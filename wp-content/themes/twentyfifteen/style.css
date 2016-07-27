@@ -4,7 +4,7 @@ Theme URI: https://wordpress.org/themes/twentyfifteen/
 Author: the WordPress team
 Author URI: https://wordpress.org/
 Description: Our 2015 default theme is clean, blog-focused, and designed for clarity. Twenty Fifteen's simple, straightforward typography is readable on a wide variety of screen sizes, and suitable for multiple languages. We designed it using a mobile-first approach, meaning your content takes center-stage, regardless of whether your visitors arrive by smartphone, tablet, laptop, or desktop computer.
-Version: 1.6
+Version: 1.7
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: black, blue, gray, pink, purple, white, yellow, dark, light, two-columns, left-sidebar, fixed-layout, responsive-layout, accessibility-ready, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
@@ -1341,20 +1341,6 @@ img.aligncenter {
  * 11.0 Widgets
  */
 
-/*
-.widget {
-	color: #707070;
-	color: rgba(51, 51, 51, 0.7);
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	-ms-hyphens: auto;
-	hyphens: auto;
-	margin: 0 auto 9.09090%;
-	width: 100%;
-	word-wrap: break-word;
-}
-*/
-
 .widget {
 	color: #707070;
 	color: rgba(51, 51, 51, 0.7);
@@ -1654,11 +1640,7 @@ a.post-thumbnail:focus {
 .entry-summary,
 .page-content,
 .comment-content {
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	-ms-hyphens: auto;
-	hyphens: auto;
-	word-wrap: break-word;
+	word-wrap: none;
 }
 
 .entry-content h1,
@@ -1831,11 +1813,7 @@ a.post-thumbnail:focus {
 }
 
 .author-description {
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	-ms-hyphens: auto;
-	hyphens: auto;
-	word-wrap: break-word;
+	word-wrap: none;
 }
 
 .author-description a {
@@ -2088,11 +2066,7 @@ a.post-thumbnail:focus {
 }
 
 .type-attachment .entry-title {
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	-ms-hyphens: auto;
-	hyphens: auto;
-	word-wrap: break-word;
+	word-wrap: none;
 }
 
 .entry-caption {
@@ -2101,13 +2075,9 @@ a.post-thumbnail:focus {
 	font-family: "Noto Sans", sans-serif;
 	font-size: 12px;
 	font-size: 1.2rem;
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	-ms-hyphens: auto;
-	hyphens: auto;
 	line-height: 1.5;
 	padding-top: 0.5em;
-	word-wrap: break-word;
+	word-wrap: none;
 }
 
 .entry-caption > :last-child {
