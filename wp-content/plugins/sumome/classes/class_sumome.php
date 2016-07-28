@@ -15,6 +15,14 @@ class WP_Plugin_SumoMe {
     if (get_option('endurance_user')==1)  $this->dataSumoPlatform="wordpress-endurance";
   }
 
+  public function activate_SumoMe_plugin() {
+    WP_Plugin_SumoMe::ajax_sumome_show_dashboard_overlay();
+  }
+
+  public function deactivate_SumoMe_plugin() {
+    WP_Plugin_SumoMe::ajax_sumome_show_dashboard_overlay();
+  }
+
   public function admin_init() {
     register_setting('sumome', 'sumome_site_id', array($this, 'sanitize_site_id'));
 
@@ -80,19 +88,28 @@ class WP_Plugin_SumoMe {
     echo sprintf('<textarea type="text" name="%s" id="%s" class="sumome-site-id" />%s</textarea><button onclick="sumome_generate_site_id(); return false;" class="button">Get New Site ID</button>', $field, $field, esc_attr($value));
   }
 
-
   public function check_generate_site_id() {
     $site_id = get_option('sumome_site_id');
 
-    if (!$site_id) {
-      $site_id = '';
-      for ($i = 0; $i < 8; $i++) {
-        $site_id .= substr(md5(uniqid()), 0, 8);
+    if (!$site_id || WP_Plugin_SumoMe::blacklisted_site_id($site_id)) {
+      list($usec, $sec) = explode(' ', microtime());
+      $sumoSeed=(float) $sec + ((float) $usec * 100000);
+
+      mt_srand($sumoSeed);
+      $site_id='';
+      for ($i=0;$i<8;$i++) {
+        $site_id.=substr(dechex(mt_rand()).'000000000',2,8);
       }
 
       update_option('sumome_site_id', $site_id);
     }
   }
+
+  private function blacklisted_site_id($site_id) {
+    $blacklist=array("8ce3f35797bf87c1644e567db13d9b3c2d9422027c10a7874b3446c9283c9aad");
+    if ($site_id && in_array($site_id, $blacklist)) return true;
+  }
+
 
   public function append_script_code() {
     $this->check_generate_site_id();
@@ -160,6 +177,10 @@ class WP_Plugin_SumoMe {
     update_option('sumome_hide_dashboard_overlay', true);
   }
 
+  public function ajax_sumome_show_dashboard_overlay() {
+    update_option('sumome_hide_dashboard_overlay', false);
+  }
+
   public function dashboard_setup() {
     add_meta_box( 'my_dashboard_widget', 'SumoMe', array($this , 'dashboard_widget'), 'dashboard', 'normal', 'high');
   }
@@ -178,7 +199,7 @@ class WP_Plugin_SumoMe {
       jQuery('.sumome-plugin-dashboard-widget').html(data);
     });
     </script>
-<?php
+    <?php
   }
 
 }

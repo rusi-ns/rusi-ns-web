@@ -68,7 +68,6 @@
     padding-top: 0%;
   }
   .sumome-plugin-main .footer {
-    height: 250px;
     padding-top: 10px;
     line-height: 25px;
   }
@@ -105,7 +104,8 @@
 
 
   /* top 2 tiles */
-  .sumome-plugin-main .sumome-logged-in-container .items .item-tile.sumo-apps,.sumome-logged-in-container .items .item-tile.sumo-store {
+  .sumome-plugin-main .sumome-logged-in-container .items .item-tile.sumo-apps,
+  .sumome-plugin-main .sumome-logged-in-container .items .item-tile.sumo-store {
     width:98%;
     float:left;
     font-size:25px;
@@ -114,11 +114,18 @@
 
   .sumome-plugin-main .sumome-logged-in-container .items .item-tile.sumo-apps {
     background-size: 90%;
-        background-position: -120px -35px;
+    background-position: -120px -35px;
+    float:left;
   }
   .sumome-plugin-main .sumome-logged-in-container .items .item-tile.sumo-store {
     background-size: 80%;
     background-position: -60px -35px;
+    float:left;
+  }
+
+  .sumome-plugin-main .sumome-logged-in-container .items div .item-tile-title {
+    top: 0%;
+    transform: none;
   }
 
   .sumome-plugin-main .sumome-logged-in-container .items .item-tile.sumo-apps .item-tile-title,
@@ -227,7 +234,7 @@
   }
 
   .sumome-plugin-main .sumome-logged-in-container .header-banner {
-    background-image: url('/wp-content/plugins/sumome/images/sumome-banner.jpg');
+    background-image: url('../images/sumome-banner.jpg');
     background-repeat: no-repeat;
     min-height: 150px;
     background-position: top center;
@@ -243,5 +250,13 @@
   }
 
 
+}
 
+@media screen and (max-width: 475px) {
+  .sumome-plugin-main .sumome-logged-in-container .items .item-tile {
+    width: 100%;
+  }
+  .sumome-plugin-main .sumome-logged-in-container .items .item-tile:nth-child(even) {
+      float: none;
+  }
 }

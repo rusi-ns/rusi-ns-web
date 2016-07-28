@@ -235,7 +235,6 @@
   position:relative;
   bottom:0px;
   left:0px;
-  height:250px;
   padding-top:60px;
   line-height:25px;
   margin-top:50px;
@@ -298,7 +297,6 @@
   background-color:#fff;
   color:#65717b;
   height:200px;
-  line-height:200px;
   margin:25px 1%;
   cursor:pointer;
   font-size:20px;
@@ -324,6 +322,13 @@
 .sumome-plugin-main .sumome-logged-in-container .items div.sumo-store {
   white-space:nowrap;
 }
+
+.sumome-plugin-main .sumome-logged-in-container .items div .item-tile-title {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .sumome-plugin-main .sumome-logged-in-container .items div.sumo-apps .item-tile-title,
 .sumome-plugin-main .sumome-logged-in-container .items div.sumo-store .item-tile-title {
   padding-right:100px;

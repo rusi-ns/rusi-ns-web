@@ -3,7 +3,7 @@ Contributors: SumoMe
 Tags: MailChimp, Aweber, Constant Contact, Campaign Monitor, GetResponse, ActiveCampaign, MyEmma, Mad Mimi, Infusionsoft, Feedblitz, HubSpot, MyNewsletterBuilder, Inbox First, Sailthru, Klaviyo, Vero, Pardot, Zapier, Ontraport, ExactTarget, Vertical Response, Drip, MailerLite, WhatCounts, ConvertKit, MailJet, Maropost, popup, exit intent, growth, subscribers, twitter, facebook share, social plugin,  social sharing, subscription, email form, share,  sharing, social , social media buttons , links, click to tweet ,  analytics , newsletter,  widget,lightbox, analytics, newsletter, newsletter, Facebook, floating social buttons, google plus, Image sharing,  pinterest plugin, pintrest, share image,   sharebar, sharing, social bookmarking, social plugin, sms, tweet button,  heat map, heatmaps, twitter share, contact form, scroll box, content analytics, inbound marketing, mailing list, share buttons, welcome mat, landing page
 Requires at least: 3.0.1
 Tested up to: 4.2.1
-Stable tag: 1.16
+Stable tag: 1.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -331,12 +331,18 @@ Why you should encourage Twitter sharing
 * Added new integrations (MailChimp, Aweber, Constant Contact, Campaign Monitor, GetResponse, ActiveCampaign, MyEmma, Mad Mimi, Infusionsoft, Feedblitz, HubSpot, MyNewsletterBuilder, Inbox First, Sailthru, Klaviyo, Vero, Pardot, Zapier, Ontraport, ExactTarget, Vertical Response, Drip, MailerLite, WhatCounts, ConvertKit, MailJet, Maropost)
 
 = 1.15 =
-* Integration with WordPress Admin
-* Statistics inside WordPress dashboard
-* Better on-boarding
+* Integration with WordPress Admin.
+* Statistics inside WordPress dashboard.
+* Better on-boarding.
 
 = 1.16 =
 * CSS and pathname fixes
+
+= 1.17 =
+* CSS, notification bubble, and more random Site ID
+
+= 1.18 =
+* Fixes site ID conflict
 
 == Upgrade Notice ==
 
@@ -380,9 +386,15 @@ Why you should encourage Twitter sharing
 * Added new integrations (MailChimp, Aweber, Constant Contact, Campaign Monitor, GetResponse, ActiveCampaign, MyEmma, Mad Mimi, Infusionsoft, Feedblitz, HubSpot, MyNewsletterBuilder, Inbox First, Sailthru, Klaviyo, Vero, Pardot, Zapier, Ontraport, ExactTarget, Vertical Response, Drip, MailerLite, WhatCounts, ConvertKit, MailJet, Maropost)
 
 = 1.15 =
-* Integration with WordPress Admin
-* Statistics inside WordPress dashboard
-* Better on-boarding
+* Integration with WordPress Admin.
+* Statistics inside WordPress dashboard.
+* Better on-boarding.
 
 = 1.16 =
 * CSS and pathname fixes
+
+= 1.17 =
+* CSS, notification bubble, and more random Site ID
+
+= 1.18 =
+* Fixes site ID conflict

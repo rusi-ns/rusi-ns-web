@@ -173,7 +173,7 @@ function getLoadInformation() {
             } else {
               jQuery('.notification-count').remove();
               if (data.unreadNotificationCount>0) {
-                jQuery('.sumo-notifications').append('<div class="notification-count">'+data.unreadNotificationCount+'</div>');
+                jQuery('.sumo-notifications .item-tile-title').append('<div class="notification-count">'+data.unreadNotificationCount+'</div>');
               }
             }
         }

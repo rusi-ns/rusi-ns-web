@@ -1,12 +1,9 @@
 <?php
-//header("Access-Control-Allow-Origin: *");
 if(isset($_COOKIE['__smUser'])) {
   $sumomeStatus="status-logged-in";
 } else{
   $sumomeStatus="status-logged-out";
 }
-//print '<pre>'.print_r($_COOKIE,true).'</pre>';
-
 ?>
 
 <div class="sumome-plugin-container">
@@ -24,8 +21,6 @@ if(isset($_COOKIE['__smUser'])) {
   </div>
 
   <?php
-
-    //include_once "siteID.php";
     include_once "popup.php";
   ?>
 

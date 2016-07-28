@@ -22,9 +22,7 @@ if (!isset($noClose)) print '<div class="sumome-plugin-dashboard-widget-close-bu
 
 
 				<div class="sumome-popup-forms">
-				<?php
-				//include 'forms-logged-out.php';
-				?>
+
 				</div>
 				<div class="sumome-plugin-dashboard-widget-header-title">Please Connect SumoMe</div>
 				<div class="sumome-plugin-dashboard-widget-header-desc">SumoMe is the #1 plugin to grow your WordPress site.<br>
@@ -183,7 +181,6 @@ if (!isset($noClose)) print '<div class="sumome-plugin-dashboard-widget-close-bu
 
 
 </div>
-
 
 
 <script>

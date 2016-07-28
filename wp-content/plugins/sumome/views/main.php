@@ -20,17 +20,12 @@ $itemArray['Statistics']['columns']=1;
 
 $itemArray['I Need Help']['data-name']="sumome-control-help";
 $itemArray['I Need Help']['data-href']="http://help.sumome.com";
-//$itemArray['I Need Help']['class']="sumome-popup-iframe";
 $itemArray['I Need Help']['class']="sumome-popup-no-dim";
 $itemArray['I Need Help']['columns']=1;
 
-$itemArray['About SumoMe']['data-name']="sumome-control-about";
-$itemArray['About SumoMe']['class']="sumome-tile-about sumome-popup-no-dim";
-$itemArray['About SumoMe']['columns']=1;
-
-$itemArray['Site Settings']['data-name']="sumome-control-advanced-settings";
-$itemArray['Site Settings']['class']="sumome-tile-advanced-settings sumome-popup-no-dim";
-$itemArray['Site Settings']['columns']=1;
+$itemArray['About']['data-name']="sumome-control-about";
+$itemArray['About']['class']="sumome-tile-about sumome-popup-no-dim";
+$itemArray['About']['columns']=1;
 
 $itemArray['SumoMe Settings']['data-name']="sumome-control-settings";
 $itemArray['SumoMe Settings']['class']="sumo-settings";
@@ -88,6 +83,16 @@ $itemArray['SumoMe Settings']['columns']=1;
           </div>
         </div>
       </div>
+
+      <!-- Site ID -->
+      <div class="row">
+        <div class="large-12 columns footer footer">
+          <div class="sumome-plugin-center">Need to restore an existing account?
+            <div class="sumome-plugin-linkalike sumome-link-button sumome-tile-advanced-settings item-tile sumome-popup-no-dim" data-name="sumome-control-advanced-settings" data-title="">Click here</div>
+          </div>
+        </div>
+      </div>
+
   </div>
 </div>
 
@@ -97,11 +102,8 @@ $itemArray['SumoMe Settings']['columns']=1;
 ?>
 <script>
 jQuery(document).ready(function() {
-  //getLoadInformation();
+  getLoadInformation();
 })
-
-
-
 
 </script>
 
