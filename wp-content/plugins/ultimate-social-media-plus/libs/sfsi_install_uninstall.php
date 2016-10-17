@@ -12,7 +12,7 @@ function sfsi_plus_update_plugin()
 	}
 	
 	//Install version
-	update_option("sfsi_plus_pluginVersion", "2.47");
+	update_option("sfsi_plus_pluginVersion", "2.5");
 	
 	/*show notification*/
 	if(!get_option('sfsi_plus_show_notification'))
@@ -468,7 +468,8 @@ function SFSI_PLUS_getFeedUrl()
         CURLOPT_POSTFIELDS => array(
             'web_url'	=> get_bloginfo('url'),
             'feed_url'	=> sfsi_plus_get_bloginfo('rss2_url'),
-            'email'		=> ''
+            'email'		=> '',
+			'subscriber_type' => 'PLWP'
         )
     ));
     // Send the request & save response to $resp
@@ -609,7 +610,7 @@ function sfsi_plus_rating_msg()
 	 <div class="sfwp_fivestar updated">
     	<p>'.__('We noticed you\'ve been using the Ultimate Social Media PLUS Plugin for more than 30 days. If you\'re happy with it, could you please do us a BIG favor and give it a 5-star rating on Wordpress?', SFSI_PLUS_DOMAIN).'</p>
         <ul class="sfwp_fivestar_ul">
-        	<li><a href="https://wordpress.org/support/view/plugin-reviews/ultimate-social-media-plus" target="_new" title="Ok, you deserved it">'.__('Ok, you deserved it', SFSI_PLUS_DOMAIN).'</a></li>
+        	<li><a href="https://wordpress.org/support/plugin/ultimate-social-media-plus/reviews/" target="_new" title="Ok, you deserved it">'.__('Ok, you deserved it', SFSI_PLUS_DOMAIN).'</a></li>
             <li><a href="javascript:void(0);" class="sfsiHideRating" title="I already did">'.__('I already did', SFSI_PLUS_DOMAIN).'</a></li>
             <li><a href="javascript:void(0);" class="sfsiHideRating" title="No, not good enough">'.__('No, not good enough', SFSI_PLUS_DOMAIN).'</a></li>
         </ul>

@@ -14,15 +14,15 @@ class afo_forgot_pass_class {
 		<div class="forgot-pass-form">
         	<?php $this->error_message();?>
 			<div class="forgot-pass-form-group">
-			<label for="email"><?php _e('Email','wp-register-profile-with-shortcode');?> </label>
+			<label for="email"><?php _e('Email','login-sidebar-widget');?> </label>
 			<input type="email" name="user_username" required="required"/>
 			</div>
 			
-			<div class="forgot-pass-form-group"><input name="forgot" type="submit" value="<?php _e('Submit','wp-register-profile-with-shortcode');?>" /></div>
+			<div class="forgot-pass-form-group"><input name="forgot" type="submit" value="<?php _e('Submit','login-sidebar-widget');?>" /></div>
 			
 			<div class="forgot-pass-form-group">
 				<div class="forgot-text">
-					<?php _e('Please enter your email. The password reset link will be provided in your email.','wp-register-profile-with-shortcode');?>
+					<?php _e('Please enter your email. The password reset link will be provided in your email.','login-sidebar-widget');?>
 				</div>
 			</div>
 			
@@ -80,17 +80,17 @@ function forgot_pass_validate(){
 			$message = html_entity_decode($message);
 			add_filter( 'wp_mail_content_type', 'set_html_content_type' );
 			if ( $message && !wp_mail($user_email, get_option('new_password_mail_subject'), $message, $headers) ) {
-				wp_die(__('Email failed to send for some unknown reason.','wp-register-profile-with-shortcode'));
+				wp_die(__('Email failed to send for some unknown reason.','login-sidebar-widget'));
 				exit;
 			}
 			else {
-				wp_die(__('New Password successfully sent to your mail address.','wp-register-profile-with-shortcode'));
+				wp_die(__('New Password successfully sent to your mail address.','login-sidebar-widget'));
 				exit;
 			}
 			remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
 		} 
 		else {
-			wp_die(__('Not a Valid Key.','wp-register-profile-with-shortcode'));
+			wp_die(__('Not a Valid Key.','login-sidebar-widget'));
 			exit;
 		}
 }
@@ -100,16 +100,16 @@ function forgot_pass_validate(){
 		global $wpdb;
 		$msg = '';
 		if(empty($_POST['user_username'])) {
-			$_SESSION['reg_msg_class'] = 'reg_error';
-			$msg .= __('Email is empty!','wp-register-profile-with-shortcode');
+			$_SESSION['reg_msg_class'] = 'error_wid_login';
+			$msg .= __('Email is empty!','login-sidebar-widget');
 		}
 		
 		$user_username = esc_sql(trim(sanitize_text_field($_POST['user_username'])));
 		
 		$user_data = get_user_by('email', $user_username);
 		if(empty($user_data)) { 
-			$_SESSION['reg_msg_class'] = 'reg_error';
-			$msg .= __('Invalid E-mail address!','wp-register-profile-with-shortcode');
+			$_SESSION['reg_msg_class'] = 'error_wid_login';
+			$msg .= __('Invalid E-mail address!','login-sidebar-widget');
 		}
 		
 		$user_login = $user_data->data->user_login;
@@ -136,20 +136,19 @@ function forgot_pass_validate(){
 			add_filter( 'wp_mail_content_type', 'set_html_content_type' );
 						
 			if ( !wp_mail($user_email, get_option('forgot_password_link_mail_subject'), $message, $headers) ) {
-				$_SESSION['reg_msg_class'] = 'reg_error';
-				$_SESSION['reg_error_msg'] = __('Email failed to send for some unknown reason.','wp-register-profile-with-shortcode');
+				$_SESSION['reg_msg_class'] = 'error_wid_login';
+				$_SESSION['reg_error_msg'] = __('Email failed to send for some unknown reason.','login-sidebar-widget');
 			}
 			else {
-				$_SESSION['reg_msg_class'] = 'reg_success';
-				$_SESSION['reg_error_msg'] = __('We have just sent you an email with Password reset instructions.','wp-register-profile-with-shortcode');
+				$_SESSION['reg_msg_class'] = 'success_wid_login';
+				$_SESSION['reg_error_msg'] = __('We have just sent you an email with Password reset instructions.','login-sidebar-widget');
 			}
 			remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
 		} else {
-			$_SESSION['reg_msg_class'] = 'reg_error';
+			$_SESSION['reg_msg_class'] = 'error_wid_login';
 			$_SESSION['reg_error_msg'] = $msg;
 		}
 	}
 }
 	
 add_action( 'init', 'forgot_pass_validate' );
-?>

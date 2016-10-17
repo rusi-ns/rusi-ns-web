@@ -1,7 +1,7 @@
 <?php
 class login_settings {
 
-	private $default_style = '.log_forms{ width:98%; padding:5px; border:1px solid #CCC; margin:2px; } .log_forms input[type=text], input[type=password] { margin: 10px 0 20px; width: 99%; padding: 7px 0 7px 4px; border: 1px solid #E3E3E3; } .log_forms input[type=submit] { margin: 10px 0 20px; width: 100%; padding: 7px; border: 1px solid #7ac9b7; } .log_forms input[type=text]:focus, input[type=password]:focus { border-color: #4697e4; }';
+	public $default_style = '.log_forms{ width:98%; padding:5px; border:1px solid #CCC; margin:2px; } .log_forms input[type=text], input[type=password] { margin: 10px 0 20px; width: 99%; padding: 7px 0 7px 4px; border: 1px solid #E3E3E3; } .log_forms input[type=submit] { margin: 10px 0 20px; width: 100%; padding: 7px; border: 1px solid #7ac9b7; } .log_forms input[type=text]:focus, input[type=password]:focus { border-color: #4697e4; }';
 	
 	public function __construct() {
 		$this->load_settings();
@@ -15,23 +15,84 @@ class login_settings {
 			   wp_die( 'Sorry, your nonce did not verify.' );
 			   exit;
 			} 
-		
-			update_option( 'redirect_page',  sanitize_text_field($_POST['redirect_page']) );
-			update_option( 'redirect_page_url',  sanitize_text_field($_POST['redirect_page_url']) );
-			update_option( 'logout_redirect_page',  sanitize_text_field($_POST['logout_redirect_page']) );
-			update_option( 'link_in_username',  sanitize_text_field($_POST['link_in_username']) );
-			update_option( 'login_afo_rem',  sanitize_text_field($_POST['login_afo_rem']) );
-			update_option( 'login_afo_forgot_pass_link',  sanitize_text_field($_POST['login_afo_forgot_pass_link']) );
-			update_option( 'login_afo_register_link',  sanitize_text_field($_POST['login_afo_register_link']) );
-			update_option( 'login_afo_fp_from_email',  sanitize_text_field($_POST['login_afo_fp_from_email']) );
+			$lmc = new login_message_class;
+			if(!empty($_POST['redirect_page'])){
+				update_option( 'redirect_page',  sanitize_text_field($_POST['redirect_page']) );
+			} else {
+				delete_option( 'redirect_page' );
+			}
 			
-			update_option( 'lafo_invalid_username',  sanitize_text_field($_POST['lafo_invalid_username']) );
-			update_option( 'lafo_invalid_password',  sanitize_text_field($_POST['lafo_invalid_password']) );
+			if(!empty($_POST['redirect_page_url'])){
+				update_option( 'redirect_page_url',  sanitize_text_field($_POST['redirect_page_url']) );
+			} else {
+				delete_option( 'redirect_page_url' );
+			}
 			
-			update_option( 'captcha_on_admin_login',  sanitize_text_field($_POST['captcha_on_admin_login']) );
-			update_option( 'captcha_on_user_login',  sanitize_text_field($_POST['captcha_on_user_login']) );
+			if(!empty($_POST['logout_redirect_page'])){
+				update_option( 'logout_redirect_page',  sanitize_text_field($_POST['logout_redirect_page']) );
+			} else {
+				delete_option( 'logout_redirect_page' );
+			}
 			
-			update_option( 'default_login_form_hooks',  sanitize_text_field($_POST['default_login_form_hooks']) );
+			if(!empty($_POST['link_in_username'])){
+				update_option( 'link_in_username',  sanitize_text_field($_POST['link_in_username']) );
+			} else {
+				delete_option( 'link_in_username' );
+			}
+			
+			if(!empty($_POST['login_afo_rem'])){
+				update_option( 'login_afo_rem',  sanitize_text_field($_POST['login_afo_rem']) );
+			} else {
+				delete_option( 'login_afo_rem' );
+			}
+			
+			if(!empty($_POST['login_afo_forgot_pass_link'])){
+				update_option( 'login_afo_forgot_pass_link',  sanitize_text_field($_POST['login_afo_forgot_pass_link']) );
+			} else {
+				delete_option( 'login_afo_forgot_pass_link' );
+			}
+			
+			if(!empty($_POST['login_afo_register_link'])){
+				update_option( 'login_afo_register_link',  sanitize_text_field($_POST['login_afo_register_link']) );
+			} else {
+				delete_option( 'login_afo_register_link' );
+			}
+			
+			if(!empty($_POST['login_afo_fp_from_email'])){
+				update_option( 'login_afo_fp_from_email',  sanitize_text_field($_POST['login_afo_fp_from_email']) );
+			} else {
+				delete_option( 'login_afo_fp_from_email' );
+			}
+			
+			if(!empty($_POST['lafo_invalid_username'])){
+				update_option( 'lafo_invalid_username',  sanitize_text_field($_POST['lafo_invalid_username']) );
+			} else {
+				delete_option( 'lafo_invalid_username' );
+			}
+			
+			if(!empty($_POST['lafo_invalid_password'])){
+				update_option( 'lafo_invalid_password',  sanitize_text_field($_POST['lafo_invalid_password']) );
+			} else {
+				delete_option( 'lafo_invalid_password' );
+			}
+			
+			if(!empty($_POST['captcha_on_admin_login'])){
+				update_option( 'captcha_on_admin_login',  sanitize_text_field($_POST['captcha_on_admin_login']) );
+			} else {
+				delete_option( 'captcha_on_admin_login' );
+			}
+			
+			if(!empty($_POST['captcha_on_user_login'])){
+				update_option( 'captcha_on_user_login',  sanitize_text_field($_POST['captcha_on_user_login']) );
+			} else {
+				delete_option( 'captcha_on_user_login' );
+			}
+			
+			if(!empty($_POST['default_login_form_hooks'])){
+				update_option( 'default_login_form_hooks',  sanitize_text_field($_POST['default_login_form_hooks']) );
+			} else {
+				delete_option( 'default_login_form_hooks' );
+			}
 			
 			if(isset( $_POST['load_default_style'] ) and sanitize_text_field($_POST['load_default_style']) == "Yes"){
 				update_option( 'custom_style_afo', sanitize_text_field($this->default_style) );
@@ -39,13 +100,36 @@ class login_settings {
 				update_option( 'custom_style_afo',  sanitize_text_field($_POST['custom_style_afo']) );
 			}
 			
-			update_option( 'login_sidebar_widget_from_email', sanitize_text_field(@$_POST['login_sidebar_widget_from_email']) );
-			update_option( 'forgot_password_link_mail_subject', sanitize_text_field(@$_POST['forgot_password_link_mail_subject']) );
-			update_option( 'forgot_password_link_mail_body', esc_html(@$_POST['forgot_password_link_mail_body']) );
-			update_option( 'new_password_mail_subject',sanitize_text_field(@$_POST['new_password_mail_subject']) );
-			update_option( 'new_password_mail_body', esc_html(@$_POST['new_password_mail_body']) );
+			if(!empty($_POST['login_sidebar_widget_from_email'])){
+				update_option( 'login_sidebar_widget_from_email', sanitize_text_field($_POST['login_sidebar_widget_from_email']) );
+			} else {
+				delete_option( 'login_sidebar_widget_from_email' );
+			}
 			
-			$lmc = new login_message_class;
+			if(!empty($_POST['forgot_password_link_mail_subject'])){
+				update_option( 'forgot_password_link_mail_subject', sanitize_text_field($_POST['forgot_password_link_mail_subject']) );
+			} else {
+				delete_option( 'forgot_password_link_mail_subject' );
+			}
+			
+			if(!empty($_POST['forgot_password_link_mail_body'])){
+				update_option( 'forgot_password_link_mail_body', esc_html($_POST['forgot_password_link_mail_body']) );
+			} else {
+				delete_option( 'forgot_password_link_mail_body' );
+			}
+			
+			if(!empty($_POST['new_password_mail_subject'])){
+				update_option( 'new_password_mail_subject',sanitize_text_field($_POST['new_password_mail_subject']) );
+			} else {
+				delete_option( 'new_password_mail_subject' );
+			}
+			
+			if(!empty($_POST['new_password_mail_body'])){
+				update_option( 'new_password_mail_body', esc_html($_POST['new_password_mail_body']) );
+			} else {
+				delete_option( 'new_password_mail_body' );
+			}
+			
 			$lmc->add_message('Settings updated successfully.','success');
 		}
 	}
@@ -80,11 +164,11 @@ class login_settings {
 	$new_password_mail_body = get_option('new_password_mail_body');
 	
 	$lmc->show_message();
-	$this->fb_login_pro_add();
-	$this->social_login_so_setup_add();
 	
-	$this->help_support();
-	$this->wp_register_profile_add();
+	self :: fb_login_pro_add();
+	self :: social_login_so_setup_add();
+	self :: help_support();
+	self :: wp_register_profile_add();
 	?>
 	<form name="f" method="post" action="">
 	<?php wp_nonce_field('login_widget_afo_action','login_widget_afo_field'); ?>
@@ -156,11 +240,11 @@ class login_settings {
 				);
 				wp_dropdown_pages( $args3 ); 
 			?>
-			<i>Leave blank to not include the link</i>
+			<i><?php _e('Leave blank to not include the link','login-sidebar-widget');?></i>
 			</td>
 	  </tr>
 	  <tr>
-		<td><strong>Register Link</strong></td>
+		<td><strong><?php _e('Register Link','login-sidebar-widget');?></strong></td>
 		<td>
 			<?php
 				$args4 = array(
@@ -188,11 +272,11 @@ class login_settings {
       </tr>
       <tr>
 		<td><strong><?php _e('Captcha on Admin Login','login-sidebar-widget');?></strong></td>
-		<td><input type="checkbox" name="captcha_on_admin_login" value="Yes" <?php echo $captcha_on_admin_login == 'Yes'?'checked="checked"':'';?> /><i>Check to enable captcha on admin login form</i></td>
+		<td><input type="checkbox" name="captcha_on_admin_login" value="Yes" <?php echo $captcha_on_admin_login == 'Yes'?'checked="checked"':'';?> /><i><?php _e('Check to enable captcha on admin login form','login-sidebar-widget');?></i></td>
 	  </tr>
        <tr>
 		<td><strong><?php _e('Captcha on User Login','login-sidebar-widget');?></strong></td>
-		<td><input type="checkbox" name="captcha_on_user_login" value="Yes" <?php echo $captcha_on_user_login == 'Yes'?'checked="checked"':'';?> /><i>Check to enable captcha on user login form</i></td>
+		<td><input type="checkbox" name="captcha_on_user_login" value="Yes" <?php echo $captcha_on_user_login == 'Yes'?'checked="checked"':'';?> /><i><?php _e('Check to enable captcha on user login form','login-sidebar-widget');?></i></td>
 	  </tr>
       <tr>
 		<td colspan="2">&nbsp;</td>
@@ -219,15 +303,12 @@ class login_settings {
       </tr>
       <tr>
 		<td valign="top"><strong><?php _e('Invalid Username Message','login-sidebar-widget');?></strong></td>
-		<td><input type="text" name="lafo_invalid_username" value="<?php echo $lafo_invalid_username;?>" placeholder="Error: Invalid Username" size="35"><i>Error message for wrong Username</i></td>
+		<td><input type="text" name="lafo_invalid_username" value="<?php echo $lafo_invalid_username;?>" placeholder="<?php _e('Error: Invalid Username','login-sidebar-widget');?>" size="35"><i><?php _e('Error message for wrong Username','login-sidebar-widget');?></i></td>
 	  </tr>
       <tr>
 		<td valign="top"><strong><?php _e('Invalid Password Message','login-sidebar-widget');?></strong></td>
-		<td><input type="text" name="lafo_invalid_password" value="<?php echo $lafo_invalid_password;?>" placeholder="Error: Invalid Username & Password" size="35"><i>Error message for wrong Password</i></td>
+		<td><input type="text" name="lafo_invalid_password" value="<?php echo $lafo_invalid_password;?>" placeholder="<?php _e('Error: Invalid Username & Password','login-sidebar-widget');?>" size="35"><i><?php _e('Error message for wrong Password','login-sidebar-widget');?></i></td>
 	  </tr>
-      
-      
-      
 	   <tr>
 			<td width="45%"><h1><?php _e('Styling','login-sidebar-widget');?></h1></td>
 			<td width="55%">&nbsp;</td>
@@ -238,38 +319,36 @@ class login_settings {
 			</td>
 			<td><textarea name="custom_style_afo" style="width:80%; height:200px;"><?php echo $custom_style_afo;?></textarea></td>
 		  </tr>
-          
-          
           <tr>
 			<td width="45%"><h1><?php _e('Email Settings','login-sidebar-widget');?></h1></td>
 			<td width="55%">&nbsp;</td>
 		  </tr>
            <tr>
-				<td valign="top"><strong>From Email</strong></td>
+				<td valign="top"><strong><?php _e('From Email','login-sidebar-widget');?></strong></td>
 				<td><input type="text" name="login_sidebar_widget_from_email" value="<?php echo $login_sidebar_widget_from_email;?>" placeholder="no-reply@example.com" />
-                <i>This will be the from email address in the emails. This will make sure that the emails do not go to a spam folder.</i>
+                <i><?php _e('This will be the from email address in the emails. This will make sure that the emails do not go to a spam folder.','login-sidebar-widget');?></i>
 				</td>
 			  </tr>
            <tr>
-				<td width="30%"><strong>Reset Password Link Mail Subject</strong></td>
+				<td width="30%"><strong><?php _e('Reset Password Link Mail Subject','login-sidebar-widget');?></strong></td>
 				<td><input type="text" name="forgot_password_link_mail_subject" value="<?php echo $forgot_password_link_mail_subject;?>" />
 				</td>
 			  </tr>
 	 		 <tr>
-				<td valign="top"><strong>Reset Password Link Mail Body</strong>
-				<p><i>This mail will fire when a user request for a new password.</i></p>
+				<td valign="top"><strong><?php _e('Reset Password Link Mail Body','login-sidebar-widget');?></strong>
+				<p><i><?php _e('This mail will fire when a user request for a new password.','login-sidebar-widget');?></i></p>
 				</td>
 				<td><textarea name="forgot_password_link_mail_body" style="height:200px; width:100%;"><?php echo $forgot_password_link_mail_body;?></textarea>
 				<p>Shortcodes: #site_url#, #user_name#, #resetlink#</p>
 				</td>
 			  </tr>
 	 	 	 <tr>
-				<td><strong>New Password Mail Subject</strong></td>
+				<td><strong><?php _e('New Password Mail Subject','login-sidebar-widget');?></strong></td>
 				<td><input type="text" name="new_password_mail_subject" value="<?php echo $new_password_mail_subject;?>" /></td>
 			  </tr>
 			 <tr>
-				<td valign="top"><strong>New Password Mail Subject Body</strong>
-				<p><i>This mail will fire when a user clicks on the password reset link provided in the above mail.</i></p>
+				<td valign="top"><strong><?php _e('New Password Mail Subject Body','login-sidebar-widget');?></strong>
+				<p><i><?php _e('This mail will fire when a user clicks on the password reset link provided in the above mail.','login-sidebar-widget');?></i></p>
 				</td>
 				<td><textarea name="new_password_mail_body" style="height:200px; width:100%;"><?php echo $new_password_mail_body;?></textarea>
 				<p>Shortcodes: #site_url#, #user_name#, #user_password#</p>
@@ -278,7 +357,7 @@ class login_settings {
 		  
 	  <tr>
 		<td>&nbsp;</td>
-		<td><input type="submit" name="submit" value="Save" class="button button-primary button-large" /></td>
+		<td><input type="submit" name="submit" value="<?php _e('Save','login-sidebar-widget');?>" class="button button-primary button-large" /></td>
 	  </tr>
 	  <tr>
 		<td>&nbsp;</td>
@@ -303,8 +382,8 @@ class login_settings {
 	</table>
 	</form>
 	<?php 
-	$this->fb_comment_addon_add();
-	if ( !is_plugin_active( 'fb-comments-afo-addon/fb_comment.php' ) ) { $this->donate(); }
+	self :: fb_comment_addon_add();
+	if ( !is_plugin_active( 'fb-comments-afo-addon/fb_comment.php' ) ) { self :: donate(); }
 	}
 	
 	
@@ -323,15 +402,15 @@ class login_settings {
 	<input type="hidden" name="option" value="save_afo_fb_comment_settings" />
 	<table width="100%" border="0" style="background-color:#FFFFFF; margin-top:20px; width:98%; padding:5px; border:1px solid #999999; ">
 	  <tr>
-		<td colspan="2"><h1>Social Comments Settings</h1></td>
+		<td colspan="2"><h1><?php _e('Social Comments Settings','login-sidebar-widget');?></h1></td>
 	  </tr>
-	  <?php do_action('fb_comments_settings_top');?>
+	  <?php do_action('fb_comments_settings_top','login-sidebar-widget');?>
 	   <tr>
-		<td><h3>Facebook Comments</h3></td>
+		<td><h3><?php _e('Facebook Comments','login-sidebar-widget');?></h3></td>
 		<td></td>
 	  </tr>
 	   <tr>
-		<td><strong>Language</strong></td>
+		<td><strong><?php _e('Language','login-sidebar-widget');?></strong></td>
 		<td><select name="fb_comments_language">
 			<option value=""> -- </option>
 			<?php echo $fb_comment_addon->language_selected($fb_comments_language);?>
@@ -339,24 +418,24 @@ class login_settings {
 		</td>
 	  </tr>
 	 <tr>
-		<td><strong>Color Scheme</strong></td>
+		<td><strong><?php _e('Color Scheme','login-sidebar-widget');?></strong></td>
 		<td><select name="fb_comments_color_scheme">
 			<?php echo $fb_comment_addon->get_color_scheme_selected($fb_comments_color_scheme);?>
 		</select>
 		</td>
 	  </tr>
 	   <tr>
-		<td><strong>Width</strong></td>
-		<td><input type="text" name="fb_comments_width" value="<?php echo $fb_comments_width;?>"/> In Percent (%)</td>
+		<td><strong><?php _e('Width','login-sidebar-widget');?></strong></td>
+		<td><input type="text" name="fb_comments_width" value="<?php echo $fb_comments_width;?>"/> <?php _e('In Percent (%)','login-sidebar-widget');?></td>
 	  </tr>
 	   <tr>
-		<td><strong>No of Comments</strong></td>
-		<td><input type="text" name="fb_comments_no" value="<?php echo $fb_comments_no;?>"/> Default is 10</td>
+		<td><strong><?php _e('No of Comments','login-sidebar-widget');?></strong></td>
+		<td><input type="text" name="fb_comments_no" value="<?php echo $fb_comments_no;?>"/> <?php _e('Default is 10','login-sidebar-widget');?></td>
 	  </tr>
-	  <?php do_action('fb_comments_settings_bottom');?>
+	  <?php do_action('fb_comments_settings_bottom','login-sidebar-widget');?>
 	  <tr>
 		<td>&nbsp;</td>
-		<td><input type="submit" name="submit" value="Save" class="button button-primary button-large" /></td>
+		<td><input type="submit" name="submit" value="<?php _e('Save','login-sidebar-widget');?>" class="button button-primary button-large" /></td>
 	  </tr>
 	  <tr>
 		<td>&nbsp;</td>
@@ -379,11 +458,7 @@ class login_settings {
 	public function login_widget_afo_text_domain(){
 		load_plugin_textdomain('login-sidebar-widget', FALSE, basename( dirname( __FILE__ ) ) .'/languages');
 	}
-	
-	public function plug_install_afo_fb_login(){
-		update_option( 'custom_style_afo', $this->default_style );
-	}
-	
+		
 	public function login_widget_afo_menu () {
 		add_menu_page( 'Login Widget', 'Login Widget Settings', 'activate_plugins', 'login_widget_afo', array( $this,'login_widget_afo_options' ));
 	}
@@ -398,10 +473,9 @@ class login_settings {
 		add_action( 'admin_init', array( $this, 'login_widget_afo_save_settings' ) );
 		add_action( 'plugins_loaded',  array( $this, 'login_widget_afo_text_domain' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_login_admin_style' ) );
-		register_activation_hook(__FILE__, array( $this, 'plug_install_afo_fb_login' ) );
 	}
 	
-	public function wp_register_profile_add(){ ?>
+	private static function wp_register_profile_add(){ ?>
 	<table width="98%" border="0" style="background-color:#FFFFFF; border:1px solid #CCCCCC; padding:0px 0px 0px 10px; margin:2px;">
   <tr>
     <td><p><strong>Login Widget With Shortcode</strong> recommends you to download and activate <a href="https://wordpress.org/plugins/wp-register-profile-with-shortcode/" target="_blank">WP Register Profile With Shortcode</a> from <a href="https://wordpress.org/" target="_blank">wordpress.org</a>, so that users can register in your site.</p></td>
@@ -409,7 +483,7 @@ class login_settings {
 </table>
 	<?php }
 	
-	public function help_support(){ ?>
+	private static function help_support(){ ?>
 	<table width="98%" border="0" style="background-color:#FFFFFF; border:1px solid #CCCCCC; padding:0px 0px 0px 10px; margin:2px;">
 	  <tr>
 		<td align="right"><a href="http://www.aviplugins.com/support.php" target="_blank">Help and Support</a> <a href="http://www.aviplugins.com/rss/news.xml" target="_blank"><img src="<?php echo  plugin_dir_url( __FILE__ ) . '/images/rss.png';?>" style="vertical-align: middle;" alt="RSS"></a></td>
@@ -418,7 +492,7 @@ class login_settings {
 	<?php
 	}
 	
-	public function fb_comment_addon_add(){ 
+	private static function fb_comment_addon_add(){ 
 		if ( !is_plugin_active( 'fb-comments-afo-addon/fb_comment.php' ) ) {
 	?>
 		<table width="98%" border="0" style="background-color:#FFFFD2; border:1px solid #E6DB55; padding:0px 0px 0px 10px; margin:2px;">
@@ -430,7 +504,7 @@ class login_settings {
 		}
 	}
 	
-	public function fb_login_pro_add(){ ?>
+	private static function fb_login_pro_add(){ ?>
 	<table width="98%" border="0" style="background-color:#FFFFD2; border:1px solid #E6DB55; padding:0px 0px 0px 10px; margin:2px;">
   <tr>
     <td><p>The <strong>PRO</strong> version supports login with <strong>Facebook</strong>, <strong>Google</strong>,  <strong>Twitter</strong> and <strong>LinkedIn</strong> accounts. Addons are available for logging in with <strong><a href="http://www.aviplugins.com/microsoft-login-addon/" target="_blank">Microsoft</a></strong> and <strong><a href="http://www.aviplugins.com/yahoo-login-addon/" target="_blank">Yahoo</a></strong> accounts. You can get it <a href="http://www.aviplugins.com/fb-login-widget-pro/" target="_blank">here</a> in <strong>USD 3.00</strong> </p></td>
@@ -438,7 +512,7 @@ class login_settings {
 </table>
 	<?php }
 	
-	public function social_login_so_setup_add(){ ?>
+	private static function social_login_so_setup_add(){ ?>
 	<table width="98%" border="0" style="background-color:#FFFFD2; border:1px solid #E6DB55; padding:0px 0px 0px 10px; margin:2px;">
   <tr>
     <td><p>Check out the <strong>Social Login No Setup</strong> plugin that supports login with <strong>Facebook</strong>, <strong>Google</strong>,  <strong>Twitter</strong>, <strong>LinkedIn</strong> and <strong>Microsoft</strong> accounts. It requires no Setups, no Maintanance, no need to create any APPs, APIs, Client Ids, Client Secrets or anything ( Everythins is maintained by aviplugins.com ). Just Install and users will start logging in with their social networking accounts right away. <a href="http://www.aviplugins.com/social-login-no-setup/" target="_blank">More Details</a>.</p></td>
@@ -446,7 +520,7 @@ class login_settings {
 </table>
 	<?php }
 	
-	public function donate(){	?>
+	private static function donate(){	?>
 	<table width="98%" border="0" style="background-color:#FFF; border:1px solid #ccc; margin:2px;">
 	 <tr>
 	 <td align="right"><a href="http://www.aviplugins.com/donate/" target="_blank">Donate</a> <img src="<?php echo  plugin_dir_url( __FILE__ ) . '/images/paypal.png';?>" style="vertical-align: middle;" alt="PayPal"></td>
@@ -454,4 +528,5 @@ class login_settings {
 	</table>
 	<?php
 	}
+	
 }

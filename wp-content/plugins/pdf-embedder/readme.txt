@@ -3,7 +3,7 @@ Contributors: danlester
 Tags: doc, docx, pdf, office, powerpoint, google, document, embed, intranet
 Requires at least: 3.5
 Tested up to: 4.6
-Stable tag: 2.7.3
+Stable tag: 2.7.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -27,7 +27,6 @@ Hyperlinks in your PDF will only be clickable in the Premium versions.
 **Now translation-ready!** Please contribute your translations.
 
 French translation contributed by Thierry Gaillou of [JDFitForme](http://www.jdfitforme.fr/)
-
 Spanish translation contributed by Armando Landois of [LANDOIS Diseño](https://landois.com/)
 
 
@@ -47,6 +46,7 @@ To override your site-wide defaults on an individual embed, see the [Plugin Inst
 >
 > * Download button in the toolbar.
 > * Hyperlinks are fully functional.
+> * Full screen mode.
 > * Edit page number to jump straight to page.
 > * Track number of downloads and views.
 > * Removes wp-pdf.com attribution from the toolbar.
@@ -170,6 +170,10 @@ the Plugins section of your Wordpress admin
 1. Follow the instructions from step 4 above
 
 == Changelog ==
+
+= 2.7.5 =
+
+Fix for a small number of PDFs rendering as smaller than expected on some high resolution screens.
 
 = 2.7.3 =
 

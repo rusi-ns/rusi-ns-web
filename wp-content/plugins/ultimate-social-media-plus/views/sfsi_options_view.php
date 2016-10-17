@@ -157,7 +157,7 @@
         <p class="green_txt sucMsg" style="display:none"> </p>
 	 	<p style="margin-top: 30px;">
         	<?php  _e( 'This plugin is 100% free. Please do us a BIG favor and give us a 5 star rating', SFSI_PLUS_DOMAIN ); ?>
-            <a href="https://wordpress.org/support/view/plugin-reviews/ultimate-social-media-plus" target="_new">
+            <a href="https://wordpress.org/support/plugin/ultimate-social-media-plus/reviews/" target="_new">
             	<?php  _e( 'here', SFSI_PLUS_DOMAIN ); ?>
             </a>.
              <?php  _e( 'If you`re not happy, please get in touch with us at support@ultimatelysocial.com, so that we can sort it out.Thank you!', SFSI_PLUS_DOMAIN ); ?>

@@ -3,8 +3,8 @@ Contributors: avimegladon
 Donate link: http://www.aviplugins.com/donate/
 Tags: login, widget, login widget, widget login, sidebar login, login form, user login, authentication, facebook login, twitter login, google login, google plus, facebook, twitter, social login, social media, facebook comments, fb comment, forgot password, reset password, link
 Requires at least: 2.0.2
-Tested up to: 4.5.2
-Stable tag: 5.5.0
+Tested up to: 4.6.1
+Stable tag: 5.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,20 +34,19 @@ There is a PRO version of this plugin that supports login with <strong>Facebook<
 
 <a href="http://www.aviplugins.com/demo/login/" target="_blank">Click here for a Live Demo</a>
 
-* The PRO version also comes with a content restriction Addon. Content of Pages and Posts can be hidden from visitors of your site.
-* Compatible with WooCommerce plugin.
-* Compatible with WordPress Multisite Installation.
-* Login Logs are stored in database. IPs gets blocked after a certain numbers of wrong login attempts.
-* IPs can be blocked permanently from admin panel.
-* Captcha login securiy in Frontend and Admin login Forms.
-* Restrict Admin panel Access for selected user Roles. For example you can restrict Admin Panel access for "Subscriber" and "Contributor" from your site.
-* Content Restriction can be applied from post edit page.
-* Use Shortcode to display login form in post or page.
-* Use only social icons for logging in. No need to put the entire login form.
+* The PRO version comes with a <strong>FREE Content Restriction Addon</strong>. Partial contents of Pages/ Posts or the complete Page/Post can be hidden from visitors of your site.
+* Compatible with <strong>WooCommerce</strong> plugin.
+* Compatible with <strong>WordPress Multisite</strong> Installation.
+* Login Logs are stored in database. IPs gets <strong>Blocked</strong> after a certain numbers of wrong login attempts. This ensures site's security.
+* IPs can be <strong>Blocked</strong> permanently from admin panel.
+* <strong>Captcha</strong> login securiy in Frontend and Admin login Forms.
+* <strong>Restrict Admin panel Access</strong> for selected user Roles. For example you can restrict Admin Panel access for "Subscriber" and "Contributor" from your site.
+* Use Shortcode to display login form in Post or Page.
+* Use only Social Icons for logging in. No need to put the entire login form.
 * Change welcome text "Howdy" from plugin settings section.
 * Manage Forgot Password Email Body.
-* Easy css implementation from admin panel.
-* And Other useful settings. <a href="http://www.aviplugins.com/fb-login-widget-pro/" target="_blank">Click here for details</a>
+* Easy CSS implementation from admin panel.
+* And with other useful settings. <a href="http://www.aviplugins.com/fb-login-widget-pro/" target="_blank">Click here for details</a>
 
 
 > Check out <strong>Social Login No Setup</strong> that supports login with <strong>Facebook</strong>, <strong>Google</strong>, <strong>Twitter</strong>, <strong>LinkedIn</strong> and <strong>Microsoft</strong> accounts and the most important part is that it requires no Setups, no Maintanance, no need to create any APPs, APIs, Client Ids, Client Secrets or anything. <a href="http://www.aviplugins.com/social-login-no-setup/" target="_blank">Click here for details</a> | <a href="http://aviplugins.com/demo/social-login/" target="_blank">Click here for Live Demo</a>
@@ -98,6 +97,15 @@ This Add-on can be used to replace the default Wordpress Comments and insert Fac
 8. Facebook Comments Addon view
 
 == Changelog ==
+
+= 5.5.3 =
+* Bug fixed.
+
+= 5.5.2 =
+* Notice message bug fixed.
+
+= 5.5.1 =
+* Bug fixed.
 
 = 5.5.0 =
 * Forgot Password functionality updated.

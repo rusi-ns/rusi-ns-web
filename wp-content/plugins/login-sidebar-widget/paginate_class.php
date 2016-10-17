@@ -5,6 +5,7 @@
 
 if (!class_exists('afo_paginate')) {
 class afo_paginate{
+	
 	public $per_page = 10;
 	public $base_url = '';
 	public $total_rec = 0;

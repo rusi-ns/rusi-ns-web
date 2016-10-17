@@ -15,12 +15,12 @@
     background-color: #FFFFD2;
     border: 1px dashed #E6DB55;
     color: #000;
-    float: left;
     font-family: Verdana,Arial,Helvetica,sans-serif;
     font-weight: 500;
-    padding: 6px;
-    width: 97%;
+    padding: 6px 14px 6px 6px;
+    width: 94%;
 	clear:both !important;
+	margin:0px auto;
 }
 
 .close_button_afo{
@@ -40,6 +40,10 @@
 
 .captcha{
 	border:1px solid #ccc;
+}
+
+.forgot-pass-form-group{
+	margin:10px;
 }
 
 .forgot-pass-form-group label{

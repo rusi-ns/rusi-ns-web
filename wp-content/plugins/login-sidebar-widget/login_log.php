@@ -2,6 +2,7 @@
 class afo_login_log{
 	
 	public $plugin_page;
+	
 	public $plugin_page_base;
 	
 	public function __construct(){
@@ -19,19 +20,19 @@ class afo_login_log{
 		$lmc = new login_message_class;
 		$query = "SELECT `ip`,`msg`,`l_added`,`l_status` FROM `".$wpdb->base_prefix."login_log` ORDER BY `l_added` DESC";
 		$ap = new afo_paginate(100,$this->plugin_page);
-		$data = $ap->initialize($query,$_REQUEST['paged']);
+		$data = $ap->initialize($query,@$_REQUEST['paged']);
 		$lmc->show_message();
 		$empty_log_url = wp_nonce_url( "admin.php?page=login_log_afo&action=empty_log", 'empty_login_log', 'trash_log' );
 		?>
         <div class="wrap">
-        <h1><?php _e('Login Log');?> <a href="<?php echo $empty_log_url;?>" class="page-title-action"><?php _e('Clear');?></a></h1> 
+        <h1><?php _e('Login Log','login-sidebar-widget');?> <a href="<?php echo $empty_log_url;?>" class="page-title-action"><?php _e('Clear','login-sidebar-widget');?></a></h1> 
         <div style="height:300px; width:100%; overflow-y:scroll;background-color:#FFFFFF; border:1px solid #999999; padding: 5px; margin-top:10px;">
 		<table width="100%" border="0">
 		 <tr>
-			<td width="30%"><strong><?php _e('IP');?></strong></td>
-            <td width="30%"><strong><?php _e('Message');?></strong></td>
-            <td width="20%"><strong><?php _e('Time');?></strong></td>
-            <td width="20%"><strong><?php _e('Status');?></strong></td>
+			<td width="30%"><strong><?php _e('IP','login-sidebar-widget');?></strong></td>
+            <td width="30%"><strong><?php _e('Message','login-sidebar-widget');?></strong></td>
+            <td width="20%"><strong><?php _e('Time','login-sidebar-widget');?></strong></td>
+            <td width="20%"><strong><?php _e('Status','login-sidebar-widget');?></strong></td>
 		  </tr>
           <?php foreach ( $data as $d ) { ?>
           <tr>

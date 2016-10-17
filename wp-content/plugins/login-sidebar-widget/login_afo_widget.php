@@ -32,9 +32,12 @@ class login_wid extends WP_Widget {
 
 
 	public function form( $instance ) {
-		$wid_title = esc_html($instance[ 'wid_title' ]);
+		$wid_title = '';
+		if(!empty($instance[ 'wid_title' ])){
+			$wid_title = esc_html($instance[ 'wid_title' ]);
+		}
 		?>
-		<p><label for="<?php echo $this->get_field_id('wid_title'); ?>"><?php _e('Title:'); ?> </label>
+		<p><label for="<?php echo $this->get_field_id('wid_title'); ?>"><?php _e('Title','login-sidebar-widget'); ?> </label>
 		<input class="widefat" id="<?php echo $this->get_field_id('wid_title'); ?>" name="<?php echo $this->get_field_name('wid_title'); ?>" type="text" value="<?php echo $wid_title; ?>" />
 		</p>
 		<?php 
@@ -214,4 +217,5 @@ function login_validate(){
 }
 
 add_action( 'widgets_init', create_function( '', 'register_widget( "login_wid" );' ) );
+
 add_action( 'init', 'login_validate' );

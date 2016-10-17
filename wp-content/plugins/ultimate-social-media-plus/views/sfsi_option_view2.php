@@ -229,7 +229,7 @@
             	<?php  _e( 'Visit my Facebook page at:', SFSI_PLUS_DOMAIN); ?>
             </label>
             
-            <input class="add" name="sfsi_plus_facebookPage_url" type="url" value="<?php echo ($option2['sfsi_plus_facebookPage_url']!='') ?  $option2['sfsi_plus_facebookPage_url'] : 'http://' ;?>" placeholder="E.g https://www.facebook.com/your_page_name" /></p>
+            <input class="add" name="sfsi_plus_facebookPage_url" type="url" value="<?php echo ($option2['sfsi_plus_facebookPage_url']!='') ?  $option2['sfsi_plus_facebookPage_url'] : '' ;?>" placeholder="E.g https://www.facebook.com/your_page_name" /></p>
             
             <p class="radio_section fb_url extra_sp">
             	<input name="sfsi_plus_facebookLike_option" <?php echo ($option2['sfsi_plus_facebookLike_option']=='yes') ?  'checked="true"' : '' ;?>  type="checkbox" value="yes" class="styled"  />
@@ -288,7 +288,7 @@
              	<label>
              		<?php  _e( 'Tweet about my page:', SFSI_PLUS_DOMAIN ); ?>
              	</label>
-                <textarea name="sfsi_plus_twitter_aboutPageText" id="sfsi_plus_twitter_aboutPageText" type="text" class="add_txt" placeholder="Hey, check out this cool site I found: www.yourname.com #Topic via@my_twitter_name" /><?php echo ($option2['sfsi_plus_twitter_aboutPageText']!='') ?  $option2['sfsi_plus_twitter_aboutPageText'] : 'Hey check out this cool site I found' ;?></textarea>
+                <textarea name="sfsi_plus_twitter_aboutPageText" id="sfsi_plus_twitter_aboutPageText" type="text" class="add_txt" placeholder="Hey, check out this cool site I found: www.yourname.com #Topic via@my_twitter_name" /><?php echo ($option2['sfsi_plus_twitter_aboutPageText']!='') ?  stripslashes($option2['sfsi_plus_twitter_aboutPageText']) : 'Hey check out this cool site I found' ;?></textarea>
              </div>
         </div>
     </div>

@@ -359,7 +359,7 @@ class sfsi_plus_SocialHelper
  	/* create on page twitter share icon */
  	public function sfsi_twitterShare($permalink,$tweettext,$icons_language)
 	{
-		$twitter_html = '<a rel="nofollow" href="http://twitter.com/share" data-count="none" class="sr-twitter-button twitter-share-button" data-lang="'.$icons_language.'" data-url="'.$permalink.'" data-text="'.$tweettext.'" ></a>';
+		$twitter_html = '<a rel="nofollow" href="http://twitter.com/share" data-count="none" class="sr-twitter-button twitter-share-button" data-lang="'.$icons_language.'" data-url="'.$permalink.'" data-text="'.stripslashes($tweettext).'" ></a>';
          return $twitter_html;
 	} 
 	
@@ -368,11 +368,11 @@ class sfsi_plus_SocialHelper
 	{
 		if($show_count)
 		{
-			$twitter_html = '<a href="http://twitter.com/share" class="sr-twitter-button twitter-share-button" lang="'.$icons_language.'" data-counturl="'.$permalink.'" data-url="'.$permalink.'" data-text="'.$tweettext.'" ></a>';
+			$twitter_html = '<a href="http://twitter.com/share" class="sr-twitter-button twitter-share-button" lang="'.$icons_language.'" data-counturl="'.$permalink.'" data-url="'.$permalink.'" data-text="'.stripslashes($tweettext).'" ></a>';
 		}
 		else
 		{
-			$twitter_html = '<a href="http://twitter.com/share" data-count="none" class="sr-twitter-button twitter-share-button" lang="'.$icons_language.'" data-url="'.$permalink.'" data-text="'.$tweettext.'" ></a>';
+			$twitter_html = '<a href="http://twitter.com/share" data-count="none" class="sr-twitter-button twitter-share-button" lang="'.$icons_language.'" data-url="'.$permalink.'" data-text="'.stripslashes($tweettext).'" ></a>';
 		}
 	   	return $twitter_html;
 	}

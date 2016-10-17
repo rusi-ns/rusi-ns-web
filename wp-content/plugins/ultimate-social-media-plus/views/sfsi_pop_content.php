@@ -350,7 +350,7 @@ $pin_url=($option2['sfsi_plus_pinterest_pageUrl']!='') ?  $option2['sfsi_plus_pi
               <?php  _e( 'You’re a toughie. Last try: As a minimum, could you please review this plugin (with 5 stars)? It only takes a minute. Thank you!', SFSI_PLUS_DOMAIN ); ?>
        </h4>
         <div class="button">
-            <a href="https://wordpress.org/support/view/plugin-reviews/ultimate-social-media-plus" target="_new" class="hidePop activate" title="Ok, Review it" >
+            <a href="https://wordpress.org/support/plugin/ultimate-social-media-plus/reviews/" target="_new" class="hidePop activate" title="Ok, Review it" >
                 <?php  _e( 'Ok, Review it', SFSI_PLUS_DOMAIN ); ?>
             </a>
         </div>

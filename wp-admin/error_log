@@ -1,0 +1,117 @@
+[28-Jul-2016 19:21:27 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'ReduxFramework' does not have a method '_options_page' in /home/rusinscio/rusi-ns-web/wp-includes/plugin.php on line 525
+[03-Aug-2016 13:47:47 UTC] PHP Warning:  array_map(): Argument #2 should be an array in /home/rusinscio/rusi-ns-web/wp-content/plugins/edit-flow/modules/notifications/notifications.php on line 370
+[03-Aug-2016 14:05:19 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/rusinscio/rusi-ns-web/wp-content/plugins/footnotes/class/dashboard/init.php on line 172
+[03-Aug-2016 14:09:15 UTC] PHP Warning:  strpos(): Offset not contained in string in /home/rusinscio/rusi-ns-web/wp-content/plugins/footnotes/class/task.php on line 340
+[22-Aug-2016 22:41:25 UTC] PHP Warning:  array_map(): Argument #2 should be an array in /home/rusinscio/rusi-ns-web/wp-content/plugins/edit-flow/modules/notifications/notifications.php on line 370
+[28-Aug-2016 23:52:36 UTC] PHP Warning:  array_map(): Argument #2 should be an array in /home/rusinscio/rusi-ns-web/wp-content/plugins/edit-flow/modules/notifications/notifications.php on line 370
+[28-Aug-2016 23:52:49 UTC] PHP Warning:  array_map(): Argument #2 should be an array in /home/rusinscio/rusi-ns-web/wp-content/plugins/edit-flow/modules/notifications/notifications.php on line 370
+[04-Oct-2016 22:31:20 UTC] [CloudFlare] ERROR: [CLIENT API] Array
+(
+    [type] => request
+    [method] => GET
+    [path] => user/
+    [headers] => Array
+        (
+            [X-Auth-Key] => v1.0-e55fd12e0d0b0e91c0a5a74502685b736906b6664cde3a7d6bf651feafca0f3a-b88bb6237d3e85043df8e694e7bcbd536525e6d123463f79e2a7a92ea156aa966edd906b2e23e1483c450ba305a2d32fd5ba1c07f2c9178bec84cad66782e57c-6c12392ffde987e4708a5a51384ac82c92d0a857e555dc355eea1a2731c15cbb
+            [X-Auth-Email] => cio.rusi.ns@gmail.com
+            [Content-Type] => application/json
+        )
+
+    [params] => Array
+        (
+        )
+
+    [body] => Array
+        (
+            [cfCSRFToken] => 
+        )
+
+)
+ 
+[04-Oct-2016 22:31:20 UTC] [CloudFlare] ERROR: [CLIENT API] Array
+(
+    [type] => response
+    [reason] => Bad Request
+    [code] => 400
+    [body] => Invalid request headers
+    [stacktrace] => #0 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Request.php(145): Guzzle\Http\Exception\BadResponseException::factory(Object(Guzzle\Http\Message\Request), Object(Guzzle\Http\Message\Response))
+#1 [internal function]: Guzzle\Http\Message\Request::onRequestError(Object(Guzzle\Common\Event), 'request.error', Object(Symfony\Component\EventDispatcher\EventDispatcher))
+#2 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/symfony/event-dispatcher/EventDispatcher.php(184): call_user_func(Array, Object(Guzzle\Common\Event), 'request.error', Object(Symfony\Component\EventDispatcher\EventDispatcher))
+#3 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/symfony/event-dispatcher/EventDispatcher.php(46): Symfony\Component\EventDispatcher\EventDispatcher->doDispatch(Array, 'request.error', Object(Guzzle\Common\Event))
+#4 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Request.php(589): Symfony\Component\EventDispatcher\EventDispatcher->dispatch('request.error', Object(Guzzle\Common\Event))
+#5 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Request.php(378): Guzzle\Http\Message\Request->processResponse(Array)
+#6 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(303): Guzzle\Http\Message\Request->setState('complete', Array)
+#7 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(257): Guzzle\Http\Curl\CurlMulti->processResponse(Object(Guzzle\Http\Message\Request), Object(Guzzle\Http\Curl\CurlHandle), Array)
+#8 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(240): Guzzle\Http\Curl\CurlMulti->processMessages()
+#9 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(224): Guzzle\Http\Curl\CurlMulti->executeHandles()
+#10 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(111): Guzzle\Http\Curl\CurlMulti->perform()
+#11 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMultiProxy.php(94): Guzzle\Http\Curl\CurlMulti->send()
+#12 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Client.php(284): Guzzle\Http\Curl\CurlMultiProxy->send()
+#13 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/cloudflare/cloudflare-plugin-backend/src/API/AbstractAPIClient.php(79): Guzzle\Http\Client->send(Object(Guzzle\Http\Message\Request))
+#14 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/cloudflare/cloudflare-plugin-backend/src/API/AbstractPluginActions.php(94): CF\API\AbstractAPIClient->callAPI(Object(CF\API\Request))
+#15 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/cloudflare/cloudflare-plugin-backend/src/Router/DefaultRestAPIRouter.php(62): CF\API\AbstractPluginActions->login()
+#16 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/cloudflare/cloudflare-plugin-backend/src/Router/RequestRouter.php(59): CF\Router\DefaultRestAPIRouter->route(Object(CF\API\Request))
+#17 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/src/WordPress/Proxy.php(64): CF\Router\RequestRouter->route(Object(CF\API\Request))
+#18 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/src/WordPress/Hooks.php(89): CF\WordPress\Proxy->run()
+#19 [internal function]: CF\WordPress\Hooks->initProxy('')
+#20 /home/rusinscio/rusi-ns-web/wp-includes/plugin.php(524): call_user_func_array(Array, Array)
+#21 /home/rusinscio/rusi-ns-web/wp-admin/admin-ajax.php(91): do_action('wp_ajax_cloudfl...')
+#22 {main}
+)
+ 
+[04-Oct-2016 22:31:20 UTC] [CloudFlare] ERROR: Invalid request headers 
+[04-Oct-2016 22:31:20 UTC] [CloudFlare] ERROR: Email address or API key invalid. 
+[04-Oct-2016 22:31:41 UTC] [CloudFlare] ERROR: [CLIENT API] Array
+(
+    [type] => request
+    [method] => GET
+    [path] => zones/
+    [headers] => Array
+        (
+            [X-Auth-Key] => 
+            [X-Auth-Email] => 
+            [Content-Type] => application/json
+        )
+
+    [params] => Array
+        (
+        )
+
+    [body] => Array
+        (
+            [cfCSRFToken] => 
+        )
+
+)
+ 
+[04-Oct-2016 22:31:41 UTC] [CloudFlare] ERROR: [CLIENT API] Array
+(
+    [type] => response
+    [reason] => Forbidden
+    [code] => 403
+    [body] => Missing X-Auth-Email header
+    [stacktrace] => #0 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Request.php(145): Guzzle\Http\Exception\BadResponseException::factory(Object(Guzzle\Http\Message\Request), Object(Guzzle\Http\Message\Response))
+#1 [internal function]: Guzzle\Http\Message\Request::onRequestError(Object(Guzzle\Common\Event), 'request.error', Object(Symfony\Component\EventDispatcher\EventDispatcher))
+#2 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/symfony/event-dispatcher/EventDispatcher.php(184): call_user_func(Array, Object(Guzzle\Common\Event), 'request.error', Object(Symfony\Component\EventDispatcher\EventDispatcher))
+#3 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/symfony/event-dispatcher/EventDispatcher.php(46): Symfony\Component\EventDispatcher\EventDispatcher->doDispatch(Array, 'request.error', Object(Guzzle\Common\Event))
+#4 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Request.php(589): Symfony\Component\EventDispatcher\EventDispatcher->dispatch('request.error', Object(Guzzle\Common\Event))
+#5 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Request.php(378): Guzzle\Http\Message\Request->processResponse(Array)
+#6 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(303): Guzzle\Http\Message\Request->setState('complete', Array)
+#7 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(257): Guzzle\Http\Curl\CurlMulti->processResponse(Object(Guzzle\Http\Message\Request), Object(Guzzle\Http\Curl\CurlHandle), Array)
+#8 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(240): Guzzle\Http\Curl\CurlMulti->processMessages()
+#9 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(224): Guzzle\Http\Curl\CurlMulti->executeHandles()
+#10 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php(111): Guzzle\Http\Curl\CurlMulti->perform()
+#11 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMultiProxy.php(94): Guzzle\Http\Curl\CurlMulti->send()
+#12 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/guzzle/guzzle/src/Guzzle/Http/Client.php(284): Guzzle\Http\Curl\CurlMultiProxy->send()
+#13 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/vendor/cloudflare/cloudflare-plugin-backend/src/API/AbstractAPIClient.php(79): Guzzle\Http\Client->send(Object(Guzzle\Http\Message\Request))
+#14 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/src/WordPress/WordPressClientAPI.php(39): CF\API\AbstractAPIClient->callAPI(Object(CF\API\Request))
+#15 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/src/WordPress/Proxy.php(92): CF\WordPress\WordPressClientAPI->getZones()
+#16 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/src/WordPress/Proxy.php(56): CF\WordPress\Proxy->cacheDomainName()
+#17 /home/rusinscio/rusi-ns-web/wp-content/plugins/cloudflare/src/WordPress/Hooks.php(89): CF\WordPress\Proxy->run()
+#18 [internal function]: CF\WordPress\Hooks->initProxy('')
+#19 /home/rusinscio/rusi-ns-web/wp-includes/plugin.php(524): call_user_func_array(Array, Array)
+#20 /home/rusinscio/rusi-ns-web/wp-admin/admin-ajax.php(91): do_action('wp_ajax_cloudfl...')
+#21 {main}
+)
+ 
+[04-Oct-2016 22:31:41 UTC] [CloudFlare] ERROR: Missing X-Auth-Email header 

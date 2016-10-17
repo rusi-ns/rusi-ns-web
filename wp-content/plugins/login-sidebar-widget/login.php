@@ -3,7 +3,7 @@
 Plugin Name: Login Widget With Shortcode
 Plugin URI: http://avifoujdar.wordpress.com/category/my-wp-plugins/
 Description: This is a simple login form in the widget. just install the plugin and add the login widget in the sidebar. Thats it. :)
-Version: 5.5.0
+Version: 5.5.3
 Text Domain: login-sidebar-widget
 Domain Path: /languages
 Author: avimegladon
@@ -74,6 +74,9 @@ You can now login with your new password at:
     update_option( 'forgot_password_link_mail_body', $forgot_password_link_mail_body );
 	update_option( 'new_password_mail_subject', $new_password_mail_subject );
     update_option( 'new_password_mail_body', $new_password_mail_body );
+	
+	$ls = new login_settings;
+	update_option( 'custom_style_afo', $ls->default_style );
 }
 
 register_activation_hook( __FILE__, 'afo_login_setup_init' );
