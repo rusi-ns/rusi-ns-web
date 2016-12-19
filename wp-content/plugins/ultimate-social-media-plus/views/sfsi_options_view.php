@@ -160,7 +160,11 @@
             <a href="https://wordpress.org/support/plugin/ultimate-social-media-plus/reviews/" target="_new">
             	<?php  _e( 'here', SFSI_PLUS_DOMAIN ); ?>
             </a>.
-             <?php  _e( 'If you`re not happy, please get in touch with us at support@ultimatelysocial.com, so that we can sort it out.Thank you!', SFSI_PLUS_DOMAIN ); ?>
+            <?php  _e( 'If you`re not happy, please get in touch with us at ', SFSI_PLUS_DOMAIN ); ?>
+            <a href="mailto:support@ultimatelysocial.com" target="_new">
+                <?php  _e( 'support@ultimatelysocial.com', SFSI_PLUS_DOMAIN ); ?>
+            </a>
+            <?php  _e( ' , so that we can sort it out.Thank you!', SFSI_PLUS_DOMAIN ); ?>
          </p>
          <p class="bldtxtmsg">
          	<?php  _e( 'Need top-notch Wordpress development work at a competitive price?', SFSI_PLUS_DOMAIN ); ?>

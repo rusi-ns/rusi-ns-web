@@ -82,7 +82,7 @@ function wpmem_a_build_options() {
 								?>
 								<li<?php echo ( $i == $len - 1 ) ? ' style="border-bottom:1px solid #eee;"' : ''; ?>>
 									<label><?php echo ( $i == 0 ) ? 'Content Blocking' : '&nbsp;'; ?></label>
-                                    <?php
+									 <?php
 									$block  = ( isset( $wpmem->block[ $key ] ) ) ? $wpmem->block[ $key ] : '';
 									$values = array(
 										__( 'Do not block', 'wp-members' ) . '|0',
@@ -117,17 +117,20 @@ function wpmem_a_build_options() {
 										if ( isset( $wpmem->{$item_key}[ $key ] ) && $wpmem->{$item_key}[ $key ]['enabled'] == 1 ) {
 											$setting = 1; 
 											$ex_len  = $wpmem->{$item_key}[ $key ]['length'];
+											$ex_text = ( isset( $wpmem->{$item_key}[ $key ]['text'] ) ) ? $wpmem->{$item_key}[ $key ]['text'] : '';
 										} else {
 											$setting = 0;
-											$ex_len  = ''; 
-										} 
+											$ex_len  = '';
+											$ex_text = ''; 
+										}
 										echo wpmem_create_formfield( 'wpmem_' . $item_key . '_' . $key, 'checkbox', '1', $setting ); ?> <span><?php echo $val; ?></span>&nbsp;&nbsp;&nbsp;&nbsp;
-										<span><?php _e( 'Number of words in excerpt:', 'wp-members' ); ?> </span><input name="wpmem_autoex_<?php echo $key; ?>_len" type="text" size="5" value="<?php echo $ex_len; ?>" />
+										<span><?php _e( 'Number of words in excerpt:', 'wp-members' ); ?> </span><input name="wpmem_autoex_<?php echo $key; ?>_len" type="text" size="5" value="<?php echo $ex_len; ?>" />&nbsp;&nbsp;&nbsp;&nbsp;
+										<span><?php _e( 'Custom read more link (optional):', 'wp-members' ); ?> </span><input name="wpmem_autoex_<?php echo $key; ?>_text" type="text" size="5" value="<?php echo $ex_text; ?>" />
 									<?php } else {
 										$setting = ( isset( $wpmem->{$item_key}[ $key ] ) ) ? $wpmem->{$item_key}[ $key ] : 0; 
 										echo wpmem_create_formfield( 'wpmem_' . $item_key . '_' . $key, 'checkbox', '1', $setting ); ?> <span><?php echo $val; ?></span>
 									<?php } ?>
-                                    </li>
+									</li>
 									<?php $i++;
 									}
 								}
@@ -159,23 +162,23 @@ function wpmem_a_build_options() {
 							for ( $row = 0; $row < count( $arr ); $row++ ) { ?>
 							  <li>
 								<label><?php echo $arr[ $row ][0]; ?></label>
-                                <?php echo wpmem_create_formfield( $arr[ $row ][1], 'checkbox', '1', $wpmem->{$arr[$row][3]} ); ?>&nbsp;&nbsp;
+								<?php echo wpmem_create_formfield( $arr[ $row ][1], 'checkbox', '1', $wpmem->{$arr[$row][3]} ); ?>&nbsp;&nbsp;
 								<?php if ( $arr[$row][2] ) { ?><span class="description"><?php echo $arr[ $row ][2]; ?></span><?php } ?>
 							  </li>
 							<?php } ?>
 							  <li>
 								<label><?php _e( 'Attribution', 'wp-members' ); ?></label>
-                                <?php echo wpmem_create_formfield( 'attribution', 'checkbox', '1', $wpmem->attrib ); ?>&nbsp;&nbsp;
+								<?php echo wpmem_create_formfield( 'attribution', 'checkbox', '1', $wpmem->attrib ); ?>&nbsp;&nbsp;
 								<span class="description"><?php _e( 'Attribution is appreciated!  Display "powered by" link on register form?', 'wp-members' ); ?></span>
 							  </li>
 							  <li>
 								<label><?php _e( 'Enable CAPTCHA', 'wp-members' ); ?></label>
-                                <?php $captcha = array(
-									__( 'None', 'wp-members' ) . '|0',
-									'reCAPTCHA|1',
-									'reCAPTCHA v2|3',
-									'Really Simple CAPTCHA|2'
-								);
+								<?php $captcha = array( __( 'None', 'wp-members' ) . '|0' );
+								if ( 1 == $wpmem->captcha ) {
+									$captcha[] = 'reCAPTCHA v1 (deprecated)|1';
+								}
+								$captcha[] = __( 'reCAPTCHA', 'wp-members' ) . '|3';
+								$captcha[] = __( 'Really Simple CAPTCHA', 'wp-members' ) . '|2';
 								echo wpmem_create_formfield( 'wpmem_settings_captcha', 'select', $captcha, $wpmem->captcha ); ?>
 							  </li>
 							<h3><?php _e( 'Pages' ); ?></h3>
@@ -433,8 +436,9 @@ function wpmem_update_options() {
 			$post_var = 'wpmem_' . $option_group_item . '_' . $post_type;
 			if ( $option_group_item == 'autoex' ) {
 				// Auto excerpt is an array.
-				$arr[ $post_type ]['enabled'] = ( isset( $_POST[ $post_var ] ) ) ? $_POST[ $post_var ] : 0;
-				$arr[ $post_type ]['length']  = ( isset( $_POST[ $post_var ] ) ) ? ( ( $_POST[ $post_var . '_len' ] == '' ) ? 0 : $_POST[ $post_var . '_len' ] ) : '';
+				$arr[ $post_type ]['enabled'] = ( isset( $_POST[ $post_var ]           ) ) ? $_POST[ $post_var ] : 0;
+				$arr[ $post_type ]['length']  = ( isset( $_POST[ $post_var . '_len'  ] ) ) ? ( ( $_POST[ $post_var . '_len' ] == '' ) ? 0 : $_POST[ $post_var . '_len' ] ) : '';
+				$arr[ $post_type ]['text']    = ( isset( $_POST[ $post_var . '_text' ] ) ) ? $_POST[ $post_var . '_text' ] : '';
 			} else {
 				// All other settings are 0|1.
 				$arr[ $post_type ] = ( isset( $_POST[ $post_var ] ) ) ? $_POST[ $post_var ] : 0;
@@ -538,18 +542,19 @@ function wpmem_admin_style_list( $style ) {
  * Create a dropdown selection of pages.
  *
  * @since 2.8.1
+ * @todo  Consider wp_dropdown_pages. Can be retrieved as HTML (echo=false) and str_replaced to add custom values.
  *
  * @param string $val
  */
 function wpmem_admin_page_list( $val, $show_custom_url = true ) {
 
-	$selected = ( $val == 'http://' ) ? 'select a page' : false;
+	$selected = ( $val == 'http://' || $val == 'https://' ) ? 'select a page' : false;
 	$pages    = get_pages();
 
 	echo '<option value=""'; echo ( $selected == 'select a page' ) ? ' selected' : ''; echo '>'; echo esc_attr( __( 'Select a page' ) ); echo '</option>';
 
 	foreach ( $pages as $page ) {
-		$selected = ( get_page_link( $page->ID ) == $val ) ? true : $selected; echo "VAL: " . $val . ' PAGE LINK: ' . get_page_link( $page->ID );
+		$selected = ( get_page_link( $page->ID ) == $val ) ? true : $selected; //echo "VAL: " . $val . ' PAGE LINK: ' . get_page_link( $page->ID );
 		$option   = '<option value="' . $page->ID . '"' . selected( get_page_link( $page->ID ), $val, 'select' ) . '>';
 		$option  .= $page->post_title;
 		$option  .= '</option>';

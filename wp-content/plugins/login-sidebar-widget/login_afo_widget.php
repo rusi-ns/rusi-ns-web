@@ -38,7 +38,7 @@ class login_wid extends WP_Widget {
 		}
 		?>
 		<p><label for="<?php echo $this->get_field_id('wid_title'); ?>"><?php _e('Title','login-sidebar-widget'); ?> </label>
-		<input class="widefat" id="<?php echo $this->get_field_id('wid_title'); ?>" name="<?php echo $this->get_field_name('wid_title'); ?>" type="text" value="<?php echo $wid_title; ?>" />
+        <?php form_class::form_input('text',$this->get_field_name('wid_title'),$this->get_field_id('wid_title'),$wid_title,'widefat');?>
 		</p>
 		<?php 
 	}
@@ -46,7 +46,7 @@ class login_wid extends WP_Widget {
 	public function add_remember_me(){
 		$login_afo_rem = get_option('login_afo_rem');
 		if($login_afo_rem == 'Yes'){
-			echo '<label for="remember"> '.__('Remember Me','login-sidebar-widget').'</label>  <input type="checkbox" name="remember" value="Yes" />';
+			echo '<label for="remember"> '.__('Remember Me','login-sidebar-widget').'</label>  '.form_class::form_checkbox('remember','','Yes','','','','',false,'',false);
 		}
 	}
 	
@@ -66,7 +66,7 @@ class login_wid extends WP_Widget {
 		}
 	}
 	
-	public function curPageURL() {
+	public static function curPageURL() {
 	 $pageURL = 'http';
 	 if (isset($_SERVER["HTTPS"]) and $_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
 	 $pageURL .= "://";
@@ -90,13 +90,17 @@ class login_wid extends WP_Widget {
 		$link_in_username = get_option('link_in_username');
 		$default_login_form_hooks = get_option('default_login_form_hooks');
 		
-		if($redirect_page_url){
-			$redirect = $redirect_page_url;
+		if(isset($_REQUEST['redirect'])){
+			$redirect = sanitize_text_field($_REQUEST['redirect']);
 		} else {
-			if($redirect_page){
-				$redirect = get_permalink($redirect_page);
+			if($redirect_page_url){
+				$redirect = $redirect_page_url;
 			} else {
-				$redirect = $this->curPageURL();
+				if($redirect_page){
+					$redirect = get_permalink($redirect_page);
+				} else {
+					$redirect = $this->curPageURL();
+				}
 			}
 		}
 		
@@ -106,7 +110,7 @@ class login_wid extends WP_Widget {
 			$logout_redirect_page = $this->curPageURL();
 		}
 		$this->load_script();
-		if(!is_user_logged_in()){
+		if(!is_user_logged_in()){		
 		?>
 		<div id="log_forms" class="log_forms <?php echo $wid_id;?>">
         <?php $this->error_message();?>

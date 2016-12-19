@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: Login Widget With Shortcode
-Plugin URI: http://avifoujdar.wordpress.com/category/my-wp-plugins/
+Plugin URI: https://wordpress.org/plugins/login-sidebar-widget/
 Description: This is a simple login form in the widget. just install the plugin and add the login widget in the sidebar. Thats it. :)
-Version: 5.5.3
+Version: 5.5.5
 Text Domain: login-sidebar-widget
 Domain Path: /languages
-Author: avimegladon
-Author URI: http://avifoujdar.wordpress.com/
+Author: aviplugins.com
+Author URI: http://www.aviplugins.com/
 */
 
 /**
@@ -25,6 +25,7 @@ include_once dirname( __FILE__ ) . '/message_class.php';
 include_once dirname( __FILE__ ) . '/security.php';
 include_once dirname( __FILE__ ) . '/login_log.php';
 include_once dirname( __FILE__ ) . '/paginate_class.php';
+include_once dirname( __FILE__ ) . '/form_class.php';
 
 new login_settings;
 new afo_login_log;

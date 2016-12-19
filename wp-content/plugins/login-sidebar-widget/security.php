@@ -66,8 +66,8 @@ if(!class_exists('login_widget_admin_security')){
 		public function security_add(){
 			echo '<p><img src="'.plugin_dir_url( __FILE__ ).'captcha/captcha.php" class="captcha" alt="code"></p>
 			<p>
-				<label for="captcha">'.__('Captcha','login-sidebar-widget').'<br>
-				<input type="text" name="admin_captcha" id="admin_captcha" class="input" value="" size="20" autocomplete="off"></label>
+				<label for="captcha">'.__('Captcha','login-sidebar-widget').'</label><br>
+				'.form_class::form_input('text','admin_captcha','admin_captcha','','input','','','','20','','','','',false).'
 			</p>';
 		}
 	
@@ -100,7 +100,7 @@ if(!class_exists('login_widget_admin_security')){
 			echo '<div class="log-form-group">
 				<label for="captcha">'.__('Captcha','login-sidebar-widget').' </label>
 				<img src="'.plugin_dir_url( __FILE__ ).'captcha/captcha.php" alt="code" class="captcha">
-				<input type="text" name="user_captcha" id="user_captcha" autocomplete="off"/>
+				'.form_class::form_input('text','user_captcha','user_captcha','','','','','','','','',__('Security code','login-sidebar-widget'),'',false).'
 			</div>';
 		}
 	}

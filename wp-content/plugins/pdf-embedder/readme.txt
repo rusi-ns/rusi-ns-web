@@ -3,7 +3,7 @@ Contributors: danlester
 Tags: doc, docx, pdf, office, powerpoint, google, document, embed, intranet
 Requires at least: 3.5
 Tested up to: 4.6
-Stable tag: 2.7.5
+Stable tag: 2.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -47,6 +47,7 @@ To override your site-wide defaults on an individual embed, see the [Plugin Inst
 > * Download button in the toolbar.
 > * Hyperlinks are fully functional.
 > * Full screen mode.
+> * Page turning arrows when hovering over edges of PDF.
 > * Edit page number to jump straight to page.
 > * Track number of downloads and views.
 > * Removes wp-pdf.com attribution from the toolbar.
@@ -170,6 +171,10 @@ the Plugins section of your Wordpress admin
 1. Follow the instructions from step 4 above
 
 == Changelog ==
+
+= 2.8 =
+
+Internal code refactoring. Added note that 'page turning arrows' are now available in the premium versions.
 
 = 2.7.5 =
 

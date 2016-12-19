@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=seb.r
 Tags: social media, facebook, instagram, youtube, twitter, share, social share, buttons, counter, pop-up, subscription, icons
 Requires at least: 3.0
 Tested up to: 4.6.1
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ Note: This plugin requires CURL to be activated/installed on your server (which 
 
 
 == Changelog ==
+
+= 2.5.1 =
+* Instructions for troubleshooting optimized
 
 = 2.5.0 =
 * Facebook icon leading to empty pages (in specific cases) fixed
@@ -265,5 +268,5 @@ Note: This plugin requires CURL to be activated/installed on your server (which 
 
 == Upgrade Notice ==
 
-= 2.5.0 =
+= 2.5.1 =
 * Please upgrade
