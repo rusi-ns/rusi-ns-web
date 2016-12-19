@@ -1,0 +1,416 @@
+# Translation of Apostrophe in English (Canada)
+# This file is distributed under the same license as the Apostrophe package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2016-07-05 01:45:06+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
+"Project-Id-Version: Apostrophe\n"
+
+#. Description of the plugin/theme
+msgid "A clean, no-nonsense magazine theme"
+msgstr "A clean, no-nonsense magazine theme"
+
+#. Theme Name of the plugin/theme
+msgid "Apostrophe"
+msgstr "Apostrophe"
+
+#: inc/plugin-enhancements.php:106
+msgid "Site Logo"
+msgstr "Site Logo"
+
+#: inc/plugin-enhancements.php:115
+msgid "Featured Content"
+msgstr "Featured Content"
+
+#: inc/plugin-enhancements.php:133
+msgid "Menus"
+msgstr "Menus"
+
+#: inc/plugin-enhancements.php:142
+msgid "Comics"
+msgstr "Comics"
+
+#: inc/plugin-enhancements.php:151
+msgid "Testimonials"
+msgstr "Testimonials"
+
+#: inc/plugin-enhancements.php:160
+msgid "Portfolios"
+msgstr "Portfolios"
+
+#: inc/plugin-enhancements.php:288
+msgid "To use %1$s, please activate the Jetpack plugin&rsquo;s %2$s."
+msgstr "To use %1$s, please activate the Jetpack plugin&rsquo;s %2$s."
+
+#: inc/plugin-enhancements.php:261
+msgid " Please install %1$s. %2$s"
+msgstr " Please install %1$s. %2$s"
+
+#: inc/plugin-enhancements.php:263
+msgid "Install"
+msgstr "Install"
+
+#: inc/plugin-enhancements.php:82
+msgid "The %1$s is necessary to use some of this theme&rsquo;s features, including: "
+msgstr "The %1$s is necessary to use some of this theme&rsquo;s features, including: "
+
+#: inc/plugin-enhancements.php:83
+msgid "Jetpack plugin"
+msgstr "Jetpack plugin"
+
+#: inc/plugin-enhancements.php:178
+msgid "no specific module needed"
+msgstr "no specific module needed"
+
+#: inc/plugin-enhancements.php:179
+msgid "Custom Content Types module"
+msgstr "Custom Content Types module"
+
+#: inc/plugin-enhancements.php:251
+msgid " Please activate %1$s. %2$s"
+msgstr " Please activate %1$s. %2$s"
+
+#: inc/plugin-enhancements.php:253
+msgid "Activate"
+msgstr "Activate"
+
+#: comments.php:26
+msgctxt "comments title"
+msgid "One comment"
+msgid_plural "%s comments"
+msgstr[0] "One comment"
+msgstr[1] "%s comments"
+
+#. Template Name of the plugin/theme
+msgid "Full-Width Page"
+msgstr "Full-Width Page"
+
+#: search.php:15
+msgid "Search Results for: %s"
+msgstr "Search Results for: %s"
+
+#: inc/template-tags.php:351
+msgid "Posts navigation"
+msgstr "Posts navigation"
+
+#: inc/template-tags.php:329 inc/template-tags.php:331
+msgid "&larr;"
+msgstr "&larr;"
+
+#: inc/template-tags.php:328 inc/template-tags.php:332
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#: inc/template-tags.php:221
+msgid "Archives"
+msgstr "Archives"
+
+#. translators: 1: Taxonomy singular name, 2: Current taxonomy term
+#: inc/template-tags.php:219
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: inc/template-tags.php:215
+msgid "Archives: %s"
+msgstr "Archives: %s"
+
+#: inc/template-tags.php:213
+msgctxt "post format archive title"
+msgid "Chats"
+msgstr "Chats"
+
+#: inc/template-tags.php:211
+msgctxt "post format archive title"
+msgid "Audio"
+msgstr "Audio"
+
+#: inc/template-tags.php:209
+msgctxt "post format archive title"
+msgid "Statuses"
+msgstr "Statuses"
+
+#: inc/template-tags.php:207
+msgctxt "post format archive title"
+msgid "Links"
+msgstr "Links"
+
+#: inc/template-tags.php:205
+msgctxt "post format archive title"
+msgid "Quotes"
+msgstr "Quotes"
+
+#: inc/template-tags.php:203
+msgctxt "post format archive title"
+msgid "Videos"
+msgstr "Videos"
+
+#: inc/template-tags.php:201
+msgctxt "post format archive title"
+msgid "Images"
+msgstr "Images"
+
+#: inc/template-tags.php:197
+msgctxt "post format archive title"
+msgid "Asides"
+msgstr "Asides"
+
+#: inc/template-tags.php:199
+msgctxt "post format archive title"
+msgid "Galleries"
+msgstr "Galleries"
+
+#: inc/template-tags.php:195
+msgctxt "daily archives date format"
+msgid "F j, Y"
+msgstr "F j, Y"
+
+#: inc/template-tags.php:195
+msgid "Day: %s"
+msgstr "Day: %s"
+
+#: inc/template-tags.php:193
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "F Y"
+
+#: inc/template-tags.php:193
+msgid "Month: %s"
+msgstr "Month: %s"
+
+#: inc/template-tags.php:191
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y"
+
+#: inc/template-tags.php:191
+msgid "Year: %s"
+msgstr "Year: %s"
+
+#: inc/template-tags.php:189
+msgid "Author: %s"
+msgstr "Author: %s"
+
+#: inc/template-tags.php:187
+msgid "Tag: %s"
+msgstr "Tag: %s"
+
+#: inc/template-tags.php:127
+msgid "%s year ago"
+msgid_plural "%s years ago"
+msgstr[0] "%s year ago"
+msgstr[1] "%s years ago"
+
+#: inc/template-tags.php:185
+msgid "Category: %s"
+msgstr "Category: %s"
+
+#: inc/template-tags.php:122
+msgid "%s month ago"
+msgid_plural "%s months ago"
+msgstr[0] "%s month ago"
+msgstr[1] "%s months ago"
+
+#: inc/template-tags.php:112
+msgid "%s day ago"
+msgid_plural "%s days ago"
+msgstr[0] "%s day ago"
+msgstr[1] "%s days ago"
+
+#: inc/template-tags.php:117
+msgid "%s week ago"
+msgid_plural "%s weeks ago"
+msgstr[0] "%s week ago"
+msgstr[1] "%s weeks ago"
+
+#: inc/template-tags.php:107
+msgid "%s hour ago"
+msgid_plural "%s hours ago"
+msgstr[0] "%s hour ago"
+msgstr[1] "%s hours ago"
+
+#. translators: min=minute
+#: inc/template-tags.php:102
+msgid "%s min ago"
+msgid_plural "%s mins ago"
+msgstr[0] "%s min ago"
+msgstr[1] "%s mins ago"
+
+#: inc/template-tags.php:52
+msgctxt "Next post link"
+msgid "Next"
+msgstr "Next"
+
+#: inc/template-tags.php:49
+msgctxt "Previous post link"
+msgid "Previous"
+msgstr "Previous"
+
+#: inc/template-tags.php:46
+msgid "Post navigation"
+msgstr "Post navigation"
+
+#: inc/extras.php:36
+msgid "Page %s"
+msgstr "Page %s"
+
+#: inc/customizer.php:44
+msgid "Enable front end feature-starring for easier tagging of Featured Content."
+msgstr "Enable front end feature-starring for easier tagging of Featured Content."
+
+#: inc/customizer.php:32
+msgid "Hide author bio panel on individual post pages."
+msgstr "Hide author bio panel on individual post pages."
+
+#: image.php:63
+msgctxt "Parent post link"
+msgid "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%title</span>"
+msgstr "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%title</span>"
+
+#: inc/customizer.php:22
+msgid "Theme"
+msgstr "Theme"
+
+#: image.php:57
+msgid "Next Image &raquo;"
+msgstr "Next Image &raquo;"
+
+#: image.php:57
+msgid "&laquo; Previous Image"
+msgstr "&laquo; Previous Image"
+
+#: image.php:48
+msgid "Page"
+msgstr "Page"
+
+#: header.php:35
+msgid "Skip to content"
+msgstr "Skip to content"
+
+#: header.php:34
+msgid "Menu"
+msgstr "Menu"
+
+#. Translators: If there are characters in your language that are not supported
+#. by Open Sans, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:167
+msgctxt "Open Sans font: on or off"
+msgid "on"
+msgstr "on"
+
+#. Translators: If there are characters in your language that are not supported
+#. by PT Serif, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:161
+msgctxt "PT Serif font: on or off"
+msgid "on"
+msgstr "on"
+
+#: functions.php:132
+msgid "Tertiary"
+msgstr "Tertiary"
+
+#: functions.php:141
+msgid "Footer Sidebar"
+msgstr "Footer Sidebar"
+
+#: functions.php:123
+msgid "Secondary"
+msgstr "Secondary"
+
+#: functions.php:114
+msgid "Primary"
+msgstr "Primary"
+
+#: functions.php:62 inc/plugin-enhancements.php:124
+msgid "Social Menu"
+msgstr "Social Menu"
+
+#: functions.php:61
+msgid "Primary Menu"
+msgstr "Primary Menu"
+
+#: footer.php:26
+msgid "Theme: %1$s by %2$s."
+msgstr "Theme: %1$s by %2$s."
+
+#: footer.php:24
+msgid "Proudly powered by %s"
+msgstr "Proudly powered by %s"
+
+#: footer.php:24
+msgid "http://wordpress.org/"
+msgstr "http://wordpress.org/"
+
+#: content-single.php:10 image.php:21
+msgid "Edit"
+msgstr "Edit"
+
+#: content-page.php:18 content-single.php:21 image.php:44
+msgid "Pages:"
+msgstr "Pages:"
+
+#: content-none.php:28
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+
+#: content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+
+#: content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "Nothing Found"
+
+#: comments.php:61
+msgid "Comments are closed."
+msgstr "Comments are closed."
+
+#: comments.php:35 comments.php:51
+msgid "Newer Comments &raquo;"
+msgstr "Newer Comments &raquo;"
+
+#: comments.php:34 comments.php:50
+msgid "&laquo; Older Comments"
+msgstr "&laquo; Older Comments"
+
+#: comments.php:33 comments.php:49
+msgid "Comment navigation"
+msgstr "Comment navigation"
+
+#. translators: %1$s: smiley
+#: 404.php:46
+msgid "Try looking in the monthly archives. %1$s"
+msgstr "Try looking in the monthly archives. %1$s"
+
+#: 404.php:27
+msgid "Most Used Categories"
+msgstr "Most Used Categories"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "Oops! That page can&rsquo;t be found."
+
+#. Author URI of the plugin/theme
+msgid "https://wordpress.com/themes/"
+msgstr "https://wordpress.com/themes/"
+
+#. Author of the plugin/theme
+msgid "Automattic"
+msgstr "Automattic"
+
+#. Theme URI of the plugin/theme
+msgid "https://wordpress.com/themes/apostrophe/"
+msgstr "https://en-ca.wordpress.com/themes/apostrophe/"
