@@ -42,9 +42,7 @@ class PP_ItemSave {
 						$args['operation'] = $op;
 						$args['agent_type'] = $agent_type;
 						
-						if ( ppc_assign_exceptions( $posted_exceptions[$for_item_type][$op][$agent_type], $agent_type, $args ) ) {   // assignments[assign_for][agent_id] = has_access 
-							$roles_customized = true;  // may be true already based on a prior role edit
-						}
+						ppc_assign_exceptions( $posted_exceptions[$for_item_type][$op][$agent_type], $agent_type, $args );   // assignments[assign_for][agent_id] = has_access 
 					} // end foreach group type
 				}
 			}

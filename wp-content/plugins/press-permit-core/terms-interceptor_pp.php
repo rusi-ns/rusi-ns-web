@@ -23,9 +23,9 @@ class PP_TermsInterceptor {
 	
 	function flt_get_the_terms( $terms, $post_id, $taxonomy ) {
 		static $busy;
-		if ( ! empty( $busy ) ) { return; }
+		if ( ! empty( $busy ) ) { return $terms; }
 		$busy = true;	// @todo: necessary?
-
+		
 		if ( $terms ) {
 			global $pp_current_user;
 		
@@ -62,7 +62,10 @@ class PP_TermsInterceptor {
 			
 		if ( 'id=>parent' == $args['fields'] ) // internal storage of {$taxonomy}_children
 			return true;
-			
+		
+		if ( ! empty( $args['object_ids'] ) && empty( $args['required_operation'] ) )  // WP 4.7 pushes wp_get_object_terms call through get_terms()
+			return true;
+		
 		// Kriesi Enfold theme conflict on "More Posts" query
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && in_array( $_REQUEST['action'], apply_filters( 'pp_unfiltered_ajax_termcount', array( 'avia_ajax_masonry_more' ) ) ) )
 			return true;

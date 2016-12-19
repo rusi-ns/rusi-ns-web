@@ -86,8 +86,17 @@ class PP_TermCountInterceptor {
 
 		extract( $args, EXTR_SKIP );
 		
-		if ( 'ids' == $fields )
+		if ( 'ids' == $fields ) {
+			if ( $terms && is_object($terms[0]) ) {
+				$_terms = array();
+				foreach( $terms as $term ) {
+					$_terms []= $term->term_id;
+				}
+				return $_terms;
+			}
+			
 			return $terms;
+		}
 		
 		// if some args were forced to prevent core post-processing, restore actual values now
 		if ( ! empty( $args['actual_args'] ) )

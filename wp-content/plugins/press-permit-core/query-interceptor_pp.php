@@ -402,7 +402,7 @@ class PP_QueryInterceptor
 
 		if ( is_array( $limit_statuses ) )
 			$use_statuses = array_intersect_key( $use_statuses, $limit_statuses );
-
+		
 		if ( empty($skip_teaser) && ! array_diff($post_types, $tease_otypes) ) {
 			// All object types potentially returned by this query will have a teaser filter applied to results, so we don't need to use further query filtering
 			$status_clause = "AND $src_table.post_status IN ('" . implode( "','", array_keys($use_statuses) ) . "')";

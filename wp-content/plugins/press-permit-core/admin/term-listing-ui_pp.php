@@ -50,10 +50,20 @@ class PP_TermsAdmin {
 			$caption = __('Universal Exceptions', 'pp');
 		}
 	
+		if ( defined( 'PP_DEBUG' ) ) {
+			$columns = array_merge( $columns, array( 'pp_ttid' => 'ID (ttid)' ) );
+		}
+	
 		return array_merge( $columns, array( 'pp_exceptions' => $caption ) );
 	}
 
 	function custom_column( $val, $column_name, $id ) {
+		if ( 'pp_ttid' == $column_name ) {
+			global $taxonomy;
+			$ttid = pp_termid_to_ttid( $id, $taxonomy );
+			echo "$id ($ttid)";
+		}
+		
 		if ( 'pp_exceptions' != $column_name )
 			return;
 
@@ -91,8 +101,8 @@ class PP_TermsAdmin {
 		if ( ! empty( $cache) ) {
 			if ( isset($cache) ) {	// Note: As of WP 3.5, array is keyed "blog_id:term_id" on Multisite installs 
 				$listed_term_ids = array();
-				foreach( $cache as $term ) {
-					if ( ! is_object($term) ) return;
+				foreach( $cache as $k => $term ) {
+					if ( ! is_numeric($k) || ! is_object($term) ) continue;
 					
 					$listed_tt_ids[]= $term->term_taxonomy_id;
 				}

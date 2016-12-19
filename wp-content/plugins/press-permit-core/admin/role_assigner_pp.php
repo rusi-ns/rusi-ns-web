@@ -99,7 +99,7 @@ class PP_RoleAssigner {
 //		 is_auto_insertion = false  (if true, skips logging the item as having a manually modified role assignment)
 public static function assign_exceptions( $agents, $agent_type = 'user', $args = array() ) {   // agents[assign_for][agent_id] = has_access 
 	$defaults = array( 'operation' => '', 'mod_type' => '', 'for_item_source' => '', 'for_item_type' => '', 'for_item_status' => '', 
-					   'via_item_source' => '', 'item_id' => 0, 'via_item_type' => '', 'remove_assignments' => false, );
+					   'via_item_source' => '', 'item_id' => 0, 'via_item_type' => '' );
 	
 	$args = array_merge($defaults, (array) $args);
 	extract($args, EXTR_SKIP);
@@ -145,7 +145,7 @@ public static function assign_exceptions( $agents, $agent_type = 'user', $args =
 	foreach ( $results as $key => $ass ) {
 		$stored_assignments[$ass->mod_type][$ass->assign_for][$ass->agent_id] = $ass->exception_id;
 	}
-
+	
 	$delete_agents_from_eitem = array( 'item' => array(), 'children' => array() );
 	$delete_eids_from_eitem = array( 'item' => array(), 'children' => array() );
 	
@@ -281,7 +281,7 @@ public static function assign_exceptions( $agents, $agent_type = 'user', $args =
 }
 
 public static function insert_exceptions( $mod_type, $operation, $via_item_source, $via_item_type, $for_item_source, $for_item_type, $item_id, $agent_type, $agents, $args ) {	
-	$defaults = array( 'assign_for' => 'item', 'remove_assignments' => false, 'for_item_status' => '', 'inherited_from' => array(), 'is_auto_insertion' => false );  // auto_insertion arg set for propagation from parent objects
+	$defaults = array( 'assign_for' => 'item', 'for_item_status' => '', 'inherited_from' => array(), 'is_auto_insertion' => false );  // auto_insertion arg set for propagation from parent objects
 	$args = array_merge($defaults, (array) $args);
 	extract($args, EXTR_SKIP);
 
@@ -443,7 +443,7 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 					if ( in_array( $id, $have_direct_assignments ) )
 						continue;
 				}
-					
+				
 				if ( $eitem_ids = $wpdb->get_col( $qry_item_delete_base . " AND exception_id = '$child_exception_id' AND item_id = '$id'" ) ) {
 					self::remove_exception_items_by_id( $eitem_ids );
 				}

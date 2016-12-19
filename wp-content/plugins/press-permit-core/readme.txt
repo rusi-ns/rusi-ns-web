@@ -4,8 +4,8 @@ Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JWZVF
 Tags: restrict, access, permissions, cms, user, private, category, pages, privacy, capabilities, role, scoper
 License: GPLv3
 Requires at least: 3.4
-Tested up to: 4.5.3
-Stable tag: 2.3.13
+Tested up to: 4.7
+Stable tag: 2.3.15
 
 Advanced yet accessible content permissions. Give users or groups type-specific roles. Enable or block access for specific posts or terms.
 
@@ -48,6 +48,18 @@ Pro [extensions](http://presspermit.com/extensions) are [available](http://press
 Initial production release
 
 == Changelog ==
+
+= 2.3.15 - 15 Dec 2016 =
+* Fixed : Exceptions were not shown in custom column on Pages screen
+* Fixed : Pro - Page editing access did not grant Media Library access for attached files (site-wide capabilities or a supplemental Media role was also required)
+* Fixed : Pro - Media files editable to a limited user based on parent page access could not be updated (also requires PP Collaborative Editing 2.3.13)
+
+= 2.3.14 - 7 Dec 2016 =
+* Compat : WP 4.7 - Fatal error when nav menu includes a category / term
+* Compat : WP 4.7 (Pro) - Fatal error when term-restricted non-Administrator saves a post
+* Compat : WP 4.7 - PHP Warnings in wp-admin
+* Compat : WP 4.7 (Pro) - Term assignment exceptions were not applied to new 'assign_term' capability check (also requires PP Collaborative Editing 2.3.9)
+* Fixed : Term exceptions were not shown in custom column on Categories / Terms screen
 
 = 2.3.13 - 17 Jul 2016 =
 * Fixed : _trashed suffix was added to post slug inappropriately under some conditions

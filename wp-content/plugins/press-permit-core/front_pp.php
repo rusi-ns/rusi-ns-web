@@ -31,11 +31,13 @@ function pp_is_active_widget_prefix( $id_prefix ) {
 function _pp_flt_hide_empty_menus() {
 	if ( ! wp_script_is('jquery') )
 		return;
+	
+	// previous: $("ul.menu").not(":has(li)").closest('div').prev('h3.widget-title').hide();
 ?>
 <script type="text/javascript">
 /* <![CDATA[ */
 jQuery(document).ready( function($) {
-$("ul.menu").not(":has(li)").closest('div').prev('h3.widget-title').hide();
+$("ul.nav-menu").not(":has(li)").hide().closest('div').hide();
 });
 /* ]]> */
 </script><?php

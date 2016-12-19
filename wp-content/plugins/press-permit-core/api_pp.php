@@ -1,6 +1,7 @@
 <?php
-global $pp_extensions;
+global $pp_extensions, $pp_group_types;
 $pp_extensions = array();
+$pp_group_types = array();
 
 function pp_load_admin_api() {
 	require_once( dirname(__FILE__).'/admin/admin-api_pp.php' );
@@ -116,7 +117,6 @@ function ppc_get_exceptions( $args = array() ) {
  *  - via_item_source    ('post' or 'term' - data source which the role is tied to)
  *  - item_id            (post ID or term_taxonomy_id)
  *  - via_item_type      (post_type or taxonomy of item which the role is tied to; default '' means unspecified when via_item_source is 'post')
- *  - remove_assignments (default false)
  */
 function ppc_assign_exceptions( $agents, $agent_type = 'pp_group', $args = array() ) {
 	require_once( dirname(__FILE__).'/admin/role_assigner_pp.php' );
@@ -163,6 +163,9 @@ function pp_get_group_type_object( $agent_type ) {
 
 function pp_get_group_types( $args = array(), $return = 'name' ) {  // todo: handle $args
 	global $pp_group_types;
+	
+	if ( ! isset( $pp_group_types ) )
+		return array();
 	
 	if ( ! empty( $args['editable'] ) ) {
 		$editable_group_types = apply_filters( 'pp_editable_group_types', array( 'pp_group' ) );

@@ -134,7 +134,7 @@ class PP_ItemExceptionsRenderUI {
 				else
 					$current_val = ( isset( $agent_exceptions[$assign_for]['exclude'] ) ) ? 0 : '';
 			}
-
+			
 			if ( $_inclusions_active ) {
 				$option_set = 'includes';
 				$this->opt_class[''] = " class='pp-no' ";

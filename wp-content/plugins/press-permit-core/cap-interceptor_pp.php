@@ -62,8 +62,9 @@ class PP_CapInterceptor
 			return $wp_sitecaps;
 			
 		//$args[0] = (array) $args[0];
+		
 		$args = (array) $args;
-		$orig_cap = reset($args);
+		$orig_cap = ( isset($args[0]) ) ? $args[0] : ''; // reset($args);
 		
 		if ( isset( $args[2] ) ) {
 			if ( is_object($args[2]) )
@@ -79,7 +80,7 @@ class PP_CapInterceptor
 		if ( defined( 'REST_REQUEST' ) && REST_REQUEST && $item_id ) {
 			$orig_cap = apply_filters( 'pp_rest_post_cap_requirement', $orig_cap, $item_id );
 		}
-	
+		
 		if ( ( 'read_post' == $orig_cap ) && ( count($orig_reqd_caps) > 1 || ( 'read' != reset($orig_reqd_caps) ) ) ) {
 			global $pp;
 			
@@ -109,18 +110,18 @@ class PP_CapInterceptor
 		}
 
 		if ( is_array($orig_cap) || ! isset( $this->meta_caps[ $orig_cap ] ) ) { // Revisionary may pass array into args[0]
-	
+		
 			// If we would fail a straight post cap check, pass it if appropriate additions stored
 			if ( array_diff( $orig_reqd_caps, array_keys( array_intersect( $wp_sitecaps, array( true, 1, '1' ) ) ) ) ) {
 				global $pp_cap_helper;
-
+				
 				$is_post_cap = false;
 				$item_type = '';
 				
 				if ( $type_caps = array_intersect( $orig_reqd_caps, array_keys( $pp_cap_helper->all_type_caps ) ) ) {
 					if ( in_array( $orig_cap, array_keys($this->meta_caps) ) || in_array( $orig_cap, array_keys($pp_cap_helper->all_type_caps) ) ) {
 						$is_post_cap = true;
-						
+
 						if ( ! $item_id && apply_filters( 'pp_do_find_post_id', true, $orig_reqd_caps, $args ) ) {
 							if ( $item_id = pp_get_post_id() )
 								$item_id = apply_filters( 'pp_get_post_id', $item_id, $orig_reqd_caps, $args );
@@ -137,7 +138,7 @@ class PP_CapInterceptor
 							$item_type = $this->post_type_from_caps( $type_caps );
 							$item_status = '';
 						}
-						
+
 						if ( $item_type && ! in_array( $item_type,  pp_get_enabled_post_types() ) )
 							return $wp_sitecaps;
 					}
@@ -158,11 +159,11 @@ class PP_CapInterceptor
 						return array_merge( $wp_sitecaps, array_fill_keys( $orig_reqd_caps, true ) );
 					
 					global $query_interceptor;
-					
+
 					if ( $is_post_cap && apply_filters( 'pp_use_post_exceptions', true, $item_type ) ) {
 						$pass = false;
 						$base_caps = $query_interceptor->get_base_caps( $type_caps, $item_type );
-						
+
 						/*
 						if ( ! $item_id && array_diff( $type_caps, $base_caps ) ) {
 							return $wp_sitecaps;	// don't credit edit_others, edit_private, etc. based on addition stored for another post (this was needed due to previous failure to apply post_id passed into has_cap filter). But it is problematic for edit.php (display of Mine for lack of edit_others_posts)
@@ -187,14 +188,14 @@ class PP_CapInterceptor
 								
 								if ( $additional_ids = $pp_current_user->get_exception_posts( $op, 'additional', $exc_post_type, array( 'status' => true ) ) )
 									$additional_ids = pp_array_flatten( array_intersect_key( $additional_ids, $valid_stati ) );
-
+								
 								if ( $additional_ids ) {
 									$has_post_additions = apply_filters( 'pp_has_post_additions', null, $additional_ids, $item_type, $item_id, compact('op','orig_reqd_caps') ); 
 									if ( is_null( $has_post_additions ) )
 										$has_post_additions = ( ! $item_id || in_array( $item_id, $additional_ids ) );
 								} else
 									$has_post_additions = false;
-									
+								
 								if ( $has_post_additions ) {
 									$pass = true;
 								} else {
@@ -235,6 +236,8 @@ class PP_CapInterceptor
 						$buffer_qualified[$bkey] = true;
 						return array_merge( $wp_sitecaps, array_fill_keys( $orig_reqd_caps, true ) );
 					}
+					
+					$force_post_metacap_check = apply_filters( 'pp_force_post_metacap_check', false, compact( 'is_post_cap', 'item_id', 'orig_cap', 'item_type', 'orig_reqd_caps' ) );
 				}
 			} else {
 				if ( $params = apply_filters( 'pp_user_has_cap_params', array(), $orig_reqd_caps, compact( 'item_id', 'orig_cap', 'item_type' ) ) ) {
@@ -245,8 +248,12 @@ class PP_CapInterceptor
 					extract( array_diff_key( $params, array_fill_keys( array( 'wp_sitecaps', 'pp_current_user', 'orig_cap', 'orig_reqd_caps' ), true ) ) );
 				}
 			}
-
-			return $wp_sitecaps;
+			
+			if ( ! empty( $force_post_metacap_check ) ) {
+				$orig_cap = $force_post_metacap_check;
+			} else {
+				return $wp_sitecaps;
+			}
 		}
 		
 		$this->in_process = true;
@@ -262,6 +269,7 @@ class PP_CapInterceptor
 				$return = $this->_flt_user_has_post_cap( $wp_sitecaps, $orig_reqd_caps, $args, compact( 'required_operation' ) );
 				break;
 			default:
+				$return = $wp_sitecaps;
 		} // end switch
 		
 		$this->in_process = false;
@@ -304,7 +312,7 @@ class PP_CapInterceptor
 			return $wp_sitecaps;
 
 		extract( $pp_args, EXTR_SKIP );
-
+		
 		// Note: At this point, we have a nonzero post_id...
 		do_action_ref_array( 'pp_has_post_cap_pre', array( $pp_reqd_caps, 'post', $post_type, $post_id, &$this ) );	// cache clearing / refresh forcing can be applied here
 		
@@ -324,7 +332,7 @@ class PP_CapInterceptor
 
 		// ============ QUERY for required caps on object id (if other listed ids are known, query for them also).  Cache results to static var. ===============
 		$query_args = array( 'required_operation' => $required_operation, 'post_types' => $post_type, 'skip_teaser' => true );
-
+		
 		// generate a string key for this set of required caps, for use below in checking, caching the filtered results
 		$cap_arg = ( 'edit_page' == $args[0] ) ? 'edit_post' : $args[0]; // minor perf boost on uploads.php, TODO: move to PPCE
 		$capreqs_key = ( $memcache_disabled ) ? false : $cap_arg . $this->flags['cache_key_suffix'] . md5(serialize($query_args));
@@ -388,7 +396,7 @@ class PP_CapInterceptor
 			// results of this has_cap inquiry are already stored (from another call within current http request)
 			$this_id_okay = $this->memcache['tested_ids'][$post_type][$capreqs_key][$post_id];
 		}
-
+		
 		do_action_ref_array( 'pp_has_post_cap_done', array( $this_id_okay, $pp_reqd_caps, 'post', $post_type, $post_id, &$this ) );	// followup to cache processing can be applied here
 		
 		if ( $this_id_okay ) {

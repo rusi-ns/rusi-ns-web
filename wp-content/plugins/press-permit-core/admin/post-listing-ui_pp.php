@@ -15,8 +15,17 @@ class PP_PostsAdmin {
 		do_action('pp_post_listing_ui');
 
 		add_filter( 'posts_fields', array( &$this, 'posts_fields' ) );	 // perf
+		
+		add_filter( 'pre_get_posts', array( &$this, 'pre_get_posts' ) );
 	}
-
+	
+	function pre_get_posts( $query_obj ) {
+		if ( did_action( 'load-edit.php' ) && ( 'id=>parent' == $query_obj->query_vars['fields'] ) ) {
+			$query_obj->query_vars['fields'] = '';
+		}
+		return $query_obj;
+	}
+	
 	// perf enhancement: query only fields which pertain to listing or quick edit
 	function posts_fields($cols) {
 		global $typenow, $pp;
