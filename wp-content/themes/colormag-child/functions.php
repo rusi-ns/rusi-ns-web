@@ -19,7 +19,9 @@ add_action( 'wp_enqueue_scripts', 'rusi_enqueue_styles' );
 function colormag_footer_copyright() {
    $site_link = '<a href="' . esc_url( home_url( '/' ) ) . '" title="' . esc_attr( get_bloginfo( 'name', 'display' ) ) . '" ><span>' . get_bloginfo( 'name', 'display' ) . '</span></a>';
 
-   $default_footer_value = sprintf( __( 'Copyright &copy; %1$s %2$s. All rights reserved.', 'colormag' ), date( 'Y' ), $site_link );
+   $default_footer_value = sprintf( __( 'Patron: His Honour Brigadier-General the Honourable J. J. Grant, CMM, ONS, CD (Retd), Lieutenant Governor of Nova Scotia.<br/> Copyright &copy; %1$s %2$s. All rights reserved.', 'colormag' 
+), 
+date( 'Y' ), $site_link );
 
    $colormag_footer_copyright = '<div class="copyright">'.$default_footer_value.'</div>';
    echo $colormag_footer_copyright;
