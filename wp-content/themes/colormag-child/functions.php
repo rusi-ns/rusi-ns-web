@@ -12,7 +12,6 @@ function rusi_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'rusi_enqueue_styles' );
 
-
 /**
  * function to show the footer info, copyright information
  */
@@ -26,5 +25,17 @@ date( 'Y' ), $site_link );
    $colormag_footer_copyright = '<div class="copyright">'.$default_footer_value.'</div>';
    echo $colormag_footer_copyright;
 }
+
+function rusi_wp_nav_menu_args( $args = '' ) 
+{
+    if( is_user_logged_in() ) {
+        $args['menu'] = 'Logged In Main Menu';
+    } else {
+        $args['menu'] = 'Main Menu';
+    }
+    return $args;
+}
+
+add_filter( 'wp_nav_menu_args', 'rusi_wp_nav_menu_args' );
 
 ?>
