@@ -27,6 +27,7 @@ class Tribe__Events__List_Widget extends WP_Widget {
 		$widget_options = array_merge(
 			array(
 				'classname'   => 'tribe-events-list-widget',
+				'classname'   => 'widget_featured_posts',
 				'description' => esc_html__( 'A widget that displays upcoming events.', 'the-events-calendar' ),
 			),
 			$widget_options
