@@ -14,7 +14,7 @@ do_action( 'pp_query_interceptor_front_non_administrator' );
 add_filter( 'widget_display_callback', array('PP_QueryInterceptorFront_NonAdmin', 'flt_slidedeck_widget'), 10, 3 );
 
 class PP_QueryInterceptorFront_NonAdmin {
-	public static function flt_slidedeck_widget( $instance, $this, $args) {
+	public static function flt_slidedeck_widget( $instance, $widget_obj, $args) {
 		if ( is_array( $instance ) && isset( $instance['slidedeck_id'] ) ) {
 			foreach( array_keys($instance) as $key ) {
 				if ( ! strpos( $key, 'slidedeck' ) )
@@ -46,6 +46,9 @@ class PP_QueryInterceptorFront_NonAdmin {
 		//d_echo( '********************** enter flt_nav_menu_items <br /> ' );
 		
 		foreach ( $items as $key => $item ) {
+			if ( ! is_scalar( $item->type ) || ! is_scalar( $item->object ) )
+				continue;
+			
 			if ( ! isset( $item_types[ $item->type ] ) )
 				$item_types[ "{$item->type}" ] = array();
 		
