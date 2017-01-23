@@ -32,10 +32,10 @@ ColorMag is distributed under the terms of the GNU GPL
 == THEME USAGE ==
 
 = Theme Instruction =
-Get theme instruction at http://themegrill.com/theme-instruction/colormag/
+Get theme instruction at https://themegrill.com/theme-instruction/colormag/
 
 = Free Support =
-Get free support at http://themegrill.com/support-forum
+Get free support at https://themegrill.com/support-forum
 
 = Theme Features Usage =
 All available options can be used from Appearance->Customize
@@ -49,6 +49,12 @@ and we will include it within the theme from next version update.
 /**********************************************************/
 
 == Changelog ==
+
+= Version 1.1.8 - 2017-01-16 =
+* Feature - Added new responsive menu design.
+* Added - RTL Language support.
+* Added - Support for Video Headers introduced in WordPress 4.7.
+
 = Version 1.1.7 - 2016-12-09 =
 * Feature - Migrated the Custom Logo from theme options to the Site Logo in Site Identity section
 
