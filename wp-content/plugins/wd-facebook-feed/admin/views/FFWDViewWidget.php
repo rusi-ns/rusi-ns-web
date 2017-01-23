@@ -193,11 +193,11 @@ class FFWDViewWidget
 				   type="text" value="<?php echo $instance['count']; ?>"/>
 		</p>
 		<p>
-			<label for="<?php echo $id_width; ?>">Dimensions:</label>
+			<label style="display: block;" for="<?php echo $id_width; ?>">Dimensions <br>(Leave height empty blank if you do not intend to limit the height of the widget.):</label>
 			<input class="widefat" style="width:25%;" id="<?php echo $id_width; ?>" name="<?php echo $name_width; ?>'"
-				   type="text" value="<?php echo $instance['width']; ?>"/> x
+			       type="text" value="<?php echo $instance['width']; ?>"/> x
 			<input class="widefat" style="width:25%;" id="<?php echo $id_height; ?>" name="<?php echo $name_height; ?>'"
-				   type="text" value="<?php echo $instance['height']; ?>"/> px
+			       type="text" value="<?php echo $instance['height']; ?>"/> px
 		</p>
 
 		<script>

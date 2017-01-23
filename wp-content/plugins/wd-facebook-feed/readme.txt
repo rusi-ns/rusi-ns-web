@@ -1,10 +1,10 @@
-=== Facebook Feed WD  ===
+=== Facebook Feed  ===
 Contributors: webdorado
 Donate link: https://web-dorado.com/products/wordpress-facebook-feed-plugin.html
 Tags: customizable facebook feed, facebook, facebook events, facebook feed, facebook group, facebook like box, facebook likes, facebook page, facebook photos, facebook plugin, facebook posts, facebook likebox
 Requires at least: 3.4
 Tested up to: 4.7
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,11 @@ Upgrade to [Facebook Feed Pro](https://web-dorado.com/products/wordpress-faceboo
 *   Social sharing for feed to Google Plus, Twitter and Facebook          
 
 == Changelog ==
+
+= 1.0.14 =
+* Fixed: Bug on reactions      
+* Fixed: Bug on multiple Feeds   
+* Fixed: Bug on widget dimension   
 
 = 1.0.13 =
 * Changed: Featured plugins      

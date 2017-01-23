@@ -554,8 +554,8 @@ function ffwd_fill_likes_blog_style(id_object_id, ffwd, owner_info, ffwd_params,
 
 
 	var ids_array_count=Math.ceil(id_object_id.length/50);
-	ids_array=[];
-	img_ids=[];
+	var ids_array=[];
+	var img_ids=[];
 	for(var i = 0; i < ids_array_count; i++)
 	{
 		ids_array[i]=[];
@@ -657,7 +657,9 @@ function ffwd_fill_likes_blog_style(id_object_id, ffwd, owner_info, ffwd_params,
 			do_something_with_data_blog_style(jQuery.parseJSON(id_object_id[i]['shares']), id_object_id[i]['id'], ffwd, 'shares', "", ffwd_params, graph_url);
 
 			// jQuery.getJSON(graph_url_for_attachments, createCallback_blog_style(id_object_id[i]['id'], ffwd, 'attachments', "", ffwd_params));
-			if(id_object_id[i]['attachments'])
+
+
+      if(id_object_id[i]['attachments'])
 				do_something_with_data_blog_style(jQuery.parseJSON(id_object_id[i]['attachments']), id_object_id[i]['id'], ffwd, 'attachments', "", ffwd_params, graph_url);
 
 		}
@@ -665,7 +667,8 @@ function ffwd_fill_likes_blog_style(id_object_id, ffwd, owner_info, ffwd_params,
 		if(id_object_id[i]['comments']);
 		do_something_with_data_blog_style(jQuery.parseJSON(id_object_id[i]['comments']), id_object_id[i]['id'], ffwd, 'comments', "", ffwd_params, graph_url);
 
-		// jQuery.getJSON(id_object_id[i]['comments'], createCallback_blog_style(id_object_id[i]['id'], ffwd, 'comments', "", ffwd_params, graph_url));
+
+    // jQuery.getJSON(id_object_id[i]['comments'], createCallback_blog_style(id_object_id[i]['id'], ffwd, 'comments', "", ffwd_params, graph_url));
 		//jQuery.getJSON(graph_url_for_who_post, createCallback_blog_style(id_object_id[i], ffwd, 'who_post', owner_info, ffwd_params));
 		do_something_with_data_blog_style(jQuery.parseJSON(id_object_id[i]['who_post']), id_object_id[i], ffwd, 'who_post', owner_info, ffwd_params, graph_url);
 
@@ -926,27 +929,32 @@ function ffwd_get_comments_replies(comment_id,graph_url,ffwd_params,ffwd) {
 
 
 }
-function ffwd_fill_likes(result,ffwd,id) {
-	var total_reactions_count = parseInt(result['total_reactions']['summary']['total_count']);
+function ffwd_fill_likes(result, ffwd, id) {
+	var total_reactions_count = {}
+	total_reactions_count[ffwd] = parseInt(result['total_reactions']['summary']['total_count']);
+	var likes_count = {};
+	likes_count[ffwd] = parseInt(result['like']['summary']['total_count']);
+	var love_count = {};
+	love_count[ffwd] = parseInt(result['love']['summary']['total_count']);
+	var wow_count = {};
+	wow_count[ffwd] = parseInt(result['wow']['summary']['total_count']);
+	var haha_count = {};
+	haha_count[ffwd] = parseInt(result['haha']['summary']['total_count']);
+	var sad_count = {};
+	sad_count[ffwd] = parseInt(result['sad']['summary']['total_count']);
+	var angry_count = {};
+	angry_count[ffwd] = parseInt(result['angry']['summary']['total_count']);
 
-	var likes_count = parseInt(result['like']['summary']['total_count']);
-	var love_count = parseInt(result['love']['summary']['total_count']);
-	var wow_count = parseInt(result['wow']['summary']['total_count']);
-	var haha_count = parseInt(result['haha']['summary']['total_count']);
-	var sad_count = parseInt(result['sad']['summary']['total_count']);
-	var angry_count = parseInt(result['angry']['summary']['total_count']);
-
-
-	jQuery('#ffwd_likes_' + ffwd + '_' + id).html(total_reactions_count);
-	if (total_reactions_count >= 3) {
+	jQuery('#ffwd_likes_' + ffwd + '_' + id).html(total_reactions_count[ffwd]);
+	if (total_reactions_count[ffwd] >= 3) {
 		var likes_some_names = '<div class="ffwd_like_name_cont_' + ffwd + '"> <a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][0]['id'] + '" target="_blank">' + result['total_reactions']['data'][0]['name'] + ' , </a><a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][1]['id'] + '" target="_blank">' + result['total_reactions']['data'][1]['name'] + ' </a></div>';
-		var likes_count_last_part = '<div class="ffwd_almost_' + ffwd + '">  '+ ffwd_frontend_text.and +' ' + (total_reactions_count - 2) + ' '+ ffwd_frontend_text.others+' </div>';
+		var likes_count_last_part = '<div class="ffwd_almost_' + ffwd + '">  ' + ffwd_frontend_text.and + ' ' + (total_reactions_count[ffwd] - 2) + ' ' + ffwd_frontend_text.others + ' </div>';
 	}
-	else if (total_reactions_count == 2) {
+	else if (total_reactions_count[ffwd] == 2) {
 		var likes_some_names = '<div class="ffwd_like_name_cont_' + ffwd + '"> <a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][0]['id'] + '" target="_blank">' + result['total_reactions']['data'][0]['name'] + ' , </a><a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][1]['id'] + '" target="_blank">' + result['total_reactions']['data'][1]['name'] + ' </a></div>';
 		var likes_count_last_part = '';
 	}
-	else if (total_reactions_count == 1) {
+	else if (total_reactions_count[ffwd] == 1) {
 		var likes_some_names = '<div class="ffwd_like_name_cont_' + ffwd + '"> <a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][0]['id'] + '" target="_blank">' + result['total_reactions']['data'][0]['name'] + '</a></div>';
 		var likes_count_last_part = '';
 	}
@@ -956,69 +964,69 @@ function ffwd_fill_likes(result,ffwd,id) {
 	}
 
 	var reactions_icons = ''
-	reactions_width=0;
-	if (likes_count != 0) {
+	reactions_width = 0;
+	if (likes_count[ffwd] != 0) {
 		reactions_icons += '<span class="ffwd_react_icons_like_' + ffwd + '" title="Like"></span>';
-		reactions_width+=40;
-		jQuery('#ffwd_reactions_like_'  + id + '_' + ffwd).show();
-		jQuery('#ffwd_tootlip_text_like_'  + id + '_' + ffwd).html('Like: '+likes_count);
+		reactions_width += 40;
+		jQuery('#ffwd_reactions_like_' + id + '_' + ffwd).show();
+		jQuery('#ffwd_tootlip_text_like_' + id + '_' + ffwd).html('Like: ' + likes_count[ffwd]);
 	}
-	if (love_count != 0) {
+	if (love_count[ffwd] != 0) {
 		reactions_icons += '<span class="ffwd_react_icons_love_' + ffwd + '" title="Love"></span>';
-		reactions_width+=40;
-		jQuery('#ffwd_reactions_love_'  + id + '_' + ffwd ).show();
-		jQuery('#ffwd_tootlip_text_love_'  + id + '_' + ffwd).html('Love: '+love_count);
+		reactions_width += 40;
+		jQuery('#ffwd_reactions_love_' + id + '_' + ffwd).show();
+		jQuery('#ffwd_tootlip_text_love_' + id + '_' + ffwd).html('Love: ' + love_count[ffwd]);
 
 
 	}
-	if (haha_count != 0) {
+	if (haha_count[ffwd] != 0) {
 		reactions_icons += '<span class="ffwd_react_icons_haha_' + ffwd + '" title="Haha"></span>';
-		reactions_width+=40;
-		jQuery('#ffwd_reactions_haha_'  + id + '_' + ffwd ).show();
-		jQuery('#ffwd_tootlip_text_haha_'  + id + '_' + ffwd).html('Haha: '+haha_count);
+		reactions_width += 40;
+		jQuery('#ffwd_reactions_haha_' + id + '_' + ffwd).show();
+		jQuery('#ffwd_tootlip_text_haha_' + id + '_' + ffwd).html('Haha: ' + haha_count[ffwd]);
 
 
 	}
-	if(wow_count!=0) {
+	if (wow_count[ffwd] != 0) {
 		reactions_icons += '<span class="ffwd_react_icons_wow_' + ffwd + '" title="WOW"></span>';
-		reactions_width+=40;
-		jQuery('#ffwd_reactions_wow_'  + id + '_' + ffwd).show();
-		jQuery('#ffwd_tootlip_text_wow_'  + id + '_' + ffwd).html('Wow: '+wow_count);
+		reactions_width += 40;
+		jQuery('#ffwd_reactions_wow_' + id + '_' + ffwd).show();
+		jQuery('#ffwd_tootlip_text_wow_' + id + '_' + ffwd).html('Wow: ' + wow_count[ffwd]);
 
 
 	}
-	if(sad_count!=0) {
+	if (sad_count[ffwd] != 0) {
 		reactions_icons += '<span class="ffwd_react_icons_sad_' + ffwd + '" title="Sad"></span>';
-		reactions_width+=40;
+		reactions_width += 40;
 		jQuery('#ffwd_reactions_sad_' + id + '_' + ffwd).show();
-		jQuery('#ffwd_tootlip_text_sad_'  + id + '_' + ffwd).html('Sad: '+sad_count);
+		jQuery('#ffwd_tootlip_text_sad_' + id + '_' + ffwd).html('Sad: ' + sad_count[ffwd]);
 
 
 	}
-	if(angry_count!=0) {
+	if (angry_count[ffwd] != 0) {
 		reactions_icons += '<span class="ffwd_react_icons_angry_' + ffwd + '" title="Angry"></span>';
-		reactions_width+=40;
-		jQuery('#ffwd_reactions_angry_'  + id + '_' + ffwd).show();
-		jQuery('#ffwd_tootlip_text_angry_'  + id + '_' + ffwd).html('Angry: '+angry_count);
+		reactions_width += 40;
+		jQuery('#ffwd_reactions_angry_' + id + '_' + ffwd).show();
+		jQuery('#ffwd_tootlip_text_angry_' + id + '_' + ffwd).html('Angry: ' + angry_count[ffwd]);
 
 
 	}
 
-	jQuery('#ffwd_reacts_'+ id + '_' + ffwd).css('width',reactions_width+52 +'px');
+	jQuery('#ffwd_reacts_' + id + '_' + ffwd).css('width', reactions_width + 52 + 'px');
 
-	if(total_reactions_count==0)
-		jQuery('#ffwd_reacts_'+ id + '_' + ffwd).css('display','none');
+	if (total_reactions_count[ffwd] == 0)
+		jQuery('#ffwd_reacts_' + id + '_' + ffwd).css('display', 'none');
 
-	var likes_names_count = '<div class="ffwd_likes_names_' + ffwd + '">' +reactions_icons+ likes_some_names + likes_count_last_part + ' </div><div style="clear:both" ></div>';
+	var likes_names_count = '<div class="ffwd_likes_names_' + ffwd + '">' + reactions_icons + likes_some_names + likes_count_last_part + ' </div><div style="clear:both" ></div>';
 
 
-
-	if (total_reactions_count)
+	if (total_reactions_count[ffwd])
 		jQuery('#ffwd_likes_names_count_' + id + '_' + ffwd).html(likes_names_count);
 	else
 		jQuery('#ffwd_likes_names_count_' + id + '_' + ffwd).remove();
 
 }
+
 
 function ffwd_blog_style_resize(ffwd_params, ffwd) {
 	var window_width = window.innerWidth,

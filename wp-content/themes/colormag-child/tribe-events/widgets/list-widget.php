@@ -15,7 +15,7 @@
  * your functions.php. In order to modify or extend a single filter, please see our
  * readme on templates hooks and filters (TO-DO)
  *
- * @version 4.1.1
+ * @version 4.4
  * @return string
  *
  * @package TribeEventsCalendar
@@ -40,37 +40,57 @@ if ( $posts ) : ?>
 			setup_postdata( $post );
 			?>
 			<div class="single-article clearfix">
+			<?php
+			if ( get_post_thumbnail_id( $post ) ) {
+				/**
+				 * Fire an action before the list widget featured image
+				 */
+				do_action( 'tribe_events_list_widget_before_the_event_image' );
 
-				<?php do_action( 'tribe_events_list_widget_before_the_event_title' ); ?>
-				<!-- Event Image -->
-				<?php echo tribe_event_featured_image( null, 'thumbnail' ) ?>
-				<div class="article-content">
+				/**
+				 * Allow the default post thumbnail size to be filtered
+				 *
+				 * @param $size
+				 */
+				$thumbnail_size = apply_filters( 'tribe_events_list_widget_thumbnail_size', 'thumbnail' );
+			?>
+				<figure style="float:left; margin: 10px">
+					<?php the_post_thumbnail( $thumbnail_size ); ?>
+				</figure>
+			<?php
+				/**
+				 * Fire an action after the list widget featured image
+				 */
+				do_action( 'tribe_events_list_widget_after_the_event_image' );
+			}
+			?>
 
+			<?php do_action( 'tribe_events_list_widget_before_the_event_title' ); ?>
+
+			<div class="article-content">
 				<!-- Event Title -->
 				<h3 class="entry-title article-content" style="font-size: 18px">
 					<a href="<?php echo esc_url( tribe_get_event_link() ); ?>" rel="bookmark"><?php the_title(); ?></a>
 				</h3>
 
 				<?php do_action( 'tribe_events_list_widget_after_the_event_title' ); ?>
-				<!-- Event Venue -->
-				<!-- Venue Display Info -->
-				
-				<div class="tribe-events-venue-details" style="font-size: 12px">
-				        <?php echo tribe_get_venue() ?>
-				</div> <!-- .tribe-events-venue-details -->
+                                <!-- Event Venue -->
+                                <!-- Venue Display Info -->
 
+                                <div class="tribe-events-venue-details" style="font-size: 12px">
+                                        <?php echo tribe_get_venue() ?>
+                                </div> <!-- .tribe-events-venue-details -->
 
 				<!-- Event Time -->
 
 				<?php do_action( 'tribe_events_list_widget_before_the_meta' ) ?>
 
 				<div class="tribe-event-duration" style="font-size: 12px">
-					<?php echo tribe_get_start_time( 
-null, "M j, Y @ G:i" ) ?>
+ 					<?php echo tribe_get_start_time(null, "M j, Y @ G:i" ) ?>
 				</div>
-
-				</div>				
+			
 				<?php do_action( 'tribe_events_list_widget_after_the_meta' ) ?>
+			</div>
 			</div>
 		<?php
 		endforeach;

@@ -43,8 +43,8 @@ class FFWDViewBlog_style {
 		{
 			$ffwd_info['objects_per_page']= $params['objects_per_page'];
 			$ffwd_info['theme']= $params['theme_id'];
-			$ffwd_info['thumb_width']= $params['thumb_width'];
-			$ffwd_info['thumb_height']= $params['thumb_height'];
+			$ffwd_info['blog_style_width']= $params['thumb_width'];
+			$ffwd_info['blog_style_height']= $params['thumb_height'];
 
 		}
 
@@ -719,7 +719,7 @@ class FFWDViewBlog_style {
 				float: left;
 				display: block;
 				height: 22px;
-				background: url('<?php echo WD_FFWD_URL . '/images/feed/love_'. $theme_row->blog_style_obj_icons_color .'.png' ?>') no-repeat 3px center;
+				background: url('<?php echo WD_FFWD_URL . '/images/feed/love_gray.png' ?>') no-repeat 3px center;
 				background-size: 16px;
 				width: 20px;
 				margin-left: -2px;
@@ -729,7 +729,7 @@ class FFWDViewBlog_style {
 				float: left;
 				display: block;
 				height: 22px;
-				background: url('<?php echo WD_FFWD_URL . '/images/feed/haha_'. $theme_row->blog_style_obj_icons_color .'.png' ?>') no-repeat 3px center;
+				background: url('<?php echo WD_FFWD_URL . '/images/feed/haha_gray.png' ?>') no-repeat 3px center;
 				background-size: 16px;
 				width: 20px;
 				margin-left: -2px;
@@ -739,7 +739,7 @@ class FFWDViewBlog_style {
 				float: left;
 				display: block;
 				height: 22px;
-				background: url('<?php echo WD_FFWD_URL . '/images/feed/wow_'. $theme_row->blog_style_obj_icons_color .'.png' ?>') no-repeat 3px center;
+				background: url('<?php echo WD_FFWD_URL . '/images/feed/wow_gray.png' ?>') no-repeat 3px center;
 				background-size: 16px;
 				width: 20px;
 				margin-left: -2px;
@@ -750,7 +750,7 @@ class FFWDViewBlog_style {
 				float: left;
 				display: block;
 				height: 22px;
-				background: url('<?php echo WD_FFWD_URL . '/images/feed/sad_'. $theme_row->blog_style_obj_icons_color .'.png' ?>') no-repeat 3px center;
+				background: url('<?php echo WD_FFWD_URL . '/images/feed/sad_gray.png' ?>') no-repeat 3px center;
 				background-size: 17px;
 				width: 20px;
 				margin-left: -2px;
@@ -760,7 +760,7 @@ class FFWDViewBlog_style {
 				float: left;
 				display: block;
 				height: 22px;
-				background: url('<?php echo WD_FFWD_URL . '/images/feed/angry_'. $theme_row->blog_style_obj_icons_color .'.png' ?>') no-repeat 3px center;
+				background: url('<?php echo WD_FFWD_URL . '/images/feed/angry_gray.png' ?>') no-repeat 3px center;
 				background-size: 17px;
 				width: 20px;
 				margin-left: -2px;
@@ -1230,24 +1230,24 @@ class FFWDViewBlog_style {
 
                                                                     <div class="ffwd_tooltip_<?php echo $ffwd; ?>">
 
-																<img id="ffwd_reactions_love_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>" src="<?php echo WD_FFWD_URL . '/images/feed/love_'. $theme_row->blog_style_obj_icons_color .'.png' ?>"	/>
+																<img id="ffwd_reactions_love_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>" src="<?php echo WD_FFWD_URL . '/images/feed/love_gray.png' ?>"	/>
                                                                         <span id="ffwd_tootlip_text_love_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>" class="ffwd_tooltiptext_<?php echo $ffwd; ?>">LOVE</span>
 																	</div>
                                                                     <div class="ffwd_tooltip_<?php echo $ffwd; ?>">
 
-																		<img id="ffwd_reactions_haha_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>"  src="<?php echo WD_FFWD_URL . '/images/feed/haha_'. $theme_row->blog_style_obj_icons_color .'.png' ?>"	/>
+																		<img id="ffwd_reactions_haha_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>"  src="<?php echo WD_FFWD_URL . '/images/feed/haha_gray.png' ?>"	/>
                                                                     <span id="ffwd_tootlip_text_haha_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>" class="ffwd_tooltiptext_<?php echo $ffwd; ?>">HAHA</span>
                                                                     </div>
                                                                     <div class="ffwd_tooltip_<?php echo $ffwd; ?>">
-                                                                    <img id="ffwd_reactions_wow_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>"  src="<?php echo WD_FFWD_URL . '/images/feed/wow_'. $theme_row->blog_style_obj_icons_color .'.png' ?>"	/>
+                                                                    <img id="ffwd_reactions_wow_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>"  src="<?php echo WD_FFWD_URL . '/images/feed/wow_gray.png' ?>"	/>
                                                                         <span id="ffwd_tootlip_text_wow_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>" class="ffwd_tooltiptext_<?php echo $ffwd; ?>">WOW</span>
                                                                         </div>
                                                                     <div class="ffwd_tooltip_<?php echo $ffwd; ?>">
-                                                                        <img id="ffwd_reactions_sad_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>"  src="<?php echo WD_FFWD_URL . '/images/feed/sad_'. $theme_row->blog_style_obj_icons_color .'.png' ?>"	/>
+                                                                        <img id="ffwd_reactions_sad_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>"  src="<?php echo WD_FFWD_URL . '/images/feed/sad_gray.png' ?>"	/>
                                                                         <span id="ffwd_tootlip_text_sad_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>" class="ffwd_tooltiptext_<?php echo $ffwd; ?>">SAD</span>
                                                                         </div>
                                                                     <div class="ffwd_tooltip_<?php echo $ffwd; ?>">
-                                                                        <img id="ffwd_reactions_angry_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>"  src="<?php echo WD_FFWD_URL . '/images/feed/angry_'. $theme_row->blog_style_obj_icons_color .'.png' ?>"	/>
+                                                                        <img id="ffwd_reactions_angry_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>"  src="<?php echo WD_FFWD_URL . '/images/feed/angry_gray.png' ?>"	/>
                                                                         <span id="ffwd_tootlip_text_angry_<?php echo $ffwd_data_row->id ?>_<?php echo $ffwd; ?>" class="ffwd_tooltiptext_<?php echo $ffwd; ?>">ANGRY</span>
                                                                     </div>
                                                                     </div>

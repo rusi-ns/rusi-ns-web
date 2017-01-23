@@ -46,10 +46,10 @@ class FFWDModelBlog_style extends FFWDModelMain {
 			$object->message_tags = json_decode(str_replace("'", esc_html("'"), $row->message_tags));
 			$object->with_tags = json_decode(str_replace("'", esc_html("'"), $row->with_tags));
 			$object->story_tags = json_decode(str_replace("'", esc_html("'"), $row->story_tags));
-			$object->comments = strip_tags($row->comments);
-			$object->attachments = strip_tags($row->attachments);
-			$object->shares = strip_tags($row->shares);
-			$object->who_post = strip_tags($row->who_post);
+			$object->comments = $row->comments;
+			$object->attachments = $row->attachments;
+			$object->shares = $row->shares;
+			$object->who_post = $row->who_post;
 			array_push($id_object_id_json, $object);
 		}
 		$this->id_object_id_json = $id_object_id_json;
