@@ -52,6 +52,7 @@ function fifu_replace($html, $post_id) {
 }
 
 function fifu_get_html($url, $alt) {
+    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
     if (is_plugin_active('sirv/sirv.php') && strpos($url, "sirv.com") !== false)
         return sprintf('<!-- Featured Image From URL plugin --> <img class="Sirv" data-src="%s"></img>', $url);
 
