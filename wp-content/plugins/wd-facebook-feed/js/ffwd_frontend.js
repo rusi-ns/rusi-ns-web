@@ -658,23 +658,23 @@ function ffwd_fill_likes_blog_style(id_object_id, ffwd, owner_info, ffwd_params,
 				id_object_id[i]['shares']='{}';
 			}
 
-			do_something_with_data_blog_style(jQuery.parseJSON(id_object_id[i]['shares']), id_object_id[i]['id'], ffwd, 'shares', "", ffwd_params, graph_url);
+			do_something_with_data_blog_style(id_object_id[i]['shares'], id_object_id[i]['id'], ffwd, 'shares', "", ffwd_params, graph_url);
 
 			// jQuery.getJSON(graph_url_for_attachments, createCallback_blog_style(id_object_id[i]['id'], ffwd, 'attachments', "", ffwd_params));
 
 
       if(id_object_id[i]['attachments'])
-				do_something_with_data_blog_style(jQuery.parseJSON(id_object_id[i]['attachments']), id_object_id[i]['id'], ffwd, 'attachments', "", ffwd_params, graph_url);
+				do_something_with_data_blog_style(id_object_id[i]['attachments'], id_object_id[i]['id'], ffwd, 'attachments', "", ffwd_params, graph_url);
 
 		}
 
 		if(id_object_id[i]['comments']);
-		do_something_with_data_blog_style(jQuery.parseJSON(id_object_id[i]['comments']), id_object_id[i]['id'], ffwd, 'comments', "", ffwd_params, graph_url);
+		do_something_with_data_blog_style(id_object_id[i]['comments'], id_object_id[i]['id'], ffwd, 'comments', "", ffwd_params, graph_url);
 
 
     // jQuery.getJSON(id_object_id[i]['comments'], createCallback_blog_style(id_object_id[i]['id'], ffwd, 'comments', "", ffwd_params, graph_url));
 		//jQuery.getJSON(graph_url_for_who_post, createCallback_blog_style(id_object_id[i], ffwd, 'who_post', owner_info, ffwd_params));
-		do_something_with_data_blog_style(jQuery.parseJSON(id_object_id[i]['who_post']), id_object_id[i], ffwd, 'who_post', owner_info, ffwd_params, graph_url);
+		do_something_with_data_blog_style(id_object_id[i]['who_post'], id_object_id[i], ffwd, 'who_post', owner_info, ffwd_params, graph_url);
 
 
 
@@ -750,26 +750,26 @@ function do_something_with_data_blog_style(result, id, ffwd, type, owner_info, f
 			jQuery('#ffwd_shares_' + ffwd + '_' + id).html(shares_count);
 			break;
 		case 'attachments' :
-
 			var src = '', length = 0, album_id = '';
 			/*
 			 erb story mej nshaca vor addes photos aranc albumi anun talu hetevabar @ngela timline -i mej
 			 u avtomat et posti subattachmentsneri arkayutayn depqum kberi dranq, ISK ete nshvaca added photos to album esinch
 			 hetevabar petqa albumi id-in vercnel araji media-i targeti urlic u pageID + albumid posti subattamentner@ cuyc tal!!!!!
 			 */
-			if (result['data'][0]) {
+
+			if (result) {
 				/*If exists subattachments*/
-				if (result['data'][0]['subattachments']) {
-					length = result['data'][0]['subattachments']['data'].length;
-					if (typeof result['data'][0]['subattachments']['data'][0]['media'] != "undefined") {
-						src = result['data'][0]['subattachments']['data'][0]['media']['image']['src'];
+				if (result['subattachments']) {
+					length = result['subattachments']['data'].length;
+					if (typeof result['subattachments']['data'][0]['media'] != "undefined") {
+						src = result['subattachments']['data'][0]['media']['image']['src'];
 					}
 					/*First time add profile picture*/
-					if (result['data'][0]['type'] == 'gallery') {
-						src = result['data'][0]['subattachments']['data'][length - 1]['media']['image']['src'];
+					if (result['type'] == 'gallery') {
+						src = result['subattachments']['data'][length - 1]['media']['image']['src'];
 					}
 				}
-				else if (result['data'][0]['media']) {
+				else if (result['media']) {
 					/* Check album containing this photo (compare title)
 					 * If not Timeline photos or Profile Pictures so get photos from that album
 					 */
@@ -781,12 +781,11 @@ function do_something_with_data_blog_style(result, id, ffwd, type, owner_info, f
 
 					 }
 					 }*/
-					src = result['data'][0]['media']['image']['src'];
+					src = result['media']['image']['src'];
 				}
+
+
 				jQuery('#ffwd_blog_style_img_' + id + '_' + ffwd).attr('src', src);
-
-
-
 				if (src == '')
 					jQuery('#ffwd_blog_style_img_' + id + '_' + ffwd).remove();
 
@@ -950,15 +949,15 @@ function ffwd_fill_likes(result, ffwd, id) {
 	angry_count[ffwd] = parseInt(result['angry']['summary']['total_count']);
 
 	jQuery('#ffwd_likes_' + ffwd + '_' + id).html(total_reactions_count[ffwd]);
-	if (total_reactions_count[ffwd] >= 3) {
+	if (total_reactions_count[ffwd] >= 3  && result['total_reactions']['data'][0]) {
 		var likes_some_names = '<div class="ffwd_like_name_cont_' + ffwd + '"> <a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][0]['id'] + '" target="_blank">' + result['total_reactions']['data'][0]['name'] + ' , </a><a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][1]['id'] + '" target="_blank">' + result['total_reactions']['data'][1]['name'] + ' </a></div>';
 		var likes_count_last_part = '<div class="ffwd_almost_' + ffwd + '">  ' + ffwd_frontend_text.and + ' ' + (total_reactions_count[ffwd] - 2) + ' ' + ffwd_frontend_text.others + ' </div>';
 	}
-	else if (total_reactions_count[ffwd] == 2) {
+	else if (total_reactions_count[ffwd] == 2  && result['total_reactions']['data'][0]) {
 		var likes_some_names = '<div class="ffwd_like_name_cont_' + ffwd + '"> <a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][0]['id'] + '" target="_blank">' + result['total_reactions']['data'][0]['name'] + ' , </a><a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][1]['id'] + '" target="_blank">' + result['total_reactions']['data'][1]['name'] + ' </a></div>';
 		var likes_count_last_part = '';
 	}
-	else if (total_reactions_count[ffwd] == 1) {
+	else if (total_reactions_count[ffwd] == 1  && result['total_reactions']['data'][0]) {
 		var likes_some_names = '<div class="ffwd_like_name_cont_' + ffwd + '"> <a class="ffwd_like_name_' + ffwd + '" href="https://www.facebook.com/' + result['total_reactions']['data'][0]['id'] + '" target="_blank">' + result['total_reactions']['data'][0]['name'] + '</a></div>';
 		var likes_count_last_part = '';
 	}

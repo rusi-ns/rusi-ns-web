@@ -36,6 +36,8 @@ class FFWDModelBlog_style extends FFWDModelMain {
 		// Store ids ans object_ids
 		$id_object_id_json = array();
 		foreach($results as $row) {
+			$attachments=json_decode(str_replace("'", esc_html("'"), $row->attachments));
+
 			$object = new stdClass();
 			$object->id = $row->id;
 			$object->type = $row->type;
@@ -46,10 +48,18 @@ class FFWDModelBlog_style extends FFWDModelMain {
 			$object->message_tags = json_decode(str_replace("'", esc_html("'"), $row->message_tags));
 			$object->with_tags = json_decode(str_replace("'", esc_html("'"), $row->with_tags));
 			$object->story_tags = json_decode(str_replace("'", esc_html("'"), $row->story_tags));
-			$object->comments = $row->comments;
-			$object->attachments = $row->attachments;
-			$object->shares = $row->shares;
-			$object->who_post = $row->who_post;
+			$object->comments = json_decode(str_replace("'", esc_html("'"), $row->comments));
+			$object->attachments = new stdClass();
+
+			if(isset($attachments->data[0]->media))
+			$object->attachments->media=$attachments->data[0]->media;
+			if(isset($attachments->data[0]->subattachments))
+				$object->attachments->subattachments=$attachments->data[0]->subattachments;
+			if(isset($attachments->data[0]->type))
+				$object->attachments->type=$attachments->data[0]->type;
+
+			$object->shares = json_decode(str_replace("'", esc_html("'"), $row->shares));
+			$object->who_post = json_decode(str_replace("'", esc_html("'"), $row->who_post));
 			array_push($id_object_id_json, $object);
 		}
 		$this->id_object_id_json = $id_object_id_json;
