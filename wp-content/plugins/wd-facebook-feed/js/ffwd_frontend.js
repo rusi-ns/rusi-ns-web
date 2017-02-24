@@ -68,8 +68,8 @@ function ffwd_frontend_ajax(form_id, current_view, id, album_id, enter_or_back, 
 /* For thumnail amd masonry view */
 function ffwd_fill_likes_thumnail(id_object_id, ffwd, graph_url) {
 	var ids_array_count=Math.ceil(id_object_id.length/50);
-	ids_array=[];
-	img_ids=[];
+	var ids_array=[];
+	var img_ids=[];
 	for(var i = 0; i < ids_array_count; i++)
 	{
 		ids_array[i]=[];
@@ -161,8 +161,8 @@ function ffwd_fill_thum_srs_likes_compact_album(id_object_id, ffwd, graph_url, f
 
 
 		var ids_array_count=Math.ceil(id_object_id.length/50);
-		ids_array=[];
-		img_ids=[];
+		var ids_array=[];
+		var img_ids=[];
 		for(var i = 0; i < ids_array_count; i++)
 		{
 			ids_array[i]=[];
@@ -363,8 +363,8 @@ function do_something_with_data_album(result, id, ffwd, type, graph_url, ffwd_al
 
 
 			var ids_array_count=Math.ceil(data.length/50);
-			ids_array=[];
-			img_ids=[];
+			var ids_array=[];
+			var img_ids=[];
 			for(var j = 0; j < ids_array_count; j++)
 			{
 				ids_array[j]=[];
@@ -653,6 +653,10 @@ function ffwd_fill_likes_blog_style(id_object_id, ffwd, owner_info, ffwd_params,
 
 			//do_something_with_data_blog_style(reactions_array[object_id], id_object_id[i]['id'], ffwd, 'likes', "", ffwd_params, graph_url);
 
+			if(!id_object_id[i]['shares'])
+			{
+				id_object_id[i]['shares']='{}';
+			}
 
 			do_something_with_data_blog_style(jQuery.parseJSON(id_object_id[i]['shares']), id_object_id[i]['id'], ffwd, 'shares', "", ffwd_params, graph_url);
 

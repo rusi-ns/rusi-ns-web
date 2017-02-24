@@ -4,7 +4,7 @@
  * Plugin Name: Facebook Feed WD
  * Plugin URI: https://web-dorado.com/products/wordpress-facebook-feed-plugin.html
  * Description:Facebook Feed WD is a completely customizable, responsive solution to help you display your Facebook feed on your WordPress website.
- * Version: 1.0.14
+ * Version: 1.0.15
  * Author: WebDorado
  * Author URI: https://web-dorado.com/
  * License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -729,7 +729,7 @@ add_action('init', 'ffwd_language_load');
 function ffwd_version()
 {
 
-    $version = '1.0.14';
+    $version = '1.0.15';
 
     if (get_option('ffwd_version') === false) {
         add_option('ffwd_version', $version);
