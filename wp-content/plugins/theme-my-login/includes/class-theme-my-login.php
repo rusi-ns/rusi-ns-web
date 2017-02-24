@@ -21,7 +21,7 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 	 * @since 6.3.2
 	 * @const string
 	 */
-	const VERSION = '6.4.7';
+	const VERSION = '6.4.9';
 
 	/**
 	 * Holds options key
@@ -129,6 +129,9 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 	 * @access public
 	 */
 	protected function load() {
+
+		$this->request_action = isset( $_REQUEST['action'] ) ? sanitize_key( $_REQUEST['action'] ) : '';
+		$this->request_instance = isset( $_REQUEST['instance'] ) ? (int) $_REQUEST['instance'] : 0;
 
 		$this->load_instance();
 
@@ -253,6 +256,14 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 	 */
 	public function pre_get_posts( $query ) {
 
+		// Bail if in admin area
+		if ( is_admin() )
+			return;
+
+		// Bail if not the main query
+		if ( ! $query->is_main_query() )
+			return;
+
 		// Bail if not a search
 		if ( ! $query->is_search )
 			return;
@@ -294,10 +305,8 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 	 * @access public
 	 */
 	public function template_redirect() {
-		$this->request_action = isset( $_REQUEST['action'] ) ? sanitize_key( $_REQUEST['action'] ) : '';
 		if ( ! $this->request_action && self::is_tml_page() )
 			$this->request_action = self::get_page_action( get_the_id() );
-		$this->request_instance = isset( $_REQUEST['instance'] ) ? sanitize_key( $_REQUEST['instance'] ) : 0;
 
 		do_action_ref_array( 'tml_request', array( &$this ) );
 
