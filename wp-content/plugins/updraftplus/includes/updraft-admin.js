@@ -437,7 +437,7 @@ var updraft_backupnow_nonce = '';
 var updraft_activejobslist_backupnownonce_only = 0;
 var updraft_inpage_hasbegun = 0;
 
-function updraft_backupnow_inpage_go(success_callback, onlythisfileentity, extradata, backupnow_nodb = 0, backupnow_nofiles = 0, backupnow_nocloud = 0) {
+function updraft_backupnow_inpage_go(success_callback, onlythisfileentity, extradata, backupnow_nodb, backupnow_nofiles, backupnow_nocloud) {
 	
 	backupnow_nodb = ('undefined' === typeof backupnow_nodb) ? 0 : backupnow_nodb;
 	backupnow_nofiles = ('undefined' === typeof backupnow_nofiles) ? 0 : backupnow_nofiles;
