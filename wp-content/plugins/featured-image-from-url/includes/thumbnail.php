@@ -9,7 +9,7 @@ function fifu_add_social_tags() {
     $title = get_the_title($post_id);
     $description = wp_strip_all_tags(get_post_field('post_content', $post_id));
 
-    if ($url)
+    if ($url && get_option('fifu_social') == 'toggleon')
         include 'html/social.html';
 }
 

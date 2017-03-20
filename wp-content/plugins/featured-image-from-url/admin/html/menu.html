@@ -30,6 +30,33 @@
         </form>
     </div>
     <div class="box">
+        <h2>Social Tags</h2>
+        <div class="greybox" style="background:#e3ffe2">
+            <b>Free feature</b><br><br>
+            Featured Image from URL provides social tags to share the external images on the social networks. Here you can enable/disable this feature.
+        </div>
+        <br>
+        <form 
+            id="fifu_form_social" 
+            action="javascript:void(0)" 
+            method="post">
+            <input 
+                type="image" 
+                href="javascript:void(0)" 
+                id="fifu_toggle_social" 
+                onclick="invert('social')" 
+                name="fifu_toggle_social" 
+                class="<?php echo $enable_social; ?>" 
+                value=" "
+                style="<?php echo $show_social_button; ?>">
+            <input 
+                type="hidden" 
+                id="fifu_input_social" 
+                name="fifu_input_social" 
+                value="" >
+        </form>
+    </div>    
+    <div class="box">
         <h2>Featured Image in Content</h2>
         <div class="greybox" style="background:#e3ffe2">
             <b>Free feature</b><br><br>
@@ -126,7 +153,7 @@
         </form>
     </div>
     <div class="box">
-        <h2><a href="https://www.flickr.com/"><font color="#007ee5">flick</font><font color="#ff0084">r</font></a> Integration: Your Website Faster Than Ever</h2>
+        <h2><a href="https://www.flickr.com/"><font color="#007ee5">flick</font><font color="#ff0084">r</font></a> Integration (External Thumbnails): Your Website Faster Than Ever</h2>
         <div class="greybox" style="background:#ffe2e2">
             <b>Premium feature</b><br><br>
             <div id="accordion">
@@ -292,9 +319,9 @@
                         </select>
                     </th> 
                 </tr>
-            </table>
+            </table><br>
+            <a href="http://fifu.marceljm.com/" targe="_blank">Live preview</a> (site loaded 93% faster due external thumbnails feature)
         </div>
-
     </div>
     <div class="box">
         <h2>External Featured Videos</h2>
@@ -357,7 +384,7 @@
     <div class="box">
         <h2>Help</h2>
         <div class="greybox">
-            Featured Image From URL plugin allows you to use an external image (from anywhere) as Featured Image of your Post, Page or Custom Post Type, such as WooCommerce Product. For WooCommerce users, it's also possible to use external images in the Product Category and Product Gallery. All included content still has social tags to facilitate sharing on social networks. And it's compatible with WP All Import and Sirv plugins. For more information, refer to <a href="https://wordpress.org/plugins/featured-image-from-url/faq/" target="_blank">FAQ</a> and <a href="https://wordpress.org/plugins/featured-image-from-url/screenshots/" target="_blank">screenshots</a>. 
+            Featured Image From URL plugin allows you to use an external image (from anywhere) as Featured Image of your Post, Page or Custom Post Type, such as WooCommerce Product. For WooCommerce users, it's also possible to use external images in the Product Category and Product Gallery. All included content still has social tags to facilitate sharing on social networks. And it's compatible with WP All Import, a3 Lazy Load and Sirv plugins. For more information, refer to <a href="https://wordpress.org/plugins/featured-image-from-url/faq/" target="_blank">FAQ</a> and <a href="https://wordpress.org/plugins/featured-image-from-url/screenshots/" target="_blank">screenshots</a>. 
         </div>
     </div>
     <div class="box">
@@ -442,7 +469,7 @@
             <h3>3) "How to get support?"</h3>
             You can inform any problem related to the Premium version (except theme issues) in the email above. It will be solved as soon as possible and without any cost.<br><br>
             <h3>4) "Which plugins are compatible with Premium version?"</h3>
-            WooCommerce, WP All Import and others. If you intend to use the Premium version with a specific plugin, please ask me if they are compatible.<br><br>
+            WooCommerce, WP All Import, a3 Lazy Load and others. If you intend to use the Premium version with a specific plugin, please ask me if they are compatible.<br><br>
             <h3>5) "Can I get my money back later?"</h3>
             With the exception of rare situations, no way. So don't go to the Premium version if you are not sure if your theme is compatible.<br><br>
             <h3>6) "How to get the Premium version?"</h3>
@@ -462,7 +489,7 @@
     <div class="box">
         <h2>About The Author</h2>
         <div class="greybox">
-            Hi! I'm Marcel Jacques Machado. Graduated in Computer Science, I work as a Software Engineer for 10 years. I already worked with C, Python, Delphi, Shell Script and other programming languages and technologies. Nowadays, I develop web applications for Telefonica in Brazil using Java. About PHP, this plugin, Featured Image From URL, is my first pratical experience. I also have a <a href="http://marceljm.com/" target="_blank">blog</a> in WordPress and I expect to post some useful content very soon.
+            Hi! I'm Marcel Jacques Machado. Graduated in Computer Science, I work as a Software Engineer for 10 years. I already worked with C, Python, Shell Script and other programming languages and technologies. Nowadays, I develop web applications in Brazil using Java. About PHP, this plugin, Featured Image From URL, is my first pratical experience. I also have a <a href="http://marceljm.com/" target="_blank">blog</a> in WordPress and I expect to post some useful content very soon.
         </div>
     </div>
 </div>

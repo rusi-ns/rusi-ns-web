@@ -25,6 +25,20 @@ jQuery(function () {
         });
     });
 
+    jQuery("#fifu_form_social").submit(function () {
+
+        var frm = jQuery("#fifu_form_social");
+
+        jQuery.ajax({
+            type: frm.attr('method'),
+            url: url,
+            data: frm.serialize(),
+            success: function (data) {
+                //alert('saved');
+            }
+        });
+    });
+
     jQuery("#fifu_form_content").submit(function () {
 
         var frm = jQuery("#fifu_form_content");

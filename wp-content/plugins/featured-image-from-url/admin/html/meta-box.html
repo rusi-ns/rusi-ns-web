@@ -3,16 +3,16 @@
 <!-- show alt field, image and link if URL was already provided -->
 
 <input id="fifu_input_alt" 
-	   type="text" 
-	   name="fifu_input_alt" 
-	   placeholder="alt attribute (optional)" 
-	   value="<?php echo $alt; ?>" 
-	   style="<?php echo $width, $margin, $show_alt ?>" />
+       type="text" 
+       name="fifu_input_alt" 
+       placeholder="alt attribute (optional)" 
+       value="<?php echo $alt; ?>" 
+       style="<?php echo $width, $margin, $show_alt ?>" />
 
 <div id="fifu_image"
-	 style="<?php echo $height, $margin, $show_image ?> 
-	 background:url('<?php echo $url; ?>') no-repeat center center; 
-	 background-size:cover;" >
+     style="<?php echo $height, $margin, $show_image ?> 
+     background:url('<?php echo $url; ?>') no-repeat center center; 
+     background-size:cover;" >
 </div>
 
 <p/>
@@ -25,11 +25,11 @@
 <!-- show URL field and preview button if URL was not provided yet -->
 
 <input id="fifu_input_url" 
-	   type="text" 
-	   name="fifu_input_url" 
-	   placeholder="URL" 
-	   value="<?php echo $url; ?>"
-	   style="<?php echo $width, $margin, $show_url ?>" />
+       type="text" 
+       name="fifu_input_url" 
+       placeholder="URL" 
+       value="<?php echo $url; ?>"
+       style="<?php echo $width, $margin, $show_url ?>" />
 
 <a id="fifu_button" 
    class="button" 
@@ -44,4 +44,5 @@
    title="Add image from Sirv"
    style="<?php echo $show_sirv?>">Choose Sirv image</a>
 
-<p>Now you can use <b>external thumbnails</b> to make your site really faster. Go to the plugin settings to know more.</p>
+<hr>
+<p style="border: 1px solid green; padding: 25px;"><b>New free feature</b>: now you can enable/disable <b>social tags</b> for external images in the plugin settings. The dafault value is off.</p>

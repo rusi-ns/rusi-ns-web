@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: marceljm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8BLDLZ3HDBGQG
-Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail
+Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network, wp all import
 Requires at least: 4.0
-Tested up to: 4.7.2
-Stable tag: 4.7.2
+Tested up to: 4.7.3
+Stable tag: 4.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -278,6 +278,9 @@ was removed. To finish, a Premium version is now been presented.
 = 1.4.9 =
 * Add information about theme compatibility.
 
+= 1.5.0 =
+* Social tags toggle.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -382,3 +385,6 @@ was removed. To finish, a Premium version is now been presented.
 
 = 1.4.9 =
 * Add information about theme compatibility.
+
+= 1.5.0 =
+* Social tags toggle.

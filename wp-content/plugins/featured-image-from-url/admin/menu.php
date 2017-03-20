@@ -14,6 +14,7 @@ function fifu_get_menu_html() {
     $image_button = plugins_url() . '/featured-image-from-url/admin/images/onoff.jpg';
 
     $enable_woocommerce = get_option('fifu_woocommerce');
+    $enable_social = get_option('fifu_social');
     $enable_content = get_option('fifu_content');
     $enable_hope = get_option('fifu_hope');
 
@@ -21,7 +22,8 @@ function fifu_get_menu_html() {
     for ($x = 0; $x <= 4; $x++)
         $array_cpt[$x] = get_option('fifu_cpt' . $x);
 
-    $show_woocommerce_button = $show_content_button = "display:block";
+    $show_woocommerce_button = $show_social_button = $show_content_button = "display:block";
+
     $output = shell_exec('uname -s');
     if ($output == "") {
         $compatible = "Unfortunatelly, the script and your server system are not compatible. " .
@@ -50,6 +52,7 @@ function fifu_get_menu_html() {
 
 function fifu_get_menu_settings() {
     fifu_get_setting('fifu_woocommerce');
+    fifu_get_setting('fifu_social');
     fifu_get_setting('fifu_content');
     fifu_get_setting('fifu_hope');
 
@@ -70,6 +73,7 @@ function fifu_get_setting($type) {
 
 function fifu_update_menu_options() {
     fifu_update_option('fifu_input_woocommerce', 'fifu_woocommerce');
+    fifu_update_option('fifu_input_social', 'fifu_social');
     fifu_update_option('fifu_input_content', 'fifu_content');
     fifu_update_option('fifu_input_hope', 'fifu_hope');
 
