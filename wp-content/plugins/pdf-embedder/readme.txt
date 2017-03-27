@@ -2,8 +2,8 @@
 Contributors: danlester
 Tags: doc, docx, pdf, office, powerpoint, google, document, embed, intranet
 Requires at least: 3.5
-Tested up to: 4.6
-Stable tag: 2.8
+Tested up to: 4.7
+Stable tag: 3.0.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -26,8 +26,11 @@ Hyperlinks in your PDF will only be clickable in the Premium versions.
 
 **Now translation-ready!** Please contribute your translations.
 
-French translation contributed by Thierry Gaillou of [JDFitForme](http://www.jdfitforme.fr/)
-Spanish translation contributed by Armando Landois of [LANDOIS Diseño](https://landois.com/)
+Persian translation by Mostafa Safarian i of [سئو](http://www.greenseo.ir/)
+
+French translation by Thierry Gaillou of [JDFitForme](http://www.jdfitforme.fr/)
+
+Spanish translation by Armando Landois of [LANDOIS Diseño](https://landois.com/)
 
 
 = Usage =
@@ -45,9 +48,9 @@ To override your site-wide defaults on an individual embed, see the [Plugin Inst
 > **Extra Premium Features**
 >
 > * Download button in the toolbar.
+> * Continuous scroll between pages.
 > * Hyperlinks are fully functional.
 > * Full screen mode.
-> * Page turning arrows when hovering over edges of PDF.
 > * Edit page number to jump straight to page.
 > * Track number of downloads and views.
 > * Removes wp-pdf.com attribution from the toolbar.
@@ -63,6 +66,8 @@ The free version of the plugin should work on most mobile browsers, but it will 
 Our **PDF Embedder Premium** plugin solves this problem with an intelligent 'full screen' mode. 
 When the document is smaller than a certain width, the document displays only as a 'thumbnail' with a large 'View in Full Screen' button for the user to click when they want to study your document. 
 This opens up the document so it has the full focus of the mobile browser, and the user can move about the document without hitting other parts of the web page by mistake. Click Exit to return to the regular web page.
+
+The user can also touch and scroll continuously between all pages of the PDF which is much easier than clicking the next/prev buttons to navigate.
 
 See our website [wp-pdf.com](http://wp-pdf.com/premium/?utm_source=PDF%20Readme%20Premium&utm_medium=freemium&utm_campaign=Freemium) for more details and purchase options.
 
@@ -171,6 +176,21 @@ the Plugins section of your Wordpress admin
 1. Follow the instructions from step 4 above
 
 == Changelog ==
+
+= 3.0.1 =
+
+Latest version of pdf.js library, and newest code bringing the free version into line with the premium versions.
+
+Improved responsiveness and redraw of pages.
+
+Plugin now respects the SCRIPT_DEBUG flag in wp-config.php and displays non-minified versions of the JS files if this is set to true.
+Helps debugging any issues.
+
+Added NL language.
+
+= 2.8.2 =
+
+Latest version of pdf.js library to include recent rendering developments/fixes by the team.
 
 = 2.8 =
 
