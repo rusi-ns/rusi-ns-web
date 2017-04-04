@@ -27,6 +27,7 @@ class FFWDModelUninstall_ffwd {
     $wpdb->query("DROP TABLE " . $wpdb->prefix . "wd_fb_shortcode");
     delete_option('ffwd_admin_notice');
     delete_option("ffwd_version");
+	  delete_option( "ffwd_subscribe_done" );
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   // Getters & Setters                                                                  //

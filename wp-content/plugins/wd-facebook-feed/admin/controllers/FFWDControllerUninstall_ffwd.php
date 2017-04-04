@@ -14,6 +14,18 @@ class FFWDControllerUninstall_ffwd {
   // Constructor & Destructor                                                           //
   ////////////////////////////////////////////////////////////////////////////////////////
   public function __construct() {
+
+	  global  $ffwd_options;
+	  if(!class_exists("DoradoWebConfig")){
+		  include_once (WD_FFWD_DIR . "/wd/config.php");
+	  }
+	  $config = new DoradoWebConfig();
+
+	  $config->set_options( $ffwd_options );
+
+	  $deactivate_reasons = new DoradoWebDeactivate($config);
+//$deactivate_reasons->add_deactivation_feedback_dialog_box();	
+	  $deactivate_reasons->submit_and_deactivate();
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   // Public Methods                                                                     //

@@ -100,7 +100,7 @@ class FFWDViewUninstall_ffwd {
     </div>
     <div class="wrap">
       <h2>Uninstall Facebook Feed WD</h2>
-      <p><strong><a href="<?php echo $deactivate_url; ?>">Click Here</a> To Finish the Uninstallation and Facebook Feed WD will be Deactivated Automatically.</strong></p>
+      <p><strong><a href="<?php echo $deactivate_url; ?>" class="ffwd_deactivate_link" data-uninstall="1">Click Here</a> To Finish the Uninstallation and Facebook Feed WD will be Deactivated Automatically.</strong></p>
       <input id="task" name="task" type="hidden" value="" />
     </div>
   <?php
