@@ -41,12 +41,39 @@ class FFWDViewInfo_ffwd
         ?>
 
 
-        <div style="font-size: 14px; font-weight: bold;">
-            This section allows you to create, edit and delete Facebook Feed WD.
-            <a style="color: blue; text-decoration: none;" target="_blank"
-               href="https://web-dorado.com/wordpress-facebook-feed/creating-feed.html">Read More in User Manual</a>
+
+
+        <div class="ffwd_upgrade wd-clear" >
+            <div class="ffwd-left">
+
+                <div style="font-size: 14px; ">
+							    <?php _e(" This section allows you to create, edit and delete Facebook Feed WD.","ffwd");?>
+                    <a style="color: #5CAEBD; text-decoration: none;border-bottom: 1px dotted;" target="_blank" href="https://web-dorado.com/wordpress-facebook-feed/creating-feed.html"><?php _e("Read More in User Manual.","ffwd");?></a>
+                </div>
+
+            </div>
+            <div class="ffwd-right">
+                <div class="wd-table">
+                    <div class="wd-cell wd-cell-valign-middle">
+                        <a href="https://wordpress.org/support/plugin/wd-facebook-feed" target="_blank">
+                            <img src="<?php echo WD_FFWD_URL; ?>/images/i_support.png" >
+											    <?php _e("Support Forum", "gmwd"); ?>
+                        </a>
+                    </div>
+                    <div class="wd-cell wd-cell-valign-middle">
+                        <a href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" target="_blank">
+											    <?php _e("UPGRADE TO PAID VERSION", "gmwd"); ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
+
         <form class="wrap" id="ffwd_info_form" method="post" action="admin.php?page=info_ffwd" style="width:99%;">
+
+
             <?php wp_nonce_field('info_ffwd', 'ffwd_nonce'); ?>
 
             <div class="ffwd_plugin_header">
@@ -64,20 +91,7 @@ class FFWDViewInfo_ffwd
                         saved.</p></strong></div>
 
 
-            <div class="ffwd_upgrade ffwd-clear">
-                <div class="ffwd-right">
-                    <a href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" target="_blank">
-                        <div class="ffwd-table">
-                            <div class="ffwd-cell ffwd-cell-valign-middle">
-                                Upgrade to paid version                    </div>
 
-                            <div class="ffwd-cell ffwd-cell-valign-middle">
-                                <img src="<?php echo WD_FFWD_URL ?>/images/web-dorado.png">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
 
 
             <div class="buttons_div">
@@ -548,31 +562,40 @@ class FFWDViewInfo_ffwd
 
 
         <div id="message_div" class="updated" style="display: none;"></div>
-        <div style="font-size: 14px; font-weight: bold;">
-            This section allows you to add/edit Facebook Feed WD.
-            <a style="color: blue; text-decoration: none;" target="_blank"
-               href="https://web-dorado.com/wordpress-facebook-feed/creating-feed.html">Read More in User Manual</a>
+
+        <div class="ffwd_upgrade wd-clear" >
+            <div class="ffwd-left">
+
+                <div style="font-size: 14px; ">
+							    <?php _e("This section allows you to add/edit Facebook Feed WD","ffwd");?>
+                    <a style="color: #5CAEBD; text-decoration: none;border-bottom: 1px dotted;" target="_blank" href="https://web-dorado.com/wordpress-facebook-feed/creating-feed.html"><?php _e("Read More in User Manual.","ffwd");?></a>
+                </div>
+
+            </div>
+            <div class="ffwd-right">
+                <div class="wd-table">
+                    <div class="wd-cell wd-cell-valign-middle">
+                        <a href="https://wordpress.org/support/plugin/wd-facebook-feed" target="_blank">
+                            <img src="<?php echo WD_FFWD_URL; ?>/images/i_support.png" >
+											    <?php _e("Support Forum", "gmwd"); ?>
+                        </a>
+                    </div>
+                    <div class="wd-cell wd-cell-valign-middle">
+                        <a href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" target="_blank">
+											    <?php _e("UPGRADE TO PAID VERSION", "gmwd"); ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
+
 
         <script src="http://malsup.github.io/jquery.form.js"></script>
         <form class="wrap" method="post" id="ffwd_info_form" action="admin.php?page=info_ffwd" style="width:99%;">
             <?php wp_nonce_field('info_ffwd', 'ffwd_nonce'); ?>
             <!-- <span class="wd-fb-icon"></span> -->
             <div class="ffwd_plugin_header">
-                <div class="ffwd_upgrade ffwd-clear">
-                    <div class="ffwd-right">
-                        <a href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" target="_blank">
-                            <div class="ffwd-table">
-                                <div class="ffwd-cell ffwd-cell-valign-middle">
-                                    Upgrade to paid version                    </div>
-
-                                <div class="ffwd-cell ffwd-cell-valign-middle">
-                                    <img src="<?php echo WD_FFWD_URL ?>/images/web-dorado.png">
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                
                 <span class="wd-fb-icon"></span>
                 <h2 class="ffwd_page_name"><?php echo $page_title; ?></h2>
             </div>

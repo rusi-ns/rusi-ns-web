@@ -27,22 +27,30 @@ class  FFWDViewThemes_ffwd
     public function display()
     {
         ?>
-        <div class="ffwd_upgrade ffwd-clear">
-            <div class="ffwd-right">
-                <a href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" target="_blank">
-                    <div class="ffwd-table">
-                        <div class="ffwd-cell ffwd-cell-valign-middle">
-                            Upgrade to paid version
-                        </div>
+        <div class="ffwd_upgrade wd-clear" >
+            <div class="ffwd-left">
 
-                        <div class="ffwd-cell ffwd-cell-valign-middle">
-                            <img
-                                src="<?php echo WD_FFWD_URL ?>/images/web-dorado.png">
-                        </div>
+               
+
+            </div>
+            <div class="ffwd-right">
+                <div class="wd-table">
+                    <div class="wd-cell wd-cell-valign-middle">
+                        <a href="https://wordpress.org/support/plugin/wd-facebook-feed" target="_blank">
+                            <img src="<?php echo WD_FFWD_URL; ?>/images/i_support.png" >
+											    <?php _e("Support Forum", "gmwd"); ?>
+                        </a>
                     </div>
-                </a>
+                    <div class="wd-cell wd-cell-valign-middle">
+                        <a href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" target="_blank">
+											    <?php _e("UPGRADE TO PAID VERSION", "gmwd"); ?>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
+
+
         <div style="clear: both;float: right;color: #15699F; font-size: 20px; margin-top:10px; padding:8px 15px;">
             This is FREE version, Customizing themes is available only in the PAID version.
         </div>

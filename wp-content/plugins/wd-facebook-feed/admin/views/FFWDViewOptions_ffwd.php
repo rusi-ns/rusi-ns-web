@@ -30,12 +30,37 @@ class FFWDViewOptions_ffwd
 
       
         ?>
-        <div style="font-size: 14px; font-weight: bold;">
-            This section allows you to change settings for different views and general options.
-            <a style="color: blue; text-decoration: none;" target="_blank"
-               href="https://web-dorado.com/wordpress-facebook-feed/options.html">Read More in User Manual</a>
+
+
+        <div class="ffwd_upgrade wd-clear" >
+            <div class="ffwd-left">
+
+                <div style="font-size: 14px; ">
+							    <?php _e("This section allows you to change settings for different views and general options.","ffwd");?>
+                    <a style="color: #5CAEBD; text-decoration: none;border-bottom: 1px dotted;" target="_blank" href="https://web-dorado.com/wordpress-facebook-feed/options.html"><?php _e("Read More in User Manual.","ffwd");?></a>
+                </div>
+
+            </div>
+            <div class="ffwd-right">
+                <div class="wd-table">
+                    <div class="wd-cell wd-cell-valign-middle">
+                        <a href="https://wordpress.org/support/plugin/wd-facebook-feed" target="_blank">
+                            <img src="<?php echo WD_FFWD_URL; ?>/images/i_support.png" >
+											    <?php _e("Support Forum", "gmwd"); ?>
+                        </a>
+                    </div>
+                    <div class="wd-cell wd-cell-valign-middle">
+                        <a href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" target="_blank">
+											    <?php _e("UPGRADE TO PAID VERSION", "gmwd"); ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <?php
+
+
+
+	    <?php
         $row = $this->model->get_row_data($reset);
         ?>
         <script>
@@ -47,20 +72,7 @@ class FFWDViewOptions_ffwd
                 <span class="option-icon"></span>
                 <h2 class="ffwd_page_name">Edit options</h2>
             </div>
-            <div class="ffwd_upgrade ffwd-clear">
-                <div class="ffwd-right">
-                    <a href="https://web-dorado.com/products/wordpress-facebook-feed-plugin.html" target="_blank">
-                        <div class="ffwd-table">
-                            <div class="ffwd-cell ffwd-cell-valign-middle">
-                                Upgrade to paid version                    </div>
 
-                            <div class="ffwd-cell ffwd-cell-valign-middle">
-                                <img src="<?php echo WD_FFWD_URL ?>/images/web-dorado.png">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
             <div style="display: inline-block; width: 100%;">
                 <div style="float: right;padding-top: 10px;">
                     <input class="ffwd-button-primary  ffwd-button-reset" type="submit" onclick="if (confirm('Do you want to reset to default?')) {
