@@ -649,8 +649,8 @@ class PP_GroupsUI {
 		} // end foreach src_name
 
 		echo '<br /><div class="pp-role-bulk-edit" style="display:none">';
-		echo "<select><option value=''>" . __ppw('Bulk Actions', 'pp') . "</option><option value='remove'>" . __ppw('Remove', 'pp') . '</option></select>';
-		//submit_button( __ppw('Apply'), 'button-secondary submit-edit-item-role', '', false );
+		echo "<select><option value=''>" . _pp_('Bulk Actions', 'pp') . "</option><option value='remove'>" . _pp_('Remove', 'pp') . '</option></select>';
+		//submit_button( _pp_('Apply'), 'button-secondary submit-edit-item-role', '', false );
 		?>
 		<input type="submit" name="" class="button submit-edit-item-role" value="<?php _e('Apply', 'pp');?>" />
 		<?php
@@ -978,7 +978,7 @@ class PP_GroupsUI {
 						echo '</table></div>';  // pp-current-roles-tbl-wrapper
 					
 						echo '<div class="pp-exception-bulk-edit" style="display:none">';
-						echo "<select><option value=''>" . __ppw('Bulk Actions', 'pp') . "</option><option value='remove'>" . __ppw('Remove', 'pp') . '</option>';
+						echo "<select><option value=''>" . _pp_('Bulk Actions', 'pp') . "</option><option value='remove'>" . _pp_('Remove', 'pp') . '</option>';
 						
 						if ( ( 'post' == $via_src ) && ( ! $via_type || $via_type_obj->hierarchical ) ) {
 							echo "<option value='propagate'>" . sprintf( __('Assign for selected and sub-%s', 'pp'), $via_type_obj->labels->name ) . '</option>';
@@ -991,7 +991,7 @@ class PP_GroupsUI {
 						}
 						
 						echo '</select>';
-						//submit_button( __ppw('Apply'), 'button-secondary submit-edit-item-exception', '', false );
+						//submit_button( _pp_('Apply'), 'button-secondary submit-edit-item-exception', '', false );
 						?>
 						<input type="submit" name="" class="button submit-edit-item-exception" value="<?php _e('Apply', 'pp');?>" />
 						<?php

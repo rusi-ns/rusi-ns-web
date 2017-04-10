@@ -183,7 +183,7 @@ class PP_Groups_List_Table extends PP_Groups_List_Table_Base {
 		if ( $can_manage_group ) {
 			$edit_link = $base_url . "?page=pp-edit-permissions&amp;action=edit{$agent_type_clause}&amp;agent_id={$group_id}";
 			$edit = "<strong><a href=\"$edit_link\">$group_object->group_name</a></strong><br />";
-			$actions['edit'] = '<a href="' . $edit_link . '">' . __ppw( 'Edit' ) . '</a>';
+			$actions['edit'] = '<a href="' . $edit_link . '">' . _pp_( 'Edit' ) . '</a>';
 		} else {
 			$edit_link = '';
 			$edit = '<strong>' . $group_object->group_name . '</strong>';
@@ -272,6 +272,74 @@ class PP_Groups_List_Table extends PP_Groups_List_Table_Base {
 		$r .= '</tr>';
 
 		return $r;
+	}
+	
+		/**
+	 * Displays the search box.
+	 *
+	 * @since 3.1.0
+	 * @access public
+	 *
+	 * @param string $text     The 'submit' button label.
+	 * @param string $input_id ID attribute value for the search input field.
+	 * @param string       $type             Optional. The type of button. Accepts 'primary', 'secondary',
+	 *                                       or 'delete'. Default 'primary large'.
+	 * @param array|string $other_attributes Optional. Other attributes that should be output with the button,
+	 *                                       mapping attributes to their values, such as `array( 'tabindex' => '1' )`.
+	 *                                       These attributes will be output as `attribute="value"`, such as
+	 *                                       `tabindex="1"`. Other attributes can also be provided as a string such
+	 *                                       as `tabindex="1"`, though the array format is typically cleaner.
+	 *                                       Default empty.
+	 */
+	public function search_box( $text, $input_id, $type = '', $tabindex = '', $other_attributes = '' ) {
+		if ( empty( $_REQUEST['s'] ) && !$this->has_items() )
+			return;
+
+		$input_id = $input_id . '-search-input';
+		
+		if ( ! is_array( $type ) )
+		$type = explode( ' ', $type );
+
+		$classes = array();
+		foreach ( $type as $t ) {
+			$classes[] = $t;
+		}
+		// Remove empty items, remove duplicate items, and finally build a string.
+		$class = implode( ' ', array_unique( array_filter( $classes ) ) );
+
+		if ( is_array( $other_attributes ) && isset( $other_attributes['id'] ) ) {
+			unset( $other_attributes['id'] );
+		}
+
+		$attributes = '';
+		if ( is_array( $other_attributes ) ) {
+			foreach ( $other_attributes as $attribute => $value ) {
+				$attributes .= $attribute . '="' . esc_attr( $value ) . '" '; // Trailing space is important
+			}
+		} elseif ( ! empty( $other_attributes ) ) { // Attributes provided as a string
+			$attributes = $other_attributes;
+		}
+		
+		$attr =  ( $class ) ? ' class="' . esc_attr( $class ) . '"' : '';
+		$attr .= ' ' . $attributes;
+		
+		if ( ! empty( $_REQUEST['orderby'] ) )
+			echo '<input type="hidden" name="orderby" value="' . esc_attr( $_REQUEST['orderby'] ) . '" />';
+		if ( ! empty( $_REQUEST['order'] ) )
+			echo '<input type="hidden" name="order" value="' . esc_attr( $_REQUEST['order'] ) . '" />';
+		if ( ! empty( $_REQUEST['post_mime_type'] ) )
+			echo '<input type="hidden" name="post_mime_type" value="' . esc_attr( $_REQUEST['post_mime_type'] ) . '" />';
+		if ( ! empty( $_REQUEST['detached'] ) )
+			echo '<input type="hidden" name="detached" value="' . esc_attr( $_REQUEST['detached'] ) . '" />';
+?>
+<p class="search-box">
+	<label class="screen-reader-text" for="<?php echo esc_attr( $input_id ); ?>"><?php echo $text; ?>:</label>
+	<input type="search" id="<?php echo esc_attr( $input_id ); ?>" name="s" value="<?php _admin_search_query(); ?>" <?php echo $attr;?> <?php echo ( $tabindex ) ? ' tabindex="' . $tabindex . '"' : '';?> />
+	<?php 
+	$attribs = ( $tabindex ) ? array( 'id' => 'search-submit', 'tabindex' => $tabindex + 1 ) : array( 'id' => 'search-submit' );
+	submit_button( $text, '', '', false, $attribs ); ?>
+</p>
+<?php
 	}
 }
 

@@ -19,7 +19,7 @@ class PP_Updater {
 		pp_get_version_info(true);
 		
 		if ( ! current_user_can('update_plugins') )
-			wp_die( __ppw('You do not have sufficient permissions to update plugins for this site.') );
+			wp_die( _pp_('You do not have sufficient permissions to update plugins for this site.') );
 
 		if ( ! $plugin )
 			$plugin = isset($_REQUEST['plugin']) ? trim($_REQUEST['plugin']) : '';
@@ -32,7 +32,7 @@ class PP_Updater {
 
 		if ( isset( $pp_extensions[ $_REQUEST['action'] ] ) ) {
 			$slug = $_REQUEST['action'];
-			$title = sprintf( __ppw('Upgrade %s'), $pp_extensions[ $slug ]->label );
+			$title = sprintf( _pp_('Upgrade %s'), $pp_extensions[ $slug ]->label );
 		}
 		
 		if ( $slug ) {
@@ -73,18 +73,18 @@ class PP_Updater {
 		global $parent_file, $submenu_file;
 
 		if ( ! current_user_can('install_plugins') )
-			wp_die( __ppw('You do not have sufficient permissions to install plugins for this site.') );
+			wp_die( _pp_('You do not have sufficient permissions to install plugins for this site.') );
 
 		if ( ! $plugin )
 			$plugin = isset($_REQUEST['plugin']) ? trim($_REQUEST['plugin']) : '';
 
-		$title = __ppw('Plugin Install');
+		$title = _pp_('Plugin Install');
 		
 		$pp_available_extensions = pp_get_all_updates_info();
 
 		if ( isset( $pp_available_extensions[ $_REQUEST['action'] ] ) ) {
 			$slug = $_REQUEST['action'];
-			$title = sprintf( __ppw('Install %s'), str_replace( 'Pp', 'PP', ucwords( str_replace( '-', ' ', $slug ) ) ) );
+			$title = sprintf( _pp_('Install %s'), str_replace( 'Pp', 'PP', ucwords( str_replace( '-', ' ', $slug ) ) ) );
 		}
 
 		if ( $slug ) {
@@ -161,28 +161,28 @@ class PP_Upgrader extends Plugin_Upgrader {
 		}
 	
 		if ( $title ) {
-			$this->strings['up_to_date'] = __ppw( 'The plugin is at the latest version.' );
-			$this->strings['no_package'] = sprintf( __ppw('%s upgrade package not available.','pp'), $title );
-			$this->strings['downloading_package'] = sprintf(__ppw('Downloading update from <span class="code">%s</span>&#8230;'),untrailingslashit('http://presspermit.com/'));
-			$this->strings['unpack_package'] = __ppw('Unpacking the update&#8230;');
-			$this->strings['deactivate_plugin'] = sprintf( __ppw('Deactivating %s.','pp'), $title );
-			$this->strings['remove_old'] = __ppw('Removing the old version of the plugin&#8230;');
-			$this->strings['remove_old_failed'] = __ppw('Could not remove the old plugin.');
-			$this->strings['process_failed'] = sprintf( __ppw('%s upgrade Failed.','pp'), $title );
-			$this->strings['process_success'] = sprintf( __ppw('%s upgraded successfully.','pp'), $title );
+			$this->strings['up_to_date'] = _pp_( 'The plugin is at the latest version.' );
+			$this->strings['no_package'] = sprintf( _pp_('%s upgrade package not available.','pp'), $title );
+			$this->strings['downloading_package'] = sprintf(_pp_('Downloading update from <span class="code">%s</span>&#8230;'),untrailingslashit('http://presspermit.com/'));
+			$this->strings['unpack_package'] = _pp_('Unpacking the update&#8230;');
+			$this->strings['deactivate_plugin'] = sprintf( _pp_('Deactivating %s.','pp'), $title );
+			$this->strings['remove_old'] = _pp_('Removing the old version of the plugin&#8230;');
+			$this->strings['remove_old_failed'] = _pp_('Could not remove the old plugin.');
+			$this->strings['process_failed'] = sprintf( _pp_('%s upgrade Failed.','pp'), $title );
+			$this->strings['process_success'] = sprintf( _pp_('%s upgraded successfully.','pp'), $title );
 		}
 	}
 	
 	function install_pp_strings($plugin) {
 		if ( $title = pp_pretty_slug( $plugin ) ) {
-			$this->strings['no_package'] = __ppw('Install package not available.');
-			$this->strings['downloading_package'] = sprintf(__ppw('Downloading install package from <span class="code">%s</span>&#8230;'),untrailingslashit('http://presspermit.com/'));
-			$this->strings['unpack_package'] = __ppw('Unpacking the package&#8230;');
-			$this->strings['installing_package'] = __ppw('Installing the plugin&#8230;');
-			$this->strings['no_files'] = __ppw('The plugin contains no files.');
-			$this->strings['process_failed'] = sprintf( __ppw('%s install Failed.','pp'), $title );
-			$this->strings['process_success'] = sprintf( __ppw('%s installed successfully.','pp'), $title );
-			$this->strings['remove_old'] = __ppw('Removing the old version of the plugin&#8230;');
+			$this->strings['no_package'] = _pp_('Install package not available.');
+			$this->strings['downloading_package'] = sprintf(_pp_('Downloading install package from <span class="code">%s</span>&#8230;'),untrailingslashit('http://presspermit.com/'));
+			$this->strings['unpack_package'] = _pp_('Unpacking the package&#8230;');
+			$this->strings['installing_package'] = _pp_('Installing the plugin&#8230;');
+			$this->strings['no_files'] = _pp_('The plugin contains no files.');
+			$this->strings['process_failed'] = sprintf( _pp_('%s install Failed.','pp'), $title );
+			$this->strings['process_success'] = sprintf( _pp_('%s installed successfully.','pp'), $title );
+			$this->strings['remove_old'] = _pp_('Removing the old version of the plugin&#8230;');
 		}
 	}
 	
@@ -318,7 +318,7 @@ class PP_Upgrader_Skin extends Plugin_Upgrader_Skin {
 			$title = __('Reload Press Permit Install Screen', 'pp');
 		} else {
 			$url = ( is_network_admin() ) ? 'network/plugins.php' : 'plugins.php';
-			$title = __ppw('Return to Plugins page');
+			$title = _pp_('Return to Plugins page');
 		}
 
 		$this->feedback('<a href="' . admin_url($url) . '" title="' . esc_attr($title) . '" target="_parent" class="button-secondary">' . $title . '</a>');

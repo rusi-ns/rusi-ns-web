@@ -14,7 +14,7 @@ do_action( 'pp_submittee' );
 class PP_Submittee {
 	function process_submission() {
 		if ( ! current_user_can('pp_manage_settings') )
-			wp_die(__ppw('Cheatin&#8217; uh?'));
+			wp_die(_pp_('Cheatin&#8217; uh?'));
 		
 		if ( ! empty( $_REQUEST['pp_refresh_updates'] ) ) {
 			delete_site_transient( 'update_plugins' );

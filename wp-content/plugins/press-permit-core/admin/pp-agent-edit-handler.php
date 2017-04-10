@@ -274,7 +274,7 @@ function _pp_edit_group( $group_id = 0, $agent_type = 'pp_group', $members_only 
 			$errors->add( 'user_login', __( '<strong>ERROR</strong>: This group name is already registered. Please choose another one.', 'pp' ) );
 
 		// Allow plugins to return their own errors.
-		do_action_ref_array( 'pp_group_profile_update_errors', array ( &$errors, $update, &$group ) );
+		do_action_ref_array( 'pp_group_profile_update_errors', array ( $errors, &$update, $group ) );
 
 		if ( $errors->get_error_codes() )
 			return $errors;

@@ -87,7 +87,7 @@ class PP_AdminUI
 		
 		wp_enqueue_style( 'pp', PP_URLPATH . '/admin/css/pp.css', array(), PPC_VERSION );
 		
-		if ( 0 === strpos( $pp_plugin_page, 'pp-' ) )
+		if ( 0 === strpos( $pp_plugin_page, 'pp-' ) || 0 === strpos( $pp_plugin_page, 'capsman' ) )
 			wp_enqueue_style( 'pp-plugin-pages', PP_URLPATH . '/admin/css/pp-plugin-pages.css', array(), PPC_VERSION );
 		
 		if ( in_array( $pagenow, array( 'user-edit.php', 'user-new.php', 'profile.php' ) ) ) {
@@ -226,7 +226,7 @@ class PP_AdminUI
 			add_submenu_page($pp_cred_menu, __('Groups', 'pp'), __('Groups', 'pp'), 'read', 'pp-groups', $handler );
 			
 			if ( current_user_can( 'pp_create_groups' ) )
-				add_submenu_page($pp_cred_menu, __('Add New Permission Group', 'pp'), '- ' . __ppw('Add New'), 'read', 'pp-group-new', $handler );
+				add_submenu_page($pp_cred_menu, __('Add New Permission Group', 'pp'), '- ' . _pp_('Add New'), 'read', 'pp-group-new', $handler );
 		}
 		
 		if ( current_user_can( 'list_users' ) && current_user_can( 'pp_administer_content' ) ) {
@@ -289,7 +289,7 @@ class PP_AdminUI
 	
 	function ui_admin_footer() {
 		if ( (false !== strpos($_SERVER['HTTP_USER_AGENT'], 'msie 7') ) )
-			echo '<span style="float:right; margin-left: 2em"><a href="http://presspermit.com/">' . __('Press Permit', 'pp') . '</a> ' . PPC_VERSION . ' | ' . '<a href="http://presspermit.com/forums/">' . __ppw('Support Forums', 'pp') . '</a>&nbsp;</span>';
+			echo '<span style="float:right; margin-left: 2em"><a href="http://presspermit.com/">' . __('Press Permit', 'pp') . '</a> ' . PPC_VERSION . ' | ' . '<a href="http://presspermit.com/forums/">' . _pp_('Support Forums', 'pp') . '</a>&nbsp;</span>';
 	}
 	
 	// support NextGenGallery uploader and other custom jquery calls which WP treats as index.php ( otherwise user_can_access_admin_page() fails )

@@ -4,11 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 <div class="wrap pp-groups">
 <?php pp_icon(); ?>
-<h2>
+<h1>
 <?php
 _e( 'User Permissions', 'pp' );
 ?>
-</h2>
+</h1>
 
 <p class="pp-bulk-user-perm">
 <h4><a href="admin.php?page=pp-edit-permissions&amp;action=edit&amp;agent_type=user">
@@ -39,6 +39,10 @@ printf( __( 'To assign supplemental roles and exceptions directly to a single us
 <br /><br />
 <ul class="pp-notes">
 <li><?php printf( __( '%1$sAll Users%2$s', 'pp' ), "<a href='$url'>", '</a>' );?></li>
+</ul>
+<br />
+<ul class="pp-notes">
+<li><?php printf( __( '%1$sUsers who have no custom Permission Group membership%2$s', 'pp' ), "<a href='$url?pp_no_group=1'>", '</a>' );?></li>
 </ul>
 <br />
 <ul class="pp-notes">

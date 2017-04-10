@@ -86,11 +86,11 @@ class PP_Plugin_Admin {
 	// adds an Options link next to Deactivate, Edit in Plugins listing
 	function flt_plugin_action_links($links, $file) {
 		if ( $file == PPC_BASENAME ) {
-			$links[] = "<a href='http://presspermit.com/forums/'>" . __ppw('Support Forums') . "</a>";
+			$links[] = "<a href='http://presspermit.com/forums/'>" . _pp_('Support Forums') . "</a>";
 			
 			if ( ! is_network_admin() ) {
 			$page = 'pp-settings';
-			$links[] = "<a href='admin.php?page=$page'>" . __ppw('Settings') . "</a>";
+			$links[] = "<a href='admin.php?page=$page'>" . _pp_('Settings') . "</a>";
 			}
 		}
 	

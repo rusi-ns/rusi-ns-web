@@ -48,14 +48,14 @@ if ( ! empty( $pp_admin->errors ) && is_wp_error( $pp_admin->errors ) ) : ?>
 <?php 
 pp_icon(); 
 ?>
-<h2><?php 
+<h1><?php 
 $agent_type = ( isset($_REQUEST['agent_type']) && pp_group_type_editable( $_REQUEST['agent_type'] ) ) ? pp_sanitize_key($_REQUEST['agent_type']) : 'pp_group';
 
 if ( ( 'pp_group' == $agent_type ) || ! $group_type_obj = pp_get_group_type_object( $agent_type ) )
 	_e('Create New Permission Group', 'pp' );
 else
 	printf( __('Create New %s', 'pp'), $group_type_obj->labels->singular_name );
-?></h2>
+?></h1>
 
 <form action="" method="post" id="creategroup" name="creategroup" class="pp-admin">
 <input name="action" type="hidden" value="creategroup" />
@@ -69,12 +69,12 @@ else
 <table class="form-table">
 <tr class="form-field form-required">
 	<th scope="row"><label for="group_name"><?php echo __('Name', 'pp'); ?></label></th>
-	<td><input type="text" name="group_name" id="group_name" value="" class="regular-text" /> </td>
+	<td><input type="text" name="group_name" id="group_name" value="" class="regular-text" tabindex="1" /> </td>
 </tr>
 
 <tr class="form-field">
 	<th><label for="description"><?php echo __('Description', 'pp'); ?></label></th>
-	<td><input type="text" name="description" id="description" value="" class="regular-text" size="80" /></td>
+	<td><input type="text" name="description" id="description" value="" class="regular-text" size="80" tabindex="2" /></td>
 </tr>
 </table>
 
@@ -90,8 +90,8 @@ echo '</div>';
 do_action( 'pp_new_group_ui' );
 ?>
 
-<?php 
-submit_button( __('Create Group', 'pp'), 'primary large pp-submit' ); 
+<?php
+submit_button( __('Create Group', 'pp'), 'primary large pp-submit', '', true, 'tabindex="3"' ); 
 ?>
 
 </form>

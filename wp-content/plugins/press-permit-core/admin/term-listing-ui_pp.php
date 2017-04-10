@@ -96,7 +96,9 @@ class PP_TermsAdmin {
 		
 		$taxonomy = pp_sanitize_key($_REQUEST['taxonomy']);
 		
-		$cache = ( isset( $wp_object_cache->cache[ $taxonomy ] ) ) ? $wp_object_cache->cache[ $taxonomy ] :  $wp_object_cache->cache[ 'terms' ];
+		if ( ! empty( $wp_object_cache ) && ( isset( $wp_object_cache->cache[ $taxonomy ] ) || isset( $wp_object_cache->cache[ 'terms' ] ) ) ) {
+			$cache = ( isset( $wp_object_cache->cache[ $taxonomy ] ) ) ? $wp_object_cache->cache[ $taxonomy ] :  $wp_object_cache->cache[ 'terms' ];
+		}
 		
 		if ( ! empty( $cache) ) {
 			if ( isset($cache) ) {	// Note: As of WP 3.5, array is keyed "blog_id:term_id" on Multisite installs 

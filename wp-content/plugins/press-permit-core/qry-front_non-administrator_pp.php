@@ -96,7 +96,7 @@ class PP_QueryInterceptorFront_NonAdmin {
 		
 		foreach( $post_types as $_post_type ) {
 			$remove_ids = array_diff( $item_types['post_type'][$_post_type], $okay_ids );
-			if ( $remove_ids = apply_filters_ref_array( 'pp_nav_menu_hide_posts', array( $remove_ids, &$items, $_post_type ) ) ) {
+			if ( $remove_ids = apply_filters( 'pp_nav_menu_hide_posts', $remove_ids, $items, $_post_type ) ) {
 				foreach( array_keys($items) as $key ) {
 					if ( ! empty($items[$key]->type) && ( 'post_type' == $items[$key]->type ) && in_array( $items[$key]->object_id, $remove_ids ) ) {
 						unset( $items[$key] );

@@ -1,3 +1,7 @@
+#wpbody-content h1 {
+padding-top: 4px;
+}
+
 /* --- PP Groups Listing */
 .wp-list-table th.column-circle_type{
 width: 6em;

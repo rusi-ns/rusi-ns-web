@@ -103,7 +103,7 @@ if ( ! empty( $pp_admin->errors ) && is_wp_error( $pp_admin->errors ) ) : ?>
 
 <div class="wrap" id="group-profile-page">
 <?php pp_icon(); ?>
-<h2><?php 
+<h1><?php 
 
 if ( 'user' == $agent_type )
 	( $agent_id ) ? _e('Edit User Permissions', 'pp' ) : _e('Add User Permissions', 'pp' );
@@ -117,7 +117,7 @@ elseif ( 'pp_group' == $agent_type )
 elseif ( $group_type_obj = pp_get_group_type_object( $agent_type ) )
 	printf( __( 'Edit Permissions (%s)', 'pp' ), $group_type_obj->labels->singular_name );
 
-?></h2>
+?></h1>
 
 <div id="pp_cred_wrap">
 <form id="agent-profile" class="pp-admin <?php echo esc_attr($agent_type) . '-profile';?>" action="<?php echo esc_url($url); ?>" method="post"<?php do_action('pp_group_edit_form_tag'); ?>>
@@ -174,7 +174,7 @@ $disabled = ( ! pp_group_type_editable( $agent_type ) || $agent->metagroup_id ) 
 	<?php endif; ?>
 <?php elseif ($agent_id) : ?>
 <tr>
-	<th><label for="description"><?php echo __ppw('Description:', 'pp'); ?></label></th>
+	<th><label for="description"><?php echo _pp_('Description:', 'pp'); ?></label></th>
 	<td><input type="text" name="description" id="description" value="<?php echo esc_attr($agent->group_description) ?>" class="regular-text" <?php echo $disabled;?> style="width:95%" /></td>
 </tr>
 <?php endif; ?>

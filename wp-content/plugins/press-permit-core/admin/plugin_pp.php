@@ -40,7 +40,7 @@ class PP_Plugin_Status {
 		//die('test');
 		
 		$query = http_build_query( $request_vars, '', '&' );
-		//pp_errlog($query);
+		pp_errlog($query);
 		
 		$args = array(
 			'headers' => array(
@@ -277,7 +277,7 @@ class PP_Plugin_Status {
 					
 					set_site_transient('ppc_update_info', false);
 				} else {
-					$message = sprintf(__ppw('There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a> or <a href="%5$s">upgrade automatically</a>.'),$plugin_data['Name'],$details_url,esc_attr($plugin_data['Name']),$version_info->new_version,$update_url);
+					$message = sprintf(_pp_('There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a> or <a href="%5$s">upgrade automatically</a>.'),$plugin_data['Name'],$details_url,esc_attr($plugin_data['Name']),$version_info->new_version,$update_url);
 				}
 				echo '<tr class="plugin-update-tr"><td colspan="3" class="plugin-update"><div class="update-message">'.$message.'</div></td></tr>';
 

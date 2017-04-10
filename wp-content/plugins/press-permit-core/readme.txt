@@ -4,8 +4,8 @@ Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JWZVF
 Tags: restrict, access, permissions, cms, user, private, category, pages, privacy, capabilities, role, scoper
 License: GPLv3
 Requires at least: 3.4
-Tested up to: 4.7
-Stable tag: 2.3.16
+Tested up to: 4.7.3
+Stable tag: 2.3.18
 
 Advanced yet accessible content permissions. Give users or groups type-specific roles. Enable or block access for specific posts or terms.
 
@@ -48,6 +48,17 @@ Pro [extensions](http://presspermit.com/extensions) are [available](http://press
 Initial production release
 
 == Changelog ==
+
+= 2.3.18 - 24 Mar 2017 =
+* Fixed : PHP Warning on Terms Listing screen
+* Compat : Pro - bump PP BuddyPress Role Groups minimum version to 2.1.5 to prevent fatal error on BP Groups screen
+* Fixed : Pro, multisite - PHP warning on login screen if PP Compatibility plugin active but netwide permission groups disabled
+
+= 2.3.17 - 17 Mar 2017 =
+* Compat : PHP 7.1 - warning for "expected to be a reference, value given" when PP Collaborative Editing Pack is active
+* Feature : Link in Users table header to list only users who have no group membership
+* Feature : On Users screen, if "no group" / "has role" / "has exceptions" filter is active, set link bold and black 
+* Fixed : Improved Formatting on PP plugin screens
 
 = 2.3.16 - 19 Dec 2016 =
 * Fixed : Fatal error on some installations (cannot use $this as parameter)

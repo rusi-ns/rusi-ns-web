@@ -23,7 +23,7 @@ class PP_Options_Install {
 			'version' =>		__('Version', 'pp'),
 			'extensions' =>		__('Extensions', 'pp'),
 			'beta_updates' =>	__('Beta Updates', 'pp'),
-			'help' =>			__ppw('Help'),
+			'help' =>			_pp_('Help'),
 		);
 
 		$key = 'install';
@@ -230,7 +230,7 @@ class PP_Options_Install {
 			
 					$_url = "plugin-install.php?tab=plugin-information&plugin=$slug&section=changelog&TB_iframe=true&width=600&height=800";
 					$info_url = ( $use_network_admin ) ? network_admin_url($_url) : admin_url($_url);
-					$info_link =  "<span class='update-message'> &bull; <a href='$info_url' class='thickbox'>" . sprintf( __ppw('%s&nbsp;details', 'pp'), $update_info[$slug]['new_version'] ) . '</a></span>';
+					$info_link =  "<span class='update-message'> &bull; <a href='$info_url' class='thickbox'>" . sprintf( _pp_('%s&nbsp;details', 'pp'), $update_info[$slug]['new_version'] ) . '</a></span>';
 				}
 			}
 			
@@ -301,12 +301,12 @@ class PP_Options_Install {
 					if ( isset($update_info[$slug]) && version_compare( $update_info[$slug]['new_version'], $plugin_info->version, '>' ) ) {
 						$_url = "plugin-install.php?tab=plugin-information&plugin=$slug&TB_iframe=true&width=600&height=800";
 						$info_url = ( $use_network_admin ) ? network_admin_url($_url) : admin_url($_url);
-						$info_link =  "<span class='update-message'> &bull; <a href='$info_url' class='thickbox' title='$change_log_caption'>" . sprintf( __ppw('%s&nbsp;details', 'pp'), $update_info[$slug]['new_version'] ) . '</a></span>';
+						$info_link =  "<span class='update-message'> &bull; <a href='$info_url' class='thickbox' title='$change_log_caption'>" . sprintf( _pp_('%s&nbsp;details', 'pp'), $update_info[$slug]['new_version'] ) . '</a></span>';
 						
 						if ( ! $suppress_updates ) {
 							$style = ( $activated ) ? '' : "style='display:none'";
 							$url = pp_plugin_update_url( $plugin_info->basename, $slug ) . '&pp_install=1&TB_iframe=true&height=400';
-							$update_link =  "<span class='pp-update-link' $style> &bull; <a href='$url' class='thickbox' target='_blank'>" . __ppw('update&nbsp;now', 'pp') . '</a></span>';
+							$update_link =  "<span class='pp-update-link' $style> &bull; <a href='$url' class='thickbox' target='_blank'>" . _pp_('update&nbsp;now', 'pp') . '</a></span>';
 							$alert = ( ! empty($update_info[$slug]['alert']) ) ? " &bull; <span class='pp-red'>{$update_info[$slug]['alert']}</span>" : '';
 						}
 					}
@@ -363,7 +363,7 @@ class PP_Options_Install {
 					$_url = "update.php?action=$slug&amp;plugin=$slug&pp_install=1&TB_iframe=true&height=400";
 					$install_url = ( $use_network_admin ) ? network_admin_url($_url) : admin_url($_url);
 					$url = wp_nonce_url($install_url, "{$slug}_$slug");
-					$install_link =  "<span> &bull; <a href='$url' class='thickbox' target='_blank'>" . __ppw('install', 'pp') . '</a></span>';
+					$install_link =  "<span> &bull; <a href='$url' class='thickbox' target='_blank'>" . _pp_('install', 'pp') . '</a></span>';
 				} else {
 					$install_link = '';
 				}
@@ -577,10 +577,6 @@ class PP_Options_Install {
 		
 		wp_localize_script( 'pp_settings', 'ppSettings', $vars );
 	}
-}
-
-function __ppjs ( $text, $domain = 'default' ) {
-	return json_encode(translate( $text, $domain ));
 }
 
 function pp_use_network_updates() {

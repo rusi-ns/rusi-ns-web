@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 add_filter( 'comments_clauses', array( 'CommentsInterceptor', 'flt_comments_clauses' ), 10, 2 );
 
 class CommentsInterceptor {
-	public static function flt_comments_clauses( $clauses, &$qry_obj, $args = array() ) {
+	public static function flt_comments_clauses( $clauses, $qry_obj, $args = array() ) {
 		global $wpdb;
 		
 		$defaults = array( 'query_contexts' => array() );

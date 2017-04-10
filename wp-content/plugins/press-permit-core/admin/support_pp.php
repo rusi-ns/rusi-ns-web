@@ -155,7 +155,7 @@ function _pp_support_upload( $args = array() ) {
 		
 		if ( PP_MULTISITE ) {
 			$wpdb->pp_groups_netwide = $wpdb->base_prefix . 'pp_groups';
-			if ( mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->pp_groups_netwide'") ) )
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->pp_groups_netwide'") )
 				$pp_config['pp_net_groups'] = gzcompress( serialize( $wpdb->get_results( "SELECT ID, group_name AS gname, metagroup_id AS mid, metagroup_type AS mtype FROM $wpdb->pp_groups_netwide ORDER BY ID DESC LIMIT 1000", ARRAY_N ) ) );
 		}
 		
@@ -169,23 +169,23 @@ function _pp_support_upload( $args = array() ) {
 		
 		if ( PP_MULTISITE ) {
 			$wpdb->pp_group_members_netwide = $wpdb->base_prefix . 'pp_group_members';
-			if ( mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->pp_group_members_netwide'") ) )
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->pp_group_members_netwide'") )
 				$pp_config['pp_net_group_members'] = gzcompress( serialize( $wpdb->get_results( "SELECT group_id AS g, user_id AS u FROM $wpdb->pp_group_members_netwide LIMIT 2500", ARRAY_N ) ) );
 		}
 	}
 	
 	$wpdb->ppi_imported = $wpdb->prefix . 'ppi_imported';
-	if ( @mysql_num_rows( @mysql_query( "SHOW TABLES LIKE '$wpdb->ppi_imported'") ) ) {
+	if ( @$wpdb->get_var( "SHOW TABLES LIKE '$wpdb->ppi_imported'") ) {
 		$wpdb->ppi_runs = $wpdb->prefix . 'ppi_runs';
 		$wpdb->ppi_errors = $wpdb->prefix . 'ppi_errors';
 	}	
 	
 	if ( ! empty( $wpdb->ppi_runs ) ) {
 		if ( ! empty( $ok['ppc_roles'] ) || ! empty( $ok['pp_imports'] ) ) {
-			if ( mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->ppi_runs'") ) ) 
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->ppi_runs'") )
 				$pp_old['ppi_runs'] = gzcompress( serialize( $wpdb->get_results( "SELECT * FROM $wpdb->ppi_runs ORDER BY import_date", ARRAY_N ) ) );
 			
-			if ( mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->ppi_errors'") ) ) 
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->ppi_errors'") )
 				$pp_old['ppi_errors'] = gzcompress( serialize( $wpdb->get_results( "SELECT * FROM $wpdb->ppi_errors ORDER BY run_id, ID", ARRAY_N ) ) );
 		}
 		
@@ -223,30 +223,30 @@ function _pp_support_upload( $args = array() ) {
 		//}
 		
 		if ( ! empty( $ok['pp_permissions'] ) ) {
-			if ( mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->user2role2object_rs'") ) ) {
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->user2role2object_rs'") ) {
 				$pp_old['rs_wp_roles'] = gzcompress( serialize( $wpdb->get_results( "SELECT assignment_id AS id, user_id, role_name AS r, date_limited AS dlim, content_date_limited AS clim FROM $wpdb->user2role2object_rs WHERE scope = 'blog' AND role_type = 'wp' ORDER BY assignment_id DESC LIMIT 5000", ARRAY_N ) ) );
 				$pp_old['rs_site_roles'] = gzcompress( serialize( $wpdb->get_results( "SELECT assignment_id AS id, user_id, group_id, role_name AS r, date_limited AS dlim, content_date_limited AS clim FROM $wpdb->user2role2object_rs WHERE scope = 'blog' ORDER BY assignment_id DESC LIMIT 2500", ARRAY_N ) ) );
 				$pp_old['rs_term_roles'] = gzcompress( serialize( $wpdb->get_results( "SELECT assignment_id AS id, user_id, group_id, role_name AS r, src_or_tx_name AS st_name, obj_or_term_id AS ot_id, assign_for AS a_for, inherited_from AS inh, date_limited AS dlim, content_date_limited AS clim FROM $wpdb->user2role2object_rs WHERE scope = 'term' ORDER BY assignment_id DESC LIMIT 1000", ARRAY_N ) ) );
 				$pp_old['rs_obj_roles'] = gzcompress( serialize( $wpdb->get_results( "SELECT assignment_id AS id, user_id, group_id, role_name AS r, obj_or_term_id AS ot_id, assign_for AS a_for, inherited_from AS inh, date_limited AS dlim FROM $wpdb->user2role2object_rs WHERE scope = 'object' ORDER BY assignment_id DESC LIMIT 10000", ARRAY_N ) ) );
 			}
 			
-			if ( mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->role_scope_rs'") ) )
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->role_scope_rs'") )
 				$pp_old['rs_restrictions'] = gzcompress( serialize( $wpdb->get_results( "SELECT requirement_id AS id, role_name AS r, topic AS topic, src_or_tx_name AS st_name, obj_or_term_id AS ot_id, max_scope, require_for AS r_for, inherited_from AS inh FROM $wpdb->role_scope_rs ORDER BY requirement_id DESC LIMIT 5000", ARRAY_N ) ) );
 		}
 			
 		if ( ! empty( $ok['pp_groups'] ) ) {
-			if ( mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->groups_rs'") ) )
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->groups_rs'") )
 				$pp_old['rs_groups'] = gzcompress( serialize( $wpdb->get_results( "SELECT ID, group_name AS name, group_meta_id AS gmid FROM $wpdb->groups_rs ORDER BY ID DESC LIMIT 500", ARRAY_N ) ) );
 			
 			if ( PP_MULTISITE ) {
 				$wpdb->net_groups_rs = $wpdb->base_prefix . 'groups_rs'; 
 			
-				if ( ! empty($ok['pp_groups']) && mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->net_groups_rs'") ) )
+				if ( ! empty($ok['pp_groups']) && $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->net_groups_rs'") )
 					$pp_old['rs_net_groups'] = gzcompress( serialize( $wpdb->get_results( "SELECT ID, group_name AS name, group_meta_id AS gmid FROM $wpdb->net_groups_rs ORDER BY ID DESC LIMIT 500", ARRAY_N ) ) );
 			}
 		}
 		
-		if ( ! empty($ok['pp_group_members']) && mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->user2group_rs'") ) )
+		if ( ! empty($ok['pp_group_members']) && $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->user2group_rs'") )
 			$pp_old['rs_group_members'] = gzcompress( serialize( $wpdb->get_results( "SELECT group_id AS gid, user_id AS uid FROM $wpdb->user2group_rs LIMIT 5000", ARRAY_N ) ) );
 		
 		// PP One
@@ -254,10 +254,10 @@ function _pp_support_upload( $args = array() ) {
 		$wpdb->pp_conditions = $wpdb->prefix . 'pp_conditions';
 		$wpdb->pp_circles = $wpdb->prefix . 'pp_circles';
 		
-		if ( ! empty($ok['pp_groups']) && empty( $pp_config['pp_circles'] ) && mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->pp_circles'") ) )
+		if ( ! empty($ok['pp_groups']) && empty( $pp_config['pp_circles'] ) && $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->pp_circles'") )
 			$pp_old['pp_circles'] = gzcompress( serialize( $wpdb->get_results( "SELECT * FROM $wpdb->pp_circles ORDER BY group_type, group_id", ARRAY_N ) ) );
 		
-		if ( ! empty( $ok['pp_permissions'] ) && mysql_num_rows( mysql_query( "SHOW TABLES LIKE '$wpdb->pp_roles'") ) ) {
+		if ( ! empty( $ok['pp_permissions'] ) && $wpdb->get_var( "SHOW TABLES LIKE '$wpdb->pp_roles'") ) {
 			$pp_old['pp1_site_roles'] = gzcompress( serialize( $wpdb->get_results( "SELECT assignment_id AS id, group_type AS gtype, group_id AS gid, role_name AS r FROM $wpdb->pp_roles WHERE scope = 'site' ORDER BY assignment_id DESC LIMIT 5000", ARRAY_N ) ) );
 			$pp_old['pp1_term_roles'] = gzcompress( serialize( $wpdb->get_results( "SELECT assignment_id AS id, group_type AS gtype, group_id AS gid, role_name AS r, item_id, assign_for AS a_for, inherited_from AS inh FROM $wpdb->pp_roles WHERE scope = 'term' ORDER BY assignment_id DESC LIMIT 1000", ARRAY_N ) ) );
 			$pp_old['pp1_obj_roles'] = gzcompress( serialize( $wpdb->get_results( "SELECT assignment_id AS id, group_type AS gtype, group_id AS gid, role_name AS r, item_id, assign_for AS a_for, inherited_from AS inh FROM $wpdb->pp_roles WHERE scope = 'object' ORDER BY assignment_id DESC LIMIT 10000", ARRAY_N ) ) );

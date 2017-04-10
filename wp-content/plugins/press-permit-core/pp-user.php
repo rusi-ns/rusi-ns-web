@@ -67,6 +67,9 @@ class PP_User extends WP_User {
 		$arr []= "{$table_alias}agent_type = 'user' AND {$table_alias}agent_id = '$this->ID'";
 		
 		foreach( pp_get_group_types( array(), 'names' ) as $agent_type ) {
+			if ( ( 'pp_net_group' == $agent_type ) && ! pp_get_option( 'netwide_groups' ) )
+				continue;
+			
 			$apply_groups = $this->groups[$agent_type];
 			
 			if ( ( 'pp_group' == $agent_type ) && pp_get_option( 'netwide_groups' ) ) {

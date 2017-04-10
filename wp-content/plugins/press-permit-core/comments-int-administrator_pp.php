@@ -1,10 +1,10 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-add_filter( 'comments_clauses', array( 'CommentsInterceptor_Administrator', 'flt_comments_clauses' ), 10, 2 );
+add_filter( 'comments_clauses', array( 'CommentsInterceptor_Administrator', 'flt_comments_clauses' ) );
 
 class CommentsInterceptor_Administrator {
-	public static function flt_comments_clauses( $clauses, &$qry_obj ) {
+	public static function flt_comments_clauses( $clauses ) {
 		global $wpdb;
 		
 		$stati = get_post_stati( array( 'public' => true, 'private' => true ), 'names', 'or' );

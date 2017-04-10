@@ -54,7 +54,7 @@ class PP_Agents_Ajax {
 		<tr><td id="pp-agent-selection_<?php echo $id_suffix;?> " style="vertical-align:top">
 		<h4><?php echo $label_headline;?></h4>
 		<input id="agent_search_text_<?php echo $id_suffix;?>" type="text" size="8" />
-		<button type="button" class="pp-agent-search-submit" id="agent_submit_<?php echo $id_suffix;?>"><?php echo __ppw("Search")?></button>
+		<button type="button" class="pp-agent-search-submit" id="agent_submit_<?php echo $id_suffix;?>"><?php echo _pp_("Search")?></button>
 		
 		<?php if ( ( 'user' == $agent_type ) ) :?>
 			<br />

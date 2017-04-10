@@ -301,7 +301,9 @@ class PP_CapInterceptor
 		//=== Allow PP extensions or other plugins to modify some variables
 		//
 
-		if ( $_vars = apply_filters_ref_array( 'pp_has_post_cap_vars', array( null, $wp_sitecaps, $pp_reqd_caps, array( 'post_type' => $post_type, 'post_id' => $post_id, 'user_id' => $args[1], 'required_operation' => $pp_args['required_operation'] ), &$this ) ) ) {
+		$null_vars = null;
+		$post_cap_args = array( 'post_type' => $post_type, 'post_id' => $post_id, 'user_id' => $args[1], 'required_operation' => $pp_args['required_operation'] );
+		if ( $_vars = apply_filters_ref_array( 'pp_has_post_cap_vars', array( $null_vars, $wp_sitecaps, $pp_reqd_caps, $post_cap_args, $this ) ) ) {
 			extract( array_intersect_key( $_vars, array_fill_keys( array( 'post_type', 'post_id', 'pp_reqd_caps', 'return_caps', 'required_operation' ), 'true' ) ) );
 		}
 
@@ -314,7 +316,7 @@ class PP_CapInterceptor
 		extract( $pp_args, EXTR_SKIP );
 		
 		// Note: At this point, we have a nonzero post_id...
-		do_action_ref_array( 'pp_has_post_cap_pre', array( $pp_reqd_caps, 'post', $post_type, $post_id, &$this ) );	// cache clearing / refresh forcing can be applied here
+		do_action_ref_array( 'pp_has_post_cap_pre', array( $pp_reqd_caps, 'post', $post_type, $post_id, $this ) );	// cache clearing / refresh forcing can be applied here
 		
 		$memcache_disabled = $this->flags['memcache_disabled'];
 		
@@ -397,7 +399,7 @@ class PP_CapInterceptor
 			$this_id_okay = $this->memcache['tested_ids'][$post_type][$capreqs_key][$post_id];
 		}
 		
-		do_action_ref_array( 'pp_has_post_cap_done', array( $this_id_okay, $pp_reqd_caps, 'post', $post_type, $post_id, &$this ) );	// followup to cache processing can be applied here
+		do_action_ref_array( 'pp_has_post_cap_done', array( $this_id_okay, $pp_reqd_caps, 'post', $post_type, $post_id, $this ) );	// followup to cache processing can be applied here
 		
 		if ( $this_id_okay ) {
 			//d_echo( "PASSED for {$orig_reqd_caps[0]}<br />" );

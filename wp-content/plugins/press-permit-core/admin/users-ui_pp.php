@@ -84,16 +84,22 @@ class PP_AdminUsers {
 	}
 	
 	public static function flt_users_columns($defaults) {
+		$title = __( 'Click to show only users who have no group', 'pp' );
+		$style = ( ! empty( $_REQUEST['pp_no_group'] ) && ( empty( $_REQUEST['orderby'] ) || 'pp_group' != $_REQUEST['orderby'] ) ) ? 'style="font-weight:bold; color:black"' : '';
+		$defaults['pp_no_groups'] = sprintf( __('%1$s(x)%2$s', 'pp'), "<a href='?pp_no_group=1' title='$title' $style>", '</a>' );
+		
 		$defaults['pp_groups'] = __('Groups', 'pp');
 		
 		$title = __( 'Click to show only users who have supplemental roles', 'pp' );
-		$defaults['pp_roles'] = sprintf( __('Roles %1$s*%2$s', 'pp'), "<a href='?pp_has_roles=1' title='$title'>", '</a>' );
+		$style = ( ! empty( $_REQUEST['pp_has_roles'] ) ) ? 'style="font-weight:bold; color:black"' : '';
+		$defaults['pp_roles'] = sprintf( __('Roles %1$s*%2$s', 'pp'), "<a href='?pp_has_roles=1' title='$title' $style>", '</a>' );
 		
 		unset($defaults['role']);
 		unset($defaults['bbp_user_role']);
 		
 		$title = __( 'Click to show only users who have exceptions', 'pp' );
-		$defaults['pp_exceptions'] = sprintf( __('Exceptions %1$s*%2$s', 'pp'), "<a href='?pp_has_exceptions=1' title='$title'>", '</a>' );
+		$style = ( ! empty( $_REQUEST['pp_has_exceptions'] ) ) ? 'style="font-weight:bold; color:black"' : '';
+		$defaults['pp_exceptions'] = sprintf( __('Exceptions %1$s*%2$s', 'pp'), "<a href='?pp_has_exceptions=1' title='$title' $style>", '</a>' );
 		return $defaults;
 	}
 
@@ -165,6 +171,9 @@ class PP_AdminUsers {
 				return implode(", ", $all_group_names);
 				break;
 				
+			case 'pp_no_groups' :
+				break;
+				
 			case 'pp_roles' :
 				global $wp_list_table, $wp_roles;
 				static $role_info;
@@ -222,13 +231,18 @@ class PP_AdminUsers {
 	public static function flt_user_query_exceptions( $query_obj ) {
 		if ( isset( $_REQUEST['orderby'] ) && 'pp_group' == $_REQUEST['orderby'] ) {
 			global $wpdb;
+			
 			$query_obj->query_where = " INNER JOIN $wpdb->pp_group_members AS gm ON gm.user_id = $wpdb->users.ID 
 										INNER JOIN $wpdb->pp_groups as g ON gm.group_id = g.ID AND g.metagroup_id='' " . $query_obj->query_where;
 			
 			$order = ( isset($_REQUEST['order']) && ( 'desc' == $_REQUEST['order'] ) ) ? 'DESC' : 'ASC';
-			$query_obj->query_orderby = "ORDER BY g.group_name $order";
+			$query_obj->query_orderby = "ORDER BY g.group_name $order, $wpdb->users.display_name";
+			
+		} elseif ( isset( $_REQUEST['pp_no_group'] ) ) {
+			global $wpdb;
+			$query_obj->query_where .= " AND $wpdb->users.ID NOT IN ( SELECT gm.user_id FROM $wpdb->pp_group_members AS gm INNER JOIN $wpdb->pp_groups as g ON gm.group_id = g.ID AND g.metagroup_id='' )";
 		}
-	 
+		
 		if ( ! empty( $_REQUEST['pp_user_exceptions'] ) ) {
 			global $wpdb;
 			$query_obj->query_where .= " AND ID IN ( SELECT agent_id FROM $wpdb->ppc_exceptions AS e INNER JOIN $wpdb->ppc_exception_items AS i ON e.exception_id = i.exception_id WHERE e.agent_type = 'user' )";

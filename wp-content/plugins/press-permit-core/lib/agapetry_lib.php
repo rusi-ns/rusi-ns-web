@@ -143,8 +143,16 @@ function pp_sanitize_csv( $key ) {
 	return preg_replace( '/[^A-Za-z0-9_\-\.,}{:\|\(\)\s\t\r\n]/', '', $key );
 }
 
-// wrapper for __(), prevents WP strings from being forced into plugin .po
-function __ppw( $string, $unused = '' ) {
+add_action( 'plugins_loaded', '_pp_define_translation_func', 99 );
+function _pp_define_translation_func() {
+	if ( ( defined( 'PPCE_VERSION' ) && version_compare( PPCE_VERSION, '2.3.15', '<=' ) ) || ( defined( 'PPS_VERSION' ) && version_compare( PPS_VERSION, '2.2.1', '<=' ) ) ) {
+		function __ppw( $string, $unused = '' ) {
+			return __( $string );
+		}
+	}
+}
+
+function _pp_( $string, $unused = '' ) {
 	return __( $string );		
 }
 

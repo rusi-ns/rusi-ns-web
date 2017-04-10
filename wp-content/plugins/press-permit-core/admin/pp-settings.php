@@ -20,7 +20,7 @@ $wp_scripts->in_footer []= 'pp_settings';  // otherwise it will not be printed i
 
 function pp_options( $args = array() ) {
 	if ( ! current_user_can('pp_manage_settings') )
-		wp_die(__ppw('Cheatin&#8217; uh?'));
+		wp_die(_pp_('Cheatin&#8217; uh?'));
 
 	do_action( 'pp_options_ui' );
 
@@ -66,12 +66,12 @@ function pp_options( $args = array() ) {
 	<div class="submit pp-submit" style="border:none;position:absolute;right:20px;top:25px;">
 	<input type="submit" name="pp_submit" class="button-primary" value="<?php _e('Save Changes', 'pp');?>" />
 	</div>
-	<h2>
+	<h1>
 	<?php
 	$title = apply_filters( 'pp_options_form_title', _e('Press Permit Settings', 'pp') );
 	_e( $title );
 	?>
-	</h2>
+	</h1>
 	
 	<?php
 

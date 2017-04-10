@@ -52,7 +52,7 @@ case 'bulkdelete':
 
 <div class="wrap">
 <?php pp_icon(); ?>
-<h2><?php _e('Delete Groups'); ?></h2>
+<h1><?php _e('Delete Groups'); ?></h1>
 <p><?php echo _n( 'You have specified this group for deletion:', 'You have specified these groups for deletion:', count( $groupids ), 'pp' ); ?></p>
 <ul>
 <?php
@@ -118,7 +118,7 @@ if ( ! empty($messages) ) {
 
 <div class="wrap pp-groups">
 <?php pp_icon(); ?>
-<h2>
+<h1>
 <?php
 if ( ( 'pp_group' == $agent_type ) || ! $group_type_obj = pp_get_group_type_object( $agent_type ) )
 	$groups_caption = ( defined( 'PP_GROUPS_CAPTION' ) ) ? PP_GROUPS_CAPTION : __('Permission Groups', 'pp');
@@ -140,10 +140,10 @@ $url = 'admin.php';
 $group_variant = ( isset($_REQUEST['group_variant']) ) ? pp_sanitize_key($_REQUEST['group_variant']) : 'pp_group';
 if ( pp_group_type_editable( $group_variant ) && current_user_can('pp_create_groups') ) { 
 ?>
-	<a href="<?php echo add_query_arg( array( 'agent_type' => $agent_type, 'page' => 'pp-group-new' ), $url );?>" class="add-new-h2"><?php echo esc_html( __ppw( 'Add New' ) ); ?></a>
+	<a href="<?php echo add_query_arg( array( 'agent_type' => $agent_type, 'page' => 'pp-group-new' ), $url );?>" class="add-new-h2" tabindex="1"><?php echo esc_html( _pp_( 'Add New' ) ); ?></a>
 <?php }
 
-echo '</h2>';
+echo '</h1>';
 
 if ( pp_get_option('display_hints') ) {
 	echo '<div class="pp-hint">';
@@ -180,7 +180,7 @@ echo '</ul>';
 
 if ( ! empty($groupsearch) )
 	printf( '<span class="subtitle">' . __('Search Results for &#8220;%s&#8221;', 'pp') . '</span>', esc_html( $groupsearch ) ); ?>
-</h2>
+</h1>
 
 <?php $pp_groups_list_table->views(); ?>
 
@@ -189,7 +189,7 @@ if ( ! empty($groupsearch) )
 <input type="hidden" name="agent_type" value="<?php echo $agent_type ?>" />
 <?php 
 //echo esc_html( __( 'Posts with a custom Visibility or Editability require a corresponding Permission Group role assignment.', 'pp' ) );
-$pp_groups_list_table->search_box( __( 'Search Groups', 'pp' ), 'group' ); 
+$pp_groups_list_table->search_box( __( 'Search Groups', 'pp' ), 'group', '', 2 ); 
 ?>
 
 <?php $pp_groups_list_table->display(); ?>
