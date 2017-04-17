@@ -4,7 +4,7 @@
  * Plugin Name: Facebook Feed WD
  * Plugin URI: https://web-dorado.com/products/wordpress-facebook-feed-plugin.html
  * Description:Facebook Feed WD is a completely customizable, responsive solution to help you display your Facebook feed on your WordPress website.
- * Version: 1.0.18
+ * Version: 1.0.19
  * Author: WebDorado
  * Author URI: https://web-dorado.com/
  * License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -806,6 +806,14 @@ function ffwd_front_end_scripts() {
 	}
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'ffwd_frontend', WD_FFWD_FRONT_URL . '/js/ffwd_frontend.js', array(), $version );
+	wp_localize_script('ffwd_frontend', 'wd_ffwd',
+	                   array(
+		                   'ajax_url' => admin_url('admin-ajax.php'),
+
+	                   ));
+
+
+
 	wp_enqueue_style( 'ffwd_frontend', WD_FFWD_FRONT_URL . '/css/ffwd_frontend.css', array(), $version );
 	// Styles/Scripts for popup.
 	wp_enqueue_style( 'ffwd_font-awesome', WD_FFWD_FRONT_URL . '/css/font-awesome/font-awesome.css', array(), '4.4.0' );
@@ -851,6 +859,8 @@ function ffwd_front_end_scripts() {
 
 add_action( 'wp_enqueue_scripts', 'ffwd_front_end_scripts' );
 
+add_action( 'wp_ajax_ffwd_autoupdate', 'wd_fb_update' );
+add_action( 'wp_ajax_nopriv_ffwd_autoupdate', 'wd_fb_update'  );
 /* Add bwg scheduled event for autoupdatable galleries.*/
 add_filter( 'cron_schedules', 'wd_fb_add_autoupdate_interval' );
 function wd_fb_add_autoupdate_interval( $schedules ) {
@@ -869,17 +879,28 @@ function wd_fb_add_autoupdate_interval( $schedules ) {
 
 	return $schedules;
 }
-
-
-add_action( 'wd_fb_schedule_event_hook', 'wd_fb_update' );
+//add_action( 'wd_fb_schedule_event_hook', 'wd_fb_update' );
 // wd_fb_update();
 function wd_fb_update() {
-	global $wpdb;
-	$query = "SELECT * FROM " . $wpdb->prefix . "wd_fb_info WHERE `update_mode` <> 'no_update'";
-	$rows  = $wpdb->get_results( $query );
 	require_once( WD_FFWD_DIR . '/framework/WDFacebookFeed.php' );
-	WDFacebookFeed::update_from_shedule( $rows );
-	die;
+	$current_time=current_time('timestamp');
+	$update_time=get_option('ffwd_autoupdate_time');
+	$autoupdate_interval = WDFacebookFeed::get_autoupdate_interval();
+	if(!$update_time)
+	    update_option('ffwd_autoupdate_time',$autoupdate_interval*60+$current_time);
+
+	if($current_time>=$update_time)
+	{
+		global $wpdb;
+		$query = "SELECT * FROM " . $wpdb->prefix . "wd_fb_info WHERE `update_mode` <> 'no_update'";
+		$rows  = $wpdb->get_results( $query );
+
+		WDFacebookFeed::update_from_shedule( $rows );
+		update_option('ffwd_autoupdate_time',$autoupdate_interval*60+current_time('timestamp'));
+	}
+
+	die();
+
 }
 
 // Facebook feed wd Widget.
@@ -897,7 +918,7 @@ add_action( 'init', 'ffwd_language_load' );
 
 function ffwd_version() {
 
-	$version = '1.0.18';
+	$version = '1.0.19';
 
 	if ( get_option( 'ffwd_version' ) === false ) {
 		add_option( 'ffwd_version', $version );

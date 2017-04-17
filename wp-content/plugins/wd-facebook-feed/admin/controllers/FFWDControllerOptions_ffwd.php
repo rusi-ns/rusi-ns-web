@@ -86,6 +86,9 @@ class FFWDControllerOptions_ffwd {
 			 * refresh filter according to new time interval,
 			 * then add new schedule with the same hook name
 			*/
+
+			update_option('ffwd_autoupdate_time',$autoupdate_interval*60+current_time('timestamp'));
+
 			wp_clear_scheduled_hook( 'wd_fb_schedule_event_hook' );
 			remove_filter( 'cron_schedules', 'wd_fb_add_autoupdate_interval' );
 			add_filter( 'cron_schedules', 'wd_fb_add_autoupdate_interval' );

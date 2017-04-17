@@ -714,8 +714,8 @@ $ffwd_info_options[$ffwd_option_db]	=((isset($_POST[$ffwd_option_db])) ? esc_htm
             array(self::$id, $edge, 'access_token=' . self::$access_token . '&', $fields, 'locale='.get_locale().'&', ''),      self::$graph_url
     );
 
-    // print_r($fb_graph_url);
-    // wp_die();
+     /*print_r($fb_graph_url);
+     wp_die();*/
 		$data['data'] = self::complite_timeline($fb_graph_url);
 		self::$data = $data;
 

@@ -15,6 +15,7 @@ class FFWDControllerMain {
   // Constructor & Destructor                                                           //
   ////////////////////////////////////////////////////////////////////////////////////////
   public function __construct($params = array(), $from_shortcode = 0, $ffwd = 0, $view) {
+
 		$this->view = $view;
 		$this->display($params, $from_shortcode, $ffwd);
 	}
@@ -31,6 +32,16 @@ class FFWDControllerMain {
     $view = new $view_name($model);
     $view->display($params, $from_shortcode, $ffwd);
   }
+
+
+	private function wd_fb_update() {
+		global $wpdb;
+		$query = "SELECT * FROM " . $wpdb->prefix . "wd_fb_info WHERE `update_mode` <> 'no_update'";
+		$rows  = $wpdb->get_results( $query );
+		require_once( WD_FFWD_DIR . '/framework/WDFacebookFeed.php' );
+		WDFacebookFeed::update_from_shedule( $rows );
+		die;
+	}
   ////////////////////////////////////////////////////////////////////////////////////////
   // Getters & Setters                                                                  //
   ////////////////////////////////////////////////////////////////////////////////////////

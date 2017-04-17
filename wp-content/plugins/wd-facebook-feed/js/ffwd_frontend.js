@@ -1064,3 +1064,19 @@ function ffwd_blog_style_resize(ffwd_params, ffwd) {
 	blogstyle_comment_reply_content.css("max-width", max_width_for_comment_reply_content);
 	ffwd_blog_style_img.css("max-width", max_width_for_attachment);
 }
+
+
+jQuery(window).ready(function () {
+  jQuery.ajax({
+    url: wd_ffwd.ajax_url,
+    data: {
+      'action': 'ffwd_autoupdate',
+		},
+    type: 'get',
+    success: function (response) {
+      console.log(response);
+    }
+
+  })
+
+})

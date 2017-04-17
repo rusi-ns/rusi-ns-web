@@ -4,7 +4,7 @@ Donate link: https://web-dorado.com/products/wordpress-facebook-feed-plugin.html
 Tags: customizable facebook feed, facebook, facebook events, facebook feed, facebook group, facebook like box, facebook likes, facebook page, facebook photos, facebook plugin, facebook posts, facebook likebox
 Requires at least: 3.4
 Tested up to: 4.7
-Stable tag: 1.0.18
+Stable tag: 1.0.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,19 +18,13 @@ Facebook Feed WD is a comprehensive tool for displaying Facebook feed, events an
 [User Guide](https://web-dorado.com/wordpress-facebook-feed/installing.html)       
 [Support Forum](https://web-dorado.com/forum/facebook-feed-wd.html)     
        
-Do you plan to make your website more social? Do you want to include Facebook feeds based on a page/public group/your profile within a few steps? Do you want to control the content length, type and styling? WordPress Facebook feed plugin will offer these and hundreds of more options. 
-
-Facebook Feed WD is a comprehensive tool for displaying Facebook feeds, events and photos in your website. With this plugin you will be able to display content from any page, public group and your profile (Pro version). 
-
-Using this WordPress Facebook feed plugin you can contantly refresh your feed: either removing old content and replacing it with fresh posts or adding-up to the existing list of posts.
+Do you plan to make your website more social? Do you want to include Facebook feeds based on a page/public group/your profile within a few steps? Do you want to control the content length, type and styling? WordPress Facebook feed plugin will offer these and hundreds of other options to create and publish custom feeds on your WordPress website.  Facebook Feed WD is a comprehensive Facebook integration tool for displaying responsive Facebook feeds, events and photos in your website. With this plugin you will be able to display content from any Facebook fan page, public group and your profile (Pro version). Using this WordPress Facebook plugin you can constantly refresh your feed: either removing old content and replacing it with fresh posts or adding-up to the existing list of posts. 
 You can set the number of posts to be displayed.
 
-You can display feeds in posts/pages using WordPress Facebook feed plugin shortcode or display them in widget area using the widget. 
+You can show feeds in posts/pages using WordPress Facebook feed plugin shortcode or display them in widget area using the widget. 
 
-The number of displayed Facebook feeds per each post/page is unlimited. You can add Facebook feeds based on different pages, groups and profile (Pro) within the same page. For Facebook pages  and groups you can choose the user roles whose posts will be shared- page owner/ group admin, group member/page fans or both.Hashtags and mentions included in posts will be preserved.
-
-Albums will be displayed with thumbnails which open up in lightbox. High-resolution lightbox images will be accompanied with filmstrip(Pro version), which will turn the standard display of images into an elegant gallery. 
-
+The number of displayed Facebook feeds per each post/page is unlimited. You can add Facebook feeds based on different pages, groups and profile (Pro) within the same page. For Facebook pages  and Facebook groups you can choose the user roles whose posts will be shared- page owner/ group admin, group member/page fans or both. Hashtags and mentions included in posts will be preserved. Facebook albums will be displayed with thumbnails which open up in lightbox. High-resolution lightbox images will be accompanied with filmstrip(Pro version), which will turn the standard display of images into an elegant Facebook gallery. The Facebook page plugin comes with a number of great features and functionality to allow you create anything from free simple feeds to custom feeds, including Facebook group events, Facebook likebox, Facebook feed gallery and more to increase engagement of your Facebook fans.
+In other words, Facebook Feed WD is a great social plugin for all those who need to display their social media feed on WordPress website, keep in constant touch with Facebook followers. This powerful, but at the same time easy custom solution will allow you to take your social networking to the next level by creating and publishing stylish Facebook feeds in just a few minutes. 
 To make appearance and overall design changes you can use Themes (available with Pro version) . This section uses different style sets for each layout.
 
 ###IMPORTANT:    
@@ -42,8 +36,8 @@ If you think you found a bug in Facebook Feed WD or have any problem/question co
 *   Page feeds
 *   Public Group feeds
 *   Auto-update for feeds based on provided time interval
-*   Unlimited display of Facebook feeds per page/post
-*   Custom display for descriptions, comments, likes and shares
+*   Unlimited display of customizable Facebook feeds per page/post
+*   Custom display for descriptions, comments, Facebook likes and shares
 *   Page information (Page Plugin) display
 *   Full-width and custom dimension lightbox support
 *   Detailed event display with featured image
@@ -57,16 +51,18 @@ If you think you found a bug in Facebook Feed WD or have any problem/question co
 Upgrade to [Facebook Feed Pro](https://web-dorado.com/products/wordpress-facebook-feed-plugin.html) to get access to:  
 
 *   Profile Feed    
-*   Specific content feeds, where you can choose to display only single type of content (photos, videos, albums, events )         
-*   Advanced lightbox with comments and more          
+*   Specific content feeds, where you can choose to display only single type of content from your Facebook wall (photos, videos, albums, events )        *   Show Facebook share buttons        *   Advanced lightbox with comments and more          
 *   Filmstrip for lightbox        
 *   Themes to change styles and colors for each view      
-*   Multiple layouts - album view for albums, masonry and thumbnail view for photos/videos, BlogStyle and  thumbnail view for events      
+*   Multiple layouts - album view for albums, masonry and thumbnail views for Facebook videos and photos, BlogStyle and thumbnail view for Facebook events      
 *   Social sharing for feed to Google Plus, Twitter and Facebook          
 
 == Changelog ==
 
-= 1.0.17 =
+= 1.0.19 =
+* Changed: Autoupdate   
+
+= 1.0.18 =
 * Added: Support Forum links    
 
 = 1.0.17 =
@@ -194,10 +190,10 @@ A screen will pop where you can choose the application platform. Here press on B
 Here fill in application display name, email and choose category for the app. And press Create App ID button.    
 Navigate to Developer dashboard, where both the App ID and App Secret Key will be appear. If Secret Key is not visible press Show button.    
 Facebook login / logout. Press to login with provided application details to use content from your user data.   
-Feed auto-update interval. You can define the period of time to update the feed in your website(minimum is 30 second).   
+Feed auto-update interval. You can define the period of time to update the Facebook feed embedded in your website(minimum is 30 second).   
 Timezone. Since Facebook will display post time based on timezone, here you can change it from your default timezone to a custom one.   
 Date format for posts. Set date format while displaying posts from profile, group or page.   
-Date format for events. Set date format while displaying events.    
+Date format for events. Set date format while displaying Facebook events.    
 
 
 = Creating a Facebook Feed =
@@ -224,7 +220,7 @@ Specific
 
 You can choose to display one of the following four content types- photos, videos, albums or events.   
 
-The views for Specific contents differ depending on content type: for Photos and Videos you can use Thumbnails and Masonry View, for Albums you can use Album View, for Events you can use Thumbnails View and Blog Style View.   
+The views for Specific contents differ depending on content type: for Photos and Videos you can use Thumbnails and Masonry View, for Albums you can use Album View, for Facebook page Events you can use Thumbnails View and Blog Style View.   
 
 
 
@@ -234,8 +230,8 @@ For Page, Profile and Group Timelines, Events Blog Style View
 
 Theme. Choose the theme from the list.   
 Width & Height. Set the  width  and height of the timeline.   
-View style. Choose whether to display the feed in Full width- descriptions below media elements(photo, video) or half width with all post content displayed within a single line.
-Enable the options from the list: comments, likes, share,message(description) or the same as caption, grouped share buttons or individual ones- Facebook button, Twitter button, Google+ button, author, post name, place name, feed name and Page Plugin (displays information about the page)
+View style. Choose whether to show feed in Full width- descriptions below media elements(photo, video) or half width with all post content displayed within a single line.
+Enable the options from the list: Facebook likes, comments, share, message(description) or the same as caption, grouped share buttons or individual ones- Facebook button, Twitter button, Google+ button, author, post name, place name, feed name and Page Plugin (displays information about the page)
 Pagination type.  Choose from numerical pagination, Load More button, infinite scroll or no pagination. In case of first two options you can define number of objects per page. 
 Displayed posts can open up in lightbox, get redirected or have no action when pressed.   
 
@@ -251,9 +247,9 @@ Displayed posts can open up in lightbox, get redirected or have no action when p
 
 For page and profile albums
 
-You can choose the feed theme. Then you can define thumbnail dimensions for album thumbnails and gallery thumbnails included in albums, set maximum number of album columns. If content area could include defined number of columns then it will be displayed.  
+You can choose the FB feed theme. Then you can define thumbnail dimensions for album thumbnails and gallery thumbnails included in albums, set maximum number of album columns. If content area could include defined number of columns then it will be displayed.  
 You can choose when to display/hide the album title: while hovered, always or not display the album title at all.   
-In case of page you can enable  Page Plugin which will display page information below or above the feed.  
+In case of page you can enable  Page Plugin which will display page information below or above the simple Facebook feed.  
 Pagination type. Choose from numerical pagination, Load More button, infinite scroll or no pagination. In case of first two options you can define number of objects per page. 
 Displayed posts can open up in lightbox, get redirected or have no action when pressed  
 
@@ -281,7 +277,7 @@ Comments
 Comment display can be set to either standard structure of Facebook which displays only certain Top level comments without replies by default or set to Stream for all level comment display including replies. If you want to use Top level but give a function to show all replies then enable Show replies option. Comment feed can be set either in chronological or reverse chronological order.    
 
 Page plugin  
-You can set the position of the page plugin below or above the feed. Choose whether to display page fans, set its width, display cover photo and small header for the information.
+You can set the position of the page plugin below or above the social feed. Choose whether to display page fans, set its width, display cover photo and small header for the information.
 
 Events  
 For events display you can display event location( including street, city, country, zip and map), event date and define maximum length of the  description. 
@@ -294,13 +290,13 @@ Here you can define main settings for different views. Depending on displayed co
 
 Plugin includes builtin four themes, one of which is default. You can change the builtin theme or create your own theme. Anytime you can reset the theme parameters. 
 
-Thumbnails. Configure options for thumbnail border, hover effect, transition, margin, padding, view and thumbnail background colors and transparency level, image alignment, image title options, like and comment box options.
+Thumbnails. Configure options for thumbnail border, hover effect, transition, margin, padding, view and thumbnail background colors and transparency level, image alignment, image title options, Facebook like box and comment box options.
 
 Masonry.  Configure options for masonry thumbnail border, padding, view and thumbnail background colors and transparency level, like and comment box options, hover effects, image description options.
 
 Compact Album.  Configure options for thumbnail border, hover effect, transition, margin, shadow,padding, view and thumbnail background colors and transparency level, image title options, back button options.
 
-Blog Style.  Configure options for comments box, Like, share, comment display, hashtags, image captions, location and dates, event, page, profile name and feed overall settings.
+Blog Style.  Configure options for comments box, Like, share, comment display, Facebook feed hashtags, image captions, location and dates, event, page, profile name and social feed overall settings.
 
 Lightbox Page. Configure options for lightbox background, control, toggle, close and navigation buttons, filmstrip options, events and story options,Like, share, comment display, hashtags and comments options.
 
@@ -319,8 +315,8 @@ Navigate to Appearance > Widgets.
 
 Scroll to Facebook Feed WD widget and assign it to a custom widget position choosing one of the available positions. Fill in the details and press Save button.   
 
-Title. Provide a title for your Facebook Feed widget.   
-Feed. Select the feed which will be displayed as a widget.    
+Title. Provide a title for your Facebook Feed widgets.   
+Feed. Select the FB feed which will be displayed as a widget.    
 View. Choose the display view for the feed. Depending on feed this can be blog style, album, masonry and thumbnail view.   
 Count. Set a constant number of posts which will be displayed with widget.    
 Dimensions. Choose Facebook Feed widget dimensions.     
