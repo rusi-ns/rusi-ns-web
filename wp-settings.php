@@ -43,11 +43,6 @@ wp_initial_constants();
 // Check for the required PHP version and for the MySQL extension or a database drop-in.
 wp_check_php_mysql_versions();
 
-// Secure cookies.
-@ini_set('session.cookie_httponly', true);
-@ini_set('session.cookie_secure', true);
-@ini_set('session.use_only_cookies', true);
-
 // Disable magic quotes at runtime. Magic quotes are added using wpdb later in wp-settings.php.
 @ini_set( 'magic_quotes_runtime', 0 );
 @ini_set( 'magic_quotes_sybase',  0 );
@@ -105,7 +100,7 @@ require( ABSPATH . WPINC . '/class-wp-matchesmapregex.php' );
 require( ABSPATH . WPINC . '/class-wp.php' );
 require( ABSPATH . WPINC . '/class-wp-error.php' );
 require( ABSPATH . WPINC . '/pomo/mo.php' );
-require( ABSPATH . WPINC . '/class-phpass.php' );
+require_once( ABSPATH . WPINC . '/class-phpass.php' );
 
 // Include the wpdb class and, if present, a db.php database drop-in.
 global $wpdb;
