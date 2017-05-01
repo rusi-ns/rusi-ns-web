@@ -27,6 +27,8 @@ $options = array(
 	'hh_x_ua_compatible_value',
 	'hh_p3p',
 	'hh_p3p_value',
+	'hh_referrer_policy',
+	'hh_referrer_policy_value',
 	'hh_access_control_allow_origin',
 	'hh_access_control_allow_origin_value',
 	'hh_access_control_allow_origin_url',

@@ -1,10 +1,10 @@
 === HTTP Headers ===
 Contributors: zinoui
-Donate link: http://zinoui.com/donation
-Tags: custom headers, http headers, headers, http, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts
+Donate link: https://zinoui.com/donation
+Tags: custom headers, http headers, headers, http, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts, referrer
 Requires at least: 3.2
-Tested up to: 4.7.2
-Stable tag: 1.1.2
+Tested up to: 4.7.4
+Stable tag: 1.2.0
 License: GPLv2 or later
 
 HTTP Headers adds CORS & security HTTP headers to your website.
@@ -28,6 +28,7 @@ Headers supported by HTTP Headers includes:
 * Access-Control-Allow-Headers
 * Access-Control-Expose-Headers
 * P3P
+* Referrer-Policy
 
 The [getting started tutorial](https://zinoui.com/blog/http-headers-for-wordpress) describes a typical configuration of this plugin.
 
@@ -58,6 +59,11 @@ These HTTP headers are being used in production services by popular websites as 
 Updates are on they way, so stay tuned at [@DimitarIvanov](https://twitter.com/DimitarIvanov)
 
 == Changelog ==
+
+= 1.2.0 =
+*Release Date - 28th April, 2017*
+
+* Added support of Referrer-Policy header
 
 = 1.1.2 =
 *Release Date - 13th February, 2017*

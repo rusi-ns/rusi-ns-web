@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: HTTP Headers
-Plugin URI: http://zinoui.com/blog/http-headers-for-wordpress
+Plugin URI: https://zinoui.com/blog/http-headers-for-wordpress
 Description: This plugin adds CORS & security HTTP headers to your website. Improves your website overall security.
-Version: 1.1.2
+Version: 1.2.0
 Author: Dimitar Ivanov
-Author URI: http://zinoui.com
+Author URI: https://zinoui.com
 License: GPLv2 or later
 Text Domain: http-headers
 */
@@ -24,7 +24,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/copyleft/gpl.html>.
 
-Copyright (c) 2016 Zino UI
+Copyright (c) 2017 Zino UI
 */
 
 if (get_option('hh_strict_transport_security_max_age') === false) {
@@ -34,6 +34,11 @@ if (get_option('hh_strict_transport_security_max_age') === false) {
 	add_option('hh_strict_transport_security_max_age', $max_age, null, 'yes');
 	add_option('hh_strict_transport_security_sub_domains', $sub_domains, null, 'yes');
 	add_option('hh_strict_transport_security_preload', 0, null, 'yes');
+}
+
+if (get_option('hh_referrer_policy') === false) {
+	add_option('hh_referrer_policy', 0, null, 'yes');
+	add_option('hh_referrer_policy_value', null, null, 'yes');
 }
 
 function http_headers() {
@@ -160,6 +165,9 @@ function http_headers() {
 			header('P3P: CP="' . join(' ', array_keys($value)) . '"');
 		}
 	}
+	if (get_option('hh_referrer_policy') == 1) {
+		header("Referrer-Policy: " . get_option('hh_referrer_policy_value'));
+	}
 }
 
 function http_headers_admin_add_page() {
@@ -189,6 +197,8 @@ function http_headers_admin() {
 	register_setting('http-headers-group', 'hh_x_ua_compatible_value');
 	register_setting('http-headers-group', 'hh_p3p');
 	register_setting('http-headers-group', 'hh_p3p_value');
+	register_setting('http-headers-group', 'hh_referrer_policy');
+	register_setting('http-headers-group', 'hh_referrer_policy_value');
 	register_setting('http-headers-cors', 'hh_access_control_allow_origin');
 	register_setting('http-headers-cors', 'hh_access_control_allow_origin_value');
 	register_setting('http-headers-cors', 'hh_access_control_allow_origin_url');
