@@ -1,13 +1,13 @@
 === Smush Image Compression and Optimization ===
 Plugin Name: Smush Image Compression and Optimization
-Version: 2.6.3
+Version: 2.7.1
 Author: WPMU DEV
 Author URI: http://premium.wpmudev.org/
 Contributors: WPMUDEV, alexdunae
 Tags: image, resize, optimize, compress, performance, lossless, lossy, photo, pictures, optimize JPG, compress PNG, Smush WordPress Compression, Smush.it
 Requires at least: 3.5
 Tested up to: 4.7.3
-Stable tag: 2.6.3
+Stable tag: 2.7.1
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 Compress and optimize image files, improve performance and boost your SEO rank using Smush WordPress image compression and optimization.
@@ -133,6 +133,31 @@ Yahoo's Smush.it API is gone forever. So WPMU DEV built our own free API that is
 
 
 == Changelog ==
+
+= 2.7.1 =
+
+    * Fixed: Progress bar not updating
+
+= 2.7 =
+
+* Updated:
+    * Faster image uploads: Set async request timeout to 0, if you're having trouble with Auto Smush, set timeout using filter `smush_async_time_out`
+
+* Fixed:
+
+    * Issue with WP Smush Pro membership check
+    * Stats: Rating message shows incorrect image count
+    * Stats: Include directory smush stats in media stats
+    * Directory Smush: UI improvement
+    * Directory Smush: Allow re-smushing directory images, if the lossy feature is turned on
+    * Directory Smush: Fixed empty query warning if there are more than 5k images
+    * Site Ground Staging - Disable Async smush for staging sites, admin URL for async request is incorrect because of the Apache module
+    * Image appearing in Re-Smush list even after smushing, if resize settings are kept on.
+    * Performance: Updated query for smushed images count
+* Added:
+    * WP S3 Offload - Plugin Compatibility for Remove files from server feature ( Pro Version )
+    * WP RSS Aggregator compatibility for Auto Smush
+    * WordPress mobile app Auto smush compatibility
 
 = 2.6.3 =
 
