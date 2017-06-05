@@ -3,7 +3,7 @@
 Plugin Name: HTTP Headers
 Plugin URI: https://zinoui.com/blog/http-headers-for-wordpress
 Description: This plugin adds CORS & security HTTP headers to your website. Improves your website overall security.
-Version: 1.2.0
+Version: 1.3.0
 Author: Dimitar Ivanov
 Author URI: https://zinoui.com
 License: GPLv2 or later
@@ -39,6 +39,11 @@ if (get_option('hh_strict_transport_security_max_age') === false) {
 if (get_option('hh_referrer_policy') === false) {
 	add_option('hh_referrer_policy', 0, null, 'yes');
 	add_option('hh_referrer_policy_value', null, null, 'yes');
+}
+
+if (get_option('hh_content_security_policy') === false) {
+	add_option('hh_content_security_policy', 0, null, 'yes');
+	add_option('hh_content_security_policy_value', null, null, 'yes');
 }
 
 function http_headers() {
@@ -101,8 +106,22 @@ function http_headers() {
 		}
 	}
 	
-	# TODO
-	//header("Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';");
+	if (get_option('hh_content_security_policy') == 1)
+	{
+		$csp = array();
+		$values = get_option('hh_content_security_policy_value');
+		foreach ($values as $key => $val)
+		{
+			if (!empty($val))
+			{
+				$csp[] = sprintf("%s %s", $key, $val);
+			}
+		}
+		if (!empty($csp))
+		{
+			header(sprintf("Content-Security-Policy: %s", join('; ', $csp)));
+		}
+	}
 
 	if (get_option('hh_access_control_allow_origin') == 1)
 	{
@@ -175,43 +194,45 @@ function http_headers_admin_add_page() {
 }
 
 function http_headers_admin() {
-	register_setting('http-headers-group', 'hh_x_frame_options');
-	register_setting('http-headers-group', 'hh_x_frame_options_value');
-	register_setting('http-headers-group', 'hh_x_frame_options_domain');
-	register_setting('http-headers-group', 'hh_x_xxs_protection');
-	register_setting('http-headers-group', 'hh_x_xxs_protection_value');
-	register_setting('http-headers-group', 'hh_x_content_type_options');
-	register_setting('http-headers-group', 'hh_x_content_type_options_value');
-	register_setting('http-headers-group', 'hh_strict_transport_security');
-	register_setting('http-headers-group', 'hh_strict_transport_security_value'); //obsolete
-	register_setting('http-headers-group', 'hh_strict_transport_security_max_age');
-	register_setting('http-headers-group', 'hh_strict_transport_security_sub_domains');
-	register_setting('http-headers-group', 'hh_strict_transport_security_preload');
-	register_setting('http-headers-group', 'hh_public_key_pins');
-	register_setting('http-headers-group', 'hh_public_key_pins_sha256_1');
-	register_setting('http-headers-group', 'hh_public_key_pins_sha256_2');
-	register_setting('http-headers-group', 'hh_public_key_pins_max_age');
-	register_setting('http-headers-group', 'hh_public_key_pins_sub_domains');
-	register_setting('http-headers-group', 'hh_public_key_pins_report_uri');
-	register_setting('http-headers-group', 'hh_x_ua_compatible');
-	register_setting('http-headers-group', 'hh_x_ua_compatible_value');
-	register_setting('http-headers-group', 'hh_p3p');
-	register_setting('http-headers-group', 'hh_p3p_value');
-	register_setting('http-headers-group', 'hh_referrer_policy');
-	register_setting('http-headers-group', 'hh_referrer_policy_value');
-	register_setting('http-headers-cors', 'hh_access_control_allow_origin');
-	register_setting('http-headers-cors', 'hh_access_control_allow_origin_value');
-	register_setting('http-headers-cors', 'hh_access_control_allow_origin_url');
-	register_setting('http-headers-cors', 'hh_access_control_allow_credentials');
-	register_setting('http-headers-cors', 'hh_access_control_allow_credentials_value');
-	register_setting('http-headers-cors', 'hh_access_control_allow_methods');
-	register_setting('http-headers-cors', 'hh_access_control_allow_methods_value');
-	register_setting('http-headers-cors', 'hh_access_control_allow_headers');
-	register_setting('http-headers-cors', 'hh_access_control_allow_headers_value');
-	register_setting('http-headers-cors', 'hh_access_control_expose_headers');
-	register_setting('http-headers-cors', 'hh_access_control_expose_headers_value');
-	register_setting('http-headers-cors', 'hh_access_control_max_age');
-	register_setting('http-headers-cors', 'hh_access_control_max_age_value');
+	register_setting('http-headers-xfo', 'hh_x_frame_options');
+	register_setting('http-headers-xfo', 'hh_x_frame_options_value');
+	register_setting('http-headers-xfo', 'hh_x_frame_options_domain');
+	register_setting('http-headers-xss', 'hh_x_xxs_protection');
+	register_setting('http-headers-xss', 'hh_x_xxs_protection_value');
+	register_setting('http-headers-cto', 'hh_x_content_type_options');
+	register_setting('http-headers-cto', 'hh_x_content_type_options_value');
+	register_setting('http-headers-sts', 'hh_strict_transport_security');
+	register_setting('http-headers-sts', 'hh_strict_transport_security_value'); //obsolete
+	register_setting('http-headers-sts', 'hh_strict_transport_security_max_age');
+	register_setting('http-headers-sts', 'hh_strict_transport_security_sub_domains');
+	register_setting('http-headers-sts', 'hh_strict_transport_security_preload');
+	register_setting('http-headers-pkp', 'hh_public_key_pins');
+	register_setting('http-headers-pkp', 'hh_public_key_pins_sha256_1');
+	register_setting('http-headers-pkp', 'hh_public_key_pins_sha256_2');
+	register_setting('http-headers-pkp', 'hh_public_key_pins_max_age');
+	register_setting('http-headers-pkp', 'hh_public_key_pins_sub_domains');
+	register_setting('http-headers-pkp', 'hh_public_key_pins_report_uri');
+	register_setting('http-headers-uac', 'hh_x_ua_compatible');
+	register_setting('http-headers-uac', 'hh_x_ua_compatible_value');
+	register_setting('http-headers-p3p', 'hh_p3p');
+	register_setting('http-headers-p3p', 'hh_p3p_value');
+	register_setting('http-headers-rp', 'hh_referrer_policy');
+	register_setting('http-headers-rp', 'hh_referrer_policy_value');
+	register_setting('http-headers-csp', 'hh_content_security_policy');
+	register_setting('http-headers-csp', 'hh_content_security_policy_value');
+	register_setting('http-headers-acao', 'hh_access_control_allow_origin');
+	register_setting('http-headers-acao', 'hh_access_control_allow_origin_value');
+	register_setting('http-headers-acao', 'hh_access_control_allow_origin_url');
+	register_setting('http-headers-acac', 'hh_access_control_allow_credentials');
+	register_setting('http-headers-acac', 'hh_access_control_allow_credentials_value');
+	register_setting('http-headers-acam', 'hh_access_control_allow_methods');
+	register_setting('http-headers-acam', 'hh_access_control_allow_methods_value');
+	register_setting('http-headers-acah', 'hh_access_control_allow_headers');
+	register_setting('http-headers-acah', 'hh_access_control_allow_headers_value');
+	register_setting('http-headers-aceh', 'hh_access_control_expose_headers');
+	register_setting('http-headers-aceh', 'hh_access_control_expose_headers_value');
+	register_setting('http-headers-acma', 'hh_access_control_max_age');
+	register_setting('http-headers-acma', 'hh_access_control_max_age_value');
 }
 
 function http_headers_enqueue($hook) {
@@ -224,7 +245,6 @@ function http_headers_enqueue($hook) {
     wp_enqueue_style('http_headers_admin_styles', plugin_dir_url( __FILE__ ) . 'assets/styles.css');
 }
 
-
 if ( is_admin() ){ // admin actions
 	add_action('admin_menu', 'http_headers_admin_add_page');
 	add_action('admin_init', 'http_headers_admin');
@@ -235,5 +255,5 @@ if ( is_admin() ){ // admin actions
 }
 
 function http_headers_admin_page() {
-	include 'views/admin.php';
+	include 'views/index.php';
 }

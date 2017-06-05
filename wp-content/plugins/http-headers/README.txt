@@ -1,10 +1,10 @@
 === HTTP Headers ===
 Contributors: zinoui
 Donate link: https://zinoui.com/donation
-Tags: custom headers, http headers, headers, http, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts, referrer
+Tags: custom headers, http headers, headers, http, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts, referrer, csp
 Requires at least: 3.2
-Tested up to: 4.7.4
-Stable tag: 1.2.0
+Tested up to: 4.7.5
+Stable tag: 1.3.0
 License: GPLv2 or later
 
 HTTP Headers adds CORS & security HTTP headers to your website.
@@ -29,6 +29,7 @@ Headers supported by HTTP Headers includes:
 * Access-Control-Expose-Headers
 * P3P
 * Referrer-Policy
+* Content-Security-Policy
 
 The [getting started tutorial](https://zinoui.com/blog/http-headers-for-wordpress) describes a typical configuration of this plugin.
 
@@ -50,15 +51,21 @@ These HTTP headers are being used in production services by popular websites as 
 
 == Screenshots ==
 
-1. The first screenshot shows up the settings page where you can adjust the security headers.
-2. The second screenshot shows up the settings page where you can adjust the CORS headers.
-3. The third screenshot shows up the response headers of your webpage.
+1. This screenshot shows up the dashboard where you can see a brief preview of headers current values.
+2. This screenshot shows up the settings page where you can adjust the security headers.
+3. This screenshot shows up the response headers returned by the web server.
 
 == Upgrade Notice ==
 
 Updates are on they way, so stay tuned at [@DimitarIvanov](https://twitter.com/DimitarIvanov)
 
 == Changelog ==
+
+= 1.3.0 =
+*Release Date - 3rd June, 2017*
+
+* Added support of Content-Security-Policy header
+* Added dashboard
 
 = 1.2.0 =
 *Release Date - 28th April, 2017*

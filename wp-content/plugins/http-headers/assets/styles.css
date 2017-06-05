@@ -24,3 +24,53 @@
 	border: 1px solid #e5e5e5;
 	margin: 20px 0 0;
 }
+
+.hh-index-table{
+	border-collapse: separate;
+	border-spacing: 0;
+	width: 100%;
+}
+.hh-index-table tbody{
+	border-left: solid 1px rgba(0,0,0,.1);
+	border-right: solid 1px rgba(0,0,0,.1);
+}
+.hh-index-table th{
+	background-color: #fff;
+	font-weight: normal;
+	padding: 8px 10px;
+	text-align: left;
+}
+.hh-index-table td{
+	background-color: #fff;
+	color: gray;
+	padding: 8px 10px;
+}
+.hh-index-table td:first-child{
+	border-left: 4px solid #fff;
+}
+.hh-index-table .active td{
+	background-color: #f7fcfe;
+	color: green;
+}
+.hh-index-table .active td:first-child{
+	border-left: 4px solid #00a0d2;
+}
+.hh-index-table td{
+	box-shadow: 0 -1px 0 rgba(0,0,0,.1);
+}
+.hh-index-table .hh-status{
+	text-align: center;
+}
+.hh-index-table .hh-status span{
+	display: inline-block;
+	border-radius: 3px;
+	padding: 2px 5px;
+}
+.hh-index-table .hh-status-on span{
+	background-color: green;
+	color: #fff;
+}
+.hh-index-table .hh-status-off span{
+	background-color: #aaa;
+	color: #fff;
+}
