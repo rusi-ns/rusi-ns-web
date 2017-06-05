@@ -3,7 +3,7 @@
 /*
  * Plugin Name: Featured Image From URL
  * Description: Allows to use an external image as Featured Image of your post, page or Custom Post Type, such as WooCommerce Product (supports Product Gallery also).
- * Version: 1.5.0
+ * Version: 1.5.1
  * Author: Marcel Jacques Machado 
  * Author URI: http://marceljm.com/wordpress/featured-image-from-url-premium/ 
  */

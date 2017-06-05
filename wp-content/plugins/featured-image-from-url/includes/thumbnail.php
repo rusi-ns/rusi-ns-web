@@ -83,3 +83,19 @@ function fifu_replace_attachment_url($att_url, $att_id) {
     return $att_url;
 }
 
+add_filter('wp_get_attachment_image_src', 'fifu_replace_attachment_image_src', 10, 2);
+
+function fifu_replace_attachment_image_src($image, $attachment_id) {
+    if ($attachment_id == get_post_thumbnail_id(get_the_ID())) {
+        $url = get_post_meta(get_the_ID(), 'fifu_image_url', true);
+        if ($url) {
+            return array(
+                $url,
+                0,
+                0,
+                false
+            );
+        }
+    }
+    return $image;
+}

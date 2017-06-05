@@ -3,8 +3,8 @@ Contributors: marceljm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8BLDLZ3HDBGQG
 Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network, wp all import
 Requires at least: 4.0
-Tested up to: 4.7.3
-Stable tag: 4.7.3
+Tested up to: 4.7.5
+Stable tag: 4.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -281,6 +281,9 @@ was removed. To finish, a Premium version is now been presented.
 = 1.5.0 =
 * Social tags toggle.
 
+= 1.5.1 =
+* Genesis Framework integration, external JS minification and WooCommerce 3 note.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -388,3 +391,6 @@ was removed. To finish, a Premium version is now been presented.
 
 = 1.5.0 =
 * Social tags toggle.
+
+= 1.5.1 =
+* Genesis Framework integration, external JS minification and WooCommerce 3 note.
