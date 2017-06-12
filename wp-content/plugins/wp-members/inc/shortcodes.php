@@ -333,7 +333,7 @@ function wpmem_sc_user_profile( $atts, $content, $tag ) {
 		 *
 		 * @param string The default edit mode heading.
 		 */
-		$heading = apply_filters( 'wpmem_user_edit_heading', __( 'Edit Your Information', 'wp-members' ) );
+		$heading = apply_filters( 'wpmem_user_edit_heading', $wpmem->get_text( 'profile_heading' ) );
 
 		switch( $wpmem->action ) {
 
@@ -524,7 +524,7 @@ function wpmem_sc_fields( $atts, $content = null, $tag ) {
 		
 		// Handle line breaks for textarea fields
 		if ( isset( $field_type ) && 'textarea' == $field_type ) {
-			$result = nl2br( $user_info->{$field} );
+			$result = ( isset( $atts['display'] ) && 'raw' == $atts['display'] ) ? $user_info->{$field} : nl2br( $user_info->{$field} );
 		}
 
 		// Remove underscores from value if requested (default: on).
