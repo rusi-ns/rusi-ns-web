@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - The Events Calendar - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-05-29 22:02:57+0000\n"
+"PO-Revision-Date: 2017-06-06 08:13:38+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -934,7 +934,7 @@ msgstr ""
 
 #: src/Tribe/Linked_Posts.php:885
 msgid "Select or Create a %s"
-msgstr ""
+msgstr "%s の選択か作成"
 
 #: src/Tribe/Linked_Posts.php:883
 msgid "Select a %s"
@@ -1103,7 +1103,7 @@ msgstr ""
 
 #: src/Tribe/Asset/Dynamic.php:72
 msgid "This event is all day on %%startdatewithyear%%."
-msgstr ""
+msgstr "このイベントは %%startdatewithyear%% 終日です。"
 
 #: src/Tribe/Asset/Dynamic.php:71
 msgid "This event is at %%starttime%% on %%startdatewithyear%%."
@@ -1111,7 +1111,7 @@ msgstr ""
 
 #: src/Tribe/Asset/Dynamic.php:70
 msgid "This event is from %%starttime%% to %%endtime%% on %%startdatewithyear%%."
-msgstr ""
+msgstr "このイベントは %%startdatewithyear%% の %%starttime%% から %%endtime%% です。"
 
 #: src/Tribe/Asset/Dynamic.php:67
 msgid "Dec"
@@ -1420,7 +1420,7 @@ msgstr ""
 #: src/admin-views/create-organizer-fields.php:19
 #: src/admin-views/organizer-meta-box.php:45
 msgid "The e-mail address will be obfuscated on your site to avoid it getting harvested by spammers."
-msgstr ""
+msgstr "メールアドレスはスパマーによって盗まれるのを避けるために暗号化されます。"
 
 #: src/admin-views/aggregator/tabs/import-form.php:240
 msgid "Events will be imported with the timezone defined by the source. If no time zone is specified, events will be assigned your site's default timezone (see %1$sSettings > General%2$s)."
@@ -3656,7 +3656,7 @@ msgstr ""
 
 #: src/Tribe/Template/Day.php:147
 msgid "No %1$s scheduled for %2$s. Please try another day."
-msgstr ""
+msgstr "%2$s の%1$s はありません。他の日を探してみてください。"
 
 #: src/Tribe/Main.php:3914
 msgid "Check out the %savailable add-ons%s."
@@ -5113,7 +5113,7 @@ msgstr "オハイオ州"
 
 #: common/src/Tribe/View_Helpers.php:350
 msgid "North Dakota"
-msgstr "ノースダコタ州"
+msgstr "ノースダコタ"
 
 #: common/src/Tribe/View_Helpers.php:349
 msgid "North Carolina"
@@ -5121,7 +5121,7 @@ msgstr "ノースカロライナ州"
 
 #: common/src/Tribe/View_Helpers.php:348
 msgid "New York"
-msgstr "ニューヨーク州"
+msgstr "ニューヨーク"
 
 #: common/src/Tribe/View_Helpers.php:347
 msgid "New Mexico"
@@ -5181,7 +5181,7 @@ msgstr "ルイジアナ州"
 
 #: common/src/Tribe/View_Helpers.php:333
 msgid "Kentucky"
-msgstr "ケンタッキー州"
+msgstr "ケンタッキー"
 
 #: common/src/Tribe/View_Helpers.php:332
 msgid "Kansas"
@@ -5193,7 +5193,7 @@ msgstr "アイオワ州"
 
 #: common/src/Tribe/View_Helpers.php:330
 msgid "Indiana"
-msgstr "インディアナ州"
+msgstr "インディアナ"
 
 #: common/src/Tribe/View_Helpers.php:329
 msgid "Illinois"
@@ -5465,7 +5465,7 @@ msgstr "サントメ・プリンシペ"
 
 #: common/src/Tribe/View_Helpers.php:231
 msgid "San Marino"
-msgstr "サモア"
+msgstr "サンマリノ"
 
 #: common/src/Tribe/View_Helpers.php:230
 msgid "Samoa"
@@ -5517,7 +5517,7 @@ msgstr "ポーランド"
 
 #: common/src/Tribe/View_Helpers.php:218
 msgid "Pitcairn"
-msgstr "ピトケアン"
+msgstr "ピトケアン諸島"
 
 #: common/src/Tribe/View_Helpers.php:217
 msgid "Philippines"
@@ -5541,7 +5541,7 @@ msgstr "パナマ"
 
 #: common/src/Tribe/View_Helpers.php:212
 msgid "Palau"
-msgstr "パラオ"
+msgstr "パラウ"
 
 #: common/src/Tribe/View_Helpers.php:211
 msgid "Pakistan"
@@ -5621,7 +5621,7 @@ msgstr "モロッコ"
 
 #: common/src/Tribe/View_Helpers.php:192
 msgid "Montserrat"
-msgstr "モントセラト"
+msgstr "モントセラート"
 
 #: common/src/Tribe/View_Helpers.php:191
 msgid "Montenegro"
@@ -5649,7 +5649,7 @@ msgstr "メキシコ"
 
 #: common/src/Tribe/View_Helpers.php:185
 msgid "Mayotte"
-msgstr "マヨット島"
+msgstr "マヨット"
 
 #: common/src/Tribe/View_Helpers.php:184
 msgid "Mauritius"
@@ -5661,7 +5661,7 @@ msgstr "モーリタニア"
 
 #: common/src/Tribe/View_Helpers.php:182
 msgid "Martinique"
-msgstr "マルティニーク島"
+msgstr "マルティニーク"
 
 #: common/src/Tribe/View_Helpers.php:181
 msgid "Marshall Islands"
@@ -5853,7 +5853,7 @@ msgstr "グアム"
 
 #: common/src/Tribe/View_Helpers.php:134
 msgid "Guadeloupe"
-msgstr "グアドループ島"
+msgstr "グアドループ"
 
 #: common/src/Tribe/View_Helpers.php:133
 msgid "Grenada"
@@ -6045,7 +6045,7 @@ msgstr "ケイマン諸島"
 
 #: common/src/Tribe/View_Helpers.php:85
 msgid "Cape Verde"
-msgstr "カーボヴェルデ"
+msgstr "カーボベルデ"
 
 #: common/src/Tribe/View_Helpers.php:84
 msgid "Canada"
@@ -6105,7 +6105,7 @@ msgstr "ブータン"
 
 #: common/src/Tribe/View_Helpers.php:70
 msgid "Bermuda"
-msgstr "バミューダ"
+msgstr "バミューダ島"
 
 #: common/src/Tribe/View_Helpers.php:69
 msgid "Benin"
@@ -6169,11 +6169,11 @@ msgstr "アンチグアバーブーダ"
 
 #: common/src/Tribe/View_Helpers.php:54
 msgid "Antarctica"
-msgstr "南極大陸"
+msgstr "南極"
 
 #: common/src/Tribe/View_Helpers.php:53
 msgid "Anguilla"
-msgstr "アングィラ"
+msgstr "アンギラ"
 
 #: common/src/Tribe/View_Helpers.php:52
 msgid "Angola"

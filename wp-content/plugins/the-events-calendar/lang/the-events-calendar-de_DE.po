@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - The Events Calendar - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-05-15 21:40:44+0000\n"
+"PO-Revision-Date: 2017-06-06 12:25:45+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,37 +13,37 @@ msgstr ""
 
 #: src/Tribe/REST/V1/Documentation/Event_Definition_Provider.php:24
 msgid "The event WordPress post ID"
-msgstr ""
+msgstr "Die Wordpress Beitrags ID der Veranstaltung"
 
 #: src/Tribe/Aggregator/Record/Abstract.php:231
 msgid "Something went wrong while inserting the record in the database."
-msgstr ""
+msgstr "Beim Einfügen des Datensatzes in der Datenbank ist etwas schief gegangen."
 
 #: common/src/Tribe/PUE/Notices.php:336
 msgid "You can always check the status of your licenses by logging in to %1$syour account on theeventscalendar.com%2$s."
-msgstr ""
+msgstr "Sie können den Status Ihrer Lizenz jederzeit überprüfen, in dem Sie sich auf %1$s in Ihrem Account auf theeventscalendar.com%2$s einloggen."
 
 #: common/src/Tribe/PUE/Notices.php:221
 msgid "It looks like you're using %1$s, but the license key is invalid. Please download the latest version %2$sfrom your account%3$s."
 msgid_plural "It looks like you're using %1$s, but the license keys are invalid. Please download the latest versions %2$sfrom your account%3$s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Anscheinend verwenden Sie %1$s, aber der Lizenzschlüssel ist ungültig. Bitte laden Sie die neuste Version %2$svon Ihrem Konto %3$s runter."
+msgstr[1] "Anscheinend verwenden Sie %1$s, aber die Lizenzschlüssel sind ungültig. Bitte laden Sie die neuste Version %2$svon Ihrem Konto %3$s runter."
 
 #: common/src/Tribe/PUE/Checker.php:974
 msgid "Please refresh the page and try your request again."
-msgstr ""
+msgstr "Bitte aktualisieren Sie die Seite und versuchen Sie es erneut."
 
 #: common/src/Tribe/Documentation/Swagger/Image_Definition_Provider.php:28
 msgid "The image WordPress post ID"
-msgstr ""
+msgstr "Die Wordpress Beitrags ID des Bildes"
 
 #: common/src/Tribe/App_Shop.php:168
 msgid "Take your image widgets to the next level with Image Widget Plus! We've taken the simple functionality of our basic Image Widget and amped it up with several popular feature requests - multiple image support, slideshow, lightbox, and random image - all backed by a full year of premium support."
-msgstr ""
+msgstr "Nutzen Sie Image Widget Plus, um Ihre Bilder noch eleganter zu präsentieren. Nutzen Sie Slideshows, Lightbox, Unterstützung mehrer Bilder oder die Anzeige zufälliger Bilder - alles mit einem Jahr Unterstützung durch unseren Premium Support."
 
 #: common/src/Tribe/App_Shop.php:166
 msgid "Image Widget Plus"
-msgstr ""
+msgstr "Image Widget Plus"
 
 #: src/admin-views/aggregator/settings.php:460
 msgid "Other URLs"
@@ -152,7 +152,7 @@ msgstr "Die angeforderte Veranstaltungs Archivseite existiert nicht"
 #: src/admin-views/aggregator/fields/schedule.php:50
 #: src/admin-views/aggregator/fields/schedule.php:68
 msgid "at approximately"
-msgstr "um ungefähr"
+msgstr "ungefähr um"
 
 #: src/admin-views/aggregator/origins/url.php:89
 msgid "Event Aggregator will try to fetch events starting in %s from the current date or the specified date;"
@@ -503,7 +503,7 @@ msgstr "Die Standard Veranstaltungskategorie für Veranstaltungen, die über ein
 
 #: src/Tribe/REST/V1/Documentation/Event_Definition_Provider.php:60
 msgid "The TEC REST API link to fetch this event"
-msgstr ""
+msgstr "Der Events Calendar REST API Link, um diese Veranstaltung abzurufen"
 
 #: src/Tribe/REST/V1/Documentation/Event_Definition_Provider.php:121
 msgid "The event timezone string"
@@ -3255,8 +3255,8 @@ msgstr "%1$s und %2$s"
 #: common/src/Tribe/PUE/Notices.php:298
 msgid "You have a license key for %1$s but the key is out of installs. %2$sVisit the Events Calendar website%3$s to to manage your installs, upgrade your license, or purchase a new one."
 msgid_plural "You have license keys for %1$s but your keys are out of installs. %2$sVisit the Events Calendar website%3$s to to manage your installs, upgrade your licenses, or purchase new ones."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sie haben einen Lizenzschlüssel für %1$s eingegeben, aber der Schlüssel wird schon verwendet. %2$sBesuchen Sie die Events Calendar Website%3$s, um Ihre Installationen zu verwalten, Ihre Lizenz zu aktualisieren oder eine neue zu kaufen."
+msgstr[1] "Sie haben Lizenzschlüssel für %1$s eingegeben, aber der Schlüssel wird schon verwendet. %2$sBesuchen Sie die Events Calendar Website%3$s, um Ihre Installationen zu verwalten, Ihre Lizenz zu aktualisieren oder eine neue zu kaufen."
 
 #: common/src/Tribe/PUE/Notices.php:266
 msgid "There is an update available for %1$s but your license has expired. %2$sVisit the Events Calendar website to renew your license.%3$s"
@@ -4317,7 +4317,7 @@ msgstr "Quelle:"
 
 #: src/views/modules/meta/details.php:55
 msgid "Details"
-msgstr " "
+msgstr "Details"
 
 #: src/admin-views/widget-admin-list.php:31
 msgid "Show widget only if there are upcoming events:"
@@ -7045,7 +7045,7 @@ msgstr "Dieser Kalender wird durch The Events Calendar generiert."
 
 #: common/src/Tribe/Cost_Utils.php:108
 msgid "Free"
-msgstr "Eintritt frei"
+msgstr "kostenlos"
 
 #: src/Tribe/Cost_Utils.php:113
 msgctxt "Cost range separator"
