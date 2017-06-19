@@ -17,6 +17,8 @@ function fifu_get_menu_html() {
     $enable_social = get_option('fifu_social');
     $enable_content = get_option('fifu_content');
     $enable_hope = get_option('fifu_hope');
+    $enable_hide_page = get_option('fifu_hide_page');
+    $enable_hide_post = get_option('fifu_hide_post');
 
     $array_cpt = array();
     for ($x = 0; $x <= 4; $x++)
@@ -55,6 +57,8 @@ function fifu_get_menu_settings() {
     fifu_get_setting('fifu_social');
     fifu_get_setting('fifu_content');
     fifu_get_setting('fifu_hope');
+    fifu_get_setting('fifu_hide_page');
+    fifu_get_setting('fifu_hide_post');
 
     for ($x = 0; $x <= 4; $x++)
         fifu_get_setting('fifu_cpt' . $x);
@@ -76,6 +80,8 @@ function fifu_update_menu_options() {
     fifu_update_option('fifu_input_social', 'fifu_social');
     fifu_update_option('fifu_input_content', 'fifu_content');
     fifu_update_option('fifu_input_hope', 'fifu_hope');
+    fifu_update_option('fifu_input_hide_page', 'fifu_hide_page');
+    fifu_update_option('fifu_input_hide_post', 'fifu_hide_post');
 
     for ($x = 0; $x <= 4; $x++)
         fifu_update_option('fifu_input_cpt' . $x, 'fifu_cpt' . $x);

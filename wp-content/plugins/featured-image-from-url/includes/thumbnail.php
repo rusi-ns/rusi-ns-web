@@ -54,9 +54,9 @@ function fifu_replace($html, $post_id) {
 function fifu_get_html($url, $alt) {
     include_once(ABSPATH . 'wp-admin/includes/plugin.php');
     if (is_plugin_active('sirv/sirv.php') && strpos($url, "sirv.com") !== false)
-        return sprintf('<!-- Featured Image From URL plugin --> <img class="Sirv" data-src="%s"></img>', $url);
+        return sprintf('<!-- Featured Image From URL plugin --> <img class="Sirv" data-src="%s">', $url);
 
-    return sprintf('<!-- Featured Image From URL plugin --> <img src="%s" alt="%s"></img>', $url, $alt);
+    return sprintf('<!-- Featured Image From URL plugin --> <img src="%s" alt="%s" style="%s">', $url, $alt, fifu_should_hide() ? 'display:none' : '');
 }
 
 add_filter('the_content', 'fifu_add_to_content');
@@ -72,9 +72,7 @@ add_filter('wp_get_attachment_url', 'fifu_replace_attachment_url', 10, 2);
 
 function fifu_replace_attachment_url($att_url, $att_id) {
     if (get_option('fifu_attachment_id') == $att_id) {
-        if (is_admin())
-            $att_url = '/wp-content/plugins/featured-image-from-url/admin/images/fifu-text.jpg';
-        else {
+        if (!is_admin()) {
             $url = get_post_meta(get_the_ID(), 'fifu_image_url', true);
             if ($url)
                 $att_url = $url;
@@ -98,4 +96,8 @@ function fifu_replace_attachment_image_src($image, $attachment_id) {
         }
     }
     return $image;
+}
+
+function fifu_should_hide() {
+    return ((is_singular('post') && get_option('fifu_hide_post') == 'toggleon') || (is_singular('page') && get_option('fifu_hide_page') == 'toggleon'));
 }

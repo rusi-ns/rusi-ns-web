@@ -20,7 +20,7 @@ function fifu_cat_column_content($internal_image, $column, $term_id) {
     if ($column == 'featured_image') {
         $url = get_term_meta($term_id, 'fifu_image_url', true);
         if ($url != '')
-            echo sprintf('<img src="%s" width="100"/>', $url);
+            echo sprintf('<img src="%s" width="32"/>', $url);
     } else
         echo $internal_image;
 }
@@ -30,6 +30,6 @@ function fifu_column_content($column, $post_id) {
         $url = get_post_meta($post_id, 'fifu_image_url', true);
         if ($url == '')
             $url = wp_get_attachment_url(get_post_thumbnail_id());
-        echo sprintf('<img src="%s" width="100"/>', $url);
+        echo sprintf('<img src="%s" width="32"/>', $url);
     }
 }

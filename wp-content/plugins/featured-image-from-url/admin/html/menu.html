@@ -3,12 +3,14 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <div class="wrap">
+
     <div class="box">
         <h1>Featured Image From URL</h1>
         <div class="fifubox" style="background:#e3ffe2">Free feature</div>
         <div class="fifubox" style="background:#ffe2e2">Premium feature</div>
         <div class="fifubox" style="background:#ffffbc">Depends on WooCommerce Version</div>
     </div>
+
     <div class="box">
         <h2>Custom Post Types</h2>
         <div class="greybox" style="background:#e3ffe2">
@@ -29,6 +31,7 @@
             <input type="submit" value="Submit" >
         </form>
     </div>
+
     <div class="box">
         <h2>Social Tags</h2>
         <div class="greybox" style="background:#e3ffe2">
@@ -55,7 +58,8 @@
                 name="fifu_input_social" 
                 value="" >
         </form>
-    </div>    
+    </div>   
+
     <div class="box">
         <h2>Featured Image in Content</h2>
         <div class="greybox" style="background:#e3ffe2">
@@ -83,6 +87,70 @@
                 value="" >
         </form>
     </div>
+
+    <div class="box">
+        <h2>Hide Featured Media</h2>
+        <div class="greybox" style="background:#e3ffe2">
+            <b>Free feature</b><br><br>
+            Enable the toggle if you want to hide the external featured image/video/slider on posts/pages but keeping its visibility on home.
+        </div>
+        <br>
+        <table style="text-align:left">
+            <tr>
+                <th>
+                    <form 
+                        id="fifu_form_hide_page" 
+                        action="javascript:void(0)" 
+                        method="post">
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_hide_page" 
+                            onclick="invert('hide_page')" 
+                            name="fifu_toggle_hide_page" 
+                            class="<?php echo $enable_hide_page; ?>" 
+                            value=" ">
+
+                        <input 
+                            type="hidden" 
+                            id="fifu_input_hide_page" 
+                            name="fifu_input_hide_page" 
+                            value="" >
+                    </form>
+                </th>
+                <th>   
+                    page
+                </th>
+            </tr> 
+            <tr>
+                <th>
+                    <form 
+                        id="fifu_form_hide_post" 
+                        action="javascript:void(0)" 
+                        method="post">
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_hide_post" 
+                            onclick="invert('hide_post')" 
+                            name="fifu_toggle_hide_post" 
+                            class="<?php echo $enable_hide_post; ?>" 
+                            value=" ">
+
+                        <input 
+                            type="hidden"
+                            id="fifu_input_hide_post" 
+                            name="fifu_input_hide_post" 
+                            value="" >
+                    </form>
+                </th>
+                <th>   
+                    post
+                </th>
+            </tr>            
+        </table>
+    </div>
+
     <div class="box">
         <h2>"This Plugin Doesn't Work, Man!"</h2>
         <div class="greybox" style="background:#e3ffe2">
@@ -110,6 +178,7 @@
                 value="" >
         </form>
     </div>
+
     <div class="box">
         <h2>WooCommerce Full Integration</h2>
         <div class="greybox" style="background:#ffffbc">
@@ -150,8 +219,9 @@
                 value="" >
         </form>
     </div>
+
     <div class="box">
-        <h2><a href="https://www.flickr.com/"><font color="#007ee5">flick</font><font color="#ff0084">r</font></a> Integration (External Thumbnails): Your Website Faster Than Ever</h2>
+        <h2><a href="https://www.flickr.com/">Flickr</a> Integration (External Thumbnails): Your Website Faster Than Ever</h2>
         <div class="greybox" style="background:#ffe2e2">
             <b>Premium feature</b><br><br>
             <div id="accordion">
@@ -181,6 +251,23 @@
             </div>            
             <h3>Choose the maximum image size for each screen</h3>
             <table style="text-align:left">
+                <tr>
+                    <th>Archive:&nbsp;</th>
+                    <th>      
+                        <select id="select_flickr_arch" style="font-family:courier;font-size:12px">
+                            <option value=""></option>
+                            <option value="s">&nbsp; 75 x 75</option>
+                            <option value="q">&nbsp;150 x 150</option>
+                            <option value="t">&nbsp;100&nbsp;on longest side</option>
+                            <option value="m">&nbsp;240&nbsp;on longest side</option>
+                            <option value="n">&nbsp;320&nbsp;on longest side</option>
+                            <option value="-">&nbsp;500&nbsp;on longest side</option>
+                            <option value="z">&nbsp;640&nbsp;on longest side</option>
+                            <option value="c">&nbsp;800&nbsp;on longest side</option>
+                            <option value="b">1024&nbsp;on longest side</option>
+                        </select>
+                    </th> 
+                </tr>
                 <tr>
                     <th>Cart:&nbsp;</th>
                     <th>      
@@ -321,22 +408,98 @@
             <a href="http://fifu.marceljm.com/" targe="_blank">Live preview</a> (site loaded 93% faster due external thumbnails feature)
         </div>
     </div>
+
     <div class="box">
-        <h2>External Featured Videos</h2>
+        <h2>Slider Settings</h2>
         <div class="greybox" style="background:#ffe2e2">
             <b>Premium feature</b><br><br>
-            Allows you to use an external video from YouTube instead of a featured image.<br><br>
+            Once you have added the first external image on a post/page/product, the slider meta box will show up. Adding more external images, you have a slider and you can define its settings here.<br><br>
+            <table style="text-align:left">
+                <tr>
+                    <th>
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_slider_fade" 
+                            name="fifu_toggle_slider_fade" 
+                            class="toggleoff" 
+                            value=" ">
+                    </th>
+                    <th>   
+                        fade effect
+                    </th>
+                </tr> 
+                <tr>
+                    <th>
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_slider_stop" 
+                            name="fifu_toggle_slider_stop" 
+                            class="toggleoff" 
+                            value=" ">
+                    </th>
+                    <th>   
+                        pause autoplay on hover
+                    </th>
+                </tr> 
+                <tr>
+                    <th>
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_slider_ctrl" 
+                            name="fifu_toggle_slider_ctrl" 
+                            class="toggleoff" 
+                            value=" ">
+                    </th>
+                    <th>   
+                        show prev/next buttons
+                    </th>
+                </tr> 
+                <tr>
+                    <th>
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_slider_auto" 
+                            name="fifu_toggle_slider_auto" 
+                            class="toggleoff" 
+                            value=" ">
+                    </th>
+                    <th>   
+                        start to play automatically
+                    </th>
+                </tr> 
+                <tr>
+                    <th>
+                        <input id="fifu_input_slider_pause" 
+                               name="fifu_input_slider_pause" 
+                               step="500"
+                               size="4">
+                    </th>
+                    <th>   
+                        time between each transition (in ms)
+                    </th>
+                </tr> 
+                <tr>
+                    <th>
+                        <input id="fifu_input_slider_speed" 
+                               name="fifu_input_slider_speed" 
+                               step="500"
+                               max="2000"
+                               size="4">
+                    </th>
+                    <th>   
+                        transition duration (in ms)
+                    </th>
+                </tr> 
+            </table>
+
             <a href="http://fifu.marceljm.com/" targe="_blank">Live preview</a>
         </div>
     </div>
-    <div class="box">
-        <h2>Slider</h2>
-        <div class="greybox" style="background:#ffe2e2">
-            <b>Premium feature</b><br><br>
-            You can use a slider of external images as featured image.<br><br>
-            <a href="http://fifu.marceljm.com/" targe="_blank">Live preview</a>
-        </div>
-    </div>
+
     <div class="box">
         <h2>CSS Style</h2>
         <div class="greybox" style="background:#ffe2e2">
@@ -348,6 +511,7 @@
         <input id="fifu_input_css" type="text" name="fifu_input_css" style="width:675px">
         <input type="submit" value="Submit" disabled>
     </div>
+
     <div class="box">
         <h2>Hover Effects</h2>
         <div class="greybox" style="background:#ffe2e2">
@@ -379,24 +543,261 @@
         </select>
         <input type="submit" value="Submit" disabled>
     </div>
+
+    <div class="box">
+        <h2>Meta boxes: External Galleries and Slider</h2>
+        <div class="greybox" style="background:#ffe2e2">
+            <b>Premium feature</b><br><br>
+            Here you can define the number of fields you will have on the editor for galleries and slider. A huge amount of fields can interfere in the save action time.<br><br>
+            <table style="text-align:left">
+                <tr>
+                    <th>   
+                        <label for="fifu_input_spinner_image" 
+                               placehold>External Image Gallery:</label>
+                    </th>
+                    <th>
+                        <input id="fifu_input_spinner_image" 
+                               name="fifu_input_spinner_image" 
+                               size="4">
+                    </th>
+                </tr>   
+                <tr>
+                    <th>
+                        <label for="fifu_input_spinner_video">External Video Gallery:</label>
+                    </th>
+                    <th>
+                        <input id="fifu_input_spinner_video" 
+                               name="fifu_input_spinner_video" 
+                               size="4">
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="fifu_input_spinner_slider">Slider:</label>
+                    </th>
+                    <th>
+                        <input id="fifu_input_spinner_slider" 
+                               name="fifu_input_spinner_slider" 
+                               size="4">
+                    </th>
+                </tr>    		          
+            </table>
+        </div>
+        <br>
+        <input type="submit" value="Submit" disabled>
+    </div>
+
+    <div class="box">
+        <h2>External Featured Videos</h2>
+        <div class="greybox" style="background:#ffe2e2">
+            <b>Premium feature</b><br><br>
+            The default value applied to the videos is "100%" and it usually works fine. However, here you can define the max size (px, cm etc) of the featured videos at different screens and the ratio for these videos as well.<br><br>
+            <table style="text-align:left">
+                <tr>
+                    <th>   
+                        Ratio:
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_width_rtio" 
+                               style="border: 1px solid black;"
+                               name="fifu_input_video_width_rtio" 
+                               size="4">
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_height_rtio" 
+                               style="border: 1px solid black;"
+                               name="fifu_input_video_height_rtio" 
+                               size="4">
+                    </th>
+                    <th>
+                        <div style="font-style: italic;font-weight:normal;">e.g.: 1, 2, 3...</div>
+                    </th>
+                </tr> 
+                <tr>
+                    <th>   
+                        Archive:
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_width_arch" 
+                               name="fifu_input_video_width_arch" 
+                               placeholder="max-width" 
+                               size="4">
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_height_arch" 
+                               name="fifu_input_video_height_arch" 
+                               placeholder="max-height" 
+                               size="4">
+                    </th>
+                    <th>
+                        <div style="font-style: italic;font-weight:normal;">e.g.: 300px, 8cm...</div>
+                    </th>
+                </tr> 
+                <tr>
+                    <th>   
+                        Category:
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_width_ctgr" 
+                               name="fifu_input_video_width_ctgr" 
+                               placeholder="max-width" 
+                               size="4">
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_height_ctgr" 
+                               name="fifu_input_video_height_ctgr" 
+                               placeholder="max-height" 
+                               size="4">
+                    </th>
+                    <th>
+                        <div style="font-style: italic;font-weight:normal;">e.g.: 300px, 8cm...</div>
+                    </th>
+                </tr> 
+                <tr>
+                    <th>   
+                        Home:
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_width_home" 
+                               name="fifu_input_video_width_home" 
+                               placeholder="max-width" 
+                               size="4">
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_height_home" 
+                               name="fifu_input_video_height_home" 
+                               placeholder="max-height" 
+                               size="4">
+                    </th>
+                    <th>
+                        <div style="font-style: italic;font-weight:normal;">e.g.: 300px, 8cm...</div>
+                    </th>
+                </tr>
+                <tr>
+                    <th>   
+                        Page:
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_width_page" 
+                               name="fifu_input_video_width_page" 
+                               placeholder="max-width" 
+                               size="4">
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_height_page" 
+                               name="fifu_input_video_height_page" 
+                               placeholder="max-height" 
+                               size="4">
+                    </th>
+                    <th>
+                        <div style="font-style: italic;font-weight:normal;">e.g.: 300px, 8cm...</div>
+                    </th>
+                </tr> 
+                <tr>
+                    <th>   
+                        Post:
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_width_post" 
+                               name="fifu_input_video_width_post" 
+                               placeholder="max-width" 
+                               size="4">
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_height_post" 
+                               name="fifu_input_video_height_post" 
+                               placeholder="max-height" 
+                               size="4">
+                    </th>
+                    <th>
+                        <div style="font-style: italic;font-weight:normal;">e.g.: 300px, 8cm...</div>
+                    </th>
+                </tr> 
+                <tr>
+                    <th>   
+                        Product:
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_width_prod" 
+                               name="fifu_input_video_width_prod" 
+                               placeholder="max-width" 
+                               size="4">
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_height_prod" 
+                               name="fifu_input_video_height_prod" 
+                               placeholder="max-height" 
+                               size="4">
+                    </th>
+                    <th>
+                        <div style="font-style: italic;font-weight:normal;">e.g.: 300px, 8cm...</div>
+                    </th>
+                </tr> 
+                <tr>
+                    <th>   
+                        Shop:
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_width_shop" 
+                               name="fifu_input_video_width_shop" 
+                               placeholder="max-width" 
+                               size="4">
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_height_shop" 
+                               name="fifu_input_video_height_shop" 
+                               placeholder="max-height" 
+                               size="4">
+                    </th>
+                    <th>
+                        <div style="font-style: italic;font-weight:normal;">e.g.: 300px, 8cm...</div>
+                    </th>
+                </tr>  		          
+            </table>
+            <br>
+            <a href="http://fifu.marceljm.com/" targe="_blank">Live preview</a>
+        </div>
+        <br>
+        <input type="submit" value="Submit" disabled>
+    </div>
+
+    <div class="box">
+        <h2>WooCommerce Lightbox</h2>
+        <div class="greybox" style="background:#ffe2e2">
+            <b>Premium feature</b><br><br>
+            You can enable/disable the WooCommerce lightbox here.<br><br>
+        </div>
+        <br>
+        <input 
+            type="image" 
+            href="javascript:void(0)" 
+            id="fifu_toggle_wc_lbox" 
+            name="fifu_toggle_wc_lbox" 
+            class="toggleoff" 
+            value=" ">
+    </div>
+
     <div class="box">
         <h2>Help</h2>
         <div class="greybox">
             Featured Image From URL plugin allows you to use an external image (from anywhere) as Featured Image of your Post, Page or Custom Post Type, such as WooCommerce Product. For WooCommerce users, it's also possible to use external images in the Product Category and Product Gallery. All included content still has social tags to facilitate sharing on social networks. And it's compatible with WP All Import, a3 Lazy Load and Sirv plugins. For more information, refer to <a href="https://wordpress.org/plugins/featured-image-from-url/faq/" target="_blank">FAQ</a> and <a href="https://wordpress.org/plugins/featured-image-from-url/screenshots/" target="_blank">screenshots</a>. 
         </div>
     </div>
+
     <div class="box">
         <h2>Give This Plugin a 5-Star Rating</h2>
         <div class="greybox">
             Do you really love Featured Image From URL? So give this plugin a 5-star <a href="https://wordpress.org/support/view/plugin-reviews/featured-image-from-url?filter=5" target="_blank">rating</a>.
         </div>
     </div>
+
     <div class="box">
         <h2>Report a Bug or Suggest an Improvement</h2>
         <div class="greybox">
             Bug reports and suggestions for improvement are always welcome. Just send an email to <a href="mailto:marceljmachado@gmail.com">marceljmachado@gmail.com</a> and your request can be available in the next release.
         </div>
     </div>
+
     <div class="box">
         <h2>About Premium Version</h2>
         <div class="greybox">
@@ -484,6 +885,7 @@
             </div>
         </div>
     </div>
+
     <div class="box">
         <h2>About The Author</h2>
         <div class="greybox">
