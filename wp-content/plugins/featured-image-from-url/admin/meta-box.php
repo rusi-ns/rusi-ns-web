@@ -99,13 +99,39 @@ function fifu_slider_show_elements($post) {
     include 'html/live-preview.html';
 }
 
+add_filter('wp_insert_post_data', 'fifu_remove_fist_image', 10, 2);
+
+function fifu_remove_fist_image($data, $postarr) {
+    $content = $postarr['post_content'];
+    if (!$content)
+        return $data;
+
+    $contentClean = fifu_show_all_images($content);
+    $data = str_replace($content, $contentClean, $data);
+
+    $img = fifu_first_img_in_content($contentClean);
+    if (!$img)
+        return $data;
+
+    if (get_option('fifu_pop_first') == 'toggleoff')
+        return str_replace($img, fifu_show_image($img), $data);
+
+    return str_replace($img, fifu_hide_image($img), $data);
+}
+
 add_action('save_post', 'fifu_save_properties');
 
 function fifu_save_properties($post_id) {
     if (isset($_POST['fifu_input_url'])) {
-        update_post_meta($post_id, 'fifu_image_url', esc_url($_POST['fifu_input_url']));
+        $first = fifu_first_url_in_content($post_id);
+        $url = esc_url($_POST['fifu_input_url']);
 
-        if (get_option('fifu_attachment_id') && !get_post_thumbnail_id($post_id) && esc_url($_POST['fifu_input_url']))
+        if ($first && get_option('fifu_get_first') == 'toggleon' && (!$url || get_option('fifu_ovw_first') == 'toggleon'))
+            $url = $first;
+
+        update_post_meta($post_id, 'fifu_image_url', $url);
+
+        if (get_option('fifu_attachment_id') && !get_post_thumbnail_id($post_id) && $url)
             set_post_thumbnail($post_id, get_option('fifu_attachment_id'));
     }
 
@@ -137,4 +163,3 @@ function fifu_save_properties($post_id) {
             delete_post_thumbnail($post_id);
     }
 }
-

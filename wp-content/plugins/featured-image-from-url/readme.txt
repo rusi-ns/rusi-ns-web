@@ -1,38 +1,40 @@
 === Plugin Name ===
 Contributors: marceljm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8BLDLZ3HDBGQG
-Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network, wp all import
+Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid
 Requires at least: 4.0
 Tested up to: 4.8
 Stable tag: 4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Allows to use an external image as Featured Image of your post, page or Custom Post Type, such as WooCommerce Product (supports Product Gallery also).
+Use an external image as Featured Image of your post/page/product (WooCommerce). Includes Auto Set (External Post), Product Gallery, Social Tags and more.
 
 == Description ==
 
 Features:
 
-* allows you to use an external image (from Flickr, Picasa, Amazon S3, anywhere etc) as Featured Image of your post, page and Custom Post Type, such as WooCommerce Product;
+* allows you to use an external image (from Flickr, Picasa, Amazon S3, anywhere) as Featured Image of your post, page and Custom Post Type, such as WooCommerce Product;
+
+* perfect for external posts, the plugin is able to use the first image as Featured Image;
 
 * it's also possible to use external images in the WooCommerce Product Gallery and WooCommerce Product Category;
 
-* when you access "All Posts", "All Pages", "Products" or "Product Categories" in admin menu, the Featured Images (internal or external) are shown in a new column;
+* when you access the table of posts/pages/products/categories in admin menu, the Featured Images are shown in a new column;
 
-* if your theme didn't show Featured Image (internal or external) in Posts, Pages or Products, it's possible to include that at the beginning of the content automatically;
+* if your theme doesn't show Featured Image on posts/pages/products, it's possible to include that at the beginning of the content automatically;
+
+* but if your theme show the Featured Images on posts/pages/products, there is an option to remove the Featured Image;
 
 * all included content still has social tags to facilitate sharing on social networks;
 
 * compatible with WP All Import plugin ("Import Products from any XML or CSV to WooCommerce");
 
-* compatible with Sirv CDN & Image Manager plugin ("Instantly resize and deliver perfectly optimized images to your website").
-
 *WooCommerce compatibility: 2.4.X and 2.5.X.*
 
 **Premium Version:**
 
-All functionalities created for external images are now available for **external videos** (from YouTube), everything in one plugin. 
+All features created for external images are now available for **external videos** (from YouTube), everything in one plugin. 
 
 And you still can: 
 
@@ -40,11 +42,15 @@ And you still can:
 
 * use a **slider** of images as featured image;
 
+* define the video size for each screen;
+
 * apply your own **CSS style** or **<a href="http://marceljm.com/wordpress/featured-image-from-url-premium/#hover">18 hover effects</a>** to the images;
+
+* disable the WooCommerce lightbox.
 
 Click <a href="http://marceljm.com/wordpress/featured-image-from-url-premium/" targe="_blank">here</a> to know more.
 	
-*WooCommerce compatibility: 2.6.X. and later.*
+*WooCommerce compatibility: 3.0.X. and later.*
 
 **<a href="http://fifu.marceljm.com/">Live Preview</a>**
 
@@ -105,7 +111,7 @@ Click <a href="http://marceljm.com/wordpress/featured-image-from-url-premium/" t
 
 = Which WooCommerce versions are supported by Featured Image From URL?
 
-* The Free version supports 2.4.X and 2.5.X while the Premium version supports 2.6.X and later.
+* The Free version supports 2.4.X and 2.5.X while the Premium version supports 3.0.X and later.
 
 = Why aren't my external images in WooCommerce Product Gallery being saved? =
 
@@ -287,6 +293,9 @@ was removed. To finish, a Premium version is now been presented.
 = 1.5.2 =
 * Hide external featured media.
 
+= 1.5.3 =
+* Auto set featured image.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -400,3 +409,6 @@ was removed. To finish, a Premium version is now been presented.
 
 = 1.5.2 =
 * Hide external featured media.
+
+= 1.5.3 =
+* Auto set featured image.

@@ -6,15 +6,103 @@
 
     <div class="box">
         <h1>Featured Image From URL</h1>
-        <div class="fifubox" style="background:#e3ffe2">Free feature</div>
-        <div class="fifubox" style="background:#ffe2e2">Premium feature</div>
-        <div class="fifubox" style="background:#ffffbc">Depends on WooCommerce Version</div>
+    </div>
+
+    <div class="box">
+
+        <h2>Auto Set Featured Image</h2>
+        <div class="greybox" style="background:#e3ffe2">
+            Perfect for external posts, this option allows to use the first image from a post/page/product content as featured image. It will happen when you click on Publish/Update button.
+        </div>
+
+        <br>
+
+        <table style="text-align:left">
+            <tr>
+                <th>
+                    <form 
+                        id="fifu_form_get_first" 
+                        action="javascript:void(0)" 
+                        method="post">
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_get_first" 
+                            onclick="invert('get_first')" 
+                            name="fifu_toggle_get_first" 
+                            class="<?php echo $enable_get_first; ?>" 
+                            value=" " style="display:block">
+
+                        <input 
+                            type="hidden" 
+                            id="fifu_input_get_first" 
+                            name="fifu_input_get_first" 
+                            value="" >
+                    </form>
+                </th>
+                <th>   
+                    use the first image as featured image
+                </th>
+            </tr> 
+            <tr>
+                <th>
+                    <form 
+                        id="fifu_form_pop_first" 
+                        action="javascript:void(0)" 
+                        method="post">
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_pop_first" 
+                            onclick="invert('pop_first')" 
+                            name="fifu_toggle_pop_first" 
+                            class="<?php echo $enable_pop_first; ?>" 
+                            value=" " style="display:block">
+
+                        <input 
+                            type="hidden"
+                            id="fifu_input_pop_first" 
+                            name="fifu_input_pop_first" 
+                            value="" >
+                    </form>
+                </th>
+                <th>   
+                    hide the first image from content
+                </th>
+            </tr>        
+            <tr>
+                <th>
+                    <form 
+                        id="fifu_form_ovw_first" 
+                        action="javascript:void(0)" 
+                        method="post">
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_ovw_first" 
+                            onclick="invert('ovw_first')" 
+                            name="fifu_toggle_ovw_first" 
+                            class="<?php echo $enable_ovw_first; ?>" 
+                            value=" " style="display:block">
+
+                        <input 
+                            type="hidden"
+                            id="fifu_input_ovw_first" 
+                            name="fifu_input_ovw_first" 
+                            value="" >
+                    </form>
+                </th>
+                <th>   
+                    overwrite the existing external featured image
+                </th>
+            </tr>      
+        </table>
+
     </div>
 
     <div class="box">
         <h2>Custom Post Types</h2>
         <div class="greybox" style="background:#e3ffe2">
-            <b>Free feature</b><br><br>
             Featured Image from URL is preconfigured to work with only one Custom Post Type (WooCommerce Product). But you also can use this plugin with other ones. For that, you just need to know the correct Custom Post Type names and fill the fields below. Please, let me know if you need more than 5 inputs here.
         </div>
         <br>
@@ -35,7 +123,6 @@
     <div class="box">
         <h2>Social Tags</h2>
         <div class="greybox" style="background:#e3ffe2">
-            <b>Free feature</b><br><br>
             Featured Image from URL provides social tags to share the external images on the social networks. Here you can enable/disable this feature.
         </div>
         <br>
@@ -51,7 +138,7 @@
                 name="fifu_toggle_social" 
                 class="<?php echo $enable_social; ?>" 
                 value=" "
-                style="<?php echo $show_social_button; ?>">
+                style="display:block">
             <input 
                 type="hidden" 
                 id="fifu_input_social" 
@@ -63,7 +150,6 @@
     <div class="box">
         <h2>Featured Image in Content</h2>
         <div class="greybox" style="background:#e3ffe2">
-            <b>Free feature</b><br><br>
             It will sound crazy, but some themes don't show the Featured Image on the posts or pages. If it is your case and you would like to show the Featured Image there, just enable the toggle. The Featured Image will appear at the beginning of the content, before the text.
         </div>
         <br>
@@ -79,7 +165,7 @@
                 name="fifu_toggle_content" 
                 class="<?php echo $enable_content; ?>" 
                 value=" "
-                style="<?php echo $show_content_button; ?>">
+                style="display:block">
             <input 
                 type="hidden" 
                 id="fifu_input_content" 
@@ -91,7 +177,6 @@
     <div class="box">
         <h2>Hide Featured Media</h2>
         <div class="greybox" style="background:#e3ffe2">
-            <b>Free feature</b><br><br>
             Enable the toggle if you want to hide the external featured image/video/slider on posts/pages but keeping its visibility on home.
         </div>
         <br>
@@ -109,7 +194,7 @@
                             onclick="invert('hide_page')" 
                             name="fifu_toggle_hide_page" 
                             class="<?php echo $enable_hide_page; ?>" 
-                            value=" ">
+                            value=" " style="display:block">
 
                         <input 
                             type="hidden" 
@@ -119,7 +204,7 @@
                     </form>
                 </th>
                 <th>   
-                    page
+                    on page
                 </th>
             </tr> 
             <tr>
@@ -135,7 +220,7 @@
                             onclick="invert('hide_post')" 
                             name="fifu_toggle_hide_post" 
                             class="<?php echo $enable_hide_post; ?>" 
-                            value=" ">
+                            value=" " style="display:block">
 
                         <input 
                             type="hidden"
@@ -145,7 +230,7 @@
                     </form>
                 </th>
                 <th>   
-                    post
+                    on post
                 </th>
             </tr>            
         </table>
@@ -154,7 +239,6 @@
     <div class="box">
         <h2>"This Plugin Doesn't Work, Man!"</h2>
         <div class="greybox" style="background:#e3ffe2">
-            <b>Free feature</b><br><br>
             If the external featured images of your posts or pages aren't being shown, congratulations: you're using a nonstandard theme! But there is a last hope. Enabling the toggle below, your external featured images will be associated to a symbolic file in your Media Library. It's a desperate attempt to cheat your theme that will think that there is an internal image there. Then when the theme tries to show the image, that doesn't exist, a function will replace the symbolic file by your URL on execution time. It should allow you to use the main feature of this plugin, but secondary ones, such as "External Featured Image Slider" may not work.
         </div>
         <br>
@@ -182,21 +266,8 @@
     <div class="box">
         <h2>WooCommerce Full Integration</h2>
         <div class="greybox" style="background:#ffffbc">
-            <div id="tabs">
-                <ul>
-                    <li><a href="#tabs-1">Full Integration</a></li>
-                    <li><a href="#tabs-2">Compatibility</a></li>
-                </ul>
-                <div id="tabs-1">
-                    Would you like to integrate WooCommerce to Featured Image From URL? For that, a script will be executed to overwrite some lines of code from WooCommerce plugin. It's safe and reversible but it will only work if your site is hosted on a Linux server. <br><br>So let me check...<br><br>
-                    <b><?php echo $compatible; ?></b>
-                </div>
-                <div id="tabs-2">
-                    <b>Free</b>: supports WooCommerce 2.4.X and 2.5.X.<br><br>
-                    <b>Premium</b>: supports WooCommerce 2.6.X and 3.0.X.
-                </div>
-            </div>
-
+            The External Featured Image box is already available on Product Editor. However the full integration is required if you want to include the External Product Gallery and use other WooCommerce resources such as Zoom and Lightbox.<br><br>
+            <b><?php echo $compatible; ?></b>
         </div>
         <br>
         <form 
@@ -211,7 +282,7 @@
                 name="fifu_toggle_woocommerce" 
                 class="<?php echo $enable_woocommerce; ?>" 
                 value=" "
-                style="<?php echo $show_woocommerce_button; ?>">
+                style="display:block">
             <input 
                 type="hidden" 
                 id="fifu_input_woocommerce" 
@@ -221,7 +292,7 @@
     </div>
 
     <div class="box">
-        <h2><a href="https://www.flickr.com/">Flickr</a> Integration (External Thumbnails): Your Website Faster Than Ever</h2>
+        <h2>External Thumbnails (<a href="https://www.flickr.com/">Flickr</a> Integration): Your Website Faster Than Ever</h2>
         <div class="greybox" style="background:#ffe2e2">
             <b>Premium feature</b><br><br>
             <div id="accordion">
@@ -423,7 +494,7 @@
                             id="fifu_toggle_slider_fade" 
                             name="fifu_toggle_slider_fade" 
                             class="toggleoff" 
-                            value=" ">
+                            value=" " style="display:block">
                     </th>
                     <th>   
                         fade effect
@@ -437,7 +508,7 @@
                             id="fifu_toggle_slider_stop" 
                             name="fifu_toggle_slider_stop" 
                             class="toggleoff" 
-                            value=" ">
+                            value=" " style="display:block">
                     </th>
                     <th>   
                         pause autoplay on hover
@@ -451,7 +522,7 @@
                             id="fifu_toggle_slider_ctrl" 
                             name="fifu_toggle_slider_ctrl" 
                             class="toggleoff" 
-                            value=" ">
+                            value=" " style="display:block">
                     </th>
                     <th>   
                         show prev/next buttons
@@ -465,7 +536,7 @@
                             id="fifu_toggle_slider_auto" 
                             name="fifu_toggle_slider_auto" 
                             class="toggleoff" 
-                            value=" ">
+                            value=" " style="display:block">
                     </th>
                     <th>   
                         start to play automatically
@@ -771,16 +842,49 @@
         <input 
             type="image" 
             href="javascript:void(0)" 
-            id="fifu_toggle_wc_lbox" 
-            name="fifu_toggle_wc_lbox" 
             class="toggleoff" 
-            value=" ">
+            value=" " style="display:block">
+    </div>
+
+    <div class="box">
+        <h2>Product Categories Grid</h2>
+        <div class="greybox" style="background:#ffe2e2">
+            <b>Premium feature</b><br><br>
+
+            Allows you to use use external images/videos on Product Categories Grid.
+
+        </div>
+
+        <br>
+
+        <form 
+            id="fifu_form_woocommerce" 
+            action="javascript:void(0)" 
+            method="post">
+
+            <input 
+                type="image" 
+                href="javascript:void(0)" 
+                id="fifu_toggle_woocommerce" 
+                onclick="invert('woocommerce')" 
+                name="fifu_toggle_woocommerce" 
+                class="<?php echo $enable_woocommerce; ?>" 
+                value=" "
+                style="display:block">
+
+            <input 
+                type="hidden" 
+                id="fifu_input_woocommerce" 
+                name="fifu_input_woocommerce" 
+                value="" >
+        </form>
+
     </div>
 
     <div class="box">
         <h2>Help</h2>
         <div class="greybox">
-            Featured Image From URL plugin allows you to use an external image (from anywhere) as Featured Image of your Post, Page or Custom Post Type, such as WooCommerce Product. For WooCommerce users, it's also possible to use external images in the Product Category and Product Gallery. All included content still has social tags to facilitate sharing on social networks. And it's compatible with WP All Import, a3 Lazy Load and Sirv plugins. For more information, refer to <a href="https://wordpress.org/plugins/featured-image-from-url/faq/" target="_blank">FAQ</a> and <a href="https://wordpress.org/plugins/featured-image-from-url/screenshots/" target="_blank">screenshots</a>. 
+            Featured Image From URL plugin allows you to use an external image (from anywhere) as Featured Image of your Post, Page or Custom Post Type, such as WooCommerce Product. For WooCommerce users, it's also possible to use external images in the Product Category and Product Gallery. All included content still has social tags to facilitate sharing on social networks. And it's compatible with WP All Import plugin using the custom field "fifu_image_url". For more information, refer to <a href="https://wordpress.org/plugins/featured-image-from-url/faq/" target="_blank">FAQ</a> and <a href="https://wordpress.org/plugins/featured-image-from-url/screenshots/" target="_blank">screenshots</a>. 
         </div>
     </div>
 
@@ -802,63 +906,55 @@
         <h2>About Premium Version</h2>
         <div class="greybox">
             <h3>1) "Is my theme compatible with Featured Image From URL Premium?"</h3>
-            Compatibility between Featured Image From URL Premium and the 50 most popular themes on WordPress Theme Directory:<br><br>
-            01) Twenty Seventeen: yes;<br>
-            02) Twenty Sixteen: yes;<br>
-            03) Twenty Fifteen: yes;<br>
-            04) Twenty Fourteen: yes;<br>
-            05) Total: yes;<br>
-            06) Twenty Twelve: yes;<br>
-            07) Giga Store: no;<br>
-            08) modernize: yes;<br>
-            09) Sydney: no;<br>
-            10) Twenty Eleven: yes;<br>
-            11) Twenty Thirteen: yes;<br>
-            12) Eleganto: no;<br>
-            13) E-Shop: yes;<br>
-            14) Twenty Ten: yes;<br>
-            15) Shop Isle: no;<br>
-            16) ColorMag: yes;<br>
-            17) Illdy: yes;<br>
-            18) OnePress: yes;<br>
-            19) Spacious: yes;<br>
-            20) Primer: yes;<br>
-            21) Storefront: yes;<br>
-            22) Vertex: no;<br>
-            23) Astrid: yes;<br>
-            24) Fotografo: no;<br>
-            25) Poseidon: no;<br>
-            26) Silver Platinum: yes;<br>
-            27) Peaceful: yes;<br>
-            28) Customizr: yes;<br>
-            29) Activello: yes;<br>
-            30) Vantage: yes;<br>
-            31) Maxwell: yes;<br>
-            32) Clean Commerce: yes;<br>
-            33) Nikkon: yes;<br>
-            34) Nisarg: yes;<br>
-            35) Vega: yes;<br>
-            36) Resortica Lite: yes;<br>
-            37) Basic: yes;<br>
-            38) Panoramic: no;<br>
-            39) Sparkling: yes;<br>
-            40) Hueman: yes;<br>
-            41) Businessx: yes;<br>
-            42) xMag: yes;<br>
-            43) Athena: no;<br>
-            44) Shopstar: yes;<br>
-            45) ajaira: yes;<br>
-            46) evolve: no;<br>
-            47) Alpha Store: yes;<br>
-            48) Virtue: no;<br>
-            49) Vogue: yes;<br>
-            50) Responsive: yes.<br>
+            Compatibility between Featured Image From URL Premium and the 30 most popular themes on WordPress Theme Directory:<br><br>
+            <style>
+                th, td {
+                    padding: 8px;
+                    text-align: left;
+                }
+            </style>
+            <table style="text-align:left">
+                <tr><th>Working as...</th><th>Blog</th><th>Shop (WooCommerce)</th></tr>
+                <tr><th>Twenty Seventeen</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Twenty Sixteen</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Consulting</th><th>no</th><th>no</th></tr>
+                <tr><th>Twenty Fifteen</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Hestia</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Twenty Fourteen</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Sydney</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Twenty Twelve</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Total</th><th>no</th><th>yes</th></tr>
+                <tr><th>One Page Express</th><th>yes</th><th>no</th></tr>
+                <tr><th>Shapely</th><th>no</th><th>no</th></tr>
+                <tr><th>Twenty Eleven</th><th>no</th><th>yes</th></tr>
+                <tr><th>Giga Store</th><th>no</th><th>no</th></tr>
+                <tr><th>Twenty Thirteen</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Flash</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Zerif Lite</th><th>no</th><th>yes</th></tr>
+                <tr><th>Activation</th><th>no</th><th>no</th></tr>
+                <tr><th>Astra</th><th>yes</th><th>no</th></tr>
+                <tr><th>Envo Store</th><th>no</th><th>no</th></tr>
+                <tr><th>Kale</th><th>no</th><th>yes</th></tr>
+                <tr><th>Eleganto</th><th>yes</th><th>no</th></tr>
+                <tr><th>ColorMag</th><th>yes</th><th>yes</th></tr>
+                <tr><th>OnePress</th><th>no</th><th>yes</th></tr>
+                <tr><th>E-Shop</th><th>no</th><th>no</th></tr>
+                <tr><th>Twenty Ten</th><th>no</th><th>yes</th></tr>
+                <tr><th>Storefront</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Shop Isle</th><th>no</th><th>no</th></tr>
+                <tr><th>Spacious</th><th>no</th><th>yes</th></tr>
+                <tr><th>Anissa</th><th>yes</th><th>no</th></tr>
+                <tr><th>Resortica Lite</th><th>no</th><th>no</th></tr>
+            </table>
             <br>
-            Other popular themes:<br>
-            01) Avada: no;<br>
-            02) Porto: no;<br>
-            03) Flatsome: no;<br>
-            04) Bimber: no.<br>
+            Other popular themes...
+            <table style="text-align:left">
+                <tr><th>Working as...</th><th>Blog</th><th>Shop (WooCommerce)</th></tr>
+                <tr><th>Avada</th><th>no</th><th>no</th></tr>
+                <tr><th>Divi</th><th>no</th><th>yes</th></tr>
+                <tr><th>Salient</th><th>yes</th><th>yes</th></tr>
+                <tr><th>Themify Ultra</th><th>no</th><th>yes</th></tr>
+            </table>
             <br>
             And I will continue updating those lists...<br>
             <br>
@@ -868,7 +964,7 @@
             <h3>3) "How to get support?"</h3>
             You can inform any problem related to the Premium version (except theme issues) in the email above. It will be solved as soon as possible and without any cost.<br><br>
             <h3>4) "Which plugins are compatible with Premium version?"</h3>
-            WooCommerce, WP All Import, a3 Lazy Load and others. If you intend to use the Premium version with a specific plugin, please ask me if they are compatible.<br><br>
+            WooCommerce, WP All Import, Monarch, a3 Lazy Load, AccessPress Anonymous Post and others. If you intend to use the Premium version with a specific plugin, you can ask me if they are compatible.<br><br>
             <h3>5) "Can I get my money back later?"</h3>
             With the exception of rare situations, no way. So don't go to the Premium version if you are not sure if your theme is compatible.<br><br>
             <h3>6) "How to get the Premium version?"</h3>

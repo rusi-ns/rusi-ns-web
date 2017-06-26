@@ -19,26 +19,20 @@ function fifu_get_menu_html() {
     $enable_hope = get_option('fifu_hope');
     $enable_hide_page = get_option('fifu_hide_page');
     $enable_hide_post = get_option('fifu_hide_post');
+    $enable_get_first = get_option('fifu_get_first');
+    $enable_pop_first = get_option('fifu_pop_first');
+    $enable_ovw_first = get_option('fifu_ovw_first');
 
     $array_cpt = array();
     for ($x = 0; $x <= 4; $x++)
         $array_cpt[$x] = get_option('fifu_cpt' . $x);
 
-    $show_woocommerce_button = $show_social_button = $show_content_button = "display:block";
-
-    $output = shell_exec('uname -s');
-    if ($output == "") {
-        $compatible = "Unfortunatelly, the script and your server system are not compatible. " .
-                "But we still can do the WooCommerce integration manually. In this case, send an email to <a href='mailto:marceljmachado@gmail.com'>marceljmachado@gmail.com</a>.";
-        $show_woocommerce_button = "display:none";
-    } else {
-        if (strpos($output, "Linux") !== false)
-            $compatible = "You server is using $output system. Great! The script may work =)";
-        else
-            $compatible = "You server is using $output system. The script may work. <p/>" .
-                    "Please, send an email to <a href='mailto:marceljmachado@gmail.com'>marceljmachado@gmail.com</a> " .
-                    "informing your server system and let me know if it worked for you.";
-    }
+    if (function_exists('WC')) {
+        $woo_version = WC()->version;
+        if ($woo_version >= 3)
+            $compatible = 'Warning: you are using WooCommerce ' . $woo_version . ' and it requires the PREMIUM version of Featured Image From URL. This free version supports WooCommerce 2.4 and 2.5.';
+    } else
+        $compatible = "Warning: WooCommerce isn't activated/installed.";
 
     include 'html/menu.html';
 
@@ -59,6 +53,9 @@ function fifu_get_menu_settings() {
     fifu_get_setting('fifu_hope');
     fifu_get_setting('fifu_hide_page');
     fifu_get_setting('fifu_hide_post');
+    fifu_get_setting('fifu_get_first');
+    fifu_get_setting('fifu_pop_first');
+    fifu_get_setting('fifu_ovw_first');
 
     for ($x = 0; $x <= 4; $x++)
         fifu_get_setting('fifu_cpt' . $x);
@@ -82,6 +79,9 @@ function fifu_update_menu_options() {
     fifu_update_option('fifu_input_hope', 'fifu_hope');
     fifu_update_option('fifu_input_hide_page', 'fifu_hide_page');
     fifu_update_option('fifu_input_hide_post', 'fifu_hide_post');
+    fifu_update_option('fifu_input_get_first', 'fifu_get_first');
+    fifu_update_option('fifu_input_pop_first', 'fifu_pop_first');
+    fifu_update_option('fifu_input_ovw_first', 'fifu_ovw_first');
 
     for ($x = 0; $x <= 4; $x++)
         fifu_update_option('fifu_input_cpt' . $x, 'fifu_cpt' . $x);
@@ -189,4 +189,3 @@ function fifu_disable_nonstandard_compatibility() {
     wp_delete_attachment(get_option('fifu_attachment_id'));
     delete_option('fifu_attachment_id');
 }
-
