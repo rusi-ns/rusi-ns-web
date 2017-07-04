@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: marceljm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8BLDLZ3HDBGQG
-Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid
+Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail
 Requires at least: 4.0
 Tested up to: 4.8
 Stable tag: 4.8
@@ -14,7 +14,7 @@ Use an external image as Featured Image of your post/page/product (WooCommerce).
 
 Features:
 
-* allows you to use an external image (from Flickr, Picasa, Amazon S3, anywhere) as Featured Image of your post, page and Custom Post Type, such as WooCommerce Product;
+* Featured Image from URL plugin allows you to use an external image (from Flickr, Picasa, Amazon S3, anywhere) as Featured Image of your post, page and Custom Post Type, such as WooCommerce Product;
 
 * perfect for external posts, the plugin is able to use the first image as Featured Image;
 
@@ -44,17 +44,16 @@ And you still can:
 
 * define the video size for each screen;
 
-* apply your own **CSS style** or **<a href="http://marceljm.com/wordpress/featured-image-from-url-premium/#hover">18 hover effects</a>** to the images;
+* apply your own **CSS style** or **<a href="http://featuredimagefromurl.com/hover-effects/">18 hover effects</a>** to the images;
 
 * disable the WooCommerce lightbox.
 
-Click <a href="http://marceljm.com/wordpress/featured-image-from-url-premium/" targe="_blank">here</a> to know more.
+Click <a href="http://featuredimagefromurl.com/" targe="_blank">here</a> to know more.
 	
 *WooCommerce compatibility: 3.0.X. and later.*
 
-**<a href="http://fifu.marceljm.com/">Live Preview</a>**
-
-[youtube https://www.youtube.com/watch?v=LuynS-Y-fZs]
+**<a href="http://blog.featuredimagefromurl.com/">Blog - Live Preview</a>**
+**<a href="http://shop.featuredimagefromurl.com/">Shop - Live Preview</a>**
 
 == Installation ==
 
@@ -71,7 +70,7 @@ Click <a href="http://marceljm.com/wordpress/featured-image-from-url-premium/" t
 
 = What's the URL field? =
 
-* There you should paste the image URL. For example: http://marceljm.com/wp-content/uploads/logo.png
+* There you should paste the image URL. For example: https://farm4.staticflickr.com/3761/9944251684_e16fd019c0_b.jpg
 
 = What's the preview button? =
 
@@ -92,10 +91,6 @@ Click <a href="http://marceljm.com/wordpress/featured-image-from-url-premium/" t
 = What happens if I have two featured images (internal and external)? =
 
 * The external image has priority in this case and the internal image won't be shown.
-
-= Why aren't the external images showing in my site? =
-
-* Because your theme is nonstandard. For US$ 50,00, I can analyse your theme code and make the required changes.
 
 = How to integrate WooCommerce and Featured Image From URL? =
 
@@ -296,6 +291,15 @@ was removed. To finish, a Premium version is now been presented.
 = 1.5.3 =
 * Auto set featured image.
 
+= 1.5.4 =
+* Bug fix: compatibility with old PHP versions.
+
+= 1.5.5 =
+* URL field isn't hidden anymore.
+
+= 1.5.6 =
+* Compatible with any theme now.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -412,3 +416,12 @@ was removed. To finish, a Premium version is now been presented.
 
 = 1.5.3 =
 * Auto set featured image.
+
+= 1.5.4 =
+* Bug fix: compatibility with old PHP versions.
+
+= 1.5.5 =
+* URL field isn't hidden anymore.
+
+= 1.5.6 =
+* Compatible with any theme now.

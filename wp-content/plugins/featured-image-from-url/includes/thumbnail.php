@@ -101,3 +101,9 @@ function fifu_replace_attachment_image_src($image, $attachment_id) {
 function fifu_should_hide() {
     return ((is_singular('post') && get_option('fifu_hide_post') == 'toggleon') || (is_singular('page') && get_option('fifu_hide_page') == 'toggleon'));
 }
+
+add_filter('genesis_get_image', 'fifu_genesis_image', 10, 4);
+
+function fifu_genesis_image($args, $var1, $var2, $src) {
+    return $src ? fifu_replace($args, get_the_ID()) : $args;
+}

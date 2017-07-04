@@ -65,7 +65,11 @@ function fifu_show_image($img) {
 
 function fifu_first_url_in_content($post_id) {
     $content = get_post_field('post_content', $post_id);
+    if (!$content)
+        return;
     $matches = array();
     preg_match_all('/<img[^>]*>/', $content, $matches);
-    return $matches && $matches[0] ? explode('"', explode('src="', $matches[0][0])[1])[0] : null;
+    $aux1 = explode('src="', $matches[0][0]);
+    $aux2 = explode('"', $aux1[1]);
+    return $matches && $matches[0] ? $aux2[0] : null;
 }

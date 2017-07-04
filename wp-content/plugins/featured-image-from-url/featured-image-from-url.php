@@ -3,9 +3,9 @@
 /*
  * Plugin Name: Featured Image From URL
  * Description: Use an external image as Featured Image of your post/page/custom post type (WooCommerce). Includes Auto Set (External Post), Product Gallery, Social Tags and more.
- * Version: 1.5.3
+ * Version: 1.5.6
  * Author: Marcel Jacques Machado 
- * Author URI: http://marceljm.com/wordpress/featured-image-from-url-premium/ 
+ * Author URI: http://featuredimagefromurl.com/
  */
 
 define('FIFU_PLUGIN_DIR', plugin_dir_path(__FILE__));
@@ -27,8 +27,5 @@ register_deactivation_hook(__FILE__, 'fifu_deactivate');
 
 function fifu_deactivate() {
     update_option('fifu_woocommerce', 'toggleoff');
-    update_option('fifu_hope', 'toggleoff');
     shell_exec('sh ../wp-content/plugins/featured-image-from-url/scripts/disableWoocommerce.sh');
-    fifu_disable_nonstandard_compatibility();
 }
-

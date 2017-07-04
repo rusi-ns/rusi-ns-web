@@ -8,27 +8,18 @@ function fifu_insert_meta_box() {
     foreach ($post_types as $post_type) {
         if ($post_type == 'product') {
             add_meta_box(
-                    'urlMetaBox', 'External Product Image', 'fifu_show_elements', $post_type, 'side', 'low'
+                    'urlMetaBox', 'Product Image from URL', 'fifu_show_elements', $post_type, 'side', 'low'
             );
             if (get_option('fifu_woocommerce') == 'toggleon') {
                 add_meta_box(
-                        'wooCommerceGalleryMetaBox', 'External Product Gallery', 'fifu_wc_show_elements', $post_type, 'side', 'low'
+                        'wooCommerceGalleryMetaBox', 'Product Gallery from URL', 'fifu_wc_show_elements', $post_type, 'side', 'low'
                 );
             }
         } else {
             if ($post_type)
                 add_meta_box(
-                        'imageUrlMetaBox', 'External Featured Image', 'fifu_show_elements', $post_type, 'side', 'low'
+                        'imageUrlMetaBox', 'Featured Image from URL', 'fifu_show_elements', $post_type, 'side', 'low'
                 );
-        }
-
-        if ($post_type) {
-            add_meta_box(
-                    'sliderImageUrlMetaBox', 'External Featured Image Slider', 'fifu_slider_show_elements', $post_type, 'side', 'low'
-            );
-            add_meta_box(
-                    'videoUrlMetaBox', 'External Featured Video', 'fifu_show_advertisement', $post_type, 'side', 'low'
-            );
         }
     }
 }
@@ -36,38 +27,30 @@ function fifu_insert_meta_box() {
 function fifu_show_elements($post) {
     $margin = 'margin-top:10px;';
     $width = 'width:100%;';
-    $height = 'height:266px;';
+    $height = 'height:200px;';
     $align = 'text-align:left;';
+    $show_news = 'display:inline';
     $is_sirv_active = is_plugin_active('sirv/sirv.php');
 
     $url = get_post_meta($post->ID, 'fifu_image_url', true);
     $alt = get_post_meta($post->ID, 'fifu_image_alt', true);
 
     if ($url) {
-        $show_url = $show_button = $show_sirv = 'display:none;';
+        $show_button = $show_sirv = 'display:none;';
         $show_alt = $show_image = $show_link = '';
     } else {
         $show_alt = $show_image = $show_link = 'display:none;';
-        $show_url = $show_button = '';
+        $show_button = '';
         $show_sirv = ($is_sirv_active ? '' : 'display:none;');
     }
 
     include 'html/meta-box.html';
 }
 
-function fifu_show_advertisement($post) {
-    $margin = 'margin-top:10px;';
-    $width = 'width:100%;';
-    $height = 'height:266px;';
-    $align = 'text-align:left;';
-
-    include 'html/meta-box-advertisement.html';
-}
-
 function fifu_wc_show_elements($post) {
     $margin = 'margin-top:1px;';
     $width = 'width:70%;';
-    $height = 'height:266px;';
+    $height = 'height:200px;';
     $align = 'text-align:left;';
     $altWidth = 'width:86%;';
 
@@ -85,18 +68,6 @@ function fifu_wc_show_elements($post) {
 
         include 'html/wc-meta-box.html';
     }
-}
-
-function fifu_slider_show_elements($post) {
-    $margin = 'margin-top:1px;';
-    $width = 'width:70%;';
-    $height = 'height:266px;';
-    $align = 'text-align:left;';
-    $altWidth = 'width:86%;';
-
-    for ($i = 1; $i < 5; $i++)
-        include 'html/slider-meta-box.html';
-    include 'html/live-preview.html';
 }
 
 add_filter('wp_insert_post_data', 'fifu_remove_fist_image', 10, 2);

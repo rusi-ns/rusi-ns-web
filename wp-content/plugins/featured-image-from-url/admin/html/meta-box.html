@@ -1,5 +1,21 @@
 <script><?php include 'js/meta-box.js' ?></script>
 
+<div style="<?php echo $show_news?>">
+    <table>
+        <tbody>
+            <tr>
+                <th>Premium Live Preview:</th>
+                <th><a href="http://blog.featuredimagefromurl.com/">Blog
+                    </a></th>
+                <th><a href="http://shop.featuredimagefromurl.com/">Shop
+                    </a></th>
+            </tr>
+        </tbody>
+    </table>
+    <p style="font-size: 12px; padding: 5px; border-left: 6px solid red; color: white;
+       background-color: black; border-radius: 15px 50px;">free and premium version are compatible with any theme now</p>
+</div>
+
 <!-- show alt field, image and link if URL was already provided -->
 
 <input id="fifu_input_alt" 
@@ -15,21 +31,22 @@
      background-size:cover;" >
 </div>
 
-<p/>
-
-<a id="fifu_link" 
-   href="#" 
-   onClick="removeImage();" 
-   style="<?php echo $show_link ?>" >Remove external featured image</a>
-
-<!-- show URL field and preview button if URL was not provided yet -->
-
 <input id="fifu_input_url" 
        type="text" 
        name="fifu_input_url" 
        placeholder="URL" 
        value="<?php echo $url; ?>"
-       style="<?php echo $width, $margin, $show_url ?>" />
+       style="<?php echo $width, $margin ?>" />
+
+<p/>
+<center>
+    <a id="fifu_link" 
+       href="#" 
+       onClick="removeImage();" 
+       style="<?php echo $show_link ?>" >remove external featured image</a>
+</center>
+
+<!-- show preview button if URL was not provided yet -->
 
 <a id="fifu_button" 
    class="button" 
@@ -43,39 +60,3 @@
    class="button sirv-add-image-modal-click"
    title="Add image from Sirv"
    style="<?php echo $show_sirv?>">Choose Sirv image</a>
-
-<hr>
-
-<p style="border: 1px solid blue; padding: 5px;">New Features 06/2017</p>
-<table style="text-align:left; font-weight: normal; font-size: 10px">
-    <tr>
-        <th>-Free: Use the first image as featured image</th>
-        </th>
-    <tr>
-    <tr>
-        <th>-Free: Hide featured media on page/post</th>
-        </th>
-    <tr>
-    <tr>
-        <th>-Premium: WooCommerce integration (any server)</th>
-        </th>
-    <tr>
-    <tr>
-        <th>-Premium: Product Categories Grid</th>
-        </th>
-    <tr>
-        <th>-Premium: Video ratio/resize</th>
-        </th>
-    <tr>
-        <th>-Premium: Slider settings</th>
-        </th>
-    <tr>
-        <th>-Premium: Unlimited galleries/slider</th>
-        </th>	
-    <tr>
-        <th>-Premium: WooCommerce 3 compatibility</th>
-        </th>	
-    <tr>
-        <th>-Premium: Disable WooCommerce Lightbox</th>
-        </th>	
-</table>	

@@ -2,12 +2,10 @@ function removeImage() {
     jQuery("#fifu_input_alt").hide();
     jQuery("#fifu_image").hide();
     jQuery("#fifu_link").hide();
-    jQuery("#fifu_hover").hide();
 
     jQuery("#fifu_input_alt").val("");
     jQuery("#fifu_input_url").val("");
 
-    jQuery("#fifu_input_url").show();
     jQuery("#fifu_button").show();
 
     if (jQuery("#sirv-add-featured-image").attr("active"))
@@ -18,7 +16,6 @@ function previewImage() {
     var $url = jQuery("#fifu_input_url").val();
 
     if ($url) {
-        jQuery("#fifu_input_url").hide();
         jQuery("#fifu_button").hide();
         jQuery("#sirv-add-featured-image").hide();
 
@@ -27,6 +24,5 @@ function previewImage() {
         jQuery("#fifu_input_alt").show();
         jQuery("#fifu_image").show();
         jQuery("#fifu_link").show();
-        jQuery("#fifu_hover").show();
     }
 }
