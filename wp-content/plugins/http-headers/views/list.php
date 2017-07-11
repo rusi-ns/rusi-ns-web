@@ -1,3 +1,12 @@
+<div class="hh-notice"><?php
+if (get_option('hh_method') == 'php')
+{
+	?>Currently, you're using the <strong>PHP</strong> method.<?php
+} else {
+	?>Currently, you're using the <strong>Apache</strong> method.<?php
+}
+?> To configure your preferred method of inclusion goes to the <a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=http-headers&amp;tab=advanced">advanced settings</a> page.</div>
+
 <table class="hh-index-table">
 	<thead>
 		<tr>
@@ -18,7 +27,7 @@
 		'hh_p3p' => array('P3P', 'p3p'),
 		'hh_public_key_pins' => array('Public-Key-Pins', 'public-key-pins'),
 		'hh_referrer_policy' => array('Referrer-Policy', 'referrer-policy'),
-		'hh_content_security_policy' => array('Content Security Policy', 'content-security-policy'),
+		'hh_content_security_policy' => array('Content-Security-Policy', 'content-security-policy'),
 		'hh_access_control_allow_origin' => array('Access-Control-Allow-Origin', 'access-control-allow-origin'),
 		'hh_access_control_allow_credentials' => array('Access-Control-Allow-Credentials', 'access-control-allow-credentials'),
 		'hh_access_control_max_age' => array('Access-Control-Max-Age', 'access-control-max-age'),
@@ -43,7 +52,8 @@
 					}
 					break;
 				case 'hh_x_frame_options':
-					if ($value == 'allow-from')
+					$value = strtoupper($value);
+					if ($value == 'ALLOW-FROM')
 					{
 						$value .= ' ' . get_option('hh_x_frame_options_domain');
 					}

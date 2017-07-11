@@ -3,7 +3,7 @@
   Plugin Name: Z-URL Preview
   Plugin URI: http://www.z-add.co.uk/
   Description: A plugin to embed a preview of a link, similar to facebook
-  Version: 1.5.7
+  Version: 1.5.8
   Author: Stuart Millington
   Author URI: http://www.z-add.co.uk
   License: GPL
@@ -103,6 +103,9 @@ function zurlpreview_install() {
     add_option("zurlpreview_buttonrow", get_zurlpreview_buttonrow(), '', 'yes');
     add_option("zurlpreview_parsemode", get_zurlpreview_parsemode(), '', 'yes');
     add_option("zurlpreview_noheadtag", get_zurlpreview_noheadtag(), '', 'yes');
+    add_option("zurlpreview_noheadtag", get_zurlpreview_noimage(), '', 'yes');
+    add_option("zurlpreview_noheadtag", get_zurlpreview_nointro(), '', 'yes');
+    add_option("zurlpreview_noheadtag", get_zurlpreview_titlelink(), '', 'yes');
 }
 
 function zurlpreview_remove() {
@@ -113,6 +116,9 @@ function zurlpreview_remove() {
     delete_option('zurlpreview_buttonrow');
     delete_option('zurlpreview_parsemode');
     delete_option('zurlpreview_noheadtag');
+    delete_option('zurlpreview_noimage');
+    delete_option('zurlpreview_nointro');
+    delete_option('zurlpreview_titlelink');
 }
 
 function get_zurlpreview_css() {
@@ -135,6 +141,15 @@ function get_zurlpreview_parsemode() {
     return 'd';
 }
 function get_zurlpreview_noheadtag() {
+    return 'No';
+}
+function get_zurlpreview_noimage() {
+    return 'No';
+}
+function get_zurlpreview_nointro() {
+    return 'No';
+}
+function get_zurlpreview_titlelink() {
     return 'No';
 }
 
@@ -206,6 +221,33 @@ function z_url_preview_option_page() {
                     </td>
                 </tr>
 				<tr valign="top">
+                	<td width="130">Supress Image</td>
+                    <td width="380">
+                        <select name="zurlpreview_noimage" id="zurlpreview_noimage">
+                        	<option value="No" <?php selected( get_option('zurlpreview_noimage'), 'No'); ?>>No</option>
+                        	<option value="Yes" <?php selected( get_option('zurlpreview_noimage'), 'Yes'); ?>>Yes</option>
+                        </select>
+                    </td>
+                </tr>
+				<tr valign="top">
+                	<td width="130">Supress Intro</td>
+                    <td width="380">
+                        <select name="zurlpreview_nointro" id="zurlpreview_nointro">
+                        	<option value="No" <?php selected( get_option('zurlpreview_nointro'), 'No'); ?>>No</option>
+                        	<option value="Yes" <?php selected( get_option('zurlpreview_nointro'), 'Yes'); ?>>Yes</option>
+                        </select>
+                    </td>
+                </tr>
+				<tr valign="top">
+                	<td width="130">Title as Link Text</td>
+                    <td width="380">
+                        <select name="zurlpreview_titlelink" id="zurlpreview_titlelink">
+                        	<option value="No" <?php selected( get_option('zurlpreview_titlelink'), 'No'); ?>>No</option>
+                        	<option value="Yes" <?php selected( get_option('zurlpreview_titlelink'), 'Yes'); ?>>Yes</option>
+                        </select>
+                    </td>
+                </tr>
+				<tr valign="top">
                 	<td width="130">Button Location</td>
                     <td width="380">
                         <select name="zurlpreview_buttonrow" id="zurlpreview_buttonrow">
@@ -230,7 +272,7 @@ function z_url_preview_option_page() {
             </table>
 
             <input type="hidden" name="action" value="update" />
-            <input type="hidden" name="page_options" value="zurlpreview_css,zurlpreview_linktxt,zurlpreview_linkmode,zurlpreview_buttonrow,zurlpreview_parsemode,zurlpreview_noheadtag" />
+            <input type="hidden" name="page_options" value="zurlpreview_css,zurlpreview_linktxt,zurlpreview_linkmode,zurlpreview_buttonrow,zurlpreview_parsemode,zurlpreview_noheadtag,zurlpreview_noimage,zurlpreview_nointro,zurlpreview_titlelink" />
 
             <p>
                 <input type="submit" value="<?php _e('Save Changes') ?>" />

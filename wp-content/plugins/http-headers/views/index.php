@@ -5,6 +5,8 @@
 	if (isset($_GET['header']) && !empty($_GET['header']))
 	{
 		include dirname(__FILE__) . '/header.php';
+	} elseif (isset($_GET['tab']) && $_GET['tab'] == 'advanced') {
+		include dirname(__FILE__) . '/advanced.php';
 	} else {
 		include dirname(__FILE__) . '/list.php';
 	}

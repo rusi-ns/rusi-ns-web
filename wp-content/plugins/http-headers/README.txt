@@ -3,8 +3,8 @@ Contributors: zinoui
 Donate link: https://zinoui.com/donation
 Tags: custom headers, http headers, headers, http, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts, referrer, csp
 Requires at least: 3.2
-Tested up to: 4.7.5
-Stable tag: 1.3.0
+Tested up to: 4.8
+Stable tag: 1.4.0
 License: GPLv2 or later
 
 HTTP Headers adds CORS & security HTTP headers to your website.
@@ -60,6 +60,11 @@ These HTTP headers are being used in production services by popular websites as 
 Updates are on they way, so stay tuned at [@DimitarIvanov](https://twitter.com/DimitarIvanov)
 
 == Changelog ==
+
+= 1.4.0 =
+*Release Date - 5th July, 2017*
+
+* Added support of Apache (via htaccess) inclusion method
 
 = 1.3.0 =
 *Release Date - 3rd June, 2017*

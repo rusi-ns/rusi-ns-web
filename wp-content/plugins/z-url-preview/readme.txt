@@ -1,7 +1,7 @@
 === Z-URL Preview ===
 Tags: link preview, post, excerpt, Facebook type preview, linkedin type preview
 Requires at least: 4.2
-Tested up to: 4.7
+Tested up to: 4.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -51,6 +51,9 @@ Note: Tested with "TinyMCE Advanced" and "Black Studio TinyMCE Widget" modules.
 7. Button with "Media Button" setting.
 
 == Changelog ==
+
+= 1.5.8 =
+* Added option to suppress image and intro and to alter the link text
 
 = 1.5.7 =
 * Added option to suppress header tag

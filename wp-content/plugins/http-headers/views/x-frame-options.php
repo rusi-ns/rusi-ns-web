@@ -21,8 +21,9 @@
 						<?php
 						$items = array('deny', 'sameorigin', 'allow-from');
 						$x_frame_options_value = get_option('hh_x_frame_options_value');
-						foreach ($items as $item) {
-							?><option value="<?php echo $item; ?>"<?php selected($x_frame_options_value, $item); ?>><?php echo $item; ?></option><?php
+						foreach ($items as $item)
+						{
+			?><option value="<?php echo $item; ?>"<?php selected($x_frame_options_value, $item); ?>><?php echo strtoupper($item); ?></option><?php
 						}
 						?>		
 						</select>

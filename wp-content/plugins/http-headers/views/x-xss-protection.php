@@ -21,7 +21,8 @@
 					<?php
 					$items = array('0', '1', '1; mode=block');
 					$x_xxs_protection_value = get_option('hh_x_xxs_protection_value');
-					foreach ($items as $item) {
+					foreach ($items as $item)
+					{
 						?><option value="<?php echo $item; ?>"<?php selected($x_xxs_protection_value, $item); ?>><?php echo $item; ?></option><?php
 					}
 					?>

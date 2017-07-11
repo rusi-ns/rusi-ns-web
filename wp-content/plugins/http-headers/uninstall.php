@@ -5,6 +5,7 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 $options = array(
+	'hh_method',
 	'hh_x_frame_options',
 	'hh_x_frame_options_value',
 	'hh_x_frame_options_domain',

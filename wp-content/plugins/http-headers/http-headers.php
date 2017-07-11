@@ -3,7 +3,7 @@
 Plugin Name: HTTP Headers
 Plugin URI: https://zinoui.com/blog/http-headers-for-wordpress
 Description: This plugin adds CORS & security HTTP headers to your website. Improves your website overall security.
-Version: 1.3.0
+Version: 1.4.0
 Author: Dimitar Ivanov
 Author URI: https://zinoui.com
 License: GPLv2 or later
@@ -46,20 +46,24 @@ if (get_option('hh_content_security_policy') === false) {
 	add_option('hh_content_security_policy_value', null, null, 'yes');
 }
 
-function http_headers() {
+if (get_option('hh_method') === false) {
+	add_option('hh_method', 'php', null, 'yes');
+}
 	
+function get_http_headers() {
+	$headers = array();
 	if (get_option('hh_x_frame_options') == 1) {
 		$x_frame_options_value = strtoupper(get_option('hh_x_frame_options_value'));
 		if ($x_frame_options_value == 'ALLOW-FROM') {
 			$x_frame_options_value .= ' ' . get_option('hh_x_frame_options_domain');
 		}
-		header("X-Frame-Options: " . $x_frame_options_value);
+		$headers['X-Frame-Options'] = $x_frame_options_value;
 	}
 	if (get_option('hh_x_xxs_protection') == 1) {
-		header("X-XSS-Protection: " . get_option('hh_x_xxs_protection_value'));
+		$headers['X-XSS-Protection'] = get_option('hh_x_xxs_protection_value');
 	}
 	if (get_option('hh_x_content_type_options') == 1) {
-		header("X-Content-Type-Options: " . get_option('hh_x_content_type_options_value'));
+		$headers['X-Content-Type-Options'] = get_option('hh_x_content_type_options_value');
 	}
 	if (get_option('hh_strict_transport_security') == 1) {
 		$hh_strict_transport_security = array();
@@ -79,10 +83,10 @@ function http_headers() {
 		} else {
 			$hh_strict_transport_security = array(get_option('hh_strict_transport_security_value'));
 		}
-		header("Strict-Transport-Security: " . join('; ', $hh_strict_transport_security));
+		$headers['Strict-Transport-Security'] = join('; ', $hh_strict_transport_security);
 	}
 	if (get_option('hh_x_ua_compatible') == 1) {
-		header("X-UA-Compatible: " . get_option('hh_x_ua_compatible_value'));
+		$headers['X-UA-Compatible'] = get_option('hh_x_ua_compatible_value');
 	}
 	if (get_option('hh_public_key_pins') == 1) {
 		$public_key_pins_sha256_1 = get_option('hh_public_key_pins_sha256_1');
@@ -102,7 +106,7 @@ function http_headers() {
 			if (!empty($public_key_pins_report_uri)) {
 				$public_key_pins[] = sprintf('report-uri="%s"', $public_key_pins_report_uri);
 			}
-			header(sprintf("Public-Key-Pins: %s", join('; ', $public_key_pins)));
+			$headers['Public-Key-Pins'] = join('; ', $public_key_pins);
 		}
 	}
 	
@@ -119,7 +123,7 @@ function http_headers() {
 		}
 		if (!empty($csp))
 		{
-			header(sprintf("Content-Security-Policy: %s", join('; ', $csp)));
+			$headers['Content-Security-Policy'] = join('; ', $csp);
 		}
 	}
 
@@ -137,19 +141,19 @@ function http_headers() {
 		}
 		if (!empty($value))
 		{
-			header("Access-Control-Allow-Origin: " . $value);
+			$headers['Access-Control-Allow-Origin'] = $value;
 		}
 	}
 	if (get_option('hh_access_control_allow_credentials') == 1)
 	{
-		header("Access-Control-Allow-Credentials: " . get_option('hh_access_control_allow_credentials_value'));
+		$headers['Access-Control-Allow-Credentials'] = get_option('hh_access_control_allow_credentials_value');
 	}
 	if (get_option('hh_access_control_max_age') == 1)
 	{
 		$value = get_option('hh_access_control_max_age_value');
 		if (!empty($value))
 		{
-			header("Access-Control-Max-Age: " . intval($value));
+			$headers['Access-Control-Max-Age'] = intval($value);
 		}
 	}
 	if (get_option('hh_access_control_allow_methods') == 1)
@@ -157,7 +161,7 @@ function http_headers() {
 		$value = get_option('hh_access_control_allow_methods_value');
 		if (!empty($value))
 		{
-			header("Access-Control-Allow-Methods: " . join(', ', array_keys($value)));
+			$headers['Access-Control-Allow-Methods'] = join(', ', array_keys($value));
 		}
 	}
 	if (get_option('hh_access_control_allow_headers') == 1)
@@ -165,7 +169,7 @@ function http_headers() {
 		$value = get_option('hh_access_control_allow_headers_value');
 		if (!empty($value))
 		{
-			header("Access-Control-Allow-Headers: " . join(', ', array_keys($value)));
+			$headers['Access-Control-Allow-Headers'] = join(', ', array_keys($value));
 		}
 	}
 	if (get_option('hh_access_control_expose_headers') == 1)
@@ -173,7 +177,7 @@ function http_headers() {
 		$value = get_option('hh_access_control_expose_headers_value');
 		if (!empty($value))
 		{
-			header("Access-Control-Expose-Headers: " . join(', ', array_keys($value)));
+			$headers['Access-Control-Expose-Headers'] = join(', ', array_keys($value));
 		}
 	}
 	if (get_option('hh_p3p') == 1)
@@ -181,11 +185,24 @@ function http_headers() {
 		$value = get_option('hh_p3p_value');
 		if (!empty($value))
 		{
-			header('P3P: CP="' . join(' ', array_keys($value)) . '"');
+			$headers['P3P'] = 'CP="' . join(' ', array_keys($value)) . '"';
 		}
 	}
 	if (get_option('hh_referrer_policy') == 1) {
-		header("Referrer-Policy: " . get_option('hh_referrer_policy_value'));
+		$headers['Referrer-Policy'] = get_option('hh_referrer_policy_value');
+	}
+	
+	return $headers;
+}
+
+function http_headers() {
+	if (get_option('hh_method') !== 'php') {
+		return;
+	}
+	$headers = get_http_headers();
+	foreach ($headers as $key => $value)
+	{
+		header(sprintf("%s: %s", $key, $value));
 	}
 }
 
@@ -194,6 +211,7 @@ function http_headers_admin_add_page() {
 }
 
 function http_headers_admin() {
+	register_setting('http-headers-mtd', 'hh_method');
 	register_setting('http-headers-xfo', 'hh_x_frame_options');
 	register_setting('http-headers-xfo', 'hh_x_frame_options_value');
 	register_setting('http-headers-xfo', 'hh_x_frame_options_domain');
@@ -233,6 +251,39 @@ function http_headers_admin() {
 	register_setting('http-headers-aceh', 'hh_access_control_expose_headers_value');
 	register_setting('http-headers-acma', 'hh_access_control_max_age');
 	register_setting('http-headers-acma', 'hh_access_control_max_age_value');
+	
+	if (isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true')
+	{
+		$htaccess_file = get_home_path().'.htaccess';
+		if (get_option('hh_method') == 'htaccess')
+		{
+			$lines = array();
+			$lines[] = '<FilesMatch "\.(php|html)$">';
+			$lines[] = '  <IfModule mod_headers.c>';
+			$headers = get_http_headers();
+			foreach ($headers as $key => $value)
+			{
+				$lines[] = sprintf('    Header set %s %s', $key, sprintf('%1$s%2$s%1$s', strpos($value, '"') === false ? '"' : "'", $value));
+			}
+			$lines[] = '  </IfModule>';
+			$lines[] = '</FilesMatch>';
+				
+			insert_with_markers($htaccess_file, "HttpHeaders", $lines);
+		} else {
+			insert_with_markers($htaccess_file, "HttpHeaders", array());
+		}
+	}
+}
+
+function http_headers_settings_link( $links ) {
+	$url = get_admin_url() . 'options-general.php?page=http-headers';
+	$settings_link = '<a href="' . $url . '">' . __('Settings') . '</a>';
+	array_unshift( $links, $settings_link );
+	return $links;
+}
+
+function http_headers_after_setup_theme() {
+	add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'http_headers_settings_link');
 }
 
 function http_headers_enqueue($hook) {
@@ -249,6 +300,7 @@ if ( is_admin() ){ // admin actions
 	add_action('admin_menu', 'http_headers_admin_add_page');
 	add_action('admin_init', 'http_headers_admin');
 	add_action('admin_enqueue_scripts', 'http_headers_enqueue');
+	add_action('after_setup_theme', 'http_headers_after_setup_theme');
 } else {
   // non-admin enqueues, actions, and filters
 	add_action('send_headers', 'http_headers');

@@ -232,9 +232,26 @@ $zlinkPreview->setParseMode(get_option('zurlpreview_parsemode'));
             <h2><?php $zlinkPreview->getTitle();  ?></h2>
             <?php
             }
+            if (get_option('zurlpreview_noimage') != "Yes") {
             ?>
             <p class="imgp"><img data-src = "<?php $zlinkPreview->getImage(1); ?>" src="<?php $zlinkPreview->getImage();  ?>"></p>
-            <p class="imgd"><?php $zlinkPreview->getDescription();  ?></p>
-            <p class="imgs"><?php echo get_option('zurlpreview_linktxt'); ?> <a href="<?php echo $zlinkPreview->url; ?>" <?php echo $linkmodehtml; ?>><?php echo preg_replace('#^https?://#', '', $zlinkPreview->url);  ?></a></p>
+            <?php
+            }
+			if (get_option('zurlpreview_nointro') != "Yes") {
+			?>
+			<p class="imgd"><?php $zlinkPreview->getDescription();  ?></p>
+			<?php
+			}
+			if (get_option('zurlpreview_titlelink') == "Yes") {
+			?>
+			<p class="imgs"><a href="<?php echo $zlinkPreview->url; ?>" <?php echo $linkmodehtml; ?>><?php echo htmlspecialchars($zlinkPreview->getTitle());  ?></a></p>
+			<?php
+			} else {
+			?>
+			<p class="imgs"><?php echo get_option('zurlpreview_linktxt'); ?> <a href="<?php echo $zlinkPreview->url; ?>" <?php echo $linkmodehtml; ?>><?php echo preg_replace('#^https?://#', '', $zlinkPreview->url);  ?></a></p>
+			<?php
+			}
+            ?>
+
             <?php } ?>
 </div>
