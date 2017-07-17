@@ -52,8 +52,8 @@ Note: Tested with "TinyMCE Advanced" and "Black Studio TinyMCE Widget" modules.
 
 == Changelog ==
 
-= 1.5.8 =
-* Added option to suppress image and intro and to alter the link text
+= 1.6.0 =
+* Added options to make main h2 header and/or image links
 
 = 1.5.7 =
 * Added option to suppress header tag

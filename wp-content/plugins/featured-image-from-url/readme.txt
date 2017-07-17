@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: marceljm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8BLDLZ3HDBGQG
-Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail
+Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, vimeo, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail
 Requires at least: 4.0
 Tested up to: 4.8
 Stable tag: 4.8
@@ -14,11 +14,9 @@ Use an external image as Featured Image of your post/page/product (WooCommerce).
 
 Features:
 
-* Featured Image from URL plugin allows you to use an external image (from Flickr, Picasa, Amazon S3, anywhere) as Featured Image of your post, page and Custom Post Type, such as WooCommerce Product;
+* Featured Image from URL plugin allows you to use an external image as Featured Image of your post, page and Custom Post Type, such as WooCommerce Product;
 
 * perfect for external posts, the plugin is able to use the first image as Featured Image;
-
-* it's also possible to use external images in the WooCommerce Product Gallery and WooCommerce Product Category;
 
 * when you access the table of posts/pages/products/categories in admin menu, the Featured Images are shown in a new column;
 
@@ -28,32 +26,23 @@ Features:
 
 * all included content still has social tags to facilitate sharing on social networks;
 
-* compatible with WP All Import plugin ("Import Products from any XML or CSV to WooCommerce");
+* compatible with WP All Import plugin;
 
-*WooCommerce compatibility: 2.4.X and 2.5.X.*
+* all features created for external images are available for external videos from YouTube and Vimeo. And you can define the video size for each screen type (**premium feature**);
 
-**Premium Version:**
+* you can use a slider of images as featured image (**premium feature**);
 
-All features created for external images are now available for **external videos** (from YouTube), everything in one plugin. 
+* it's also possible to use external images in the WooCommerce Product Gallery and WooCommerce Product Category (**premium feature**);
 
-And you still can: 
+* you can use external thumbnails from Flickr to make your site until 94% faster (**premium feature**);
 
-* use **external thumbnails** from Flickr to make your site really faster;
+* you can apply your own CSS style or 18 hover effects to the images (**premium feature**);
 
-* use a **slider** of images as featured image;
+* you can enable/disable the WooCommerce lightbox (**premium feature**);
 
-* define the video size for each screen;
-
-* apply your own **CSS style** or **<a href="http://featuredimagefromurl.com/hover-effects/">18 hover effects</a>** to the images;
-
-* disable the WooCommerce lightbox.
-
-Click <a href="http://featuredimagefromurl.com/" targe="_blank">here</a> to know more.
-	
-*WooCommerce compatibility: 3.0.X. and later.*
-
-**<a href="http://blog.featuredimagefromurl.com/">Blog - Live Preview</a>**
-**<a href="http://shop.featuredimagefromurl.com/">Shop - Live Preview</a>**
+**<a href="http://featuredimagefromurl.com/">Official Site</a>**	
+**<a href="http://blog.featuredimagefromurl.com/">Live Preview (Blog)</a>**
+**<a href="http://shop.featuredimagefromurl.com/">Live Preview (Shop)</a>**
 
 == Installation ==
 
@@ -64,7 +53,7 @@ Click <a href="http://featuredimagefromurl.com/" targe="_blank">here</a> to know
 
 == Frequently Asked Questions ==
 
-= Where are the "Featured Image From URL" box? =
+= Where are the "Featured Image from URL" box? =
 
 * It will be immediately below or above the traditional "Featured Image" box, in the page/post/product editor.
 
@@ -82,7 +71,7 @@ Click <a href="http://featuredimagefromurl.com/" targe="_blank">here</a> to know
 
 = What's the "alt attribute" field? =
 
-* There you can write a short description of the image. It is optional for pages and posts, but required for products.
+* There you can write a short description of the image. It is only for SEO reasons.
 
 = What's the "Remove external featured image" link? =
 
@@ -92,87 +81,63 @@ Click <a href="http://featuredimagefromurl.com/" targe="_blank">here</a> to know
 
 * The external image has priority in this case and the internal image won't be shown.
 
-= How to integrate WooCommerce and Featured Image From URL? =
+= Which WooCommerce versions are supported by Featured Image from URL?
 
-* There is a toggle (on/off) in Featured Image From URL settings. When enabled, a shell script is executed to overwrite some code lines from WooCommerce plugin. Otherwise, the changes are undone.
+* 3.0.X and later.
 
-= What happens to the WooCommerce plugin if I deactivate Featured Image From URL? =
+= When accessing "All Pages", "All Posts", "Products" or "Product Categories" in admin menu, how can I enable or disable "FIFU" column? =
 
-* When the plugin is deactivated, all the changes done by Featured Image From URL in WooCommerce code are undone.
-
-= Why WooCommerce integration isn't working/possible? =
-
-* Because the integration script just work on a Linux server or you are using an incompatible WooCommerce version. 
-
-= Which WooCommerce versions are supported by Featured Image From URL?
-
-* The Free version supports 2.4.X and 2.5.X while the Premium version supports 3.0.X and later.
-
-= Why aren't my external images in WooCommerce Product Gallery being saved? =
-
-* Because you are not filling the alt attribute field. It's required by WooCommerce.
-
-= When accessing "All Pages", "All Posts", "Products" or "Product Categories" in admin menu, how can I enable or disable "Featured Image" column? =
-
-* Just click on "Screen Options", and check or uncheck "Featured Image".
+* Just click on "Screen Options", and check or uncheck "FIFU".
 
 = How to show the Featured Image (internal or external) at the beginning of the content of a Post, Page or Product? =
 
-* There is a toggle (on/off) in Featured Image From URL settings. This functionality was added to attend some themes that didn't show the Featured Image before the content of Posts, Pages or Products.
+* There is a toggle (on/off) in Featured Image from URL settings. This functionality was added to attend some themes that didn't show the Featured Image before the content of Posts, Pages or Products.
 
-= How to use Featured Image From URL with my Custom Post Types? =
+= How to use Featured Image from URL with my Custom Post Types? =
 
-* There are some text fields in Featured Image From URL settings. For now you can define there until 5 Custom Post Types. Just type the correct names and click on Submit button.
-
-= How to show an external featured image on WooCommerce Product Category page? =
-
-* An "External Featured Image" box will be shown when you create/edit a Product Category. Depending on your theme, you must enable "WooCommerce Full Integration" on Featured Image From URL settings.
+* There are some text fields in Featured Image from URL settings. For now you can define there until 5 Custom Post Types. Just type the correct names and click on Submit button.
 
 == Screenshots ==
 
-1. This plugin allows you to use an external image as Featured Image of your pages. Just fill the URL field with the image address and click on preview button.
+1. Just fill the URL field with the image address and click on preview button.
 
-2. If the URL is correct, the image preview will be shown. Then you can define the image title, filling the ALT field.
+2. If the URL is correct, the image will be shown.
 
-3. The external image will be displayed on your page.
+3. Premium feature: featured video from URL.
 
-4. The external image will be displayed when someone shares your page on social networks.
+4. Premium feature: featured slider from URL.
 
-5. The external image will be displayed in the list of Pages.
+5. Featured image column.
 
-6. Besides that, this plugin allows you to use an external image as Featured Image of your posts. Just fill the URL field with the image address and click on preview button.
+6. External featured media on home.
 
-7. If the URL is correct, the image preview will be shown. Then you can define the image title, filling the ALT field.
+7. External featured image on post (it could be a page or a custom post type).
 
-8. The external image will be displayed in your post gallery.
+8. Premium feature: featured video from URL.
 
-9. The external image will be displayed in your post.
+9. Premium feature: featured slider from URL.
 
-10. The external image will be displayed when someone shares your post on social networks.
+10. A lot of settings to adapt the plugin to your needs.
 
-11. The external image will be displayed in the list of Posts.
+11. Premium feature: image gallery from URL.
 
-12. Moreover, you can integrate this plugin to WooCommerce. Just access Featured Image From URL settings and enable that. Then a shell script will be executed to overwrite some code lines from WooCommerce plugin. But don't worry about that, because moving the toggle to off will undone the changes. Unfortunatelly, the integration requires your site be running in a Linux server. So, if the toggle didn't appear, it's because your server uses a different system.
+12. Premium feature: video gallery from URL.
 
-13. Now you can use an external image as Featured Image of your WooCommerce products. Just fill the URL field with the image address and click on preview button.
+13. External featured media on WooCommerce shop.
 
-14. If the URL is correct, the image preview will be shown. Then you can define the image title, filling the ALT field.
+14. External featured media on cart.
 
-15. It's also possible to use external images in the WooCommerce Product Gallery. Fill an URL field with the image address and click on preview button.
+15. Premium feature: image gallery from URL.
 
-16. If the URL is correct, the image preview will be shown. Then you must define the image title, filling the ALT field.
+16. External featured image on Lightbox.
 
-17. And if you have more images, just fill the others URL fields with the image address and click on preview button.
+17. Lightbox zoom.
 
-18. If the URL is correct, the image preview will be shown. Then you must define the image title, filling the ALT field.
+18. Premium feature: video gallery from URL.
 
-19. The external images will be displayed on your product.
+19. Premium feature: external featured video on Lightbox.
 
-20. The same effects of the internal featured image will work for your external featured image.
-
-21. The same effects of internal images will work for your external images in the product gallery.
-
-22. The external image will be displayed in the list of Products.
+20. Lightbox zoom.
 
 == Changelog ==
 
@@ -201,7 +166,7 @@ Click <a href="http://featuredimagefromurl.com/" targe="_blank">here</a> to know
 * Now it's possible to use external images as Featured Images of your Custom Post Types. On the menu settings, you can define for now until 5 Custom Post Types.
 
 = 1.1.5 =
-* Now it's possible to use an external image as Featured Image of your WooCommerce Product Category. Then an "External Featured Image" box will be shown when you create/edit a Product Category. Depending on your theme, you must enable "WooCommerce Full Integration" on Featured Image From URL settings.
+* Now it's possible to use an external image as Featured Image of your WooCommerce Product Category. Then an "External Featured Image" box will be shown when you create/edit a Product Category. Depending on your theme, you must enable "WooCommerce Full Integration" on Featured Image from URL settings.
 
 = 1.2 =
 * It was included a Featured Image column in Product Categories. Moreover, it was fixed a problem with a toggle (Featured Image in Content) that didn't appear in Firefox. And another toggle, for backlink,
@@ -300,6 +265,12 @@ was removed. To finish, a Premium version is now been presented.
 = 1.5.6 =
 * Compatible with any theme now.
 
+= 1.5.7 =
+* Resize featured image column.
+
+= 1.5.8 =
+* FAQ update.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -312,10 +283,10 @@ was removed. To finish, a Premium version is now been presented.
 * Now it's possible to use an external image as Featured Image of your WooCommerce products.
 
 = 1.1 =
-* Now it's possible to use until 10 external images in the WooCommerce Product Gallery (since your site is hosted on a Linux server). Go to Featured Image From URL settings to enable that.
+* Now it's possible to use until 10 external images in the WooCommerce Product Gallery (since your site is hosted on a Linux server). Go to Featured Image from URL settings to enable that.
 
 = 1.1.1 =
-* Now, when you access "All Posts", "All Pages" or "Products" in admin menu, the Featured Images (internal or external) are shown in a new column. Moreover, now it's possible to use until 10 external images in the WooCommerce Product Gallery (since your site is hosted on a Linux server). Go to Featured Image From URL settings to enable that.
+* Now, when you access "All Posts", "All Pages" or "Products" in admin menu, the Featured Images (internal or external) are shown in a new column. Moreover, now it's possible to use until 10 external images in the WooCommerce Product Gallery (since your site is hosted on a Linux server). Go to Featured Image from URL settings to enable that.
 
 = 1.1.2 =
 * Menu toggles weren't been shown on Firefox. Fixed!
@@ -327,7 +298,7 @@ was removed. To finish, a Premium version is now been presented.
 * Now it's possible to use external images as Featured Images of your Custom Post Types. On the menu settings, you can define for now until 5 Custom Post Types.
 
 = 1.1.5 =
-* Now it's possible to use an external image as Featured Image of your WooCommerce Product Category. Then an "External Featured Image" box will be shown when you create/edit a Product Category. Depending on your theme, you must enable "WooCommerce Full Integration" on Featured Image From URL settings.
+* Now it's possible to use an external image as Featured Image of your WooCommerce Product Category. Then an "External Featured Image" box will be shown when you create/edit a Product Category. Depending on your theme, you must enable "WooCommerce Full Integration" on Featured Image from URL settings.
 
 = 1.2 =
 * It was included a Featured Image column in Product Categories. Moreover, it was fixed a problem with a toggle (Featured Image in Content) that didn't appear in Firefox. And another toggle, for backlink,
@@ -425,3 +396,9 @@ was removed. To finish, a Premium version is now been presented.
 
 = 1.5.6 =
 * Compatible with any theme now.
+
+= 1.5.7 =
+* Resize featured image column.
+
+= 1.5.8 =
+* FAQ update.

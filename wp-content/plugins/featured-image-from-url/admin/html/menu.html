@@ -121,6 +121,21 @@
     </div>
 
     <div class="box">
+        <h2>Featured Image Column</h2>
+        <div class="greybox" style="background:#e3ffe2">
+            The plugin adds a new column "FIFU" (Featured Image from URL) to your table of posts/pages/products in admin area. Below you can choose the height (px) of the image in the column. To disable that, just uncheck "FIFU" in the Screen Options.
+        </div>
+        <br>
+        <form 
+            id="fifu_form_column" 
+            action="javascript:void(0)" 
+            method="post">
+            <input id="fifu_input_column_height" type="text" name="fifu_input_column_height"  value="<?php echo $column_height; ?>" placeholder="e.g.: 64" size="4">
+            <input type="submit" value="Submit" >
+        </form>
+    </div>
+
+    <div class="box">
         <h2>Featured Image in Content</h2>
         <div class="greybox" style="background:#e3ffe2">
             It will sound crazy, but some themes don't show the Featured Image on the posts or pages. If it is your case and you would like to show the Featured Image there, just enable the toggle. The Featured Image will appear at the beginning of the content, before the text.
@@ -301,6 +316,19 @@
                         <div style="font-style: italic;font-weight:normal;">e.g.: 1, 2, 3...</div>
                     </th>
                 </tr> 
+                <tr>
+                    <th>   
+                        Margin Bottom:
+                    </th>
+                    <th>
+                        <input id="fifu_input_video_margin_bottom" 
+                               name="fifu_input_video_margin_bottom" 
+                               size="4">
+                    </th>
+                    <th>
+                        <div style="font-style: italic;font-weight:normal;">e.g.: 300px, 8cm...</div>
+                    </th>
+                </tr>  
                 <tr>
                     <th>   
                         Archive:

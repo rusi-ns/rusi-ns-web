@@ -228,14 +228,26 @@ $zlinkPreview->setParseMode(get_option('zurlpreview_parsemode'));
             ?>
             <?php
             if (get_option('zurlpreview_noheadtag') != "Yes") {
-            ?>
-            <h2><?php $zlinkPreview->getTitle();  ?></h2>
-            <?php
+	           	if (get_option('zurlpreview_linkheader') == "Yes") {
+					?>
+					<h2><a href="<?php echo $zlinkPreview->url; ?>" <?php echo $linkmodehtml; ?>><?php $zlinkPreview->getTitle();  ?></a></h2>
+					<?php
+            	} else {
+					?>
+					<h2><?php $zlinkPreview->getTitle();  ?></h2>
+					<?php
+            	}
             }
             if (get_option('zurlpreview_noimage') != "Yes") {
-            ?>
-            <p class="imgp"><img data-src = "<?php $zlinkPreview->getImage(1); ?>" src="<?php $zlinkPreview->getImage();  ?>"></p>
-            <?php
+	           	if (get_option('zurlpreview_linkimage') == "Yes") {
+					?>
+					<p class="imgp"><a href="<?php echo $zlinkPreview->url; ?>" <?php echo $linkmodehtml; ?>><img data-src = "<?php $zlinkPreview->getImage(1); ?>" src="<?php $zlinkPreview->getImage();  ?>"></a></p>
+					<?php
+            	} else {
+					?>
+					<p class="imgp"><img data-src = "<?php $zlinkPreview->getImage(1); ?>" src="<?php $zlinkPreview->getImage();  ?>"></p>
+					<?php
+            	}
             }
 			if (get_option('zurlpreview_nointro') != "Yes") {
 			?>

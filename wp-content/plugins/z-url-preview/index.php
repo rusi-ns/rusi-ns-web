@@ -3,7 +3,7 @@
   Plugin Name: Z-URL Preview
   Plugin URI: http://www.z-add.co.uk/
   Description: A plugin to embed a preview of a link, similar to facebook
-  Version: 1.5.8
+  Version: 1.6.0
   Author: Stuart Millington
   Author URI: http://www.z-add.co.uk
   License: GPL
@@ -106,6 +106,8 @@ function zurlpreview_install() {
     add_option("zurlpreview_noheadtag", get_zurlpreview_noimage(), '', 'yes');
     add_option("zurlpreview_noheadtag", get_zurlpreview_nointro(), '', 'yes');
     add_option("zurlpreview_noheadtag", get_zurlpreview_titlelink(), '', 'yes');
+    add_option("zurlpreview_linkheader", get_zurlpreview_linkheader(), '', 'yes');
+    add_option("zurlpreview_linkimage", get_zurlpreview_linkimage(), '', 'yes');
 }
 
 function zurlpreview_remove() {
@@ -119,6 +121,8 @@ function zurlpreview_remove() {
     delete_option('zurlpreview_noimage');
     delete_option('zurlpreview_nointro');
     delete_option('zurlpreview_titlelink');
+    delete_option('zurlpreview_linkheader');
+    delete_option('zurlpreview_linkimage');
 }
 
 function get_zurlpreview_css() {
@@ -150,6 +154,12 @@ function get_zurlpreview_nointro() {
     return 'No';
 }
 function get_zurlpreview_titlelink() {
+    return 'No';
+}
+function get_zurlpreview_linkheader() {
+    return 'No';
+}
+function get_zurlpreview_linkimage() {
     return 'No';
 }
 
@@ -248,6 +258,24 @@ function z_url_preview_option_page() {
                     </td>
                 </tr>
 				<tr valign="top">
+                	<td width="130">Main Heading as Link</td>
+                    <td width="380">
+                        <select name="zurlpreview_linkheader" id="zurlpreview_linkheader">
+                        	<option value="No" <?php selected( get_option('zurlpreview_linkheader'), 'No'); ?>>No</option>
+                        	<option value="Yes" <?php selected( get_option('zurlpreview_linkheader'), 'Yes'); ?>>Yes</option>
+                        </select>
+                    </td>
+                </tr>
+				<tr valign="top">
+                	<td width="130">Main Image as Link</td>
+                    <td width="380">
+                        <select name="zurlpreview_linkimage" id="zurlpreview_linkimage">
+                        	<option value="No" <?php selected( get_option('zurlpreview_linkimage'), 'No'); ?>>No</option>
+                        	<option value="Yes" <?php selected( get_option('zurlpreview_linkimage'), 'Yes'); ?>>Yes</option>
+                        </select>
+                    </td>
+                </tr>
+				<tr valign="top">
                 	<td width="130">Button Location</td>
                     <td width="380">
                         <select name="zurlpreview_buttonrow" id="zurlpreview_buttonrow">
@@ -272,7 +300,7 @@ function z_url_preview_option_page() {
             </table>
 
             <input type="hidden" name="action" value="update" />
-            <input type="hidden" name="page_options" value="zurlpreview_css,zurlpreview_linktxt,zurlpreview_linkmode,zurlpreview_buttonrow,zurlpreview_parsemode,zurlpreview_noheadtag,zurlpreview_noimage,zurlpreview_nointro,zurlpreview_titlelink" />
+            <input type="hidden" name="page_options" value="zurlpreview_css,zurlpreview_linktxt,zurlpreview_linkmode,zurlpreview_buttonrow,zurlpreview_parsemode,zurlpreview_noheadtag,zurlpreview_noimage,zurlpreview_nointro,zurlpreview_titlelink,zurlpreview_linkheader,zurlpreview_linkimage" />
 
             <p>
                 <input type="submit" value="<?php _e('Save Changes') ?>" />
