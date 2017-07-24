@@ -135,7 +135,7 @@ class PP_GroupRetrieval {
 	}
 	
 	public static function get_pp_groups_for_user( $user_id, $args = array() ) {
-		$defaults = array( 'agent_type' => 'pp_group', 'member_type' => 'member', 'status' => 'active', 'cols' => 'all', 'metagroup_type' => null, 'force_refresh' => false, 'query_user_ids' => false );
+		$defaults = array( 'agent_type' => 'pp_group', 'member_type' => 'member', 'status' => 'active', 'cols' => 'all', 'metagroup_type' => null, 'force_refresh' => false, 'query_user_ids' => false, 'wp_roles' => array() );
 		$args = array_merge( $defaults, $args );
 		
 		if ( is_null( $args['metagroup_type'] ) )
@@ -193,6 +193,27 @@ class PP_GroupRetrieval {
 					$user_groups[$auth_group->ID] = $auth_group;
 			}
 
+			// ensure current WP roles are recognized even if pp_group_members entries out of sync
+			if ( ! empty( $args['wp_roles'] ) ) {
+				foreach( $args['wp_roles'] as $role_name ) { 
+					if ( is_object( $role_name ) )
+						$role_name = $role_name->name;
+					
+					$matched = false;
+					foreach( $user_groups as $ug ) {
+						if ( ! empty( $ug->metagroup_id ) && ( $ug->metagroup_id == $role_name ) && ( 'wp_role' == $ug->metagroup_type ) ) {
+							$matched = true;
+							break;
+						}
+					}
+					
+					if ( ! $matched ) {
+						$role_group = pp_get_metagroup( 'wp_role', $role_name );
+						$user_groups[$role_group->ID] = $role_group;
+					}
+				}
+			}
+			
 			$user_groups = apply_filters( 'pp_get_pp_groups_for_user', $user_groups, $results, $user_id, $args );
 		} else {
 			if ( $query_user_ids ) {
@@ -341,6 +362,10 @@ class PP_GroupRetrieval {
 		extract( $args, EXTR_SKIP );
 		
 		global $wpdb;
+		
+		// todo: debug usage w/ switch_to_blog() on a blog with Press Permit activated
+		if ( empty( $wpdb->ppc_exceptions ) )
+			return array();
 		
 		$except = array();
 		

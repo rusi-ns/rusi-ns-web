@@ -80,4 +80,20 @@ function _ppc_delete_propagated_attachment_exceptions() {
 
 // ===== end 2.1.35 cleanup =====
 
+function _ppc_remove_group_members_pk() {
+	global $wpdb;
+	
+	if ( $tableindices = $wpdb->get_results("SHOW INDEX FROM $wpdb->pp_group_members") ) {
+
+		foreach($tableindices as $tableindex) {
+			if ( 'PRIMARY' == $tableindex->Key_name ) {
+				$wpdb->query( "ALTER TABLE $wpdb->pp_group_members MODIFY group_id bigint(20) unsigned NOT NULL default '0'" );
+				$wpdb->query( "ALTER TABLE $wpdb->pp_group_members MODIFY user_id bigint(20) unsigned NOT NULL default '0'" );
+				$wpdb->query( "ALTER TABLE $wpdb->pp_group_members DROP PRIMARY KEY" );
+				$wpdb->query( "ALTER TABLE $wpdb->pp_group_members ADD INDEX `pp_group_user` (`group_id`,`user_id`)" );
+			}
+		}
+	}
+}
+
 ?>

@@ -57,6 +57,12 @@ class PP_Updated {
 				break;  // no need to run through version comparisons if no previous version
 			}
 			
+			if ( version_compare( $prev_version, '2.3.19-dev', '<') ) {
+				require_once( dirname(__FILE__).'/update-exceptions_pp.php' );
+				_ppc_remove_group_members_pk();
+				
+			} else break;
+			
 			if ( version_compare( $prev_version, '2.1.47-dev', '<') ) {
 				if ( ! get_option( 'pp_post_blockage_priority' ) ) {
 					// previously, post-assigned reading/editing blockages could be overriden by category-assigned additions
@@ -218,9 +224,13 @@ class PP_Updated {
 		else
 			$members_table = $wpdb->pp_group_members;
 
+		$length_limit = apply_filters( 'pp_rolename_max_length', 40 );
+		if ( $length_limit < 40 ) $length_limit = 40;		// pp_groups:metagroup_id db column width is 64, but default to limit of 40 to avoid forcing change to any existing stored truncations
+		//if ( $length_limit > 107 ) $length_limit = 107;	// longer role names can result in exceeding ppc_roles:role_name db column width of 176
+		
 		// sync WP Role metagroups
 		foreach ( array_keys($wp_roles->role_objects) as $role_name ) {
-			$metagroup_id = trim(substr($role_name, 0, 40));
+			$metagroup_id = trim(substr($role_name, 0, $length_limit ));
 			
 			// if the name is too long and its truncated ID already taken, just exclude it from eligible metagroups
 			if ( ! isset( $metagroups[ $metagroup_id ] ) )

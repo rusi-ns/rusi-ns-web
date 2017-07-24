@@ -365,6 +365,13 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 	
 	$qry_item_delete_base = "SELECT eitem_id FROM $wpdb->ppc_exception_items WHERE 1=1";
 	
+	if ( $optimized_insertions = ( ( 'post' == $via_item_source ) && defined( 'PP_OPTIMIZE_EXCEPTION_STORAGE' ) ) ) {
+		$qry_insert_base = "INSERT INTO $wpdb->ppc_exception_items (item_id, assign_for, exception_id, inherited_from) VALUES ";
+		$qry_insert = $qry_insert_base;
+		$insert_row_count = 0;
+		$max_insert_rows = ( defined( 'PP_EXCEPTIONS_MAX_INSERT_ROWS' ) ) ? PP_EXCEPTIONS_MAX_INSERT_ROWS : 1000;
+	}
+	
 	foreach( array_keys($agents) as $agent_id ) {
 		$agent_id = (int) $agent_id;
 	
@@ -399,6 +406,22 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 				//$role_arr['inherited_from'] = $this_inherited_from;
 			}
 
+			if ( $optimized_insertions ) {
+				$child_exception_id = $exception_id;
+				
+				if ( ! defined( 'PP_FORCE_EXCEPTION_OVERWRITE' ) || ! PP_FORCE_EXCEPTION_OVERWRITE ) {
+					$have_direct_assignments = $wpdb->get_col( "SELECT item_id FROM $wpdb->ppc_exception_items WHERE exception_id = '$child_exception_id' AND inherited_from = '0' AND item_id IN ('$descendant_id_csv')" );
+					
+					$direct_assignment_csv = implode( "','", $have_direct_assignments );
+				} else {
+					$direct_assignment_csv = '';
+				}
+				
+				if ( $eitem_ids = $wpdb->get_col( $qry_item_delete_base . " AND exception_id = '$child_exception_id' AND item_id IN ('$descendant_id_csv') AND item_id NOT IN ('$direct_assignment_csv')" ) ) {
+					self::remove_exception_items_by_id( $eitem_ids );
+				}
+			}
+			
 			$exceptions_by_type = array();
 			$_results = $wpdb->get_results( "$qry_exc_select_type_base AND for_item_type = '$for_item_type' AND agent_id = '$agent_id'" );
 			foreach( $_results AS $row )
@@ -406,13 +429,17 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 
 			if ( ( 'term' == $via_item_source ) && taxonomy_exists($for_item_type) )  // need to allow for descendants of a different post type than parent
 				$descendant_types = $wpdb->get_results( "SELECT term_taxonomy_id, taxonomy AS for_item_type FROM $wpdb->term_taxonomy WHERE term_taxonomy_id IN ('" . implode( "','", $descendant_ids ) . "')", OBJECT_K );
-			elseif ( 'post' == $via_item_source )
-				$descendant_types = $wpdb->get_results( "SELECT ID, post_type AS for_item_type FROM $wpdb->posts WHERE ID IN ('" . implode( "','", $descendant_ids ) . "')", OBJECT_K );
-			else
+			elseif ( 'post' == $via_item_source ) {
+				$type_clause = ( $optimized_insertions ) ? "post_type = '$for_item_type' AND" : '';
+				$descendant_types = $wpdb->get_results( "SELECT ID, post_type AS for_item_type FROM $wpdb->posts WHERE $type_clause ID IN ('" . implode( "','", $descendant_ids ) . "')", OBJECT_K );
+			} else
 				$descendant_types = array();
 			
 			foreach ( $descendant_ids as $id ) {
-				if ( $for_item_type ) {
+				if ( $optimized_insertions ) {
+					$child_for_item_type = $for_item_type;
+				
+				} elseif ( $for_item_type ) {
 					// allow for descendants with post type different from parent
 					if ( ! isset( $descendant_types[$id] ) ) {
 						$child_for_item_type = $for_item_type;  // if child type could not be determined, assume parent type
@@ -427,51 +454,79 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 					$child_for_item_type = '';
 				}
 				
-				if ( ! isset( $exceptions_by_type[$child_for_item_type] ) ) {
-					$insert_exc_data['agent_id'] = $agent_id;
-					$insert_exc_data['for_item_type'] = $child_for_item_type;
-					$wpdb->insert( $wpdb->ppc_exceptions, $insert_exc_data );
-					$exceptions_by_type[$child_for_item_type] = $wpdb->insert_id;
+				if ( ! $optimized_insertions ) {
+					if ( ! isset( $exceptions_by_type[$child_for_item_type] ) ) {
+						$insert_exc_data['agent_id'] = $agent_id;
+						$insert_exc_data['for_item_type'] = $child_for_item_type;
+						$wpdb->insert( $wpdb->ppc_exceptions, $insert_exc_data );
+						$exceptions_by_type[$child_for_item_type] = $wpdb->insert_id;
+					}
+				
+					$child_exception_id = $exceptions_by_type[$child_for_item_type];
+
+					// Don't overwrite an explicitly assigned exception with a propagated exception
+					if ( ! defined( 'PP_FORCE_EXCEPTION_OVERWRITE' ) || ! PP_FORCE_EXCEPTION_OVERWRITE ) {
+						$have_direct_assignments = $wpdb->get_col( "SELECT item_id FROM $wpdb->ppc_exception_items WHERE exception_id = '$child_exception_id' AND inherited_from = '0' AND item_id IN ('$descendant_id_csv')" );
+					}
 				}
 				
-				$child_exception_id = $exceptions_by_type[$child_for_item_type];
-				
-				// Don't overwrite an explicitly assigned exception with a propagated exception
-				if ( ! defined( 'PP_FORCE_EXCEPTION_OVERWRITE' ) || ! PP_FORCE_EXCEPTION_OVERWRITE ) {
-					$have_direct_assignments = $wpdb->get_col( "SELECT item_id FROM $wpdb->ppc_exception_items WHERE exception_id = '$child_exception_id' AND inherited_from = '0' AND item_id IN ('$descendant_id_csv')" );
-				
-					if ( in_array( $id, $have_direct_assignments ) )
-						continue;
-				}
-				
-				if ( $eitem_ids = $wpdb->get_col( $qry_item_delete_base . " AND exception_id = '$child_exception_id' AND item_id = '$id'" ) ) {
-					self::remove_exception_items_by_id( $eitem_ids );
-				}
-				
+				if ( in_array( $id, $have_direct_assignments ) )
+					continue;
+
 				// note: Propagated roles will be converted to direct-assigned roles if the parent object/term is deleted.
 				//$role_arr['item_id'] = $id;
 				
-				$item_data = array( 'item_id' => $id, 'assign_for' => 'item', 'exception_id' => $child_exception_id, 'inherited_from' => $this_inherited_from, 'assigner_id' => $assigner_id );
-				$wpdb->insert( $wpdb->ppc_exception_items, $item_data );
-				do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
-				//if ( $role_hooks ) {
-				//	$assignment_id = $wpdb->insert_id;
-				//	$role_arr['assign_for'] = 'item';
-				//}
-
-				$item_data['assign_for'] = 'children';
-				$wpdb->insert( $wpdb->ppc_exception_items, $item_data );
-				do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
-				//if ( $role_hooks ) {
-				//	$assignment_id = $wpdb->insert_id;
-				//	$role_arr['assign_for'] = 'children';
-				//}
+				
+				if ( $optimized_insertions ) {
+					// $qry_insert_base = "INSERT INTO $wpdb->ppc_exception_items ('item_id', 'assign_for', 'exception_id', 'inherited_from') VALUES ";
+					if ( $insert_row_count ) $qry_insert .= ', ';
+					$qry_insert .= "('$id','item','$child_exception_id','$this_inherited_from')";
+					$insert_row_count++;
+				} else {
+					if ( $eitem_ids = $wpdb->get_col( $qry_item_delete_base . " AND exception_id = '$child_exception_id' AND item_id = '$id'" ) ) {
+						self::remove_exception_items_by_id( $eitem_ids );
+					}
+					
+					$item_data = array( 'item_id' => $id, 'assign_for' => 'item', 'exception_id' => $child_exception_id, 'inherited_from' => $this_inherited_from, 'assigner_id' => $assigner_id );
+					
+					$wpdb->insert( $wpdb->ppc_exception_items, $item_data );
+					do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
+					
+					//if ( $role_hooks ) {
+					//	$assignment_id = $wpdb->insert_id;
+					//	$role_arr['assign_for'] = 'item';
+					//}
+				}
+				
+				if ( $optimized_insertions ) {
+					if ( $insert_row_count ) $qry_insert .= ', ';
+					$qry_insert .= "('$id','children','$child_exception_id','$this_inherited_from')";
+					$insert_row_count++;
+					
+					if ( $insert_row_count == $max_insert_rows ) {
+						$wpdb->query( $qry_insert );
+						$qry_insert = $qry_insert_base;
+						$insert_row_count = 0;
+					}
+				} else {
+					$item_data['assign_for'] = 'children';
+					$wpdb->insert( $wpdb->ppc_exception_items, $item_data );
+					do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
+					
+					//if ( $role_hooks ) {
+					//	$assignment_id = $wpdb->insert_id;
+					//	$role_arr['assign_for'] = 'children';
+					//}
+				}
 
 				$updated_items[] = $id;
 			}
 		}
 	} // end foreach agent_id
 	
+	if ( $optimized_insertions && $insert_row_count ) {
+		$wpdb->query( $qry_insert );
+	}
 	
 	return $updated_items;
 }

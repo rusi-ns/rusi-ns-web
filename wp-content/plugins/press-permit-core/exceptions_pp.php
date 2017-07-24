@@ -63,6 +63,8 @@ class PP_Exceptions {
 				// term restrictions which apply only to this post type
 				if ( $apply_term_restrictions )
 					$where .= self::add_term_restrictions_clause( $required_operation, $post_type, $src_table );
+			} elseif ( in_array( 'comments', $args['query_contexts'] ) && defined( 'REST_REQUEST' ) && REST_REQUEST ) {  // if PPCE is not activated, don't filter comments
+				$where = '1=1';
 			} else {
 				$where = '1=2';
 			}

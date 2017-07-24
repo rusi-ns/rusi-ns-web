@@ -48,44 +48,47 @@ font-size: 1.5em;
 <ul class="pp-features">
 
 <li>
-<?php _e( "Assign standard WP roles supplementally for a specific post type", $lang_id );?>
-<a href="http://presspermit.com/tutorial/regulate-post-type-access" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<?php _e( "Customize editing permissions per-category or per-post", $lang_id );?>
+<a href="https://www.youtube.com/watch?v=0yOEBD8VE9c&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=3" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
 
 <li>
-<?php _e( "Assign custom WP roles supplementally for a specific post type <em>(Pro)</em>", $lang_id );?>
-<a href="http://presspermit.com/tutorial/custom-role-usage" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<?php _e( "Limit category/term assignment and page parent selection", $lang_id );?>
+<a href="https://www.youtube.com/watch?v=QqvtxrqLPwY&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=4" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
 
 <li>
-<?php _e( "Customize reading permissions per-category or per-post", $lang_id );?>
-<a href="http://presspermit.com/tutorial/category-exceptions" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<?php _e( "File URL Filter: regulate direct access to uploaded files", $lang_id );?>
+<a href="https://www.youtube.com/watch?v=kVusrdlgSps&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=15" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
 
 <li>
-<?php _e( "Customize editing permissions per-category or per-post <em>(Pro)</em>", $lang_id );?>
-<a href="http://presspermit.com/tutorial/page-editing-exceptions" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<?php _e( "Hidden Content Teaser", $lang_id );?>
+<a href="https://www.youtube.com/watch?v=d_5r8NKjxDQ&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=9" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
 
 <li>
-<?php _e( "Custom Post Visibility statuses, fully implemented throughout wp-admin <em>(Pro)</em>", $lang_id );?>
-<a href="http://presspermit.com/tutorial/custom-post-visibility" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<?php _e( "bbPress: customize viewing, topic creation or reply submission permissions per-forum", $lang_id );?></li>
 
 <li>
-<?php _e( "Custom Moderation statuses for access-controlled, multi-step publishing workflow <em>(Pro)</em>", $lang_id );?>
-<a href="http://presspermit.com/tutorial/multi-step-moderation" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<?php _e( "Date-limited membership in Permissions Groups", $lang_id );?>
+<a href="https://www.youtube.com/watch?v=hMOVvCy_9Ws&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=7" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
 
 <li>
-<?php _e( "Regulate permissions for Edit Flow post statuses <em>(Pro)</em>", $lang_id );?>
-<a href="http://presspermit.com/tutorial/edit-flow-integration" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<?php _e( "Custom Post Visibility statuses, fully implemented throughout wp-admin", $lang_id );?>
+<a href="https://www.youtube.com/watch?v=vM3Iwt3Jdak&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=6" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
 
 <li>
-<?php _e( "Customize the moderated editing of published content with Revisionary or Post Forking <em>(Pro)</em>", $lang_id );?>
-<a href="http://presspermit.com/tutorial/published-content-revision" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<?php _e( "Custom Moderation statuses for access-controlled, multi-step publishing workflow", $lang_id );?>
+<a href="https://www.youtube.com/watch?v=v8VyKP3rIvk&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=8" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
 
 <li>
-<?php _e( "Grant Spectator, Participant or Moderator access to specific bbPress forums <em>(Pro)</em>", $lang_id );?>
-<a href="http://presspermit.com/tutorial/bbpress-forum-permissions" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<?php _e( "Regulate permissions for Edit Flow post statuses", $lang_id );?>
+<a href="https://www.youtube.com/watch?v=eeZ6CBC5kQI&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=11" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+
+<li>
+<?php _e( "Customize the moderated editing of published content with Revisionary or Post Forking", $lang_id );?>
+<a href="https://www.youtube.com/watch?v=kCD6HQAjUXs&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=12" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
 
 <li>
 <?php _e( "Grant supplemental content permissions to a BuddyPress group <em>(Pro)</em>", $lang_id );?>
-<a href="http://presspermit.com/tutorial/buddypress-content-permissions" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
+<a href="https://www.youtube.com/watch?v=oABIT7wki_A&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=14" target="_blank"><img class="cme-play" src="<?php echo $img_url;?>play.png" /></a></li>
 
 <li>
 <?php _e( "WPML integration to mirror permissions to translations <em>(Pro)</em>", $lang_id );?>

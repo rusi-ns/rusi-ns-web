@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * 
  * @package PP
  * @author Kevin Behrens <kevin@agapetry.net>
- * @copyright Copyright (c) 2011-2015, Agapetry Creations LLC
+ * @copyright Copyright (c) 2011-2017, Agapetry Creations LLC
  * 
  */
 
@@ -152,10 +152,10 @@ class PP_Agents_Ajax {
 		<tr>
 		<?php do_action( 'pp_agents_selection_ui_select_pre', $id_suffix ); ?>		
 
-		<td><button type="button" id="select_agents_<?php echo $id_suffix;?>" class="pp_add" style="float:right<?php if( ! $multi_select ):?>;display:none;<?php endif;?>"><?php echo $label_select;?></button></td>
+		<td><button type="button" id="select_agents_<?php echo $id_suffix;?>" class="pp_add" style="float:right;margin-right:50px<?php if( ! $multi_select ):?>;display:none;<?php endif;?>"><?php echo $label_select;?></button></td>
 		
 		<?php if( $display_stored_selections) : ?>
-		<td class="pp-members-current"><button type="button" id="unselect_agents_<?php echo $id_suffix;?>" class="pp_remove"><?php echo $label_unselect;?></button></td>
+		<td class="pp-members-current"><button type="button" id="unselect_agents_<?php echo $id_suffix;?>" class="pp_remove" style="margin-left:30px"><?php echo $label_unselect;?></button></td>
 		<?php endif; ?>
 		
 		</tr>

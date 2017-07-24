@@ -372,7 +372,7 @@ function pp_get_option( $option_basename ) {
 
 	if ( isset( $pp_default_options[$option_basename] ) )
 		return maybe_unserialize( $pp_default_options[$option_basename] );
-
+	
 	// return null if option not set in db or defaults
 }
 
@@ -454,7 +454,7 @@ function pp_get_enabled_taxonomies( $args = array(), $output = 'names' ) {
 function pp_remove_disabled_taxonomies( $taxonomies ) {
 	if ( $enabled = (array) pp_get_option( "enabled_taxonomies" ) )
 		$taxonomies = array_intersect( $taxonomies, array_keys( array_intersect( $enabled, array( 1, '1', true ) ) ) );
-
+		
 	if ( $omit_types = apply_filters( 'pp_unfiltered_taxonomies', array() ) )
 		$taxonomies = array_diff_key( $taxonomies, $omit_types );
 

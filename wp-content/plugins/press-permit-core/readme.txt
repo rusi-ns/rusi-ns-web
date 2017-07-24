@@ -4,8 +4,8 @@ Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JWZVF
 Tags: restrict, access, permissions, cms, user, private, category, pages, privacy, capabilities, role, scoper
 License: GPLv3
 Requires at least: 3.4
-Tested up to: 4.7.3
-Stable tag: 2.3.18
+Tested up to: 4.8
+Stable tag: 2.3.20
 
 Advanced yet accessible content permissions. Give users or groups type-specific roles. Enable or block access for specific posts or terms.
 
@@ -15,7 +15,7 @@ Advanced yet accessible content permissions. Give users or groups type-specific 
 
 Core Features include:
 
-  * New "Roles and Exceptions" model is closely integrated with the WP capability system
+  * Permissions model is closely integrated with the WP capability system
   * Assign supplemental roles and exceptions for custom post types [youtube http://www.youtube.com/watch?v=v7jTkgmjHrw&rel=0&hd=1]
   
   * For any user, group or WP role, customize reading access by specifying "also these", "not these" or "only these" posts or terms.
@@ -26,20 +26,21 @@ Core Features include:
 
 Pro [extensions](http://presspermit.com/extensions) are [available](http://presspermit.com/purchase) for [additional access control and features](http://www.youtube.com/playlist?list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3):
 	
-  * Customize editing access for specific posts or terms - [video](http://presspermit.com/tutorial/page-editing-exceptions)
-  * Limit category/term assignment and page parent selection - [video](http://presspermit.com/tutorial/limit-posting-category-parent)
-  * Define your own custom post statuses - [video](http://presspermit.com/tutorial/custom-post-visibility)
-  * Assign supplemental roles for custom post statuses
-  * Date-limited membership in Permissions Groups - [video](http://presspermit.com/tutorial/date-limited-group-membership)
-  * Moderation statuses control multi-step moderation - [video](http://presspermit.com/tutorial/multi-step-moderation)
-  * Hidden Content Teaser - [video](http://presspermit.com/tutorial/privacy-statuses-teaser)
-  * Edit Flow integration - [video](http://presspermit.com/tutorial/edit-flow-integration)
-  * Revisionary and Post Forking: regulate moderated editing of published content - [video](http://presspermit.com/tutorial/published-content-revision)
-  * BuddyPress Permission Groups for additional reading or editing access - [video](http://presspermit.com/tutorial/buddypress-content-permissions)
-  * Circles: block access to content not authored by a fellow group member - [video](http://presspermit.com/tutorial/buddypress-content-permissions)
-  * File URL Filter: regulate direct access to uploaded files - [video](http://presspermit.com/tutorial/regulate-file-url-access)
-  * Customize bbPress forum permissions
+  * Customize editing access for specific posts or terms - [video](https://www.youtube.com/watch?v=0yOEBD8VE9c&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=3)
+  * Limit category/term assignment and page parent selection - [video](https://www.youtube.com/watch?v=QqvtxrqLPwY&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=4)
+  * File URL Filter: regulate direct access to uploaded files - [video](https://www.youtube.com/watch?v=kVusrdlgSps&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=15)
+  * Hidden Content Teaser - [video](https://www.youtube.com/watch?v=d_5r8NKjxDQ&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=9)
+  * bbPress: customize viewing, topic creation or reply submission permissions per-forum
+  * bbPress: display a teaser message for unreadable topics or replies
+  * Date-limited membership in Permissions Groups - [video](https://www.youtube.com/watch?v=hMOVvCy_9Ws&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=7)
+  
+  * Moderation statuses control multi-step moderation - [video](https://www.youtube.com/watch?v=v8VyKP3rIvk&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=8)
+  * Edit Flow integration - [video](https://www.youtube.com/watch?v=eeZ6CBC5kQI&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=11)
+  * Revisionary and Post Forking: regulate moderated editing of published content - [video](https://www.youtube.com/watch?v=kCD6HQAjUXs&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=12)
+  * BuddyPress Permission Groups for additional reading or editing access - [video](https://www.youtube.com/watch?v=oABIT7wki_A&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=14)
+  * Circles: block access to content not authored by a fellow group member
   * WPML integration: mirror post/term permissions to translations
+  * Define custom post statuses and set corresponding supplemental roles - [video](https://www.youtube.com/watch?v=vM3Iwt3Jdak&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=6)
   * Import groups, roles and restrictions from Role Scoper
 	
 == Upgrade Notice ==
@@ -48,6 +49,15 @@ Pro [extensions](http://presspermit.com/extensions) are [available](http://press
 Initial production release
 
 == Changelog ==
+
+= 2.3.20 - 20 Jul 2017 =
+* Fixed : REST comments retrieval by non-Administrator returned empty if PP Collaborative Editing Pack not activated
+* Fixed : Exceptions and supplemental roles associated with WP role permission group were not applied if pp_group_members table out of sync
+
+= 2.3.19 - 16 Jun 2017 =
+* Fixed : Authors could not preview their own scheduled posts
+* Fixed : Database error for duplicate primary key values in table pp_group_members
+* Compat : WP 4.8 - Uppermost Update button on Edit Category screen was ineffective
 
 = 2.3.18 - 24 Mar 2017 =
 * Fixed : PHP Warning on Terms Listing screen
@@ -539,19 +549,7 @@ Moving forward, I do not plan any major development of the Role Scoper code base
 
 If you encounter issues with Role Scoper and need to migrate to a different solution, [Press Permit Pro](http://presspermit.com) provides access to an import script which can (for most installations) automate the majority of your RS migration.
 
-= Can Press Permit Pro do everything Role Scoper can do? =
-
-[Press Permit Pro](http://presspermit.com) introduces some important new features, including custom post statuses, BuddyPress group role assignments and bbPress compatibility.  For most sites, it is a functional equivalent to Role Scoper, with major improvements in UI and performance. A few of Role Scoper's more obscure features are <strong>not</strong> currently provided by PP Pro:
-
-  * HTTP Authentication for feeds
-  * Supplemental roles and restrictions for links defined in wp-admin/link-manager.php
-  * Customization of NextGEN Gallery editing permissions
-  * Group membership requests and recommendations (but supplemental roles can be assigned to BuddyPress groups, inheriting any membership control)
-  * Role assignment for limited content date range (but membership in custom-defined permission groups can be date-limited)
-
-For a detailed comparison, see the [RS/PP Feature Grid](http://presspermit.com/pp-rs-feature-grid).
-
-If you have a feature request, the plugin author may be available for custom consulting.
+For a detailed feature comparison, see the [RS/PP Feature Grid](http://presspermit.com/pp-rs-feature-grid).
 
 = Can I import settings from Role Scoper? =
 
@@ -599,75 +597,6 @@ I will gladly include any user-contributed languages!
 
 **WP Super Cache** : set WPSC option to disable caching for logged users (unless you only use Press Permit to customize editing access).
 
-**WPML Multilingual CMS** : plugin creates a separate post / page / category for each translation.  PP for WPML extension plugin is required to filter the PP Exceptions item selection UI
-  by language and (optionally) to enable mirroring of exceptions to translations
+**WPML Multilingual CMS** : plugin creates a separate post / page / category for each translation.  PP for WPML extension plugin is required to filter the PP Exceptions item selection UI by language and (optionally) to enable mirroring of exceptions to translations
 
-**QTranslate** : Press Permit ensures compatibility by disabling the caching of page and category listings.  To enable caching, change QTranslate get_pages and get_terms 
-  filter priority to 2 or higher, then add the following line to wp-config.php: define('SCOPER_QTRANSLATE_COMPAT', true);
-
-**Get Recent Comments** : not compatible due to direct database query. Use WP Recent Comments widget instead.
-
-**The Events Calendar** : Not compatible as of TEV 1.6.3.  For unofficial workaround, change the-events-calendar.class.php as follows :
-
-change:
-
-    add_filter( 'posts_join', array( $this, 'events_search_join' ) );
-    add_filter( 'posts_where', array( $this, 'events_search_where' ) );
-    add_filter( 'posts_orderby',array( $this, 'events_search_orderby' ) );
-    add_filter( 'posts_fields',	array( $this, 'events_search_fields' ) );
-    add_filter( 'post_limits', array( $this, 'events_search_limits' ) );
-  
-	
-to:
-
-    if( ! is_admin() ) {
-      add_filter( 'posts_join', array( $this, 'events_search_join' ) );
-      add_filter( 'posts_where', array( $this, 'events_search_where' ) );
-      add_filter( 'posts_orderby',array( $this, 'events_search_orderby' ) );
-      add_filter( 'posts_fields',	array( $this, 'events_search_fields' ) );
-      add_filter( 'post_limits', array( $this, 'events_search_limits' ) );
-	}
-  
-	
-**PHP Execution** : as of v1.0.0, mechanism to limit editing based on post author capabilities is inherently incompatible w/ Press Permit. 
-  Edit php-execution-plugin/includes/class.php_execution.php as follows :
-
-change:
-
-    add_filter('user_has_cap', array(&$this,'action_user_has_cap'),10,3);
-  
-to:
-
-    add_filter( 'map_meta_cap', array( &$this,'map_meta_cap' ), 10, 4 );
-	
-replace function action_user_has_cap with :
-
-    function map_meta_cap( $caps, $meta_cap, $user_id, $args ) {
-        $object_id = ( is_array($args) ) ? $args[0] : $args;
-        if ( ! $post = get_post( $object_id ) )
-           return $caps;
-
-        if ( function_exists( 'get_post_type_object' ) ) {
-            $type_obj = get_post_type_object( $post->post_type );
-            $is_edit_cap = ( ( $type_obj->cap->edit_post == $meta_cap ) && in_array( $type_obj->cap->edit_others_posts, $caps ) );
-        } else {
-            $is_edit_cap = in_array( $meta_cap, array( 'edit_post', 'edit_page' ) ) && array_intersect( $caps, array( 'edit_others_posts', 'edit_others_pages' ) );
-        }
-
-        if ( $is_edit_cap ) {
-            $id = $post->post_author;
-
-            if ( isset( $this->cap_cache[$id] ) ) {
-                $author_can_exec_php = $this->cap_cache[$id];
-            } else {
-                $author = new WP_User($id);
-                $author_can_exec_php = ! empty( $author->allcaps[PHP_EXECUTION_CAPABILITY] );
-                $this->cap_cache[$id] = $author_can_exec_php;
-            }
-
-            if ( $author_can_exec_php ) 
-                $caps []= PHP_EXECUTION_CAPABILITY;
-        }
  
-        return $caps;	
-    }

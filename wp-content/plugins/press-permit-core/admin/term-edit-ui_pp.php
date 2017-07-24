@@ -136,8 +136,12 @@ class PP_TermEditUI {
 		if ( ! current_user_can('pp_assign_roles') || apply_filters( 'pp_disable_exception_ui', false, 'term', $tag->term_taxonomy_id, $post_type ) )
 			return;
 		
-		submit_button( __('Update', 'pp') );
-
+		?>
+		<div class="edit-tag-actions">
+		<input class="button button-primary" value="<?php _e('Update', 'pp');?>" type="submit">
+		</div>
+		<?php
+		
 		if ( $post_type )
 			self::universal_exceptions_note( $tag, $taxonomy, $post_type );
 		?>

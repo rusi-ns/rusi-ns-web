@@ -28,11 +28,19 @@ class PP_User extends WP_User {
 		$agent_type = 'pp_group';		
 		$this->groups[$agent_type] = $this->_get_pp_groups( compact( 'agent_type' ) );
 		
+		// TODO: ensure current WP roles are included in pp_groups
+		
 		if ( ! empty($args['filter_usergroups']) && ! empty($args['filter_usergroups'][$agent_type]) )  // assist group admin
 			$this->groups[$agent_type] = array_intersect_key($this->groups[$agent_type], $args['filter_usergroups'][$agent_type]);
 
 		$this->site_roles = $this->get_site_roles();	// @todo: eliminate redundant call - get_user_typecast_caps()
-
+		
+		global $wp_roles;
+		foreach( array_keys($this->site_roles) as $role_name ) {
+			if ( ! strpos( $role_name, ':' ) && $wp_roles->is_role( $role_name ) )
+				$this->roles []= $role_name;
+		}
+		
 		add_filter('map_meta_cap', array(&$this, 'reinstate_caps'), 99, 3);
 
 		//pp_log_mem_usage( 'new PP_User done' );
@@ -70,7 +78,7 @@ class PP_User extends WP_User {
 			if ( ( 'pp_net_group' == $agent_type ) && ! pp_get_option( 'netwide_groups' ) )
 				continue;
 			
-			$apply_groups = $this->groups[$agent_type];
+			$apply_groups = ( isset( $this->groups[$agent_type] ) ) ? $this->groups[$agent_type] : array();
 			
 			if ( ( 'pp_group' == $agent_type ) && pp_get_option( 'netwide_groups' ) ) {
 				foreach( array_keys($apply_groups) as $k ) {
@@ -115,6 +123,7 @@ class PP_User extends WP_User {
 					$user_groups[$all_group->ID] = $all_group;
 			}
 		} else {
+			$args['wp_roles'] = $this->roles;
 			$user_groups = pp_get_groups_for_user( $this->ID, $args['agent_type'], $args );
 			
 			if ( isset( $this->roles ) ) {

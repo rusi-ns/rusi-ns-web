@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - The Events Calendar - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-06-29 09:35:43+0000\n"
+"PO-Revision-Date: 2017-07-18 12:12:35+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2358,7 +2358,7 @@ msgstr "löschen"
 
 #: src/Tribe/Aggregator/Tabs/Scheduled.php:181
 msgid "queued"
-msgstr "anstehend"
+msgstr "anstehend: "
 
 #: src/Tribe/Aggregator/Tabs/Scheduled.php:94
 msgid "Scheduled Imports"
@@ -4310,7 +4310,7 @@ msgstr "%1$s f&uuml;r %2$s - %3$s"
 
 #: src/functions/template-tags/loop.php:140
 msgid "Upcoming %s"
-msgstr "Anstehende %s"
+msgstr "%s anstehende"
 
 #: src/functions/template-tags/google-map.php:47
 msgid "+ Google Map"
@@ -7159,7 +7159,7 @@ msgstr "Anfangsdatum"
 
 #: src/Tribe/Admin_List.php:246 src/Tribe/Main.php:1713
 msgid "%s Categories"
-msgstr "Kategorien"
+msgstr "%ss-Kategorien"
 
 #: src/Tribe/Admin/Timezone_Updater.php:105
 msgid "A problem stopped the timezone update process from completing. Please refresh and try again."
@@ -7239,4 +7239,4 @@ msgstr "Vereinigte Staaten"
 
 #: src/Tribe/Venue.php:315
 msgid "Unnamed Venue"
-msgstr "Unbenannter Veranstaltungsort"ort"
+msgstr "Unbenannter Veranstaltungsort"

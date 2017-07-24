@@ -271,7 +271,7 @@ class PP_QueryInterceptor
 		if ( $num_matches = preg_match_all( "/{$src_table}.post_status\s*=\s*'([^']+)'/", $where, $matches ) ) {
 			if ( pp_is_front() || ( defined('REST_REQUEST') && REST_REQUEST ) ) {
 				if ( pp_is_front() || 'read' == $required_operation )
-					$valid_stati = array_merge( pp_get_post_stati( array( 'public' => true, 'post_type' => $post_types ) ), pp_get_post_stati( array( 'private' => true, 'post_type' => $post_types ) ) );
+					$valid_stati = array_merge( pp_get_post_stati( array( 'public' => true, 'post_type' => $post_types ) ), pp_get_post_stati( array( 'private' => true, 'post_type' => $post_types ) ), array( 'future' => 'future' ) );
 				else
 					$valid_stati = pp_get_post_stati( array( 'internal' => false, 'post_type' => $post_types ), 'names' );
 				
@@ -383,7 +383,7 @@ class PP_QueryInterceptor
 		$meta_cap = "{$required_operation}_post";
 
 		if ( 'read' == $required_operation ) {
-			$use_statuses = array_merge( pp_get_post_stati( array( 'public' => true, 'post_type' => $post_types ), 'object' ), pp_get_post_stati( array( 'private' => true, 'post_type' => $post_types ), 'object' ) );
+			$use_statuses = array_merge( pp_get_post_stati( array( 'public' => true, 'post_type' => $post_types ), 'object' ), pp_get_post_stati( array( 'private' => true, 'post_type' => $post_types ), 'object' ), array( 'future' => 'future' ) );
 			foreach( $use_statuses as $key => $obj ) {
 				if ( ! empty($obj->exclude_from_search) )	// example usage is bbPress hidden status
 					unset($use_statuses[$key]);
@@ -451,6 +451,13 @@ class PP_QueryInterceptor
 							continue;
 						}
 					}
+					
+					if ( 'future' == $status ) {
+						$cap_property = "edit_others_posts";
+						if ( empty( $type_obj->cap->$cap_property ) ) {
+							continue;
+						}
+					}
 
 					if ( $flag_meta_caps ) { $pp_meta_caps->do_status_cap_map = true; }
 					$reqd_caps = pp_map_meta_cap( $meta_cap, $pp_current_user->ID, 0, compact( 'post_type', 'status', 'query_contexts' ) );
@@ -508,7 +515,7 @@ class PP_QueryInterceptor
 					if ( $where_arr[$post_type] ) {
 						$where_arr[$post_type] = pp_implode( 'OR', $where_arr[$post_type] );
 						$where_arr[$post_type] = "1=1 AND ( " . $where_arr[$post_type] . " )"; 
-					} else {
+					} elseif ( ! in_array( 'comments', $args['query_contexts'] ) || ! defined( 'REST_REQUEST' ) || ! REST_REQUEST  ) { // if PPCE is not activated, don't filter comments
 						$where_arr[$post_type] = '1=2';
 					}
 				}
