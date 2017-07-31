@@ -17,7 +17,7 @@
 		        	<td>
 		        		<?php settings_fields( 'http-headers-xfo' ); ?>
 						<?php do_settings_sections( 'http-headers-xfo' ); ?>
-		        		<select name="hh_x_frame_options_value" class="http-header-value"<?php disabled($x_frame_options, 0); ?>>
+		<select name="hh_x_frame_options_value" class="http-header-value"<?php echo $x_frame_options == 1 ? NULL : ' readonly'; ?>>
 						<?php
 						$items = array('deny', 'sameorigin', 'allow-from');
 						$x_frame_options_value = get_option('hh_x_frame_options_value');
@@ -27,6 +27,6 @@
 						}
 						?>		
 						</select>
-						<input type="text" name="hh_x_frame_options_domain" placeholder="Domain" value="<?php echo esc_attr(get_option('hh_x_frame_options_domain')); ?>"<?php echo $x_frame_options == 1 && $x_frame_options_value == 'allow-from' ? NULL : ' disabled="disabled" style="display: none"'; ?> />
+		<input type="text" name="hh_x_frame_options_domain" placeholder="Domain" value="<?php echo esc_attr(get_option('hh_x_frame_options_domain')); ?>"<?php echo $x_frame_options == 1 && $x_frame_options_value == 'allow-from' ? NULL : ' style="display: none" readonly'; ?> />
 					</td>
 		        </tr>

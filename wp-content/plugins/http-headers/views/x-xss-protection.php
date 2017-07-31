@@ -17,7 +17,7 @@
 		        <td>
 		        	<?php settings_fields( 'http-headers-xss' ); ?>
 					<?php do_settings_sections( 'http-headers-xss' ); ?>
-		        	<select name="hh_x_xxs_protection_value" class="http-header-value"<?php disabled($x_xxs_protection, 0); ?>>
+		        	<select name="hh_x_xxs_protection_value" class="http-header-value"<?php echo $x_xxs_protection == 1 ? NULL : ' readonly'; ?>>
 					<?php
 					$items = array('0', '1', '1; mode=block');
 					$x_xxs_protection_value = get_option('hh_x_xxs_protection_value');

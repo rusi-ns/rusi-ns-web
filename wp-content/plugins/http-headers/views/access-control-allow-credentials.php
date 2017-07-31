@@ -17,7 +17,7 @@
 	<td>
 		<?php settings_fields( 'http-headers-acac' ); ?>
 		<?php do_settings_sections( 'http-headers-acac' ); ?>
-		<select name="hh_access_control_allow_credentials_value" class="http-header-value"<?php disabled($access_control_allow_credentials, 0); ?>>
+		<select name="hh_access_control_allow_credentials_value" class="http-header-value"<?php echo $access_control_allow_credentials == 1 ? NULL : ' readonly'; ?>>
 		<?php
 		$items = array('true', 'false');
 		$access_control_allow_credentials_value = get_option('hh_access_control_allow_credentials_value');

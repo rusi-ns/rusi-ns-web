@@ -20,7 +20,7 @@
 					<table>
 						<tr>
 							<td>max-age:</td>
-							<td><select name="hh_strict_transport_security_max_age" class="http-header-value"<?php disabled($strict_transport_security, 0); ?>>
+							<td><select name="hh_strict_transport_security_max_age" class="http-header-value"<?php echo $strict_transport_security == 1 ? NULL : ' readonly'; ?>>
 							<?php
 							$items = array('0' => '0 (Delete entire HSTS Policy)', '3600' => '1 hour', '86400' => '1 day', '604800' => '7 days', '2592000' => '30 days', '5184000' => '60 days', '7776000' => '90 days', '31536000' => '1 year', '63072000' => '2 years');
 							$strict_transport_security_max_age = get_option('hh_strict_transport_security_max_age');
@@ -32,11 +32,11 @@
 						</tr>
 						<tr>
 							<td>includeSubDomains:</td>
-							<td><input type="checkbox" class="http-header-value" name="hh_strict_transport_security_sub_domains" value="1"<?php checked(get_option('hh_strict_transport_security_sub_domains'), 1, true); ?><?php disabled($strict_transport_security, 0); ?> /></td>
+							<td><input type="checkbox" class="http-header-value" name="hh_strict_transport_security_sub_domains" value="1"<?php checked(get_option('hh_strict_transport_security_sub_domains'), 1, true); ?><?php echo $strict_transport_security == 1 ? NULL : ' readonly'; ?> /></td>
 						</tr>
 						<tr>
 							<td>preload:</td>
-							<td><input type="checkbox" class="http-header-value" name="hh_strict_transport_security_preload" value="1"<?php checked(get_option('hh_strict_transport_security_preload'), 1, true); ?><?php disabled($strict_transport_security, 0); ?> /></td>
+							<td><input type="checkbox" class="http-header-value" name="hh_strict_transport_security_preload" value="1"<?php checked(get_option('hh_strict_transport_security_preload'), 1, true); ?><?php echo $strict_transport_security == 1 ? NULL : ' readonly'; ?> /></td>
 						</tr>
 					</table>
 				</td>

@@ -1,7 +1,7 @@
 <?php 
-$bools = array(0 => 'Off', 1 => 'On');
+include dirname(__FILE__) . '/includes/config.inc.php';
+include dirname(__FILE__) . '/includes/breadcrumbs.inc.php';
 ?>
-<p><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=http-headers">&laquo; Back to list of headers</a></p>
 
 <section class="hh-panel">
 	<form method="post" action="options.php">

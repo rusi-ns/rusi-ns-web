@@ -17,7 +17,7 @@
 		        	<td>
 			        	<?php settings_fields( 'http-headers-rp' ); ?>
 						<?php do_settings_sections( 'http-headers-rp' ); ?>
-		        		<select name="hh_referrer_policy_value" class="http-header-value"<?php disabled($referrer_policy, 0); ?>>
+		        		<select name="hh_referrer_policy_value" class="http-header-value"<?php echo $referrer_policy == 1 ? NULL : ' readonly'; ?>>
 						<?php
 						$items = array("", "no-referrer", "no-referrer-when-downgrade", "same-origin", "origin", "strict-origin", "origin-when-cross-origin", "strict-origin-when-cross-origin", "unsafe-url");
 						$referrer_policy_value = get_option('hh_referrer_policy_value');

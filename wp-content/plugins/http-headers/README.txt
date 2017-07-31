@@ -1,10 +1,10 @@
 === HTTP Headers ===
 Contributors: zinoui
 Donate link: https://zinoui.com/donation
-Tags: custom headers, http headers, headers, http, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts, referrer, csp
+Tags: custom headers, http headers, headers, security, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts, referrer, csp, caching, compression, access control, authentication
 Requires at least: 3.2
 Tested up to: 4.8
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 
 HTTP Headers adds CORS & security HTTP headers to your website.
@@ -15,21 +15,30 @@ HTTP Headers gives your control over the http headers returned by your blog or w
 
 Headers supported by HTTP Headers includes:
 
-* X-Frame-Options
-* X-XSS-Protection
-* X-Content-Type-Options
-* X-UA-Compatible
-* Strict-Transport-Security
-* Public-Key-Pins
 * Access-Control-Allow-Origin
 * Access-Control-Allow-Credentials
 * Access-Control-Max-Age
 * Access-Control-Allow-Methods
 * Access-Control-Allow-Headers
 * Access-Control-Expose-Headers
+* Age 
+* Content-Security-Policy
+* Cache-Control
+* Connection
+* Content-Encoding
+* Expires
+* Pragma
+* Public-Key-Pins
 * P3P
 * Referrer-Policy
-* Content-Security-Policy
+* Strict-Transport-Security
+* Vary
+* WWW-Authenticate
+* X-Content-Type-Options
+* X-Frame-Options
+* X-Powered-By
+* X-UA-Compatible
+* X-XSS-Protection
 
 The [getting started tutorial](https://zinoui.com/blog/http-headers-for-wordpress) describes a typical configuration of this plugin.
 
@@ -60,6 +69,20 @@ These HTTP headers are being used in production services by popular websites as 
 Updates are on they way, so stay tuned at [@DimitarIvanov](https://twitter.com/DimitarIvanov)
 
 == Changelog ==
+
+= 1.5.0 =
+*Release Date - 30th July, 2017*
+
+* Added support of "Age" header 
+* Added support of "Cache-Control" header
+* Added support of "Connection" header
+* Added support of "Content-Encoding" header
+* Added support of "Expires" header
+* Added support of "Pragma" header
+* Added support of "Vary" header
+* Added support of "WWW-Authenticate" header
+* Added support of "X-Powered-By" header
+* Added support of "Secure" and "HttpOnly" cookies
 
 = 1.4.0 =
 *Release Date - 5th July, 2017*

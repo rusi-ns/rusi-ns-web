@@ -29,7 +29,7 @@
 			if ($i % 3 === 0) {
 				?></tr><tr><?php
 									}
-			?><td><label><input type="checkbox" class="http-header-value" name="hh_access_control_expose_headers_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $access_control_expose_headers_value) ? NULL : ' checked="checked"'; ?><?php disabled($access_control_expose_headers, 0); ?> /> <?php echo $item; ?></label></td><?php
+			?><td><label><input type="checkbox" class="http-header-value" name="hh_access_control_expose_headers_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $access_control_expose_headers_value) ? NULL : ' checked'; ?><?php echo $access_control_expose_headers == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 		}
 		?>
 		</tr></tbody></table>

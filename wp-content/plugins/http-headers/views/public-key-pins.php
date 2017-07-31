@@ -20,15 +20,15 @@
 					<table>
 						<tr>
 							<td>pin-sha256:</td>
-							<td><input type="text" class="http-header-value" name="hh_public_key_pins_sha256_1" value="<?php echo esc_attr(get_option('hh_public_key_pins_sha256_1')); ?>" placeholder="d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM="<?php disabled($public_key_pins, 0); ?> /></td>
+							<td><input type="text" class="http-header-value" name="hh_public_key_pins_sha256_1" value="<?php echo esc_attr(get_option('hh_public_key_pins_sha256_1')); ?>" placeholder="d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM="<?php echo $public_key_pins == 1 ? NULL : ' readonly'; ?> /></td>
 						</tr>
 						<tr>
 							<td>pin-sha256:<br>(backup key)</td>
-							<td><input type="text" class="http-header-value" name="hh_public_key_pins_sha256_2" value="<?php echo esc_attr(get_option('hh_public_key_pins_sha256_2')); ?>" placeholder="E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g="<?php disabled($public_key_pins, 0); ?> /></td>
+							<td><input type="text" class="http-header-value" name="hh_public_key_pins_sha256_2" value="<?php echo esc_attr(get_option('hh_public_key_pins_sha256_2')); ?>" placeholder="E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g="<?php echo $public_key_pins == 1 ? NULL : ' readonly'; ?> /></td>
 						</tr>
 						<tr>
 							<td>max-age:</td>
-							<td><select class="http-header-value" name="hh_public_key_pins_max_age"<?php disabled($public_key_pins, 0); ?>>
+							<td><select class="http-header-value" name="hh_public_key_pins_max_age"<?php echo $public_key_pins == 1 ? NULL : ' readonly'; ?>>
 							<?php 
 							$items = array('3600' => '1 hour', '86400' => '1 day', '604800' => '7 days', '2592000' => '30 days', '5184000' => '60 days', '7776000' => '90 days', '31536000' => '1 year');
 							$public_key_pins_max_age = get_option('hh_public_key_pins_max_age');
@@ -40,11 +40,11 @@
 						</tr>
 						<tr>
 							<td>includeSubDomains:</td>
-							<td><input type="checkbox" class="http-header-value" name="hh_public_key_pins_sub_domains" value="1"<?php checked(get_option('hh_public_key_pins_sub_domains'), 1, true); ?><?php disabled($public_key_pins, 0); ?> /></td>
+							<td><input type="checkbox" class="http-header-value" name="hh_public_key_pins_sub_domains" value="1"<?php checked(get_option('hh_public_key_pins_sub_domains'), 1, true); ?><?php echo $public_key_pins == 1 ? NULL : ' readonly'; ?> /></td>
 						</tr>
 						<tr>
 							<td>report-uri:</td>
-							<td><input type="text" class="http-header-value" name="hh_public_key_pins_report_uri" value="<?php echo esc_attr(get_option('hh_public_key_pins_report_uri')); ?>" placeholder="http://example.com/pkp-report"<?php disabled($public_key_pins, 0); ?> /></td>
+							<td><input type="text" class="http-header-value" name="hh_public_key_pins_report_uri" value="<?php echo esc_attr(get_option('hh_public_key_pins_report_uri')); ?>" placeholder="http://example.com/pkp-report"<?php echo $public_key_pins == 1 ? NULL : ' readonly'; ?> /></td>
 						</tr>
 					</table>
 				</td>

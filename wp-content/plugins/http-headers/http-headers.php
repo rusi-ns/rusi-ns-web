@@ -3,7 +3,7 @@
 Plugin Name: HTTP Headers
 Plugin URI: https://zinoui.com/blog/http-headers-for-wordpress
 Description: This plugin adds CORS & security HTTP headers to your website. Improves your website overall security.
-Version: 1.4.0
+Version: 1.5.0
 Author: Dimitar Ivanov
 Author URI: https://zinoui.com
 License: GPLv2 or later
@@ -50,8 +50,67 @@ if (get_option('hh_method') === false) {
 	add_option('hh_method', 'php', null, 'yes');
 }
 	
+if (get_option('hh_connection') === false) {
+	add_option('hh_connection', 0, null, 'yes');
+	add_option('hh_connection_value', null, null, 'yes');
+}
+
+if (get_option('hh_cache_control') === false) {
+	add_option('hh_cache_control', 0, null, 'yes');
+	add_option('hh_cache_control_value', null, null, 'yes');
+}
+
+if (get_option('hh_age') === false) {
+	add_option('hh_age', 0, null, 'yes');
+	add_option('hh_age_value', null, null, 'yes');
+}
+
+if (get_option('hh_pragma') === false) {
+	add_option('hh_pragma', 0, null, 'yes');
+	add_option('hh_pragma_value', null, null, 'yes');
+}
+
+if (get_option('hh_expires') === false) {
+	add_option('hh_expires', 0, null, 'yes');
+	add_option('hh_expires_value', null, null, 'yes');
+	add_option('hh_expires_type', null, null, 'yes');
+}
+
+if (get_option('hh_content_encoding') === false) {
+	add_option('hh_content_encoding', 0, null, 'yes');
+	add_option('hh_content_encoding_value', null, null, 'yes');
+	add_option('hh_content_encoding_ext', null, null, 'yes');
+}
+
+if (get_option('hh_vary') === false) {
+	add_option('hh_vary', 0, null, 'yes');
+	add_option('hh_vary_value', null, null, 'yes');
+}
+
+if (get_option('hh_x_powered_by') === false) {
+	add_option('hh_x_powered_by', 0, null, 'yes');
+	add_option('hh_x_powered_by_option', null, null, 'yes');
+	add_option('hh_x_powered_by_value', null, null, 'yes');
+}
+
+if (get_option('hh_www_authenticate') === false) {
+	add_option('hh_www_authenticate', 0, null, 'yes');
+	add_option('hh_www_authenticate_type', null, null, 'yes');
+	add_option('hh_www_authenticate_realm', null, null, 'yes');
+	add_option('hh_www_authenticate_user', null, null, 'yes');
+	add_option('hh_www_authenticate_pswd', null, null, 'yes');
+}
+
+if (get_option('hh_cookie_security') === false) {
+	add_option('hh_cookie_security', 0, null, 'yes');
+	add_option('hh_cookie_security_value', null, null, 'yes');
+}
+	
 function get_http_headers() {
+	$statuses = array();
+	$unset = array();
 	$headers = array();
+	$append = array();
 	if (get_option('hh_x_frame_options') == 1) {
 		$x_frame_options_value = strtoupper(get_option('hh_x_frame_options_value'));
 		if ($x_frame_options_value == 'ALLOW-FROM') {
@@ -59,11 +118,42 @@ function get_http_headers() {
 		}
 		$headers['X-Frame-Options'] = $x_frame_options_value;
 	}
+	if (get_option('hh_x_powered_by') == 1) {
+		if (get_option('hh_x_powered_by_option') == 'set') {
+			$headers['X-Powered-By'] = get_option('hh_x_powered_by_value');
+		} else {
+			$unset[] = 'X-Powered-By';
+		}
+	}
 	if (get_option('hh_x_xxs_protection') == 1) {
 		$headers['X-XSS-Protection'] = get_option('hh_x_xxs_protection_value');
 	}
 	if (get_option('hh_x_content_type_options') == 1) {
 		$headers['X-Content-Type-Options'] = get_option('hh_x_content_type_options_value');
+	}
+	if (get_option('hh_connection') == 1) {
+		$headers['Connection'] = get_option('hh_connection_value');
+	}
+	if (get_option('hh_pragma') == 1) {
+		$headers['Pragma'] = get_option('hh_pragma_value');
+	}
+	if (get_option('hh_age') == 1) {
+		$headers['Age'] = sprintf("%u", get_option('hh_age_value'));
+	}
+	if (get_option('hh_cache_control') == 1) {
+		$hh_cache_control_value = get_option('hh_cache_control_value', array());
+		$tmp = array();
+		foreach ($hh_cache_control_value as $k => $v) {
+			if (in_array($k, array('max-age', 's-maxage'))) {
+				if (strlen($v) > 0) {
+					$tmp[] = sprintf("%s=%u", $k, $v);
+				}
+			} else {
+				$tmp[] = $k;
+			}
+		}
+		$hh_cache_control_value = join(', ', $tmp);
+		$headers['Cache-Control'] = $hh_cache_control_value;
 	}
 	if (get_option('hh_strict_transport_security') == 1) {
 		$hh_strict_transport_security = array();
@@ -191,18 +281,107 @@ function get_http_headers() {
 	if (get_option('hh_referrer_policy') == 1) {
 		$headers['Referrer-Policy'] = get_option('hh_referrer_policy_value');
 	}
+	if (get_option('hh_www_authenticate') == 1) {
 	
-	return $headers;
+		switch (get_option('hh_www_authenticate_type')) {
+			case 'Basic':
+				if (!(isset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])
+					&& $_SERVER['PHP_AUTH_USER'] == get_option('hh_www_authenticate_user')
+					&& $_SERVER['PHP_AUTH_PW'] == get_option('hh_www_authenticate_pswd'))) {
+					$headers['WWW-Authenticate'] = sprintf("Basic realm='%s'", get_option('hh_www_authenticate_realm'));
+					$statuses['HTTP/1.1'] = '401 Unauthorized';
+				}
+				break;
+			case 'Digest':
+				if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
+					$realm = get_option('hh_www_authenticate_realm');
+					$headers['WWW-Authenticate'] = sprintf("Digest realm='%s',qop='auth',nonce='%s',opaque='%s'",
+						$realm, uniqid(), md5($realm));
+					$statuses['HTTP/1.1'] = '401 Unauthorized';
+				}
+				break;
+		}
+	}
+	if (get_option('hh_vary') == 1)
+	{
+		$value = get_option('hh_vary_value');
+		if (!empty($value))
+		{
+			$append['Vary'] = join(', ', array_keys($value));
+		}
+	}
+	
+	return array($headers, $statuses, $unset, $append);
+}
+
+function http_digest_parse($txt) {
+	$txt = stripslashes($txt);
+	
+	$needed_parts = array('nonce'=>1, 'nc'=>1, 'cnonce'=>1, 'qop'=>1, 'username'=>1, 'uri'=>1, 'response'=>1);
+	$data = array();
+	$keys = implode('|', array_keys($needed_parts));
+
+	preg_match_all('@(' . $keys . ')=(?:([\'"])([^\2]+?)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
+
+	foreach ($matches as $m) {
+		$data[$m[1]] = $m[3] ? $m[3] : $m[4];
+		unset($needed_parts[$m[1]]);
+	}
+
+	return $needed_parts ? false : $data;
+}
+
+function php_auth_digest() {
+	if (!($data = http_digest_parse($_SERVER['PHP_AUTH_DIGEST'])) || get_option('hh_www_authenticate_user') != $data['username']) {
+		die('Wrong Credentials!');
+	}
+
+	$A1 = md5($data['username'] . ':' . get_option('hh_www_authenticate_realm') . ':' . get_option('hh_www_authenticate_pswd'));
+	$A2 = md5($_SERVER['REQUEST_METHOD'].':'.$data['uri']);
+	$valid_response = md5($A1.':'.$data['nonce'].':'.$data['nc'].':'.$data['cnonce'].':'.$data['qop'].':'.$A2);
+	if ($data['response'] != $valid_response) {
+		die('Wrong Credentials!');
+	}
+}
+
+function php_content_encoding() {
+	if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+		ob_start('ob_gzhandler');
+	} else {
+		ob_start();
+	}
 }
 
 function http_headers() {
 	if (get_option('hh_method') !== 'php') {
 		return;
 	}
-	$headers = get_http_headers();
-	foreach ($headers as $key => $value)
-	{
+	// PHP method below
+	list($headers, $statuses, $unset, $append) = get_http_headers();
+	foreach ($headers as $key => $value) {
 		header(sprintf("%s: %s", $key, $value));
+	}
+	foreach ($append as $key => $value) {
+		header(sprintf("%s: %s", $key, $value), false);
+	}
+	foreach ($unset as $header) {
+		if (function_exists('header_remove')) {
+			header_remove($header);
+		} else {
+			header("$header:");
+		}
+	}
+	foreach ($statuses as $key => $value) {
+		header(sprintf("%s %s", $key, $value));
+		exit;
+	}
+	
+	if (get_option('hh_www_authenticate') == 1) {
+		php_auth_digest();
+	}
+	
+	if (get_option('hh_content_encoding') == 1) {
+		php_content_encoding();
 	}
 }
 
@@ -251,28 +430,218 @@ function http_headers_admin() {
 	register_setting('http-headers-aceh', 'hh_access_control_expose_headers_value');
 	register_setting('http-headers-acma', 'hh_access_control_max_age');
 	register_setting('http-headers-acma', 'hh_access_control_max_age_value');
+	register_setting('http-headers-ce', 'hh_content_encoding');
+	register_setting('http-headers-ce', 'hh_content_encoding_value');
+	register_setting('http-headers-ce', 'hh_content_encoding_ext');
+	register_setting('http-headers-vary', 'hh_vary');
+	register_setting('http-headers-vary', 'hh_vary_value');
+	register_setting('http-headers-xpb', 'hh_x_powered_by');
+	register_setting('http-headers-xpb', 'hh_x_powered_by_option');
+	register_setting('http-headers-xpb', 'hh_x_powered_by_value');
+	register_setting('http-headers-wwa', 'hh_www_authenticate');
+	register_setting('http-headers-wwa', 'hh_www_authenticate_type');
+	register_setting('http-headers-wwa', 'hh_www_authenticate_realm');
+	register_setting('http-headers-wwa', 'hh_www_authenticate_user');
+	register_setting('http-headers-wwa', 'hh_www_authenticate_pswd');
+	register_setting('http-headers-cc', 'hh_cache_control');
+	register_setting('http-headers-cc', 'hh_cache_control_value');
+	register_setting('http-headers-age', 'hh_age');
+	register_setting('http-headers-age', 'hh_age_value');
+	register_setting('http-headers-pra', 'hh_pragma');
+	register_setting('http-headers-pra', 'hh_pragma_value');
+	register_setting('http-headers-exp', 'hh_expires');
+	register_setting('http-headers-exp', 'hh_expires_value');
+	register_setting('http-headers-exp', 'hh_expires_type');
+	register_setting('http-headers-con', 'hh_connection');
+	register_setting('http-headers-con', 'hh_connection_value');
+	register_setting('http-headers-cose', 'hh_cookie_security');
+	register_setting('http-headers-cose', 'hh_cookie_security_value');
 	
-	if (isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true')
-	{
-		$htaccess_file = get_home_path().'.htaccess';
-		if (get_option('hh_method') == 'htaccess')
-		{
-			$lines = array();
-			$lines[] = '<FilesMatch "\.(php|html)$">';
-			$lines[] = '  <IfModule mod_headers.c>';
-			$headers = get_http_headers();
-			foreach ($headers as $key => $value)
-			{
-				$lines[] = sprintf('    Header set %s %s', $key, sprintf('%1$s%2$s%1$s', strpos($value, '"') === false ? '"' : "'", $value));
-			}
-			$lines[] = '  </IfModule>';
-			$lines[] = '</FilesMatch>';
-				
-			insert_with_markers($htaccess_file, "HttpHeaders", $lines);
-		} else {
-			insert_with_markers($htaccess_file, "HttpHeaders", array());
+	# When method is changed
+	if (isset($_GET['settings-updated'], $_GET['tab']) && $_GET['settings-updated'] == 'true' && $_GET['tab'] == 'advanced') {
+		update_headers_directives();
+		
+		update_auth_credentials();
+		update_auth_directives();
+	
+		update_content_encoding_directives();
+		
+		update_expires_directives();
+		
+		update_cookie_security_directives();
+	}
+	
+	# When particular header is changed
+	if (isset($_GET['settings-updated'], $_GET['header'])
+		&& $_GET['settings-updated'] == 'true'
+		&& get_option('hh_method') == 'htaccess') {
+		
+		switch ($_GET['header']) {
+			case 'www-authenticate':
+				update_auth_credentials();
+				update_auth_directives();
+				break;
+			case 'content-encoding':
+			case 'vary':
+				update_content_encoding_directives();
+				break;
+			case 'expires':
+				update_expires_directives();
+				break;
+			case 'cookie-security':
+				update_cookie_security_directives();
+				break;
+			default:
+				update_headers_directives();
 		}
 	}
+}
+	
+function update_headers_directives() {
+	$lines = array();
+	if (get_option('hh_method') == 'htaccess') {
+		list($headers, $statuses, $unset, $append) = get_http_headers();
+			
+		foreach ($unset as $header) {
+			$lines[] = sprintf('    Header unset %s', $header);
+		}
+		foreach ($headers as $key => $value) {
+			if (in_array($key, array('WWW-Authenticate'))) {
+				continue;
+			}
+			$lines[] = sprintf('    Header set %s %s', $key, sprintf('%1$s%2$s%1$s', strpos($value, '"') === false ? '"' : "'", $value));
+		}
+		foreach ($append as $key => $value) {
+			$lines[] = sprintf('    Header append %s %s', $key, sprintf('%1$s%2$s%1$s', strpos($value, '"') === false ? '"' : "'", $value));
+		}
+		
+		if (!empty($lines)) {
+			array_unshift($lines, '<FilesMatch "\.(php|html)$">', '  <IfModule mod_headers.c>');
+			array_push($lines, '  </IfModule>', '</FilesMatch>');
+		}
+	}
+	return insert_with_markers(get_home_path().'.htaccess', "HttpHeaders", $lines);
+}
+
+function update_content_encoding_directives() {
+	$lines = array();
+	if (get_option('hh_method') == 'htaccess' && get_option('hh_content_encoding') == 1) {
+	
+		$content_encoding_value = get_option('hh_content_encoding_value');
+		if (!$content_encoding_value) {
+			$content_encoding_value = array();
+		}
+		
+		$content_encoding_ext = get_option('hh_content_encoding_ext');
+		if (!$content_encoding_ext) {
+			$content_encoding_ext = array();
+		}
+		if (!empty($content_encoding_ext)) {
+			$lines[] = sprintf('<FilesMatch "\.(%s)$">', join('|', array_keys($content_encoding_ext)));
+			$lines[] = '  <IfModule mod_deflate.c>';
+			$lines[] = '    SetOutputFilter DEFLATE';
+			$lines[] = '  </IfModule>';
+			$lines[] = '</FilesMatch>';
+		}
+		if (!empty($content_encoding_value)) {
+			if (!empty($lines)) {
+				$lines[] = '';
+			}
+			$lines[] = '<IfModule mod_deflate.c>';
+			foreach ($content_encoding_value as $item => $whatever) {
+				$lines[] = sprintf('  AddOutputFilterByType DEFLATE %s', $item);
+			}
+			$lines[] = '</IfModule>';
+		}
+	}
+				
+	return insert_with_markers(get_home_path().'.htaccess', "HttpHeadersCompression", $lines);
+}
+
+function update_expires_directives() {
+	$lines = array();
+	if (get_option('hh_method') == 'htaccess' && get_option('hh_expires') == 1) {
+		
+		$types = get_option('hh_expires_type', array());
+		$values = get_option('hh_expires_value', array());
+		
+		$lines[] = '<IfModule mod_expires.c>';
+		$lines[] = '  ExpiresActive On';
+		foreach ($types as $type => $whatever) {
+			list($base, $period, $suffix) = explode('_', $values[$type]);
+			if (in_array($base, array('access', 'modification'))) {
+				$lines[] = $type != 'default'
+					? sprintf('  ExpiresByType %s "%s plus %u %s"', $type, $base, $period, $suffix)
+					: sprintf('  ExpiresDefault "%s plus %u %s"', $base, $period, $suffix);
+			} elseif ($base == 'invalid') {
+				$lines[] = $type != 'default'
+					? sprintf('  ExpiresByType %s A0', $type)
+					: sprintf('  ExpiresDefault A0');
+			}
+		}
+		$lines[] = '</IfModule>';
+	}
+	return insert_with_markers(get_home_path().'.htaccess', "HttpHeadersExpires", $lines);
+}
+
+function update_auth_directives() {
+	$lines = array();
+	if (get_option('hh_method') == 'htaccess' && get_option('hh_www_authenticate') == 1) {
+		
+		$type = get_option('hh_www_authenticate_type');
+		
+		$file = $type == 'Basic' ? '.hh-htpasswd' : '.hh-htdigest';
+		
+		$lines[] = '<FilesMatch "^\.hh-ht(digest|passwd)$">';
+		$lines[] = '  Order deny,allow';
+		$lines[] = '  Deny from all';
+		$lines[] = '</FilesMatch>';
+		
+		$lines[] = sprintf('<IfModule mod_auth_%s.c>', strtolower($type));
+		$lines[] = sprintf('  AuthType %s', get_option('hh_www_authenticate_type'));
+		$lines[] = sprintf('  AuthName "%s"', get_option('hh_www_authenticate_realm'));
+		$lines[] = sprintf('  AuthUserFile "%s%s"', get_home_path(), $file);
+		$lines[] = sprintf('  Require user %s', get_option('hh_www_authenticate_user'));
+		$lines[] = '</IfModule>';
+	}
+
+	return insert_with_markers(get_home_path().'.htaccess', "HttpHeadersAuth", $lines);
+}
+
+function update_cookie_security_directives() {
+	$lines = array();
+	if (get_option('hh_method') == 'htaccess' && get_option('hh_cookie_security') == 1) {
+		$value = get_option('hh_cookie_security_value', array());
+		if (isset($value['HttpOnly'])) {
+			$lines[] = 'php_flag session.cookie_httponly on';
+		}
+		if (isset($value['Secure'])) {
+			$lines[] = 'php_flag session.cookie_secure on';
+		}
+	}
+	return insert_with_markers(get_home_path().'.htaccess', "HttpHeadersCookieSecurity", $lines);
+}
+
+function update_auth_credentials() {
+	if (get_option('hh_method') == 'htaccess' && get_option('hh_www_authenticate') == 1) {
+		$type = get_option('hh_www_authenticate_type');
+		$user = get_option('hh_www_authenticate_user');
+		$pswd = get_option('hh_www_authenticate_pswd');
+		$realm = get_option('hh_www_authenticate_realm');
+		
+		switch ($type) {
+			case 'Basic':
+				$ht_file = get_home_path().'.hh-htpasswd';
+				$auth = sprintf('%s:{SHA}%s', $user, base64_encode(sha1($pswd, true)));
+				break;
+			case 'Digest':
+				$ht_file = get_home_path().'.hh-htdigest';
+				$auth = sprintf('%s:%s:%s', $user, $realm, md5($user.':'.$realm.':'.$pswd));
+				break;
+		}
+		return @file_put_contents($ht_file, $auth);
+	}
+	return false;
 }
 
 function http_headers_settings_link( $links ) {

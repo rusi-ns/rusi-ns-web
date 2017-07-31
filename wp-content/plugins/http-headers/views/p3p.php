@@ -37,7 +37,7 @@
 								if ($i > 0 && $i % 4 === 0) {
 									?></tr><tr><?php
 								}
-								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked="checked"'; ?><?php disabled($p3p, 0); ?> /> <?php echo $item; ?></label></td><?php
+								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked'; ?><?php echo $p3p == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 							}
 							?></tr></tbody></table>
 						</td>
@@ -51,7 +51,7 @@
 								if ($i > 0 && $i % 4 === 0) {
 									?></tr><tr><?php
 								}
-								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked="checked"'; ?><?php disabled($p3p, 0); ?> /> <?php echo $item; ?></label></td><?php
+								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked'; ?><?php echo $p3p == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 							}
 							?></tr></tbody></table>
 						</td>
@@ -65,7 +65,7 @@
 								if ($i > 0 && $i % 4 === 0) {
 									?></tr><tr><?php
 								}
-								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked="checked"'; ?><?php disabled($p3p, 0); ?> /> <?php echo $item; ?></label></td><?php
+								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked'; ?><?php echo $p3p == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 							}
 							?></tr></tbody></table>
 						</td>
@@ -79,7 +79,7 @@
 								if ($i > 0 && $i % 4 === 0) {
 									?></tr><tr><?php
 								}
-								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked="checked"'; ?><?php disabled($p3p, 0); ?> /> <?php echo $item; ?></label></td><?php
+								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked'; ?><?php echo $p3p == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 							}
 							?></tr></tbody></table>
 						</td>
@@ -93,7 +93,7 @@
 								if ($i > 0 && $i % 4 === 0) {
 									?></tr><tr><?php
 								}
-								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked="checked"'; ?><?php disabled($p3p, 0); ?> /> <?php echo $item; ?></label></td><?php
+								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked'; ?><?php echo $p3p == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 							}
 							?></tr></tbody></table>
 						</td>
@@ -107,7 +107,7 @@
 								if ($i > 0 && $i % 4 === 0) {
 									?></tr><tr><?php
 								}
-								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked="checked"'; ?><?php disabled($p3p, 0); ?> /> <?php echo $item; ?></label></td><?php
+								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked'; ?><?php echo $p3p == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 							}
 							?></tr></tbody></table>
 						</td>
@@ -121,7 +121,7 @@
 								if ($i > 0 && $i % 4 === 0) {
 									?></tr><tr><?php
 								}
-								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked="checked"'; ?><?php disabled($p3p, 0); ?> /> <?php echo $item; ?></label></td><?php
+								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked'; ?><?php echo $p3p == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 							}
 							?></tr></tbody></table>
 						</td>
@@ -135,7 +135,7 @@
 								if ($i > 0 && $i % 4 === 0) {
 									?></tr><tr><?php
 								}
-								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked="checked"'; ?><?php disabled($p3p, 0); ?> /> <?php echo $item; ?></label></td><?php
+								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked'; ?><?php echo $p3p == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 							}
 							?></tr></tbody></table>
 						</td>
@@ -149,7 +149,7 @@
 								if ($i > 0 && $i % 4 === 0) {
 									?></tr><tr><?php
 								}
-								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked="checked"'; ?><?php disabled($p3p, 0); ?> /> <?php echo $item; ?></label></td><?php
+								?><td><label><input type="checkbox" class="http-header-value" name="hh_p3p_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $p3p_value) ? NULL : ' checked'; ?><?php echo $p3p == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
 							}
 							?></tr></tbody></table>
 						</td>

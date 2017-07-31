@@ -17,7 +17,7 @@
 				<td>
 					<?php settings_fields( 'http-headers-uac' ); ?>
 					<?php do_settings_sections( 'http-headers-uac' ); ?>
-					<select name="hh_x_ua_compatible_value" class="http-header-value"<?php disabled($x_ua_compatible, 0); ?>>
+					<select name="hh_x_ua_compatible_value" class="http-header-value"<?php echo $x_ua_compatible == 1 ? NULL : ' readonly'; ?>>
 					<?php
 					$items = array('IE=7', 'IE=8', 'IE=9', 'IE=10', 'IE=edge', 'IE=edge,chrome=1');
 					$x_ua_compatible_value = get_option('hh_x_ua_compatible_value');

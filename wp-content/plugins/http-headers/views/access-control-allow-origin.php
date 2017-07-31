@@ -17,7 +17,7 @@
 	<td>
 		<?php settings_fields( 'http-headers-acao' ); ?>
 		<?php do_settings_sections( 'http-headers-acao' ); ?>
-		<select name="hh_access_control_allow_origin_value" class="http-header-value"<?php disabled($access_control_allow_origin, 0); ?>>
+		<select name="hh_access_control_allow_origin_value" class="http-header-value"<?php echo $access_control_allow_origin == 1 ? NULL : ' readonly'; ?>>
 		<?php
 		$items = array('*', 'HTTP_ORIGIN', 'origin');
 		$access_control_allow_origin_value = get_option('hh_access_control_allow_origin_value');
@@ -26,6 +26,6 @@
 		}
 		?>
 		</select>
-		<input type="text" name="hh_access_control_allow_origin_url" placeholder="http://domain.com" value="<?php echo esc_attr(get_option('hh_access_control_allow_origin_url')); ?>"<?php echo $access_control_allow_origin == 1 && $access_control_allow_origin_value == 'origin' ? NULL : ' disabled="disabled" style="display: none"'; ?> />
+		<input type="text" name="hh_access_control_allow_origin_url" placeholder="http://domain.com" value="<?php echo esc_attr(get_option('hh_access_control_allow_origin_url')); ?>"<?php echo $access_control_allow_origin == 1 && $access_control_allow_origin_value == 'origin' ? NULL : ' style="display: none" readonly'; ?> />
 	</td>
 </tr>

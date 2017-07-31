@@ -1,5 +1,7 @@
-<p><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=http-headers">&laquo; Back to list of headers</a></p>
-
+<?php 
+include dirname(__FILE__) . '/includes/config.inc.php';
+include dirname(__FILE__) . '/includes/breadcrumbs.inc.php';
+?>
 <section class="hh-panel">
 	<form method="post" action="options.php">
 	    <table class="form-table hh-table">
@@ -15,7 +17,7 @@
 						<?php do_settings_sections( 'http-headers-mtd' ); ?>
 						<?php
 						$items = array(
-							'php' => 'Use PHP to send headers',
+							'php' => 'Use PHP to send headers (deprecated)',
 							'htaccess' => 'Use Apache (mod_headers) to send headers', 
 						);
 						$method = get_option('hh_method');

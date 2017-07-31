@@ -17,7 +17,7 @@
 				<td>
 					<?php settings_fields( 'http-headers-cto' ); ?>
 					<?php do_settings_sections( 'http-headers-cto' ); ?>
-					<select name="hh_x_content_type_options_value" class="http-header-value"<?php disabled($x_content_type_options, 0); ?>>
+					<select name="hh_x_content_type_options_value" class="http-header-value"<?php echo $x_content_type_options == 1 ? NULL : ' readonly'; ?>>
 					<?php
 					$items = array('nosniff');
 					$x_content_type_options_value = get_option('hh_x_content_type_options_value');

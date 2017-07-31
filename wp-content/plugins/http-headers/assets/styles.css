@@ -1,3 +1,7 @@
+select.readonly,
+select[readonly] {
+	background-color: #eee;
+}
 .hh-table > tbody > tr > th,
 .hh-table > tbody > tr > td,
 .hh-table td{
@@ -78,4 +82,122 @@
 	background-color: #FFFFCC; 
 	margin: 20px 0;
 	padding: 8px 10px; 
+}
+.hh-breadcrumbs{
+	
+}
+.hh-breadcrumbs li{
+	display: inline-block;
+}
+.hh-breadcrumbs li:not(:last-child):after {
+	content: "\00A0\00BB\00A0";
+	display: inline-block;
+}
+.hh-breadcrumbs li a{
+
+}
+.hh-categories{
+	max-width: 992px;
+}
+.hh-categories *{
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	     -o-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+.hh-categories:after{
+	content: '';
+	clear: left;
+	display: table;
+	zoom: 1;
+}
+a.hh-category{
+	background-color: #fff;
+	border: solid 1px #92D295;
+	display: inline-block;
+	float: left;
+	font-size: 16px;
+	height: 168px;
+	margin: 0 3% 3% 0;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	width: 30%;
+}
+
+a.hh-category i {
+    background-color: #92D295;
+	display: inline-block;
+    height: 48px;
+    margin: 35px 0 0;
+    text-align: center;
+    width: 48px;
+    -webkit-transform: rotate(20deg);
+       -moz-transform: rotate(20deg);
+        -ms-transform: rotate(20deg);
+         -o-transform: rotate(20eg);
+}
+a.hh-category i:after {
+    background-color: #92D295;
+    content: "";
+    display: inline-block;
+    height: 48px;
+    width: 48px;
+    -webkit-transform: rotate(135deg);
+       -moz-transform: rotate(135deg);
+        -ms-transform: rotate(135deg);
+         -o-transform: rotate(135deg);
+}
+
+a.hh-category span{
+	display: block;
+	color: #fff;
+	font-size: 24px;
+	font-weight: 600;
+	text-transform: uppercase;
+	left: 0;
+	position: absolute;
+	top: 48px;
+	width: 100%;
+}
+
+a.hh-category strong{
+	display: block;
+	font-weight: normal;
+	margin: 20px 0 0;
+}
+
+a.hh-category:hover{
+	box-shadow: 0 0 3px #6EC271;
+}
+a.hh-category:hover i{
+	-webkit-transform: rotate(160deg);
+       -moz-transform: rotate(160deg);
+        -ms-transform: rotate(160deg);
+         -o-transform: rotate(160eg);
+
+	-webkit-transition: -webkit-transform 0.5s ease-out;
+	   -moz-transition: -moz-transform 0.5s ease-out;
+	     -o-transition: -o-transform 0.5s ease-out;
+	        transition: transform 0.5s ease-out;
+}
+@media (min-width: 1280px) {
+	a.hh-category{
+		max-width: 260px;
+	}
+}
+@media (max-width: 768px) {
+	a.hh-category{
+		margin: 0 5% 20px;
+		width: 40%;
+	}
+}
+@media (max-width: 468px) {
+	a.hh-category{
+		clear: left;
+		margin: 0 0 20px;
+		max-width: 260px;
+		width: 100%;
+	}
 }

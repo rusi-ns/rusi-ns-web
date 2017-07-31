@@ -26,7 +26,7 @@
 	}
 	foreach ($items as $item)
 	{
-		?><p><label><input type="checkbox" class="http-header-value" name="hh_access_control_allow_methods_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $access_control_allow_methods_value) ? NULL : ' checked="checked"'; ?><?php disabled($access_control_allow_methods, 0); ?> /> <?php echo $item; ?></label></p><?php
+		?><p><label><input type="checkbox" class="http-header-value" name="hh_access_control_allow_methods_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $access_control_allow_methods_value) ? NULL : ' checked'; ?><?php echo $access_control_allow_methods == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></p><?php
 	}
 	?>
 	</td>

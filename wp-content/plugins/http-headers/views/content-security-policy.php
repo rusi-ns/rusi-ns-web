@@ -37,7 +37,7 @@
         			<td><?php echo $item; ?></td>
         			<td class="hh-td-inner" valign="middle">
         				<input type="text" name="hh_content_security_policy_value[<?php echo $item; ?>]" class="http-header-value" 
-        					value="<?php echo esc_attr(@$csp[$item]); ?>"<?php disabled($content_security_policy, 0); ?>>
+        					value="<?php echo esc_attr(@$csp[$item]); ?>"<?php echo $content_security_policy == 1 ? NULL : ' readonly'; ?>>
         			</td>
         		</tr>
 				<?php

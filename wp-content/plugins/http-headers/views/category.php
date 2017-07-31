@@ -1,12 +1,7 @@
-<div class="hh-notice"><?php
-if (get_option('hh_method') == 'php')
-{
-	?>Currently, you're using the <strong>PHP</strong> method.<?php
-} else {
-	?>Currently, you're using the <strong>Apache</strong> method.<?php
-}
-?> To configure your preferred method of inclusion goes to the <a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=http-headers&amp;tab=advanced">advanced settings</a> page.</div>
-
+<?php 
+include dirname(__FILE__) . '/includes/config.inc.php';
+include dirname(__FILE__) . '/includes/breadcrumbs.inc.php';
+?>
 <table class="hh-index-table">
 	<thead>
 		<tr>
@@ -18,25 +13,15 @@ if (get_option('hh_method') == 'php')
 	</thead>
 	<tbody>
 	<?php 
-	$headers = array(
-		'hh_x_frame_options' => array('X-Frame-Options', 'x-frame-options'),
-		'hh_x_xxs_protection' => array('X-XSS-Protection', 'x-xss-protection'),
-		'hh_x_content_type_options' => array('X-Content-Type-Options', 'x-content-type-options'),
-		'hh_x_ua_compatible' => array('X-UA-Compatible', 'x-ua-compatible'),
-		'hh_strict_transport_security' => array('Strict-Transport-Security', 'strict-transport-security'),
-		'hh_p3p' => array('P3P', 'p3p'),
-		'hh_public_key_pins' => array('Public-Key-Pins', 'public-key-pins'),
-		'hh_referrer_policy' => array('Referrer-Policy', 'referrer-policy'),
-		'hh_content_security_policy' => array('Content-Security-Policy', 'content-security-policy'),
-		'hh_access_control_allow_origin' => array('Access-Control-Allow-Origin', 'access-control-allow-origin'),
-		'hh_access_control_allow_credentials' => array('Access-Control-Allow-Credentials', 'access-control-allow-credentials'),
-		'hh_access_control_max_age' => array('Access-Control-Max-Age', 'access-control-max-age'),
-		'hh_access_control_allow_methods' => array('Access-Control-Allow-Methods', 'access-control-allow-methods'),
-		'hh_access_control_allow_headers' => array('Access-Control-Allow-Headers', 'access-control-allow-headers'),
-		'hh_access_control_expose_headers' => array('Access-Control-Expose-Headers', 'access-control-expose-headers'),
-	);
-	foreach ($headers as $key => $item)
+	foreach ($headers as $index => $item)
 	{
+		if (@$_GET['category'] != $item[2])
+		{
+			continue;
+		}
+		
+		$key = $item[1];
+		
 		$option = get_option($key, 0);
 		$isOn = (int) $option === 1;
 		$value = NULL;
@@ -45,10 +30,18 @@ if (get_option('hh_method') == 'php')
 			$value = get_option($key .'_value');
 			switch ($key)
 			{
+				case 'hh_age':
+					$value = (int) $value;
+					break;
 				case 'hh_p3p':
 					if (!empty($value))
 					{
 						$value = sprintf('CP="%s"', join(' ', array_keys($value)));
+					}
+					break;
+				case 'hh_x_powered_by':
+					if (get_option('hh_x_powered_by_option') == 'unset') {
+						$value = '[Unset]';
 					}
 					break;
 				case 'hh_x_frame_options':
@@ -126,6 +119,55 @@ if (get_option('hh_method') == 'php')
 						$value = join('; ', $csp);
 					}
 					break;
+				case 'hh_content_encoding':
+					$value = !$value ? null : join(', ', array_keys($value));
+					
+					$ext = get_option('hh_content_encoding_ext');
+					if (!empty($ext)) {
+						$ext = join(', ', array_keys($ext));
+						$value .= (!empty($value) ? '<br>' : null) . $ext;
+					}
+					$value = !empty($value) ? sprintf('gzip (%s)', $value) : 'gzip';
+					break;
+				case 'hh_vary':
+					$value = !$value ? null : join(', ', array_keys($value));
+					break;
+				case 'hh_www_authenticate':
+					$value = get_option('hh_www_authenticate_type');
+					break;
+				case 'hh_cache_control':
+					$tmp = array();
+					foreach ($value as $k => $v) {
+						if (in_array($k, array('max-age', 's-maxage'))) {
+							if (strlen($v) > 0) {
+								$tmp[] = sprintf("%s=%u", $k, $v);
+							}
+						} else {
+							$tmp[] = $k;
+						}
+					}
+					$value = join(', ', $tmp);
+					break;
+				case 'hh_expires':
+					$tmp = array();
+					$types = get_option('hh_expires_type', array());
+					foreach ($types as $type => $whatever) {
+						list($base, $period, $suffix) = explode('_', $value[$type]);
+						if (in_array($base, array('access', 'modification'))) {
+							$tmp[] = $type != 'default'
+								? sprintf('%s = "%s plus %u %s"', $type, $base, $period, $suffix)
+								: sprintf('default = "%s plus %u %s"', $base, $period, $suffix);
+						} elseif ($base == 'invalid') {
+							$tmp[] = $type != 'default'
+								? sprintf('%s = A0', $type)
+								: sprintf('default = A0');
+						}
+					}
+					$value = join('<br>', $tmp);
+					break;
+				case 'hh_cookie_security':
+					$value = is_array($value) ? join(', ', array_keys($value)) : NULL;
+					break;
 				default:
 					$value = !is_array($value) ? $value : join(', ', $value);
 			}
@@ -136,8 +178,8 @@ if (get_option('hh_method') == 'php')
 			<td><?php echo $item[0]; ?></td>
 			<td><?php echo $value; ?></td>
 			<td class="hh-status hh-status-<?php echo $isOn ? 'on' : 'off'; ?>"><span><?php echo $status; ?></span></td>
-			<td><a href="<?php echo $_SERVER['PHP_SELF']; ?>?page=http-headers&header=<?php 
-				echo $item[1]; ?>">Edit</a></td>
+			<td><a href="<?php echo get_admin_url(); ?>options-general.php?page=http-headers&header=<?php 
+				echo $index; ?>">Edit</a></td>
 		</tr>
 		<?php
 	}
