@@ -22,7 +22,11 @@ function colormag_footer_copyright() {
 ), 
 date( 'Y' ), $site_link );
 
-   $colormag_footer_copyright = '<div class="copyright">'.$default_footer_value.'</div>';
+   $colormag_footer_copyright = <<<HEREDOC
+<div class="copyright">{$default_footer_value}
+</div>
+HEREDOC;
+
    echo $colormag_footer_copyright;
 }
 

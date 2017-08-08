@@ -71,6 +71,10 @@ $options = array(
 	'hh_connection_value',
 	'hh_cookie_security',
 	'hh_cookie_security_value',
+	'hh_expect_ct',
+	'hh_expect_ct_max_age',
+	'hh_expect_ct_report_uri',
+	'hh_expect_ct_enforce',
 );
 
 foreach ($options as $option)

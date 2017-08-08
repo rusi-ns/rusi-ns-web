@@ -1,8 +1,8 @@
 <?php
 
-add_filter('wp_insert_post_data', 'fifu_remove_fist_image_ext', 10, 2);
+add_filter('wp_insert_post_data', 'fifu_remove_first_image_ext', 10, 2);
 
-function fifu_remove_fist_image_ext($data, $postarr) {
+function fifu_remove_first_image_ext($data, $postarr) {
     if (isset($_POST['fifu_input_url']))
         return $data;
 
@@ -33,9 +33,6 @@ function fifu_save_properties_ext($post_id) {
 
     if ($url && get_option('fifu_get_first') == 'toggleon')
         update_post_meta($post_id, 'fifu_image_url', $url);
-
-    if (get_option('fifu_attachment_id') && !get_post_thumbnail_id($post_id) && $url)
-        set_post_thumbnail($post_id, get_option('fifu_attachment_id'));
 }
 
 function fifu_first_img_in_content($content) {
@@ -69,6 +66,8 @@ function fifu_first_url_in_content($post_id) {
         return;
     $matches = array();
     preg_match_all('/<img[^>]*>/', $content, $matches);
+    if (!$matches[0])
+        return;
     $aux1 = explode('src="', $matches[0][0]);
     $aux2 = explode('"', $aux1[1]);
     return $matches && $matches[0] ? $aux2[0] : null;

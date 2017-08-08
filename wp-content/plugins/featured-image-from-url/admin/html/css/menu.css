@@ -47,3 +47,11 @@
     border-style: solid;
 }
 
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding-right: 32px;
+}
+
+th {
+    height: 25px;
+}

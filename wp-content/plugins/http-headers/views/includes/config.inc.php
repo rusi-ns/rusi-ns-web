@@ -37,4 +37,5 @@ $headers = array(
 	'age' => array('Age', 'hh_age', 'caching'),
 	'connection' => array('Connection', 'hh_connection', 'misc'),
 	'cookie-security' => array('Cookie security', 'hh_cookie_security', 'security'),
+	'expect-ct' => array('Expect-CT', 'hh_expect_ct', 'security'),
 );

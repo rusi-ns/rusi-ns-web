@@ -9,6 +9,13 @@
     </div>
 
     <div class="box">
+        <h2>Give this plugin a <a href="https://wordpress.org/support/view/plugin-reviews/featured-image-from-url?filter=5" target="_blank">5-star</a> rating, please =)</h2>
+        <div class="greybox" style="background:#c5c6f9">
+            <div style="color:#0073aa">Reaching 100 positive reviews, </div> the "CSS Style" feature will be released for all users.
+        </div>
+    </div>
+
+    <div class="box">
 
         <h2>Auto Set Featured Image</h2>
         <div class="greybox" style="background:#e3ffe2">
@@ -881,16 +888,196 @@
     </div>
 
     <div class="box">
-        <h2>Help</h2>
-        <div class="greybox">
-            Featured Image From URL plugin allows you to use an external image (from anywhere) as Featured Image of your Post, Page or Custom Post Type, such as WooCommerce Product. For WooCommerce users, it's also possible to use external images in the Product Category and Product Gallery. All included content still has social tags to facilitate sharing on social networks. And it's compatible with WP All Import plugin using the custom field "fifu_image_url". For more information, refer to <a href="https://wordpress.org/plugins/featured-image-from-url/faq/" target="_blank">FAQ</a> and <a href="https://wordpress.org/plugins/featured-image-from-url/screenshots/" target="_blank">screenshots</a>. 
+
+        <h2>WP REST API</h2>
+
+        <div class="greybox" style="background:#ffe2e2">
+            <b>Premium feature</b><br><br>
+            <div id="tabsApi">
+                <ul>
+                    <li><a href="#tabs-1">Endpoints</a></li>
+                    <li><a href="#tabs-2">Plugin Fields</a></li>
+                    <li><a href="#tabs-3">Creating your first product...</a></li>
+                    <li><a href="#tabs-4">Creating your first post...</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <table style="text-align:left">
+                        <tr>
+                            <th>			
+                            </th>
+                            <th>								
+                                GET/POST
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Shop</th>
+                            <th>
+                                <p>http://yourdomain.com/wp-json/wc/v2/products</p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Blog</th>
+                            <th>
+                                <p>http://yourdomain.com/wp-json/wp/v2/posts</p>
+                            </th>
+                        </tr>
+                    </table>
+                    <br>
+                    <br>
+                    <table style="text-align:left">
+                        <tr>
+                            <th>			
+                            </th>
+                            <th>								
+                                GET/PUT/DELETE
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Shop</th>
+                            <th>
+                                <p>http://yourdomain.com/wp-json/wc/v2/products/{id}</p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Blog</th>
+                            <th>
+                                <p>http://yourdomain.com/wp-json/wp/v2/posts/{id}</p>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="tabs-2">
+                    <table style="text-align:left">
+                        <tr>
+                            <th>
+                            <th>
+                                Key
+                            </th>
+                            <th>
+                                Key
+                            </th>
+                            <th>
+                                Key
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Image
+                            </th>
+                            <th>
+                                <p>
+                                    fifu_image_url
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Alt
+                            </th>
+                            <th>
+                                <p>
+                                    fifu_image_alt
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Video
+                            </th>
+                            <th>
+                                <p>
+                                    fifu_video_url
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Image Gallery
+                            </th>
+                            <th>
+                                <p>
+                                    fifu_image_url_0
+                                </p>
+                            </th>
+                            <th>
+                                <p>
+                                    fifu_image_url_1
+                                </p>
+                            </th>
+                            <th>
+                                <p>
+                                    ...
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Video Gallery
+                            </th>
+                            <th>
+                                <p>
+                                    fifu_video_url_0
+                                </p>
+                            </th>
+                            <th>
+                                <p>
+                                    fifu_video_url_1
+                                </p>
+                            </th>
+                            <th>
+                                <p>
+                                    ...
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Slider
+                            </th>
+                            <th>
+                                <p>
+                                    fifu_slider_image_url_0
+                                </p>
+                            </th>
+                            <th>
+                                <p>
+                                    fifu_slider_image_url_1
+                                </p>
+                            </th>
+                            <th>
+                                <p>
+                                    ...
+                                </p>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="tabs-3">
+                    <p>
+                        <iframe src="../wp-content/plugins/featured-image-from-url/admin/html/txt/product.txt"
+                                width="800px" height="220px" ></iframe>
+                    </p>
+                </div>
+
+                <div id="tabs-4">
+                    <p>
+                        <iframe src="../wp-content/plugins/featured-image-from-url/admin/html/txt/post.txt"
+                                width="800px" height="220px" ></iframe>
+                    </p>
+                </div>
+
+            </div>
+
         </div>
+
     </div>
 
     <div class="box">
-        <h2>Give This Plugin a 5-Star Rating</h2>
+        <h2>Help</h2>
         <div class="greybox">
-            Do you really love Featured Image From URL? So give this plugin a 5-star <a href="https://wordpress.org/support/view/plugin-reviews/featured-image-from-url?filter=5" target="_blank">rating</a>.
+            Featured Image From URL plugin allows you to use an external image (from anywhere) as Featured Image of your Post, Page or Custom Post Type, such as WooCommerce Product. For WooCommerce users, it's also possible to use external images in the Product Category and Product Gallery. All included content still has social tags to facilitate sharing on social networks. And it's compatible with WP All Import plugin using the custom field "fifu_image_url". For more information, refer to <a href="https://wordpress.org/plugins/featured-image-from-url/faq/" target="_blank">FAQ</a> and <a href="https://wordpress.org/plugins/featured-image-from-url/screenshots/" target="_blank">screenshots</a>. 
         </div>
     </div>
 
@@ -909,7 +1096,7 @@
             <h3>1) "How to get support?"</h3>
             You can inform any problem related to the Premium version in the email above. It will be solved as soon as possible and without any cost.<br><br>
             <h3>2) "Which plugins are compatible with Premium version?"</h3>
-            WooCommerce, WP All Import, Monarch, AccessPress Anonymous Post and others. If you intend to use the Premium version with a specific plugin, you can ask me if they are compatible.<br><br>
+            WooCommerce, WP All Import, Monarch, Frontend Publishing and others. If you intend to use the Premium version with a specific plugin, you can ask me if they are compatible.<br><br>
             <h3>3) "Can I get my money back later?"</h3>
             With the exception of rare situations, no. But don't worry about that. You will still have the best support and if, after your complete cooperation, I'm not able to solve your issue, I may refund you.<br><br>
             <h3>4) "How to get the Premium version?"</h3>
@@ -922,7 +1109,7 @@
                 </form>
             </div>
             <div style="display:inline-block;top:-20px;position:relative">
-                (US$ 25 or more, please) and receive the Premium version by email within 12 hours.
+                (US$ 50 or more, please) and receive the Premium version by email within 12 hours.
             </div>
         </div>
     </div>

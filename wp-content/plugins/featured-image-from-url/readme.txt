@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: marceljm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8BLDLZ3HDBGQG
-Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, vimeo, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail, link, uri, affiliate
+Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, vimeo, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail, link, uri, affiliate, wp, rest, api, wp rest api
 Requires at least: 4.0
 Tested up to: 4.8
 Stable tag: 4.8
@@ -27,6 +27,8 @@ Features:
 * all included content still has social tags to facilitate sharing on social networks;
 
 * compatible with WP All Import plugin;
+
+* supports WP REST API (**premium feature**);
 
 * all features created for external images are available for external videos from YouTube and Vimeo. And you can define the video size for each screen type (**premium feature**);
 
@@ -274,6 +276,15 @@ was removed. To finish, a Premium version is now been presented.
 = 1.5.9 =
 * New support email.
 
+= 1.6.0 =
+* WP REST API.
+
+= 1.6.1 =
+* Bug fix.
+
+= 1.6.2 =
+* Bug fix.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -408,3 +419,12 @@ was removed. To finish, a Premium version is now been presented.
 
 = 1.5.9 =
 * New support email.
+
+= 1.6.0 =
+* WP REST API.
+
+= 1.6.1 =
+* Bug fix.
+
+= 1.6.2 =
+* Bug fix.

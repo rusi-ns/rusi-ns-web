@@ -168,6 +168,15 @@ include dirname(__FILE__) . '/includes/breadcrumbs.inc.php';
 				case 'hh_cookie_security':
 					$value = is_array($value) ? join(', ', array_keys($value)) : NULL;
 					break;
+				case 'hh_expect_ct':
+					$tmp = array();
+					$tmp[] = sprintf('max-age=%u', get_option('hh_expect_ct_max_age'));
+					if (get_option('hh_expect_ct_enforce') == 1) {
+						$tmp[] = 'enforce';
+					}
+					$tmp[] = sprintf('report-uri="%s"', get_option('hh_expect_ct_report_uri'));
+					$value = join(', ', $tmp); 
+					break;
 				default:
 					$value = !is_array($value) ? $value : join(', ', $value);
 			}

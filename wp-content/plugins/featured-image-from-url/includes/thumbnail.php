@@ -71,20 +71,18 @@ function fifu_add_to_content($content) {
 add_filter('wp_get_attachment_url', 'fifu_replace_attachment_url', 10, 2);
 
 function fifu_replace_attachment_url($att_url, $att_id) {
-    if (get_option('fifu_attachment_id') == $att_id) {
-        if (!is_admin()) {
-            $url = get_post_meta(get_the_ID(), 'fifu_image_url', true);
-            if ($url)
-                $att_url = $url;
-        }
+    if ($att_id == get_post_thumbnail_id(get_the_ID())) {
+        $url = get_post_meta(get_the_ID(), 'fifu_image_url', true);
+        if ($url)
+            $att_url = $url;
     }
     return $att_url;
 }
 
 add_filter('wp_get_attachment_image_src', 'fifu_replace_attachment_image_src', 10, 2);
 
-function fifu_replace_attachment_image_src($image, $attachment_id) {
-    if ($attachment_id == get_post_thumbnail_id(get_the_ID())) {
+function fifu_replace_attachment_image_src($image, $att_id) {
+    if ($att_id == get_post_thumbnail_id(get_the_ID())) {
         $url = get_post_meta(get_the_ID(), 'fifu_image_url', true);
         if ($url) {
             return array(

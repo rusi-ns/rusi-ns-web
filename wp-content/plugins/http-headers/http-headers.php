@@ -2,8 +2,8 @@
 /*
 Plugin Name: HTTP Headers
 Plugin URI: https://zinoui.com/blog/http-headers-for-wordpress
-Description: This plugin adds CORS & security HTTP headers to your website. Improves your website overall security.
-Version: 1.5.0
+Description: A plugin for HTTP headers management including security, access-control (CORS), caching, compression, and authentication.
+Version: 1.6.0
 Author: Dimitar Ivanov
 Author URI: https://zinoui.com
 License: GPLv2 or later
@@ -104,6 +104,13 @@ if (get_option('hh_www_authenticate') === false) {
 if (get_option('hh_cookie_security') === false) {
 	add_option('hh_cookie_security', 0, null, 'yes');
 	add_option('hh_cookie_security_value', null, null, 'yes');
+}
+	
+if (get_option('hh_expect_ct') === false) {
+	add_option('hh_expect_ct', 0, null, 'yes');
+	add_option('hh_expect_ct_max_age', null, null, 'yes');
+	add_option('hh_expect_ct_report_uri', null, null, 'yes');
+	add_option('hh_expect_ct_enforce', null, null, 'yes');
 }
 	
 function get_http_headers() {
@@ -311,6 +318,21 @@ function get_http_headers() {
 		}
 	}
 	
+	if (get_option('hh_expect_ct') == 1) {
+		$expect_ct_max_age = get_option('hh_expect_ct_max_age');
+		$expect_ct_report_uri = get_option('hh_expect_ct_report_uri');
+		if (!empty($expect_ct_report_uri) && !empty($expect_ct_max_age)) {
+				
+			$expect_ct = array();
+			$expect_ct[] = sprintf("max-age=%u", $expect_ct_max_age);
+			if (get_option('hh_expect_ct_enforce') == 1) {
+				$expect_ct[] = "enforce";
+			}
+			$expect_ct[] = sprintf('report-uri="%s"', $expect_ct_report_uri);
+			$headers['Expect-CT'] = join(', ', $expect_ct);
+		}
+	}
+	
 	return array($headers, $statuses, $unset, $append);
 }
 
@@ -456,6 +478,10 @@ function http_headers_admin() {
 	register_setting('http-headers-con', 'hh_connection_value');
 	register_setting('http-headers-cose', 'hh_cookie_security');
 	register_setting('http-headers-cose', 'hh_cookie_security_value');
+	register_setting('http-headers-ect', 'hh_expect_ct');
+	register_setting('http-headers-ect', 'hh_expect_ct_max_age');
+	register_setting('http-headers-ect', 'hh_expect_ct_report_uri');
+	register_setting('http-headers-ect', 'hh_expect_ct_enforce');
 	
 	# When method is changed
 	if (isset($_GET['settings-updated'], $_GET['tab']) && $_GET['settings-updated'] == 'true' && $_GET['tab'] == 'advanced') {
