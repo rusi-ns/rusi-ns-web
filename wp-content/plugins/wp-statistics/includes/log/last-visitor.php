@@ -79,12 +79,15 @@ if ( $_get != '%' ) {
         <div class="metabox-holder">
             <div class="meta-box-sortables">
                 <div class="postbox">
-                    <div class="handlediv" title="<?php _e( 'Click to toggle', 'wp_statistics' ); ?>"><br/></div>
-                    <h3 class="hndle"><span><?php _e( 'Recent Visitor Statistics', 'wp_statistics' );
-							if ( $_get != '%' ) {
-								echo ' [' . __( 'Filtered by', 'wp_statistics' ) . ': ' . $title . ']';
-							} ?></span></h3>
-
+                    <?php $paneltitle = __( 'Recent Visitor Statistics', 'wp_statistics' );
+                        if ( $_get != '%' ) {
+                            $paneltitle = $paneltitle . ' [' . __( 'Filtered by', 'wp_statistics' ) . ': ' . $title . ']';
+                        } ?>
+                    <button class="handlediv" type="button" aria-expanded="true">
+                        <span class="screen-reader-text"><?php printf( __( 'Toggle panel: %s', 'wp_statistics' ), $paneltitle ); ?></span>
+                        <span class="toggle-indicator" aria-hidden="true"></span>
+                    </button>
+                    <h2 class="hndle"><span><?php echo $paneltitle; ?></span></h2>
                     <div class="inside">
 						<?php
 						// Instantiate pagination object with appropriate arguments
@@ -162,7 +165,7 @@ if ( $_get != '%' ) {
 
                 <div class="pagination-log">
 					<?php echo $Pagination->display(); ?>
-                    <p id="result-log"><?php echo ' ' . __( 'Page', 'wp_statistics' ) . ' ' . $Pagination->getCurrentPage() . ' ' . __( 'From', 'wp_statistics' ) . ' ' . $Pagination->getTotalPages(); ?></p>
+                    <p id="result-log"><?php printf( __( 'Page %1$s of %2$s', 'wp_statistics' ), $Pagination->getCurrentPage(), $Pagination->getTotalPages() ); ?></p>
                 </div>
             </div>
         </div>

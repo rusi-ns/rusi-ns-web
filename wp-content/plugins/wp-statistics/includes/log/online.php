@@ -13,8 +13,12 @@
             <div class="meta-box-sortables">
 
                 <div class="postbox">
-                    <div class="handlediv" title="<?php _e( 'Click to toggle', 'wp_statistics' ); ?>"><br/></div>
-                    <h3 class="hndle"><span><?php _e( 'Online Users', 'wp_statistics' ); ?></span></h3>
+                    <?php $paneltitle = __( 'Online Users', 'wp_statistics' ); ?>
+                    <button class="handlediv" type="button" aria-expanded="true">
+                        <span class="screen-reader-text"><?php printf( __( 'Toggle panel: %s', 'wp_statistics' ), $paneltitle ); ?></span>
+                        <span class="toggle-indicator" aria-hidden="true"></span>
+                    </button>
+                    <h2 class="hndle"><span><?php echo $paneltitle; ?></span></h2>
                     <div class="inside">
 						<?php
 						$ISOCountryCode = $WP_Statistics->get_country_codes();
@@ -77,18 +81,17 @@
 									echo "<a href='?page=" . WP_STATISTICS_OVERVIEW_PAGE . "&type=last-all-visitor&agent={$items->agent}'>{$agent}</a> {$items->ip}";
 									echo "<br>";
 
-									echo __( 'Online for ', 'wp_statistics' );
 									$timediff = ( $items->timestamp - $items->created );
 
 									if ( $timediff > 3600 ) {
-										echo date( "H:i:s", ( $items->timestamp - $items->created ) );
+										$onlinefor = date( "H:i:s", ( $items->timestamp - $items->created ) );
 									} else if ( $timediff > 60 ) {
-										echo "00:" . date( "i:s", ( $items->timestamp - $items->created ) );
+										$onlinefor = "00:" . date( "i:s", ( $items->timestamp - $items->created ) );
 									} else {
-										echo "00:00:" . date( "s", ( $items->timestamp - $items->created ) );
+										$onlinefor = "00:00:" . date( "s", ( $items->timestamp - $items->created ) );
 									}
 
-									echo " (HH:MM:SS)";
+									echo sprintf( __( 'Online for %s (HH:MM:SS)', 'wp_statistics' ), $onlinefor );
 
 									echo "</div>";
 									echo "</div>";
@@ -111,7 +114,7 @@
 				<?php if ( $total > 0 ) { ?>
                     <div class="pagination-log">
 						<?php echo $Pagination->display(); ?>
-                        <p id="result-log"><?php echo ' ' . __( 'Page', 'wp_statistics' ) . ' ' . $Pagination->getCurrentPage() . ' ' . __( 'From', 'wp_statistics' ) . ' ' . $Pagination->getTotalPages(); ?></p>
+                        <p id="result-log"><?php printf( __( 'Page %1$s of %2$s', 'wp_statistics' ), $Pagination->getCurrentPage(), $Pagination->getTotalPages() ); ?></p>
                     </div>
 				<?php } ?>
             </div>

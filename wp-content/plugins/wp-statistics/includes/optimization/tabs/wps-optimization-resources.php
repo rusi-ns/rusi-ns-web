@@ -27,7 +27,7 @@ function formatSize( $size ) {
             </th>
 
             <td>
-                <strong><?php echo number_format_i18n( memory_get_usage() ); ?></strong> <?php _e( 'Byte', 'wp_statistics' ); ?>
+                <strong><?php echo number_format_i18n( memory_get_usage() ); ?></strong> <?php _e( 'Bytes', 'wp_statistics' ); ?>
                 <p class="description"><?php _e( 'Memory usage in PHP', 'wp_statistics' ); ?></p>
             </td>
         </tr>
@@ -50,7 +50,7 @@ function formatSize( $size ) {
             </th>
 
             <td>
-                <strong><?php echo number_format_i18n( $result['useronline'] ); ?></strong> <?php _e( 'Row', 'wp_statistics' ); ?>
+                <strong><?php echo number_format_i18n( $result['useronline'] ); ?></strong> <?php echo _n( 'Row', 'Rows', number_format_i18n( $result['useronline'] ), 'wp_statistics' ); ?>
                 <p class="description"><?php _e( 'Number of rows', 'wp_statistics' ); ?></p>
             </td>
         </tr>
@@ -62,7 +62,7 @@ function formatSize( $size ) {
             </th>
 
             <td>
-                <strong><?php echo number_format_i18n( $result['visit'] ); ?></strong> <?php _e( 'Row', 'wp_statistics' ); ?>
+                <strong><?php echo number_format_i18n( $result['visit'] ); ?></strong> <?php echo _n( 'Row', 'Rows', number_format_i18n( $result['visit'] ), 'wp_statistics' ); ?>
                 <p class="description"><?php _e( 'Number of rows', 'wp_statistics' ); ?></p>
             </td>
         </tr>
@@ -74,7 +74,7 @@ function formatSize( $size ) {
             </th>
 
             <td>
-                <strong><?php echo number_format_i18n( $result['visitor'] ); ?></strong> <?php _e( 'Row', 'wp_statistics' ); ?>
+                <strong><?php echo number_format_i18n( $result['visitor'] ); ?></strong> <?php echo _n( 'Row', 'Rows', number_format_i18n( $result['visitor'] ), 'wp_statistics' ); ?>
                 <p class="description"><?php _e( 'Number of rows', 'wp_statistics' ); ?></p>
             </td>
         </tr>
@@ -86,7 +86,7 @@ function formatSize( $size ) {
             </th>
 
             <td>
-                <strong><?php echo number_format_i18n( $result['exclusions'] ); ?></strong> <?php _e( 'Row', 'wp_statistics' ); ?>
+                <strong><?php echo number_format_i18n( $result['exclusions'] ); ?></strong> <?php echo _n( 'Row', 'Rows', number_format_i18n( $result['exclusions'] ), 'wp_statistics' ); ?>
                 <p class="description"><?php _e( 'Number of rows', 'wp_statistics' ); ?></p>
             </td>
         </tr>
@@ -98,7 +98,7 @@ function formatSize( $size ) {
             </th>
 
             <td>
-                <strong><?php echo number_format_i18n( $result['pages'] ); ?></strong> <?php _e( 'Row', 'wp_statistics' ); ?>
+                <strong><?php echo number_format_i18n( $result['pages'] ); ?></strong> <?php echo _n( 'Row', 'Rows', number_format_i18n( $result['pages'] ), 'wp_statistics' ); ?>
                 <p class="description"><?php _e( 'Number of rows', 'wp_statistics' ); ?></p>
             </td>
         </tr>
@@ -110,7 +110,7 @@ function formatSize( $size ) {
             </th>
 
             <td>
-                <strong><?php echo number_format_i18n( $result['historical'] ); ?></strong> <?php _e( 'Row', 'wp_statistics' ); ?>
+                <strong><?php echo number_format_i18n( $result['historical'] ); ?></strong> <?php echo _n( 'Row', 'Rows', number_format_i18n( $result['historical'] ), 'wp_statistics' ); ?>
                 <p class="description"><?php _e( 'Number of rows', 'wp_statistics' ); ?></p>
             </td>
         </tr>
@@ -122,7 +122,7 @@ function formatSize( $size ) {
             </th>
 
             <td>
-                <strong><?php echo number_format_i18n( $result['search'] ); ?></strong> <?php _e( 'Row', 'wp_statistics' ); ?>
+                <strong><?php echo number_format_i18n( $result['search'] ); ?></strong> <?php echo _n( 'Row', 'Rows', number_format_i18n( $result['search'] ), 'wp_statistics' ); ?>
                 <p class="description"><?php _e( 'Number of rows', 'wp_statistics' ); ?></p>
             </td>
         </tr>
@@ -160,9 +160,9 @@ function formatSize( $size ) {
 
             <td>
                 <strong><?php if ( ini_get( 'safe_mode' ) ) {
-						echo 'Yes';
+						_e( 'Yes', 'wp_statistics' );
 					} else {
-						echo 'No';
+						_e( 'No', 'wp_statistics' );
 					} ?></strong>
                 <p class="description"><?php _e( 'Is PHP Safe Mode active.  The GeoIP code is not supported in Safe Mode.', 'wp_statistics' ); ?></p>
             </td>
@@ -175,9 +175,9 @@ function formatSize( $size ) {
 
             <td>
                 <strong><?php if ( defined( 'AF_INET6' ) ) {
-						echo 'Yes';
+						_e( 'Yes', 'wp_statistics' );
 					} else {
-						echo 'No';
+						_e( 'No', 'wp_statistics' );
 					} ?></strong>
                 <p class="description"><?php _e( 'Is PHP compiled with IPv6 support.  You may see warning messages in your PHP log if it is not and you receive HTTP headers with IPv6 addresses in them.', 'wp_statistics' ); ?></p>
             </td>

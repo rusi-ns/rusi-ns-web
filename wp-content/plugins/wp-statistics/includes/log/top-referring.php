@@ -99,13 +99,16 @@ if ( $referr ) {
         <div class="metabox-holder">
             <div class="meta-box-sortables">
                 <div class="postbox">
-                    <div class="handlediv" title="<?php _e( 'Click to toggle', 'wp_statistics' ); ?>"><br/></div>
-					<?php if ( $referr ) { ?>
-                        <h3 class="hndle"><span><?php _e( 'Referring sites from', 'wp_statistics' ); ?>
-                                : <?php echo $WP_Statistics->html_sanitize_referrer( $referr ); ?></span></h3>
-					<?php } else { ?>
-                        <h3 class="hndle"><span><?php _e( 'Top Referring Sites', 'wp_statistics' ); ?></span></h3>
-					<?php } ?>
+                    <?php if ( $referr ) {
+                        $paneltitle = sprintf( __( 'Referring site: %s', 'wp_statistics' ), $WP_Statistics->html_sanitize_referrer( $referr ) );
+                    } else {
+                        $paneltitle = __( 'Top Referring Sites', 'wp_statistics' );
+                    }; ?>
+                    <button class="handlediv" type="button" aria-expanded="true">
+                        <span class="screen-reader-text"><?php printf( __( 'Toggle panel: %s', 'wp_statistics' ), $paneltitle ); ?></span>
+                        <span class="toggle-indicator" aria-hidden="true"></span>
+                    </button>
+                    <h2 class="hndle"><span><?php echo $paneltitle; ?></h2>
                     <div class="inside">
 						<?php
 						echo "<div class='log-latest'>";
@@ -150,7 +153,7 @@ if ( $referr ) {
 									}
 
 									echo "<div class='log-agent'><a href='?page=" . WP_STATISTICS_OVERVIEW_PAGE . "&type=last-all-visitor&agent={$item->agent}'>{$agent}</a>";
-									echo $WP_Statistics->get_referrer_link( $item->referred, 100 );
+									echo $WP_Statistics->get_referrer_link( $item->referred, 100 ) . '</div>';
 									echo "</div>";
 								}
 							} else {
@@ -180,7 +183,7 @@ if ( $referr ) {
                 <div class="pagination-log">
 					<?php if ( $total > 0 ) {
 						echo $Pagination->display(); ?>
-                        <p id="result-log"><?php echo ' ' . __( 'Page', 'wp_statistics' ) . ' ' . $Pagination->getCurrentPage() . ' ' . __( 'From', 'wp_statistics' ) . ' ' . $Pagination->getTotalPages(); ?></p>
+                        <p id="result-log"><?php printf( __( 'Page %1$s of %2$s', 'wp_statistics' ), $Pagination->getCurrentPage(), $Pagination->getTotalPages() ); ?></p>
 					<?php } ?>
                 </div>
             </div>

@@ -4,19 +4,25 @@
 
 		$(document).on('change', 'select[name="hh_x_frame_options_value"]', function () {
 			var $el = $('input[name="hh_x_frame_options_domain"]'),
-				readOnly = $(this).find('option:selected').val() != 'allow-from' || this.readOnly;
+				readOnly = $(this).find('option:selected').val() != 'allow-from';
+			if ($el.length) {
+				$el.prop('readOnly', readOnly).toggle(!readOnly);
+			}
+		}).on('change', 'select[name="hh_x_xxs_protection_value"]', function (e) {
+			var $el = $('input[name="hh_x_xxs_protection_uri"]'),
+				readOnly = $(this).find('option:selected').val() != '1; report=';
 			if ($el.length) {
 				$el.prop('readOnly', readOnly).toggle(!readOnly);
 			}
 		}).on('change', 'select[name="hh_x_powered_by_option"]', function () {
 			var $el = $('input[name="hh_x_powered_by_value"]'),
-				readOnly = $(this).find('option:selected').val() != 'set' || this.readOnly;
+				readOnly = $(this).find('option:selected').val() != 'set';
 			if ($el.length) {
 				$el.prop('readOnly', readOnly).toggle(!readOnly);
 			}
 		}).on('change', 'select[name="hh_access_control_allow_origin_value"]', function () {
 			var $el = $('input[name="hh_access_control_allow_origin_url"]'),
-				readOnly = $(this).find('option:selected').val() != 'origin' || this.readOnly;
+				readOnly = $(this).find('option:selected').val() != 'origin';
 			if ($el.length) {
 				$el.prop('readOnly', readOnly).toggle(!readOnly);
 			}
@@ -39,6 +45,20 @@
 			$('select[name="hh_x_powered_by_option"]').trigger('change');
 		}).on('change', 'input[name="hh_access_control_allow_origin"]', function () {
 			$('select[name="hh_access_control_allow_origin_value"]').trigger('change');
+		}).on('submit', '#frmIspect', function (e) {
+			e.preventDefault();
+			var $this = $(this);
+			$.post($this.attr('action'), $this.serialize()).done(function (data) {
+				$('#hh-result').html(data);
+			});
+			return false;
+		}).on('change', '#authentication', function () {
+			var $a = $('#box-authentication');
+			if (this.checked) {
+				$a.show();
+			} else {
+				$a.hide();
+			}
 		});
 	});
 })(jQuery);

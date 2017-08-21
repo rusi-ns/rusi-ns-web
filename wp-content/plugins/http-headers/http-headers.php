@@ -3,7 +3,7 @@
 Plugin Name: HTTP Headers
 Plugin URI: https://zinoui.com/blog/http-headers-for-wordpress
 Description: A plugin for HTTP headers management including security, access-control (CORS), caching, compression, and authentication.
-Version: 1.6.0
+Version: 1.7.1
 Author: Dimitar Ivanov
 Author URI: https://zinoui.com
 License: GPLv2 or later
@@ -44,6 +44,18 @@ if (get_option('hh_referrer_policy') === false) {
 if (get_option('hh_content_security_policy') === false) {
 	add_option('hh_content_security_policy', 0, null, 'yes');
 	add_option('hh_content_security_policy_value', null, null, 'yes');
+}
+
+if (get_option('hh_content_security_policy_report_only') === false) {
+	add_option('hh_content_security_policy_report_only', 0, null, 'yes');
+}
+
+if (get_option('hh_public_key_pins_report_only') === false) {
+	add_option('hh_public_key_pins_report_only', 0, null, 'yes');
+}
+
+if (get_option('hh_x_xxs_protection_uri') === false) {
+	add_option('hh_x_xxs_protection_uri', null, null, 'yes');
 }
 
 if (get_option('hh_method') === false) {
@@ -134,6 +146,9 @@ function get_http_headers() {
 	}
 	if (get_option('hh_x_xxs_protection') == 1) {
 		$headers['X-XSS-Protection'] = get_option('hh_x_xxs_protection_value');
+		if ($headers['X-XSS-Protection'] == '1; report=') {
+			$headers['X-XSS-Protection'] .= get_option('hh_x_xxs_protection_uri');
+		}
 	}
 	if (get_option('hh_x_content_type_options') == 1) {
 		$headers['X-Content-Type-Options'] = get_option('hh_x_content_type_options_value');
@@ -191,6 +206,7 @@ function get_http_headers() {
 		$public_key_pins_max_age = get_option('hh_public_key_pins_max_age');
 		$public_key_pins_sub_domains = get_option('hh_public_key_pins_sub_domains');
 		$public_key_pins_report_uri = get_option('hh_public_key_pins_report_uri');
+		$public_key_pins_report_only = get_option('hh_public_key_pins_report_only');
 		if (!empty($public_key_pins_sha256_1) && !empty($public_key_pins_sha256_2) && !empty($public_key_pins_max_age)) {
 			
 			$public_key_pins = array();
@@ -203,7 +219,7 @@ function get_http_headers() {
 			if (!empty($public_key_pins_report_uri)) {
 				$public_key_pins[] = sprintf('report-uri="%s"', $public_key_pins_report_uri);
 			}
-			$headers['Public-Key-Pins'] = join('; ', $public_key_pins);
+			$headers['Public-Key-Pins'.($public_key_pins_report_only ? '-Report-Only' : NULL)] = join('; ', $public_key_pins);
 		}
 	}
 	
@@ -211,6 +227,7 @@ function get_http_headers() {
 	{
 		$csp = array();
 		$values = get_option('hh_content_security_policy_value');
+		$csp_report_only = get_option('hh_content_security_policy_report_only');
 		foreach ($values as $key => $val)
 		{
 			if (!empty($val))
@@ -220,7 +237,7 @@ function get_http_headers() {
 		}
 		if (!empty($csp))
 		{
-			$headers['Content-Security-Policy'] = join('; ', $csp);
+			$headers['Content-Security-Policy'.($csp_report_only ? '-Report-Only' : NULL)] = join('; ', $csp);
 		}
 	}
 
@@ -418,6 +435,7 @@ function http_headers_admin() {
 	register_setting('http-headers-xfo', 'hh_x_frame_options_domain');
 	register_setting('http-headers-xss', 'hh_x_xxs_protection');
 	register_setting('http-headers-xss', 'hh_x_xxs_protection_value');
+	register_setting('http-headers-xss', 'hh_x_xxs_protection_uri');
 	register_setting('http-headers-cto', 'hh_x_content_type_options');
 	register_setting('http-headers-cto', 'hh_x_content_type_options_value');
 	register_setting('http-headers-sts', 'hh_strict_transport_security');
@@ -431,6 +449,7 @@ function http_headers_admin() {
 	register_setting('http-headers-pkp', 'hh_public_key_pins_max_age');
 	register_setting('http-headers-pkp', 'hh_public_key_pins_sub_domains');
 	register_setting('http-headers-pkp', 'hh_public_key_pins_report_uri');
+	register_setting('http-headers-pkp', 'hh_public_key_pins_report_only');
 	register_setting('http-headers-uac', 'hh_x_ua_compatible');
 	register_setting('http-headers-uac', 'hh_x_ua_compatible_value');
 	register_setting('http-headers-p3p', 'hh_p3p');
@@ -439,6 +458,7 @@ function http_headers_admin() {
 	register_setting('http-headers-rp', 'hh_referrer_policy_value');
 	register_setting('http-headers-csp', 'hh_content_security_policy');
 	register_setting('http-headers-csp', 'hh_content_security_policy_value');
+	register_setting('http-headers-csp', 'hh_content_security_policy_report_only');
 	register_setting('http-headers-acao', 'hh_access_control_allow_origin');
 	register_setting('http-headers-acao', 'hh_access_control_allow_origin_value');
 	register_setting('http-headers-acao', 'hh_access_control_allow_origin_url');

@@ -85,8 +85,12 @@
         <div class="metabox-holder">
             <div class="meta-box-sortables">
                 <div class="postbox">
-                    <div class="handlediv" title="<?php _e( 'Click to toggle', 'wp_statistics' ); ?>"><br/></div>
-                    <h3 class="hndle"><span><?php _e( 'Tag Statistics Chart', 'wp_statistics' ); ?></span></h3>
+                    <?php $paneltitle =  __( 'Tag Statistics Chart', 'wp_statistics' ); ?>
+                    <button class="handlediv" type="button" aria-expanded="true">
+                        <span class="screen-reader-text"><?php printf( __( 'Toggle panel: %s', 'wp_statistics' ), $paneltitle ); ?></span>
+                        <span class="toggle-indicator" aria-hidden="true"></span>
+                    </button>
+                    <h2 class="hndle"><span><?php echo $paneltitle; ?></h2>
                     <div class="inside">
                         <script type="text/javascript">
                             var visit_chart;
@@ -127,7 +131,7 @@
 								?>
                                 visit_chart = jQuery.jqplot('visits-stats', [visit_data_line], {
                                     title: {
-                                        text: '<b>' + <?php echo json_encode( __( 'Hits in the last', 'wp_statistics' ) . ' ' . $daysToDisplay . ' ' . __( 'days', 'wp_statistics' ) ); ?> +'</b>',
+                                        text: '<b>' + <?php echo json_encode( sprintf( __( 'Hits in the last %s days', 'wp_statistics' ), $daysToDisplay ) ); ?> +'</b>',
                                         fontSize: '12px',
                                         fontFamily: 'Tahoma',
                                         textColor: '#000000',
@@ -162,7 +166,7 @@
                                         show: true,
                                         location: 's',
                                         placement: 'outsideGrid',
-                                        labels: [<?php echo json_encode( __( 'Visit', 'wp_statistics' ) ); ?>],
+                                        labels: [<?php echo json_encode( __( 'Visits', 'wp_statistics' ) ); ?>],
                                         renderer: jQuery.jqplot.EnhancedLegendRenderer,
                                         rendererOptions: {
                                             numberColumns: 2,
@@ -224,8 +228,12 @@
         <div class="metabox-holder">
             <div class="meta-box-sortables">
                 <div class="postbox">
-                    <div class="handlediv" title="<?php _e( 'Click to toggle', 'wp_statistics' ); ?>"><br/></div>
-                    <h3 class="hndle"><span><?php _e( 'Tag Statistics Summary', 'wp_statistics' ); ?></span></h3>
+                    <?php $paneltitle =  __( 'Tag Statistics Summary', 'wp_statistics' ); ?>
+                    <button class="handlediv" type="button" aria-expanded="true">
+                        <span class="screen-reader-text"><?php printf( __( 'Toggle panel: %s', 'wp_statistics' ), $paneltitle ); ?></span>
+                        <span class="toggle-indicator" aria-hidden="true"></span>
+                    </button>
+                    <h2 class="hndle"><span><?php echo $paneltitle; ?></h2>
                     <div class="inside">
                         <table width="auto" class="widefat table-stats" id="summary-stats">
                             <tbody>
@@ -269,8 +277,12 @@
         <div class="metabox-holder">
             <div class="meta-box-sortables">
                 <div class="postbox">
-                    <div class="handlediv" title="<?php _e( 'Click to toggle', 'wp_statistics' ); ?>"><br/></div>
-                    <h3 class="hndle"><span><?php _e( 'Tag Posts Sorted by Hits', 'wp_statistics' ); ?></span></h3>
+                    <?php $paneltitle =  __( 'Tag Posts Sorted by Hits', 'wp_statistics' ); ?>
+                    <button class="handlediv" type="button" aria-expanded="true">
+                        <span class="screen-reader-text"><?php printf( __( 'Toggle panel: %s', 'wp_statistics' ), $paneltitle ); ?></span>
+                        <span class="toggle-indicator" aria-hidden="true"></span>
+                    </button>
+                    <h2 class="hndle"><span><?php echo $paneltitle; ?></h2>
                     <div class="inside">
                         <table width="auto" class="widefat table-stats" id="post-stats">
                             <tbody>

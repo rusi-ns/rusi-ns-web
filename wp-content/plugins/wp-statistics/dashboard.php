@@ -76,7 +76,7 @@ function wp_statistics_dashboard_widget_load() {
 			wp_add_dashboard_widget( 'wp-statistics-countries-widget', __( 'Top 10 Countries', 'wp_statistics' ), 'wp_statistics_generate_dashboard_postbox_contents', $control_callback = null, array( 'widget' => 'countries' ) );
 		}
 		if ( $WP_Statistics->get_option( 'visitors' ) ) {
-			wp_add_dashboard_widget( 'wp-statistics-hitsmap-widget', __( 'Today\'s Visitor Map', 'wp_statistics' ), 'wp_statistics_generate_dashboard_postbox_contents', $control_callback = null, array( 'widget' => 'hitsmap' ) );
+			wp_add_dashboard_widget( 'wp-statistics-hitsmap-widget', __( 'Today\'s Visitors Map', 'wp_statistics' ), 'wp_statistics_generate_dashboard_postbox_contents', $control_callback = null, array( 'widget' => 'hitsmap' ) );
 		}
 		if ( $WP_Statistics->get_option( 'visits' ) ) {
 			wp_add_dashboard_widget( 'wp-statistics-hits-widget', __( 'Hit Statistics', 'wp_statistics' ), 'wp_statistics_generate_dashboard_postbox_contents', $control_callback = null, array( 'widget' => 'hits' ) );
@@ -161,8 +161,8 @@ function wp_statistics_dashboard_inline_javascript() {
 
 	$loading_img = '<div style="width: 100%; text-align: center;"><img src=" ' . plugins_url( 'wp-statistics/assets/images/' ) . 'ajax-loading.gif" alt="' . __( 'Reloading...', 'wp_statistics' ) . '"></div>';
 
-	$new_buttons = '</button><button class="handlediv button-link wps-refresh" type="button" id="{{refreshid}}">' . wp_statistics_icons( 'dashicons-update' ) . '</button><button class="handlediv button-link wps-more" type="button" id="{{moreid}}">' . wp_statistics_icons( 'dashicons-migrate' ) . '</button>';
-	$new_button  = '</button><button class="handlediv button-link wps-refresh" type="button" id="{{refreshid}}">' . wp_statistics_icons( 'dashicons-update' ) . '</button>';
+	$new_buttons = '</button><button class="handlediv button-link wps-refresh" type="button" id="{{refreshid}}">' . wp_statistics_icons( 'dashicons-update' ) . '<span class="screen-reader-text">' . __( 'Reload', 'wp_statistics' ) . '</span></button><button class="handlediv button-link wps-more" type="button" id="{{moreid}}">' . wp_statistics_icons( 'dashicons-migrate' ) . '<span class="screen-reader-text">' . __( 'More Details', 'wp_statistics' ) . '</span></button>';
+	$new_button  = '</button><button class="handlediv button-link wps-refresh" type="button" id="{{refreshid}}">' . wp_statistics_icons( 'dashicons-update' ) . '<span class="screen-reader-text">' . __( 'Reload', 'wp_statistics' ) . '</span></button>';
 
 	$admin_url = get_admin_url() . "admin.php?page=";
 

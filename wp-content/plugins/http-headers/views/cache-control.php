@@ -32,7 +32,11 @@
 		?>
 		<table>
 		<?php 
-		$cache_control_value = get_option('hh_cache_control_value', array());
+		$cache_control_value = get_option('hh_cache_control_value');
+		if (!$cache_control_value)
+		{
+			$cache_control_value = array();
+		}
 		foreach ($items as $item => $type)
 		{
 			?>

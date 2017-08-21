@@ -4,7 +4,7 @@
  * 
  * @package PP
  * @author Kevin Behrens <kevin@agapetry.net>
- * @copyright Copyright (c) 2011-2015, Agapetry Creations LLC
+ * @copyright Copyright (c) 2011-2017, Agapetry Creations LLC
  * 
  */
 
@@ -208,8 +208,9 @@ class PP_GroupRetrieval {
 					}
 					
 					if ( ! $matched ) {
-						$role_group = pp_get_metagroup( 'wp_role', $role_name );
-						$user_groups[$role_group->ID] = $role_group;
+						if ( $role_group = pp_get_metagroup( 'wp_role', $role_name ) ) {
+							$user_groups[$role_group->ID] = $role_group;
+						}
 					}
 				}
 			}

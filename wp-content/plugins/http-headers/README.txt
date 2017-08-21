@@ -4,7 +4,7 @@ Donate link: https://zinoui.com/donation
 Tags: custom headers, http headers, headers, security, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts, referrer, csp, caching, compression, access control, authentication
 Requires at least: 3.2
 Tested up to: 4.8.1
-Stable tag: 1.6.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 
 HTTP Headers adds CORS & security HTTP headers to your website.
@@ -23,6 +23,7 @@ Headers supported by HTTP Headers includes:
 * Access-Control-Expose-Headers
 * Age 
 * Content-Security-Policy
+* Content-Security-Policy-Report-Only
 * Cache-Control
 * Connection
 * Content-Encoding
@@ -30,6 +31,7 @@ Headers supported by HTTP Headers includes:
 * Expires
 * Pragma
 * Public-Key-Pins
+* Public-Key-Pins-Report-Only
 * P3P
 * Referrer-Policy
 * Strict-Transport-Security
@@ -61,15 +63,30 @@ These HTTP headers are being used in production services by popular websites as 
 
 == Screenshots ==
 
-1. This screenshot shows up the dashboard where you can see a brief preview of headers current values.
-2. This screenshot shows up the settings page where you can adjust the security headers.
-3. This screenshot shows up the response headers returned by the web server.
+1. This screenshot shows up the dashboard with categories of the supported headers.
+2. This screenshot shows up the headers of a chosen category and their current values.
+3. This screenshot shows up the settings page where you can adjust the security headers.
+4. This screenshot shows up the response headers returned by the web server.
 
 == Upgrade Notice ==
 
 Updates are on they way, so stay tuned at [@DimitarIvanov](https://twitter.com/DimitarIvanov)
 
 == Changelog ==
+
+= 1.7.1 =
+*Release Date - 18th August, 2017*
+
+* PHP notice bugfixed
+
+= 1.7.0 =
+*Release Date - 15th August, 2017*
+
+* Added support of "Content-Security-Policy-Report-Only" header
+* Added support of "Public-Key-Pins-Report-Only" header
+* Added "1; report=<reporting-URI>" directive to the "X-XSS-Protection" header
+* Added "Inspect headers" tool
+* UI bugfixes
 
 = 1.6.0 =
 *Release Date - 5th August, 2017*

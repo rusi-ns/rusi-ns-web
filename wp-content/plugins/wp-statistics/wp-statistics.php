@@ -3,7 +3,7 @@
  * Plugin Name: WP Statistics
  * Plugin URI: http://wp-statistics.com/
  * Description: Complete statistics for your WordPress site.
- * Version: 12.0.10
+ * Version: 12.0.11
  * Author: WP-Statistics Team
  * Author URI: http://wp-statistics.com/
  * Text Domain: wp_statistics
@@ -12,7 +12,7 @@
  */
 
 // These defines are used later for various reasons.
-define( 'WP_STATISTICS_VERSION', '12.0.10' );
+define( 'WP_STATISTICS_VERSION', '12.0.11' );
 define( 'WP_STATISTICS_REQUIRED_PHP_VERSION', '5.4.0' );
 define( 'WP_STATISTICS_REQUIRED_GEOIP_PHP_VERSION', WP_STATISTICS_REQUIRED_PHP_VERSION );
 define( 'WPS_EXPORT_FILE_NAME', 'wp-statistics' );
@@ -34,6 +34,7 @@ define( 'WP_STATISTICS_TOP_VISITORS_PAGE', 'wps_top_visitors_page' );
 define( 'WP_STATISTICS_VISITORS_PAGE', 'wps_visitors_page' );
 define( 'WP_STATISTICS_OPTIMIZATION_PAGE', 'wps_optimization_page' );
 define( 'WP_STATISTICS_SETTINGS_PAGE', 'wps_settings_page' );
+define( 'WP_STATISTICS_PLUGINS_PAGE', 'wps_plugins_page' );
 define( 'WP_STATISTICS_DONATE_PAGE', 'wps_donate_page' );
 
 if ( defined( 'SCRIPT_DEBUG' ) && true === SCRIPT_DEBUG ) {
@@ -104,7 +105,7 @@ function wp_statistics_unsupported_version_admin_notice() {
 
 			echo sprintf( __( 'WP Statistics has detected PHP version %s which is unsupported, WP Statistics requires PHP Version %s or higher!', 'wp_statistics' ), phpversion(), WP_STATISTICS_REQUIRED_PHP_VERSION );
 			echo '</p><p>';
-			echo __( 'Please contact your hosting provider to upgrade to a supported version or disable WP Statistics to remove this message.' );
+			echo __( 'Please contact your hosting provider to upgrade to a supported version or disable WP Statistics to remove this message.', 'wp_statistics' );
 			?></p>
     </div>
 
@@ -215,7 +216,7 @@ function wp_statistics_not_enable() {
 		}
 
 		if ( count( $itemstoenable ) > 0 ) {
-			echo '<div class="update-nag">' . sprintf( __( 'The following features are disabled, please go to %s and enable them: %s', 'wp_statistics' ), '<a href="' . $get_bloginfo_url . '">' . __( 'settings page', 'wp_statistics' ) . '</a>', implode( __( ',', 'wp_statistics' ), $itemstoenable ) ) . '</div>';
+			echo '<div class="update-nag">' . sprintf( __( 'The following features are disabled, please go to %ssettings page%s and enable them: %s', 'wp_statistics' ), '<a href="' . $get_bloginfo_url . '">', '</a>', implode( __( ',', 'wp_statistics' ), $itemstoenable ) ) . '</div>';
 		}
 
 		$get_bloginfo_url = get_admin_url() . "admin.php?page=" . WP_STATISTICS_OPTIMIZATION_PAGE . "&tab=database";
@@ -243,7 +244,7 @@ function wp_statistics_not_enable() {
 			}
 
 			if ( count( $dbupdatestodo ) > 0 ) {
-				echo '<div class="update-nag">' . sprintf( __( 'Database updates are required, please go to %s and update the following: %s', 'wp_statistics' ), '<a href="' . $get_bloginfo_url . '">' . __( 'optimization page', 'wp_statistics' ) . '</a>', implode( __( ',', 'wp_statistics' ), $dbupdatestodo ) ) . '</div>';
+				echo '<div class="update-nag">' . sprintf( __( 'Database updates are required, please go to %soptimization page%s and update the following: %s', 'wp_statistics' ), '<a href="' . $get_bloginfo_url . '">', '</a>', implode( __( ',', 'wp_statistics' ), $dbupdatestodo ) ) . '</div>';
 			}
 
 		}
@@ -517,6 +518,7 @@ function wp_statistics_menu() {
 
 	$WP_Statistics->menu_slugs['optimize'] = add_submenu_page( WP_STATISTICS_OVERVIEW_PAGE, __( 'Optimization', 'wp_statistics' ), __( 'Optimization', 'wp_statistics' ), $manage_cap, WP_STATISTICS_OPTIMIZATION_PAGE, 'wp_statistics_optimization' );
 	$WP_Statistics->menu_slugs['settings'] = add_submenu_page( WP_STATISTICS_OVERVIEW_PAGE, __( 'Settings', 'wp_statistics' ), __( 'Settings', 'wp_statistics' ), $read_cap, WP_STATISTICS_SETTINGS_PAGE, 'wp_statistics_settings' );
+	$WP_Statistics->menu_slugs['plugins']  = add_submenu_page( WP_STATISTICS_OVERVIEW_PAGE, __( 'Add-Ons', 'wp_statistics' ), '<span style="color:#dc6b26">' . __( 'Add-Ons', 'wp_statistics' ) . '</span>', $read_cap, WP_STATISTICS_PLUGINS_PAGE, 'wp_statistics_plugins' );
 	$WP_Statistics->menu_slugs['donate']   = add_submenu_page( WP_STATISTICS_OVERVIEW_PAGE, __( 'Donate', 'wp_statistics' ), '<span style="color:#459605">' . __( 'Donate', 'wp_statistics' ) . '</span>', $read_cap, WP_STATISTICS_DONATE_PAGE, 'wp_statistics_donate' );
 
 	// Add action to load the meta boxes to the overview page.
@@ -540,7 +542,7 @@ function wp_statistics_load_overview_page() {
 		add_meta_box( 'wps_recent_postbox', __( 'Recent Visitors', 'wp_statistics' ), 'wp_statistics_generate_overview_postbox_contents', $WP_Statistics->menu_slugs['overview'], 'normal', null, array( 'widget' => 'recent' ) );
 
 		if ( $WP_Statistics->get_option( 'geoip' ) ) {
-			add_meta_box( 'wps_map_postbox', __( 'Today Visitors Map', 'wp_statistics' ), 'wp_statistics_generate_overview_postbox_contents', $WP_Statistics->menu_slugs['overview'], 'normal', null, array( 'widget' => 'map' ) );
+			add_meta_box( 'wps_map_postbox', __( 'Today\'s Visitors Map', 'wp_statistics' ), 'wp_statistics_generate_overview_postbox_contents', $WP_Statistics->menu_slugs['overview'], 'normal', null, array( 'widget' => 'map' ) );
 		}
 	}
 
@@ -682,6 +684,43 @@ function wp_statistics_goto_network_blog() {
 	echo "<script>window.location.href = '$url';</script>";
 }
 
+function wp_statistics_plugins() {
+	// Activate or deactivate the selected plugin
+	if ( isset( $_GET['action'] ) ) {
+		if ( $_GET['action'] == 'activate' ) {
+			$result = activate_plugin( $_GET['plugin'] . '/' . $_GET['plugin'] . '.php' );
+			if ( is_wp_error( $result ) ) {
+				wp_statistics_admin_notice_result( 'error', $result->get_error_message() );
+			} else {
+				wp_statistics_admin_notice_result( 'success', __( 'Add-On activated.', 'wp_statistics' ) );
+			}
+		}
+		if ( $_GET['action'] == 'deactivate' ) {
+			$result = deactivate_plugins( $_GET['plugin'] . '/' . $_GET['plugin'] . '.php' );
+			if ( is_wp_error( $result ) ) {
+				wp_statistics_admin_notice_result( 'error', $result->get_error_message() );
+			} else {
+				wp_statistics_admin_notice_result( 'success', __( 'Add-On deactivated.', 'wp_statistics' ) );
+			}
+		}
+	}
+	$response      = wp_remote_get( 'https://wp-statistics.com/wp-json/addons/get' );
+	$response_code = wp_remote_retrieve_response_code( $response );
+	$error         = null;
+	$plugins       = [];
+	// Check response
+	if ( is_wp_error( $response ) ) {
+		$error = $response->get_error_message();
+	} else {
+		if ( $response_code == '200' ) {
+			$plugins = json_decode( $response['body'] );
+		} else {
+			$error = $response['body'];
+		}
+	}
+	include_once dirname( __FILE__ ) . '/includes/templates/plugins.php';
+}
+
 function wp_statistics_donate() {
 	echo "<script>window.location.href='http://wp-statistics.com/donate';</script>";
 }
@@ -729,32 +768,32 @@ function wp_statistics_menubar() {
 		$wp_admin_bar->add_menu( array(
 			'id'     => 'wp-statistics-menu-useronline',
 			'parent' => 'wp-statistic-menu',
-			'title'  => __( 'User Online', 'wp_statistics' ) . ": " . wp_statistics_useronline(),
+			'title'  => __( 'Online User', 'wp_statistics' ) . ": " . wp_statistics_useronline(),
 			'href'   => $AdminURL . 'admin.php?page=' . WP_STATISTICS_ONLINE_PAGE
 		) );
 
 		$wp_admin_bar->add_menu( array(
 			'id'     => 'wp-statistics-menu-todayvisitor',
 			'parent' => 'wp-statistic-menu',
-			'title'  => __( 'Today visitor', 'wp_statistics' ) . ": " . wp_statistics_visitor( 'today' )
+			'title'  => __( 'Today\'s Visitors', 'wp_statistics' ) . ": " . wp_statistics_visitor( 'today' )
 		) );
 
 		$wp_admin_bar->add_menu( array(
 			'id'     => 'wp-statistics-menu-todayvisit',
 			'parent' => 'wp-statistic-menu',
-			'title'  => __( 'Today visit', 'wp_statistics' ) . ": " . wp_statistics_visit( 'today' )
+			'title'  => __( 'Today\'s Visits', 'wp_statistics' ) . ": " . wp_statistics_visit( 'today' )
 		) );
 
 		$wp_admin_bar->add_menu( array(
 			'id'     => 'wp-statistics-menu-yesterdayvisitor',
 			'parent' => 'wp-statistic-menu',
-			'title'  => __( 'Yesterday visitor', 'wp_statistics' ) . ": " . wp_statistics_visitor( 'yesterday' )
+			'title'  => __( 'Yesterday\'s Visitors', 'wp_statistics' ) . ": " . wp_statistics_visitor( 'yesterday' )
 		) );
 
 		$wp_admin_bar->add_menu( array(
 			'id'     => 'wp-statistics-menu-yesterdayvisit',
 			'parent' => 'wp-statistic-menu',
-			'title'  => __( 'Yesterday visit', 'wp_statistics' ) . ": " . wp_statistics_visit( 'yesterday' )
+			'title'  => __( 'Yesterday\'s Visits', 'wp_statistics' ) . ": " . wp_statistics_visit( 'yesterday' )
 		) );
 
 		$wp_admin_bar->add_menu( array(

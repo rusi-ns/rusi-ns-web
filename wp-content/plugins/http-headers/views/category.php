@@ -39,6 +39,11 @@ include dirname(__FILE__) . '/includes/breadcrumbs.inc.php';
 						$value = sprintf('CP="%s"', join(' ', array_keys($value)));
 					}
 					break;
+				case 'hh_x_xxs_protection':
+					if ($value == '1; report=') {
+						$value .= get_option('hh_x_xxs_protection_uri');
+					}
+					break;
 				case 'hh_x_powered_by':
 					if (get_option('hh_x_powered_by_option') == 'unset') {
 						$value = '[Unset]';
@@ -92,6 +97,9 @@ include dirname(__FILE__) . '/includes/breadcrumbs.inc.php';
 							$public_key_pins[] = sprintf('report-uri="%s"', $public_key_pins_report_uri);
 						}
 						$value = join('; ', $public_key_pins);
+						if (get_option('hh_public_key_pins_report_only')) {
+							$item[0] .= '-Report-Only';
+						}
 					}
 					break;
 				case 'hh_access_control_allow_origin':
@@ -117,6 +125,9 @@ include dirname(__FILE__) . '/includes/breadcrumbs.inc.php';
 					if (!empty($csp))
 					{
 						$value = join('; ', $csp);
+					}
+					if (get_option('hh_content_security_policy_report_only')) {
+						$item[0] .= '-Report-Only';
 					}
 					break;
 				case 'hh_content_encoding':

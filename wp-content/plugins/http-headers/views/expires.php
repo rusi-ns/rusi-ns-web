@@ -60,8 +60,16 @@
 			'modification_6_months' => 'Modification +6 months',
 			'modification_1_year' => 'Modification +1 year',
 		);
-		$expires_value = get_option('hh_expires_value', array());
-		$expires_type = get_option('hh_expires_type', array());
+		$expires_value = get_option('hh_expires_value');
+		$expires_type = get_option('hh_expires_type');
+		if (!$expires_value)
+		{
+			$expires_value = array();
+		}
+		if (!$expires_type)
+		{
+			$expires_type = array();
+		}
 		foreach ($types as $type) {
 			?>
 			<tr>

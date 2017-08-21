@@ -4,7 +4,7 @@ Donate link: https://wp-statistics.com/donate/
 Tags: statistics, stats, visit, visitors, chart, browser, blog, today, yesterday, week, month, year, total, post, page, sidebar, summary, hits, pagerank, google, alexa, live visit
 Requires at least: 3.0
 Tested up to: 4.8
-Stable tag: 12.0.10
+Stable tag: 12.0.11
 License: GPL3
 
 Complete statistics for your WordPress site.
@@ -287,6 +287,19 @@ You may also downgrade to WP Statistics 10.3 as a temporary measure, but no new 
 This is a security fix, please update immediately.
 
 == Changelog ==
+= 12.0.12 =
+* Added: Add-ons page! The Add-ons add functionality to your WP-Statistics. [Click here](https://wp-statistics.com/add-ons/) to see current Add-ons.
+* Updated: GeoIP library to v2.6.0
+* Updated: admin.min.css
+
+= 12.0.11 =
+* Release Date: August 17, 2017
+* Fixed: links issue in the last visitors page.
+* Fixed: i18n issues (hardcoded strings, missing or incorrect textdomains).
+* Updated: admin CSS style. set `with` for Hits column in posts/pages list.
+* Updated: Improve consistency, best practices and correct typos in translation strings.
+* Updated: More, Reload and Toggle arrow buttons in metaboxes are consistent with WP core widget metaboxes, with screen-reader-text and key navigation. by [Pedro Mendonça](https://profiles.wordpress.org/pedromendonca/).
+
 = 12.0.10 =
 * Release Date: July 24, 2017
 * Added: UptimeRobot to the default robots list.

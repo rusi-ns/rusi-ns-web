@@ -96,6 +96,51 @@ select[readonly] {
 .hh-breadcrumbs li a{
 
 }
+.hh-highlight{
+	background-color: #333;
+	color: #fff;
+	font-weight: 400;
+	padding: 3px 7px;
+}
+.hh-results{
+	border-collapse: collapse;
+	width: 100%;
+}
+.hh-results thead th,
+.hh-results tbody td{
+	border-top: solid 1px #e0e0e0;
+	padding: 5px 5px 5px 0;
+	text-align: left;
+}
+.hh-results thead th{
+	border: none;
+}
+.hh-results tbody tr td:first-child{
+	white-space: nowrap;
+}
+.hh-results tbody tr.hh-found td{
+	background-color: #f7fcfe;
+}
+.hh-results tbody tr.hh-found td:first-child{
+	color: green;
+}
+.form-field .form-label{
+	font-weight: bold;
+}
+.form-field .form-lbl{
+	display: inline-block;
+	margin: 0 10px 0 0;
+}
+.form-row .form-col-6{
+	float: left;
+	width: 50%;
+}
+.form-row:after{
+	clear: left;
+	content: '';
+	display: table;
+	zoom: 1;
+}
 .hh-categories{
 	max-width: 992px;
 }

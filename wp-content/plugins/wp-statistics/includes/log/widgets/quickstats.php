@@ -9,7 +9,7 @@ function wp_statistics_generate_quickstats_postbox_content( $search_engines, $se
         <tbody>
 		<?php if ( $WP_Statistics->get_option( 'useronline' ) ) { ?>
             <tr>
-                <th><?php _e( 'User(s) Online', 'wp_statistics' ); ?>:</th>
+                <th><?php _e( 'Online Users', 'wp_statistics' ); ?>:</th>
                 <th colspan="2" id="th-colspan">
                     <span><a href="admin.php?page=<?php echo WP_STATISTICS_ONLINE_PAGE; ?>"><?php echo wp_statistics_useronline(); ?></a></span>
                 </th>
@@ -21,12 +21,12 @@ function wp_statistics_generate_quickstats_postbox_content( $search_engines, $se
             <tr>
                 <th width="60%"></th>
                 <th class="th-center"><?php if ( $WP_Statistics->get_option( 'visitors' ) ) {
-						_e( 'Visitor', 'wp_statistics' );
+						_e( 'Visitors', 'wp_statistics' );
 					} else {
 						echo '';
 					} ?></th>
                 <th class="th-center"><?php if ( $WP_Statistics->get_option( 'visits' ) ) {
-						_e( 'Visit', 'wp_statistics' );
+						_e( 'Visits', 'wp_statistics' );
 					} else {
 						echo '';
 					} ?></th>

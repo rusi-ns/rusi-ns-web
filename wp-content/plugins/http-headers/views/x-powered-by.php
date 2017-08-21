@@ -30,7 +30,7 @@
 		}
 		?>		
 		</select>
-		<input type="text" name="hh_x_powered_by_value" placeholder="PHP/<?php echo PHP_VERSION; ?>" value="<?php echo esc_attr(get_option('hh_x_powered_by_value')); ?>"
+		<input type="text" name="hh_x_powered_by_value" class="http-header-value" placeholder="PHP/<?php echo PHP_VERSION; ?>" value="<?php echo esc_attr(get_option('hh_x_powered_by_value')); ?>"
 		<?php echo $x_powered_by == 1 && $x_powered_by_option == 'set' ? NULL : ' style="display: none" readonly'; ?> />
 	</td>
 </tr>

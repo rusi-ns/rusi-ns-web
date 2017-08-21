@@ -9,6 +9,8 @@
 		?><li><?php echo @$headers[$_GET['header']][0]; ?></li><?php
 	} elseif (isset($_GET['tab']) && $_GET['tab'] == 'advanced') {
 		?><li>Advanced settings</li><?php
+	} elseif (isset($_GET['tab']) && $_GET['tab'] == 'inspect') {
+		?><li>Inspect headers</li><?php
 	}
 	?>
 </ul>

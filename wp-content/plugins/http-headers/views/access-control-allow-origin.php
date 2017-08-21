@@ -26,6 +26,6 @@
 		}
 		?>
 		</select>
-		<input type="text" name="hh_access_control_allow_origin_url" placeholder="http://domain.com" value="<?php echo esc_attr(get_option('hh_access_control_allow_origin_url')); ?>"<?php echo $access_control_allow_origin == 1 && $access_control_allow_origin_value == 'origin' ? NULL : ' style="display: none" readonly'; ?> />
+		<input type="text" name="hh_access_control_allow_origin_url" class="http-header-value" placeholder="http://domain.com" value="<?php echo esc_attr(get_option('hh_access_control_allow_origin_url')); ?>"<?php echo $access_control_allow_origin == 1 && $access_control_allow_origin_value == 'origin' ? NULL : ' style="display: none" readonly'; ?> />
 	</td>
 </tr>

@@ -4,8 +4,8 @@ Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JWZVF
 Tags: restrict, access, permissions, cms, user, private, category, pages, privacy, capabilities, role, scoper
 License: GPLv3
 Requires at least: 3.4
-Tested up to: 4.8
-Stable tag: 2.3.20
+Tested up to: 4.8.1
+Stable tag: 2.3.21
 
 Advanced yet accessible content permissions. Give users or groups type-specific roles. Enable or block access for specific posts or terms.
 
@@ -49,6 +49,9 @@ Pro [extensions](http://presspermit.com/extensions) are [available](http://press
 Initial production release
 
 == Changelog ==
+
+= 2.3.21 - 11 Aug 2017 =
+* Fixed : PHP Notice on some installations (trying to get property of non-object in groups-retrieval_pp.php)
 
 = 2.3.20 - 20 Jul 2017 =
 * Fixed : REST comments retrieval by non-Administrator returned empty if PP Collaborative Editing Pack not activated

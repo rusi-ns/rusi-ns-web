@@ -436,18 +436,18 @@ class WP_Statistics {
 		try {
 			$agent = parse_user_agent();
 		} catch ( Exception $e ) {
-			$agent = array( 'browser' => 'Unknown', 'platform' => 'Unknown', 'version' => 'Unknown' );
+			$agent = array( 'browser' => _x( 'Unknown', 'Browser', 'wp_statistics' ), 'platform' => _x( 'Unknown', 'Platform', 'wp_statistics' ), 'version' => _x( 'Unknown', 'Version', 'wp_statistics' ) );
 		}
 
 		// null isn't a very good default, so set it to Unknown instead.
 		if ( $agent['browser'] == null ) {
-			$agent['browser'] = "Unknown";
+			$agent['browser'] = _x( 'Unknown', 'Browser', 'wp_statistics' );
 		}
 		if ( $agent['platform'] == null ) {
-			$agent['platform'] = "Unknown";
+			$agent['platform'] = _x( 'Unknown', 'Platform', 'wp_statistics' );
 		}
 		if ( $agent['version'] == null ) {
-			$agent['version'] = "Unknown";
+			$agent['version'] = _x( 'Unknown', 'Version', 'wp_statistics' );
 		}
 
 		// Uncommon browsers often have some extra cruft, like brackets, http:// and other strings that we can strip out.
@@ -597,7 +597,7 @@ class WP_Statistics {
 
 		// If no SE matched, return some defaults.
 		return array(
-			'name'         => 'Unknown',
+			'name'         => _x( 'Unknown', 'Search Engine', 'wp_statistics' ),
 			'tag'          => '',
 			'sqlpattern'   => '',
 			'regexpattern' => '',
@@ -624,7 +624,7 @@ class WP_Statistics {
 
 		// If no SE matched, return some defaults.
 		return array(
-			'name'         => 'Unknown',
+			'name'         => _x( 'Unknown', 'Search Engine', 'wp_statistics' ),
 			'tag'          => '',
 			'sqlpattern'   => '',
 			'regexpattern' => '',
@@ -810,13 +810,13 @@ class WP_Statistics {
 		$html_referrer = $this->html_sanitize_referrer( $referrer );
 
 		if ( $length > 0 && strlen( $referrer ) > $length ) {
-			$html_referrer_limited = $this->html_sanitize_referrer( $item->referred, $length );
+			$html_referrer_limited = $this->html_sanitize_referrer( $referrer, $length );
 			$eplises               = '[...]';
 		} else {
 			$html_referrer_limited = $html_referrer;
 			$eplises               = '';
 		}
 
-		return "<a href='http://{$html_referrer}'><div class='dashicons dashicons-admin-links'></div>{$html_referrer_limited}{$eplises}</a>";
+		return "<a href='{$html_referrer}'><div class='dashicons dashicons-admin-links'></div>{$html_referrer_limited}{$eplises}</a>";
 	}
 }
