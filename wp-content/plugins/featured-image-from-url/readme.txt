@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: marceljm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8BLDLZ3HDBGQG
-Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, vimeo, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail, link, uri, affiliate, wp, rest, api, wp rest api
+Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, vimeo, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail, link, uri, affiliate, wp, rest, api, wp rest api, lazy, load, google, drive
 Requires at least: 4.0
 Tested up to: 4.8
 Stable tag: 4.8
@@ -24,13 +24,17 @@ Features:
 
 * but if your theme show the Featured Images on posts/pages/products, there is an option to remove the Featured Image;
 
+* with lazy load feature the images/videos won't be loaded until user scrolls to them making the home/shop page load faster;
+
 * all included content still has social tags to facilitate sharing on social networks;
 
 * compatible with WP All Import plugin;
 
+* some nonstandard image URLs, such as Google Drive's, will work as well;
+
 * supports WP REST API (**premium feature**);
 
-* all features created for external images are available for external videos from YouTube and Vimeo. And you can define the video size for each screen type (**premium feature**);
+* all features created for external images are available for external videos from YouTube and Vimeo. For YouTube videos, it's possible to set player parameters. And you can define the video size for each screen type (**premium feature**);
 
 * you can use a slider of images as featured image (**premium feature**);
 
@@ -285,6 +289,18 @@ was removed. To finish, a Premium version is now been presented.
 = 1.6.2 =
 * Bug fix.
 
+= 1.6.3 =
+* Lazy load.
+
+= 1.6.4 =
+* Bug fix.
+
+= 1.6.5 =
+* Bug fix.
+
+= 1.6.6 =
+* Support to Google Drive images.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -428,3 +444,15 @@ was removed. To finish, a Premium version is now been presented.
 
 = 1.6.2 =
 * Bug fix.
+
+= 1.6.3 =
+* Lazy load.
+
+= 1.6.4 =
+* Bug fix.
+
+= 1.6.5 =
+* Bug fix.
+
+= 1.6.6 =
+* Support to Google Drive images.

@@ -9,10 +9,7 @@
     </div>
 
     <div class="box">
-        <h2>Give this plugin a <a href="https://wordpress.org/support/view/plugin-reviews/featured-image-from-url?filter=5" target="_blank">5-star</a> rating, please =)</h2>
-        <div class="greybox" style="background:#c5c6f9">
-            <div style="color:#0073aa">Reaching 100 positive reviews, </div> the "CSS Style" feature will be released for all users.
-        </div>
+            <h2>Value my work: give this plugin a <a href="https://wordpress.org/support/view/plugin-reviews/featured-image-from-url?filter=5" target="_blank">5-star</a> rating =)</h2>
     </div>
 
     <div class="box">
@@ -232,6 +229,33 @@
     </div>
 
     <div class="box">
+        <h2>Lazy Load</h2>
+        <div class="greybox" style="background:#e3ffe2">
+            Enabling this feature the images/videos won't be loaded until user scrolls to them. So it will make your home/shop load faster.
+        </div>
+        <br>
+        <form 
+            id="fifu_form_lazy" 
+            action="javascript:void(0)" 
+            method="post">
+            <input 
+                type="image" 
+                href="javascript:void(0)" 
+                id="fifu_toggle_lazy" 
+                onclick="invert('lazy')" 
+                name="fifu_toggle_lazy" 
+                class="<?php echo $enable_lazy; ?>" 
+                value=" "
+                style="display:block">
+            <input 
+                type="hidden" 
+                id="fifu_input_lazy" 
+                name="fifu_input_lazy" 
+                value="" >
+        </form>
+    </div>
+
+    <div class="box">
         <h2>Social Tags</h2>
         <div class="greybox" style="background:#e3ffe2">
             Featured Image from URL provides social tags to share the external images on the social networks. Here you can enable/disable this feature.
@@ -284,6 +308,13 @@
                     name="fifu_input_woocommerce" 
                     value="" >
             </form>
+        </div>
+    </div>
+
+    <div class="box">
+        <h2>WP All Import</h2>
+        <div class="greybox" style="background:#e3ffe2">
+            You can use Featured Image from URL with WP All Import plugin. For that, use the custom field <b>fifu_image_url</b>. The other custom fields supported by FIFU are listed below, in the section WP REST API > Plugin Fields.
         </div>
     </div>
 
@@ -912,13 +943,13 @@
                         <tr>
                             <th>Shop</th>
                             <th>
-                                <p>http://yourdomain.com/wp-json/wc/v2/products</p>
+                                http://yourdomain.com/wp-json/wc/v2/products
                             </th>
                         </tr>
                         <tr>
                             <th>Blog</th>
                             <th>
-                                <p>http://yourdomain.com/wp-json/wp/v2/posts</p>
+                                http://yourdomain.com/wp-json/wp/v2/posts
                             </th>
                         </tr>
                     </table>
@@ -935,13 +966,13 @@
                         <tr>
                             <th>Shop</th>
                             <th>
-                                <p>http://yourdomain.com/wp-json/wc/v2/products/{id}</p>
+                                http://yourdomain.com/wp-json/wc/v2/products/{id}
                             </th>
                         </tr>
                         <tr>
                             <th>Blog</th>
                             <th>
-                                <p>http://yourdomain.com/wp-json/wp/v2/posts/{id}</p>
+                                http://yourdomain.com/wp-json/wp/v2/posts/{id}
                             </th>
                         </tr>
                     </table>
@@ -966,9 +997,7 @@
                                 Image
                             </th>
                             <th>
-                                <p>
-                                    fifu_image_url
-                                </p>
+                                fifu_image_url
                             </th>
                         </tr>
                         <tr>
@@ -976,9 +1005,7 @@
                                 Alt
                             </th>
                             <th>
-                                <p>
-                                    fifu_image_alt
-                                </p>
+                                fifu_image_alt
                             </th>
                         </tr>
                         <tr>
@@ -986,9 +1013,7 @@
                                 Video
                             </th>
                             <th>
-                                <p>
-                                    fifu_video_url
-                                </p>
+                                fifu_video_url
                             </th>
                         </tr>
                         <tr>
@@ -996,19 +1021,13 @@
                                 Image Gallery
                             </th>
                             <th>
-                                <p>
-                                    fifu_image_url_0
-                                </p>
+                                fifu_image_url_0
                             </th>
                             <th>
-                                <p>
-                                    fifu_image_url_1
-                                </p>
+                                fifu_image_url_1
                             </th>
                             <th>
-                                <p>
-                                    ...
-                                </p>
+                                ...
                             </th>
                         </tr>
                         <tr>
@@ -1016,19 +1035,13 @@
                                 Video Gallery
                             </th>
                             <th>
-                                <p>
-                                    fifu_video_url_0
-                                </p>
+                                fifu_video_url_0
                             </th>
                             <th>
-                                <p>
-                                    fifu_video_url_1
-                                </p>
+                                fifu_video_url_1
                             </th>
                             <th>
-                                <p>
-                                    ...
-                                </p>
+                                ...
                             </th>
                         </tr>
                         <tr>
@@ -1036,19 +1049,13 @@
                                 Slider
                             </th>
                             <th>
-                                <p>
-                                    fifu_slider_image_url_0
-                                </p>
+                                fifu_slider_image_url_0
                             </th>
                             <th>
-                                <p>
-                                    fifu_slider_image_url_1
-                                </p>
+                                fifu_slider_image_url_1
                             </th>
                             <th>
-                                <p>
-                                    ...
-                                </p>
+                                ...
                             </th>
                         </tr>
                     </table>

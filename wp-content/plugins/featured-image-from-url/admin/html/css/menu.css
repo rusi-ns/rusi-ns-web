@@ -50,6 +50,7 @@
 th, td {
     border-bottom: 1px solid #ddd;
     padding-right: 32px;
+    font-weight: normal;
 }
 
 th {

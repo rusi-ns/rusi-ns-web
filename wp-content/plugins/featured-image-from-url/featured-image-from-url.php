@@ -3,7 +3,7 @@
 /*
  * Plugin Name: Featured Image From URL
  * Description: Use an external image as Featured Image of your post/page/custom post type (WooCommerce). Includes Auto Set (External Post), Product Gallery, Social Tags and more.
- * Version: 1.6.2
+ * Version: 1.6.6
  * Author: Marcel Jacques Machado 
  * Author URI: http://featuredimagefromurl.com/
  */
@@ -15,6 +15,7 @@ define('FIFU_ADMIN_DIR', FIFU_PLUGIN_DIR . '/admin');
 require_once( FIFU_INCLUDES_DIR . '/thumbnail.php' );
 require_once( FIFU_INCLUDES_DIR . '/thumbnail-category.php' );
 require_once( FIFU_INCLUDES_DIR . '/external-post.php' );
+require_once( FIFU_INCLUDES_DIR . '/convert-url.php' );
 
 if (is_admin()) {
     require_once( FIFU_ADMIN_DIR . '/meta-box.php' );

@@ -1,7 +1,12 @@
 <?php
 
+add_filter('wp_head', 'fifu_add_js');
 add_filter('wp_head', 'fifu_add_social_tags');
 add_filter('wp_head', 'fifu_add_sirv_js');
+
+function fifu_add_js() {
+    include 'html/script.html';
+}
 
 function fifu_add_social_tags() {
     $post_id = get_the_ID();
@@ -45,10 +50,11 @@ function fifu_replace($html, $post_id) {
     $url = get_post_meta($post_id, 'fifu_image_url', true);
     $alt = get_post_meta($post_id, 'fifu_image_alt', true);
 
-    if ($url)
-        $html = fifu_get_html($url, $alt);
+    return empty($url) ? $html : fifu_get_html($url, $alt);
+}
 
-    return $html;
+function is_ajax_call() {
+    return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') || wp_doing_ajax();
 }
 
 function fifu_get_html($url, $alt) {
@@ -56,7 +62,7 @@ function fifu_get_html($url, $alt) {
     if (is_plugin_active('sirv/sirv.php') && strpos($url, "sirv.com") !== false)
         return sprintf('<!-- Featured Image From URL plugin --> <img class="Sirv" data-src="%s">', $url);
 
-    return sprintf('<!-- Featured Image From URL plugin --> <img src="%s" alt="%s" style="%s">', $url, $alt, fifu_should_hide() ? 'display:none' : '');
+    return sprintf('<!-- Featured Image From URL plugin --> <img %s alt="%s" style="%s">', fifu_lazy_url($url), $alt, fifu_should_hide() ? 'display:none' : '');
 }
 
 add_filter('the_content', 'fifu_add_to_content');
@@ -104,4 +110,10 @@ add_filter('genesis_get_image', 'fifu_genesis_image', 10, 4);
 
 function fifu_genesis_image($args, $var1, $var2, $src) {
     return $src ? fifu_replace($args, get_the_ID()) : $args;
+}
+
+function fifu_lazy_url($url) {
+    if (get_option('fifu_lazy') != 'toggleon' || is_ajax_call())
+        return 'src="' . $url . '"';
+    return (is_home() || (class_exists('WooCommerce') && is_shop()) ? 'data-src="' : 'src="') . $url . '"';
 }

@@ -14,6 +14,7 @@ function removeImage() {
 
 function previewImage() {
     var $url = jQuery("#fifu_input_url").val();
+    $url = fifu_convert($url);
 
     if ($url) {
         jQuery("#fifu_button").hide();

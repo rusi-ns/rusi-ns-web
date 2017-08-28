@@ -15,6 +15,7 @@ function fifu_get_menu_html() {
 
     $enable_woocommerce = get_option('fifu_woocommerce');
     $enable_social = get_option('fifu_social');
+    $enable_lazy = get_option('fifu_lazy');
     $enable_content = get_option('fifu_content');
     $enable_hide_page = get_option('fifu_hide_page');
     $enable_hide_post = get_option('fifu_hide_post');
@@ -37,6 +38,7 @@ function fifu_get_menu_html() {
 function fifu_get_menu_settings() {
     fifu_get_setting('fifu_woocommerce');
     fifu_get_setting('fifu_social');
+    fifu_get_setting('fifu_lazy');
     fifu_get_setting('fifu_content');
     fifu_get_setting('fifu_hide_page');
     fifu_get_setting('fifu_hide_post');
@@ -65,6 +67,7 @@ function fifu_get_setting($type) {
 function fifu_update_menu_options() {
     fifu_update_option('fifu_input_woocommerce', 'fifu_woocommerce');
     fifu_update_option('fifu_input_social', 'fifu_social');
+    fifu_update_option('fifu_input_lazy', 'fifu_lazy');
     fifu_update_option('fifu_input_content', 'fifu_content');
     fifu_update_option('fifu_input_hide_page', 'fifu_hide_page');
     fifu_update_option('fifu_input_hide_post', 'fifu_hide_post');

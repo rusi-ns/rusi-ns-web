@@ -23,13 +23,13 @@
                             </div>
                             <div class="plugin-card-bottom">
                                 <div class="column-downloaded">
-                                    <strong>Version: </strong><?php echo $plugin->version; ?>
-                                    <p><strong>Status:</strong>
+                                    <strong><?php _e( 'Version:', 'wp-statistics' ); ?></strong><?php echo ' ' . $plugin->version; ?>
+                                    <p><strong><?php _e( 'Status:', 'wp-statistics' ); ?></strong>
 										<?php
 										if ( is_plugin_active( $plugin->slug . '/' . $plugin->slug . '.php' ) ) {
 											_e( 'Active', 'wp-statistics' );
 										} else if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin->slug . '/' . $plugin->slug . '.php' ) ) {
-											_e( 'Deactivate', 'wp-statistics' );
+											_e( 'Inactive', 'wp-statistics' );
 										} else {
 											_e( 'Not installed', 'wp-statistics' );
 										}
@@ -57,18 +57,18 @@
             </div>
 
             <div id="postbox-container-1" class="postbox-container">
-
-                <div id="wps-plugins-support" class="postbox">
-                    <button type="button" class="handlediv button-link" aria-expanded="true">
-                        <span class="screen-reader-text">Toggle panel</span><span class="toggle-indicator" aria-hidden="true"></span>
-                    </button>
-                    <h2 class="hndle ui-sortable-handle"><span><?php _e( 'Join to Market!', 'wp-statistics' ); ?></span>
-                    </h2>
-                    <div class="inside">
-                        <p>We welcome practical extensions for the WP-Statistics plugin. In case you're a WordPress
-                            programmer and developer and plan to sell extension in this page, please contact us through
-                            the following link.</p>
-                        <a href="http://wp-statistics.com/add-ons/submit" target="_blank" class="button"><?php _e( 'Submit Add-on', 'wp-statistics' ); ?></a>
+                <div class="meta-box-sortables ui-sortable">
+                    <div id="wps-plugins-support" class="postbox">
+                        <?php $paneltitle = __( 'Join to Market!', 'wp-statistics' ); ?>
+                        <button class="handlediv" type="button" aria-expanded="true">
+                            <span class="screen-reader-text"><?php printf( __( 'Toggle panel: %s', 'wp-statistics' ), $paneltitle ); ?></span>
+                            <span class="toggle-indicator" aria-hidden="true"></span>
+                        </button>
+                        <h2 class="hndle"><span><?php echo $paneltitle; ?></span></h2>
+                        <div class="inside">
+                          <p><?php _e( 'We welcome practical extensions for the WP-Statistics plugin. In case you\'re a WordPress programmer and developer and plan to sell extension in this page, please contact us through the following link.', 'wp-statistics' ); ?></p>
+                          <a href="http://wp-statistics.com/add-ons/submit" target="_blank" class="button"><?php _e( 'Submit Add-on', 'wp-statistics' ); ?></a>
+                        </div>
                     </div>
                 </div>
             </div>

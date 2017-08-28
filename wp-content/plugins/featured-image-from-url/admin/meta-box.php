@@ -123,7 +123,7 @@ function fifu_save_properties($post_id) {
 
 function fifu_update_or_delete($post_id, $field, $url) {
     if ($url)
-        update_post_meta($post_id, $field, $url);
+        update_post_meta($post_id, $field, fifu_convert($url));
     else
         delete_post_meta($post_id, $field, $url);
 }

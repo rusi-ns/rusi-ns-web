@@ -32,7 +32,7 @@
 									if (document.forms['post'].elements["title"].value == "") {
 										var topar = document.createElement('div');
 										topar.innerHTML = html;
-										var parh2col = topar.getElementsByTagName('h2');
+										var parh2col = topar.getElementsByTagName('h3');
 										var pt = '';
 										for(var i = 0, max = parh2col.length; i < max; i++) {
 											pt = parh2col[i].innerHTML;

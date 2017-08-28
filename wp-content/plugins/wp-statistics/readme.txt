@@ -4,7 +4,7 @@ Donate link: https://wp-statistics.com/donate/
 Tags: statistics, stats, visit, visitors, chart, browser, blog, today, yesterday, week, month, year, total, post, page, sidebar, summary, hits, pagerank, google, alexa, live visit
 Requires at least: 3.0
 Tested up to: 4.8
-Stable tag: 12.0.11
+Stable tag: 12.0.12
 License: GPL3
 
 Complete statistics for your WordPress site.
@@ -289,6 +289,7 @@ This is a security fix, please update immediately.
 == Changelog ==
 = 12.0.12 =
 * Added: Add-ons page! The Add-ons add functionality to your WP-Statistics. [Click here](https://wp-statistics.com/add-ons/) to see current Add-ons.
+* Fixed: Translations issue.
 * Updated: GeoIP library to v2.6.0
 * Updated: admin.min.css
 

@@ -10,9 +10,12 @@ function fifu_cat_show_box($term) {
     $align = 'text-align:left;';
     $show_news = 'display:none';
     $is_sirv_active = is_plugin_active('sirv/sirv.php');
+    $url = $alt = $show_button = $show_alt = $show_image = $show_link = null;
 
-    $url = get_term_meta($term->term_id, 'fifu_image_url', true);
-    $alt = get_term_meta($term->term_id, 'fifu_image_alt', true);
+    if (is_object($term)) {
+        $url = get_term_meta($term->term_id, 'fifu_image_url', true);
+        $alt = get_term_meta($term->term_id, 'fifu_image_alt', true);
+    }
 
     if ($url)
         $show_button = $show_sirv = 'display:none;';
@@ -29,7 +32,7 @@ add_action('create_product_cat', 'fifu_cat_save_properties', 10, 2);
 
 function fifu_cat_save_properties($term_id) {
     if (isset($_POST['fifu_input_url']))
-        update_term_meta($term_id, 'fifu_image_url', esc_url($_POST['fifu_input_url']));
+        update_term_meta($term_id, 'fifu_image_url', fifu_convert(esc_url($_POST['fifu_input_url'])));
 
     if (isset($_POST['fifu_input_alt']))
         update_term_meta($term_id, 'fifu_image_alt', wp_strip_all_tags($_POST['fifu_input_alt']));

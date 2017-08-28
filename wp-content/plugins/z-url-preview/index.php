@@ -3,7 +3,7 @@
   Plugin Name: Z-URL Preview
   Plugin URI: http://www.z-add.co.uk/
   Description: A plugin to embed a preview of a link, similar to facebook
-  Version: 1.6.0
+  Version: 1.6.1
   Author: Stuart Millington
   Author URI: http://www.z-add.co.uk
   License: GPL

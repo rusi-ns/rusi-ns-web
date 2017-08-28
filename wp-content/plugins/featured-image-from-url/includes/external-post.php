@@ -32,7 +32,7 @@ function fifu_save_properties_ext($post_id) {
     $url = fifu_first_url_in_content($post_id);
 
     if ($url && get_option('fifu_get_first') == 'toggleon')
-        update_post_meta($post_id, 'fifu_image_url', $url);
+        update_post_meta($post_id, 'fifu_image_url', fifu_convert($url));
 }
 
 function fifu_first_img_in_content($content) {
