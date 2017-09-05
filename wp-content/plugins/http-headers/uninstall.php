@@ -78,6 +78,17 @@ $options = array(
 	'hh_expect_ct_max_age',
 	'hh_expect_ct_report_uri',
 	'hh_expect_ct_enforce',
+	'hh_timing_allow_origin',
+	'hh_timing_allow_origin_value',
+	'hh_timing_allow_origin_url',
+    'hh_x_permitted_cross_domain_policies',
+    'hh_x_permitted_cross_domain_policies_value',
+    'hh_x_download_options',
+    'hh_x_download_options_value',
+    'hh_x_dns_prefetch_control',
+    'hh_x_dns_prefetch_control_value',
+    'hh_custom_headers',
+    'hh_custom_headers_value',
 );
 
 foreach ($options as $option)

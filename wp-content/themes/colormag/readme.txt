@@ -50,6 +50,13 @@ and we will include it within the theme from next version update.
 /**********************************************************/
 
 == Changelog ==
+= Version 1.2.1 - 2017-08-31 =
+* Tweaks - Updated BxSlider to version 4.2.12
+* Tweaks - WooCommerce sidebar layout now utilizes the same sidebar area provided via the theme by default
+* Tweaks - Image alt text added to the advertisement widgets provided via this theme
+* Tweaks - Introduce selective refresh for site title and description
+* Feature - Added theme starter content introduced in WordPress 4.7
+
 = Version 1.2.0 - 2017-04-27 =
 * Feature - Added option to display the date in header set via WordPress date setting
 * Tweaks - Add theme support for WooCommerce 3.0's new gallery feature

@@ -141,8 +141,64 @@ select[readonly] {
 	display: table;
 	zoom: 1;
 }
+.hh-tabs > ul{
+	margin-bottom: -1px;
+}
+.hh-tabs > ul:after{
+	content: '';
+	display: table;
+	clear: left;
+	zoom: 1;
+}
+.hh-tabs > ul > li{
+	background-color: #fff;
+	border: solid 1px #ccc;
+	border-bottom: none;
+	display: inline-block;
+	float: left;
+	margin: 0 5px 0 0;
+	padding: 0;
+}
+.hh-tabs > ul > li a{
+	color: #222;
+	display: inline-block;
+	padding: 5px 10px;
+	text-decoration: none;
+}
+.hh-tabs > ul > li.hh-active{
+	border: solid 1px #222;
+	border-bottom-color: #fff;
+}
+.hh-tabs .hh-tab-active{
+	background-color: #fff;
+	border: solid 1px #222;
+	padding: 20px;
+}
+.hh-textarea-manual{
+	height: 450px;
+	width: 100%;
+}
+.hh-hidden{
+	display: none;
+}
+.hh-wrapper{
+	
+}
+.hh-sidebar{
+	float: right;
+	width: 20%;
+}
+.hh-sidebar-inner{
+	background-color: #fff;
+	border: solid 1px #92D295;
+	padding: 15px;
+}
+.hh-sidebar-inner h3{
+	margin: 0;
+}
 .hh-categories{
-	max-width: 992px;
+	float: left;
+	width: 80%;
 }
 .hh-categories *{
 	-webkit-box-sizing: border-box;
@@ -150,9 +206,10 @@ select[readonly] {
 	     -o-box-sizing: border-box;
 	        box-sizing: border-box;
 }
+.hh-wrapper:after,
 .hh-categories:after{
 	content: '';
-	clear: left;
+	clear: both;
 	display: table;
 	zoom: 1;
 }
@@ -227,22 +284,56 @@ a.hh-category:hover i{
 	     -o-transition: -o-transform 0.5s ease-out;
 	        transition: transform 0.5s ease-out;
 }
+.hh-p{
+	margin: 0.5em 0;
+}
 @media (min-width: 1280px) {
 	a.hh-category{
 		max-width: 260px;
 	}
 }
-@media (max-width: 768px) {
+@media (max-width: 960px) {
 	a.hh-category{
 		margin: 0 5% 20px;
+		width: 40%;
+	}
+	.hh-categories{
+		width: 70%;
+}
+	.hh-sidebar{
+		width: 30%;
+	}
+}
+@media (max-width: 768px) {
+	.hh-categories{
+		width: 65%;
+	}
+	.hh-sidebar{
+		width: 35%;
+	}
+}
+@media (max-width: 640px) {
+	a.hh-category{
+		float: none;
+		margin: 0 0 20px;
+		width: 100%;
+	}
+	.hh-categories{
+		width: 55%;
+	}
+	.hh-sidebar{
 		width: 40%;
 	}
 }
 @media (max-width: 468px) {
 	a.hh-category{
-		clear: left;
-		margin: 0 0 20px;
 		max-width: 260px;
+	}
+	.hh-categories,
+	.hh-sidebar{
+		float: none;
+		margin: 0 auto;
+		max-width: 250px;
 		width: 100%;
 	}
 }

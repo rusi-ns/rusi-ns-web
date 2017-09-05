@@ -4,7 +4,7 @@
 	</th>
 	<td>
 	    <fieldset>
-	    	<legend class="screen-reader-text">Access-Control-Allow-Credentials</legend>
+	    	<legend class="screen-reader-text">Access-Control-Allow-Origin</legend>
 	        <?php
 	        $access_control_allow_origin = get_option('hh_access_control_allow_origin', 0);
 	        foreach ($bools as $k => $v)

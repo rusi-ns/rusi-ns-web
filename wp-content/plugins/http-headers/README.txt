@@ -4,7 +4,7 @@ Donate link: https://zinoui.com/donation
 Tags: custom headers, http headers, headers, security, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts, referrer, csp, caching, compression, access control, authentication
 Requires at least: 3.2
 Tested up to: 4.8.1
-Stable tag: 1.7.1
+Stable tag: 1.8.0
 License: GPLv2 or later
 
 HTTP Headers adds CORS & security HTTP headers to your website.
@@ -35,10 +35,14 @@ Headers supported by HTTP Headers includes:
 * P3P
 * Referrer-Policy
 * Strict-Transport-Security
+* Timing-Allow-Origin
 * Vary
 * WWW-Authenticate
 * X-Content-Type-Options
+* X-DNS-Prefetch-Control
+* X-Download-Options
 * X-Frame-Options
+* X-Permitted-Cross-Domain-Policies
 * X-Powered-By
 * X-UA-Compatible
 * X-XSS-Protection
@@ -73,6 +77,15 @@ These HTTP headers are being used in production services by popular websites as 
 Updates are on they way, so stay tuned at [@DimitarIvanov](https://twitter.com/DimitarIvanov)
 
 == Changelog ==
+
+= 1.8.0 =
+*Release Date - 31st August, 2017*
+
+* Added support of "Timing-Allow-Origin" header
+* Added support of "X-Download-Options" header
+* Added support of "X-DNS-Prefetch-Control" header
+* Added support of "X-Permitted-Cross-Domain-Policies" header
+* Added support of Custom headers
 
 = 1.7.1 =
 *Release Date - 18th August, 2017*

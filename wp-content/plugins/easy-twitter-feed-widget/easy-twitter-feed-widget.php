@@ -7,11 +7,11 @@ Author: DesignOrbital.com
 Author URI: https://designorbital.com
 Text Domain: do-etfw
 Domain Path: /languages/
-Version: 0.6
+Version: 0.7
 License: GPL v3
 
 Easy Twitter Feed Widget Plugin
-Copyright (C) 2012-2016, DesignOrbital.com
+Copyright (C) 2012-2017, DesignOrbital.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

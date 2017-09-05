@@ -257,11 +257,17 @@ class colormag_featured_posts_slider_widget extends WP_Widget {
       $type = isset( $instance[ 'type' ] ) ? $instance[ 'type' ] : 'latest' ;
       $category = isset( $instance[ 'category' ] ) ? $instance[ 'category' ] : '';
 
+      $post_status = 'publish';
+      if( get_option( 'fresh_site') == 1 ){
+      	$post_status = array( 'auto-draft', 'publish' );
+      }
+
       if( $type == 'latest' ) {
          $get_featured_posts = new WP_Query( array(
             'posts_per_page'        => $number,
             'post_type'             => 'post',
-            'ignore_sticky_posts'   => true
+            'ignore_sticky_posts'   => true,
+            'post_status'           => $post_status,
          ) );
       }
       else {
@@ -286,10 +292,15 @@ class colormag_featured_posts_slider_widget extends WP_Widget {
                <?php
                if( has_post_thumbnail() ) {
                   $image = '';
+                  $thumbnail_id = get_post_thumbnail_id( $post->ID );
+                  $image_alt_text = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true);
                   $title_attribute = get_the_title( $post->ID );
+                  if( empty( $image_alt_text ) ) {
+                     $image_alt_text = $title_attribute;
+                  }
                   $image .= '<figure class="slider-featured-image">';
                   $image .= '<a href="' . get_permalink() . '" title="'.the_title( '', '', false ).'">';
-                  $image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $title_attribute ) ) ).'</a>';
+                  $image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $image_alt_text ) ) ).'</a>';
                   $image .= '</figure>';
                   echo $image;
                } else { ?>
@@ -386,11 +397,17 @@ class colormag_highlighted_posts_widget extends WP_Widget {
       $type = isset( $instance[ 'type' ] ) ? $instance[ 'type' ] : 'latest' ;
       $category = isset( $instance[ 'category' ] ) ? $instance[ 'category' ] : '';
 
+  	  $post_status = 'publish';
+      if( get_option( 'fresh_site') == 1 ){
+      	$post_status = array( 'auto-draft', 'publish' );
+      }
+
       if( $type == 'latest' ) {
          $get_featured_posts = new WP_Query( array(
             'posts_per_page'        => $number,
             'post_type'             => 'post',
-            'ignore_sticky_posts'   => true
+            'ignore_sticky_posts'   => true,
+            'post_status'           => $post_status,
          ) );
       }
       else {
@@ -412,10 +429,15 @@ class colormag_highlighted_posts_widget extends WP_Widget {
                <?php
                if( has_post_thumbnail() ) {
                   $image = '';
+                  $thumbnail_id = get_post_thumbnail_id( $post->ID );
+                  $image_alt_text = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true);
                   $title_attribute = get_the_title( $post->ID );
+                  if( empty( $image_alt_text ) ) {
+                     $image_alt_text = $title_attribute;
+                  }
                   $image .= '<figure class="highlights-featured-image">';
                   $image .= '<a href="' . get_permalink() . '" title="'.the_title( '', '', false ).'">';
-                  $image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $title_attribute ) ) ).'</a>';
+                  $image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $image_alt_text ) ) ).'</a>';
                   $image .= '</figure>';
                   echo $image;
                } else { ?>
@@ -531,11 +553,17 @@ class colormag_featured_posts_widget extends WP_Widget {
       $type = isset( $instance[ 'type' ] ) ? $instance[ 'type' ] : 'latest' ;
       $category = isset( $instance[ 'category' ] ) ? $instance[ 'category' ] : '';
 
+      $post_status = 'publish';
+      if( get_option( 'fresh_site') == 1 ){
+      	$post_status = array( 'auto-draft', 'publish' );
+      }
+
       if( $type == 'latest' ) {
          $get_featured_posts = new WP_Query( array(
             'posts_per_page'        => $number,
             'post_type'             => 'post',
-            'ignore_sticky_posts'   => true
+            'ignore_sticky_posts'   => true,
+            'post_status'           => $post_status,
          ) );
       }
       else {
@@ -545,6 +573,7 @@ class colormag_featured_posts_widget extends WP_Widget {
             'category__in'          => $category
          ) );
       }
+
       echo $before_widget;
       ?>
       <?php
@@ -567,10 +596,15 @@ class colormag_featured_posts_widget extends WP_Widget {
                   <?php
                   if( has_post_thumbnail() ) {
                      $image = '';
+                     $thumbnail_id = get_post_thumbnail_id( $post->ID );
+                     $image_alt_text = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true);
                      $title_attribute = get_the_title( $post->ID );
+                     if( empty( $image_alt_text ) ) {
+                        $image_alt_text = $title_attribute;
+                     }
                      $image .= '<figure>';
                      $image .= '<a href="' . get_permalink() . '" title="'.the_title( '', '', false ).'">';
-                     $image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $title_attribute ) ) ).'</a>';
+                     $image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $image_alt_text ) ) ).'</a>';
                      $image .= '</figure>';
                      echo $image;
                   }
@@ -689,11 +723,17 @@ class colormag_featured_posts_vertical_widget extends WP_Widget {
       $type = isset( $instance[ 'type' ] ) ? $instance[ 'type' ] : 'latest' ;
       $category = isset( $instance[ 'category' ] ) ? $instance[ 'category' ] : '';
 
+      $post_status = 'publish';
+      if( get_option( 'fresh_site') == 1 ){
+      	$post_status = array( 'auto-draft', 'publish' );
+      }
+
       if( $type == 'latest' ) {
          $get_featured_posts = new WP_Query( array(
             'posts_per_page'        => $number,
             'post_type'             => 'post',
-            'ignore_sticky_posts'   => true
+            'ignore_sticky_posts'   => true,
+            'post_status' 			=> $post_status
          ) );
       }
       else {
@@ -725,10 +765,15 @@ class colormag_featured_posts_vertical_widget extends WP_Widget {
                   <?php
                   if( has_post_thumbnail() ) {
                      $image = '';
+                     $thumbnail_id = get_post_thumbnail_id( $post->ID );
+                     $image_alt_text = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true);
                      $title_attribute = get_the_title( $post->ID );
+                     if( empty( $image_alt_text ) ) {
+                        $image_alt_text = $title_attribute;
+                     }
                      $image .= '<figure>';
                      $image .= '<a href="' . get_permalink() . '" title="'.the_title( '', '', false ).'">';
-                     $image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $title_attribute ) ) ).'</a>';
+                     $image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $image_alt_text ) ) ).'</a>';
                      $image .= '</figure>';
                      echo $image;
                   }
@@ -858,13 +903,15 @@ class colormag_300x250_advertisement_widget extends WP_Widget {
          <?php }
             $output = '';
             if ( !empty( $image_url ) ) {
+                $image_id = attachment_url_to_postid( $image_url );
+                $image_alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
                $output .= '<div class="advertisement-content">';
                if ( !empty( $image_link ) ) {
                $output .= '<a href="'.$image_link.'" class="single_ad_300x250" target="_blank" rel="nofollow">
-                                    <img src="'.$image_url.'" width="300" height="250">
+                                    <img src="'.$image_url.'" width="300" height="250" alt="' . $image_alt . '">
                            </a>';
                } else {
-                  $output .= '<img src="'.$image_url.'" width="300" height="250">';
+                  $output .= '<img src="'.$image_url.'" width="300" height="250" alt="' . $image_alt . '">';
                }
                $output .= '</div>';
                echo $output;
@@ -961,11 +1008,13 @@ class colormag_728x90_advertisement_widget extends WP_Widget {
             if ( !empty( $image_url ) ) {
                $output .= '<div class="advertisement-content">';
                if ( !empty( $image_link ) ) {
+				$image_id = attachment_url_to_postid( $image_url );
+				$image_alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
                $output .= '<a href="'.$image_link.'" class="single_ad_728x90" target="_blank" rel="nofollow">
-                                    <img src="'.$image_url.'" width="728" height="90">
+                                    <img src="'.$image_url.'" width="728" height="90" alt="' . $image_alt . '">
                            </a>';
                } else {
-                  $output .= '<img src="'.$image_url.'" width="728" height="90">';
+                  $output .= '<img src="'.$image_url.'" width="728" height="90" alt="' . $image_alt . '">';
                }
                $output .= '</div>';
                echo $output;
@@ -1071,16 +1120,18 @@ class colormag_125x125_advertisement_widget extends WP_Widget {
          <?php }
             $output = '';
             if ( !empty( $image_array ) ) {
+			$image_id = attachment_url_to_postid( $image_url );
+			$image_alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
             $output .= '<div class="advertisement-content">';
             for ( $i = 1; $i < 7; $i++ ) {
                $j = $i - 1;
                if( !empty( $image_array[$j] ) ) {
                   if ( !empty( $link_array[$j] ) ) {
                      $output .= '<a href="'.$link_array[$j].'" class="single_ad_125x125" target="_blank" rel="nofollow">
-                                 <img src="'.$image_array[$j].'" width="125" height="125">
+                                 <img src="'.$image_array[$j].'" width="125" height="125" alt="' . $image_alt . '">
                               </a>';
                   } else {
-                     $output .= '<img src="'.$image_array[$j].'" width="125" height="125">';
+                     $output .= '<img src="'.$image_array[$j].'" width="125" height="125" alt="' . $image_alt . '">';
                   }
                }
             }

@@ -16,59 +16,96 @@ function do_etfw_widget_init() {
 }
 
 /**
- * Post Carousel widget class
+ * Core class used to implement a widget.
+ * @see WP_Widget
  */
 class DO_ETFW_Widget extends WP_Widget {
 
 	/**
-	 * Registers the widget with WordPress.
+	 * Default instance.
+	 */
+	protected $default_instance;
+
+	/**
+	 * Form Options
+	 */
+	protected $twitter_timeline_type;
+	protected $twitter_widget_theme;
+
+	/**
+	 * Sets up a new widget instance.
 	 */
 	public function __construct() {
 
-		parent::__construct(
-			'do-etfw',
-			apply_filters( 'do_etfw_widget_name', esc_html__( 'Twitter Timeline (Easy Twitter Feed Widget)', 'do-etfw' ) ),
-			array(
-				'classname'   => 'widget-do-etfw',
-				'description' => esc_html__( 'Display an official Twitter Embedded Timeline widget.', 'do-etfw' )
-			)
+		// Initialize Default Instance
+		$this->default_instance = array (
+			'title'                       => esc_html__( 'Follow me on Twitter', 'do-etfw' ),
+			'twitter_timeline_type'       => 'username',
+			'twitter_widget_username'     => 'DesignOrbital',
+			'twitter_widget_id'           => '',
+			'twitter_widget_width'        => '',
+			'twitter_widget_height'       => 400,
+			'twitter_widget_tweet_limit'  => null,
+			'twitter_widget_theme'        => 'light',
+			'twitter_widget_link_color'   => '#3b94d9',
+			'twitter_widget_border_color' => '#f5f5f5',
+			'twitter_widget_chrome'       => array(),
 		);
 
-		if ( is_active_widget( false, false, $this->id_base ) && do_etfw_option( 'twitter_script' ) ) {
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		// Initialize Form Options
+		$this->set_form_options();
+
+		// Widget Options
+		$widget_ops = array (
+			'classname'   => 'widget-do-etfw',
+			'description' => esc_html__( 'Display an official Twitter Embedded Timeline widget.', 'do-etfw' ),
+			'customize_selective_refresh' => true,
+		);
+
+		// Constructor
+		parent::__construct (
+			'do-etfw', // ID
+			apply_filters( 'do_etfw_widget_name', esc_html__( 'Twitter Timeline (Easy Twitter Feed Widget)', 'do-etfw' ) ),
+			$widget_ops
+		);
+
+		// Scripts
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+	}
+
+	/**
+	 * Enqueue scripts
+	 */
+	public function enqueue_scripts() {
+
+		if ( do_etfw_option( 'twitter_script' ) ) {
+			wp_enqueue_script( 'do-etfw-twitter-widgets', DO_ETFW_URI . '/js/twitter-widgets.js', array( 'jquery' ), '1.0', true );
 		}
 
 	}
 
 	/**
-	 * Enqueue scripts for front-end.
-	 */
-	public function enqueue_scripts() {
-		wp_enqueue_script( 'do-etfw-twitter-widgets', DO_ETFW_URI . '/js/twitter-widgets.js', array( 'jquery' ), '1.0', true );
-	}
-
-	/**
-	 * Front-end display of widget.
+	 * Outputs the content for the current widget instance.
 	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
+	 * @param array $args     Display arguments including 'before_title', 'after_title',
+	 *                        'before_widget', and 'after_widget'.
+	 * @param array $instance Settings for the current Custom HTML widget instance.
 	 */
 	function widget( $args, $instance ) {
 
-		// Defaults
-		$defaults = $this->defaults();
+		// Merge the instance arguments with the defaults.
+		$instance = wp_parse_args( (array) $instance, $this->default_instance );
 
-		// Merge the user-selected arguments with the defaults.
-		$instance = wp_parse_args( (array) $instance, $defaults );
+		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
+		$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 
 		// Open the output of the widget.
 		echo $args['before_widget'];
 
 ?>
-		<?php if ( ! empty( $instance['title'] ) ) : ?>
-			<?php echo $args['before_title'] . apply_filters( 'widget_title',  $instance['title'], $instance, $this->id_base ) . $args['after_title']; ?>
+		<?php if ( ! empty ( $title ) ) : ?>
+			<?php echo $args['before_title'] . $title . $args['after_title']; ?>
 		<?php endif; ?>
 
 		<?php
@@ -124,14 +161,12 @@ class DO_ETFW_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Sanitize widget form values as they are saved.
+	 * Handles updating settings for the current widget instance.
 	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
+	 * @param array $new_instance New settings for this instance as input by the user via
+	 *                            WP_Widget::form().
+	 * @param array $old_instance Old settings for this instance.
+	 * @return array Settings to save or bool false to cancel saving.
 	 */
 	public function update( $new_instance, $old_instance ) {
 
@@ -139,11 +174,11 @@ class DO_ETFW_Widget extends WP_Widget {
 		$instance = $old_instance;
 
 		// Sanitization
-		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['title'] = sanitize_text_field( $new_instance['title'] );
 
 		$instance['twitter_timeline_type'] = $new_instance['twitter_timeline_type'];
-		if ( ! in_array( $instance['twitter_timeline_type'], array( 'widget-id', 'username' ) ) ) {
-			$instance['twitter_timeline_type'] = 'widget-id';
+		if ( ! array_key_exists( $instance['twitter_timeline_type'], $this->twitter_timeline_type ) ) {
+			$instance['twitter_timeline_type'] = $this->default_instance['twitter_timeline_type'];
 		}
 
 		$instance['twitter_widget_username'] = sanitize_text_field( $new_instance['twitter_widget_username'] );
@@ -169,8 +204,8 @@ class DO_ETFW_Widget extends WP_Widget {
 		$instance['twitter_widget_tweet_limit'] = ( $twitter_widget_tweet_limit ? $twitter_widget_tweet_limit : null );
 
 		$instance['twitter_widget_theme'] = $new_instance['twitter_widget_theme'];
-		if ( ! in_array( $instance['twitter_widget_theme'], array( 'light', 'dark' ) ) ) {
-			$instance['twitter_widget_theme'] = 'light';
+		if ( ! array_key_exists( $instance['twitter_widget_theme'], $this->twitter_widget_theme ) ) {
+			$instance['twitter_widget_theme'] = $this->default_instance['twitter_widget_theme'];
 		}
 
 		$instance['twitter_widget_link_color']   = sanitize_hex_color( $new_instance['twitter_widget_link_color'] );
@@ -197,110 +232,101 @@ class DO_ETFW_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Back-end widget form.
+	 * Set Form Options
 	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
+	 * @returns void
 	 */
-	function form( $instance ) {
+	public function set_form_options() {
 
-		// Defaults
-		$defaults = $this->defaults();
-
-		// Merge the user-selected arguments with the defaults.
-		$instance = wp_parse_args( (array) $instance, $defaults );
-
-		// Controls
-		$twitter_timeline_type = array (
+		// Timeline Type
+		$this->twitter_timeline_type = array (
 			'username'  => esc_html__( 'Username',  'do-etfw'),
 			'widget-id' => esc_html__( 'Widget ID', 'do-etfw'),
 		);
 
-		$twitter_widget_theme = array (
+		// Widget Theme
+		$this->twitter_widget_theme = array (
 			'light' => esc_html__( 'Light', 'do-etfw'),
 			'dark'  => esc_html__( 'Dark', 'do-etfw'),
 		);
+
+	}
+
+	/**
+	 * Outputs the widget settings form.
+	 *
+	 * @param array $instance Current instance.
+	 * @returns void
+	 */
+	function form( $instance ) {
+
+		// Merge the instance arguments with the defaults.
+		$instance = wp_parse_args( (array) $instance, $this->default_instance );
+
 ?>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>">
-				<?php esc_html_e( 'Title:', 'do-etfw' ); ?>
-				<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
-			</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'do-etfw' ); ?></label>
+			<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'twitter_timeline_type' ); ?>">
-				<?php esc_html_e( 'Timeline Type:', 'do-etfw' ); ?>
-				<a href="https://designorbital.com/easy-twitter-feed-widget/" target="_blank">( ? )</a>
-			</label>
-			<select class="widefat" name="<?php echo $this->get_field_name( 'twitter_timeline_type' ); ?>" id="<?php echo $this->get_field_id( 'twitter_timeline_type' ); ?>">
-              <?php foreach ( $twitter_timeline_type as $key => $val ): ?>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_timeline_type' ) ); ?>"><?php esc_html_e( 'Timeline Type:', 'do-etfw' ); ?></label>
+            <select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_timeline_type' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_timeline_type' ) ); ?>">
+              <?php foreach ( $this->twitter_timeline_type as $key => $val ): ?>
 			    <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['twitter_timeline_type'], $key ); ?>><?php echo esc_html( $val ); ?></option>
 			  <?php endforeach; ?>
             </select>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_username' ) ); ?>">
-				<?php esc_html_e( 'Twitter Username:', 'do-etfw' ); ?>
-				<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_username' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_username' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_username'] ); ?>" />
-			</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_username' ) ); ?>"><?php esc_html_e( 'Twitter Username:', 'do-etfw' ); ?></label>
+			<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_username' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_username' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_username'] ); ?>" />
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_id' ) ); ?>">
-				<?php esc_html_e( 'Widget ID:', 'do-etfw' ); ?>
-				<br /><code><?php echo esc_html__( 'It can be empty, if you are using Timeline Type "Username".', 'do-etfw' ); ?></code>
-				<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_id' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_id' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_id'] ); ?>" />
-			</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_id' ) ); ?>"><?php esc_html_e( 'Widget ID:', 'do-etfw' ); ?></label>
+			<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_id' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_id' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_id'] ); ?>" />
+			<br />
+			<small><?php echo esc_html__( 'It can be empty, if you are using Timeline Type "Username".', 'do-etfw' ); ?></small>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_width' ) ); ?>">
-				<?php esc_html_e( 'Maximum Width (px; 220 to 1200):', 'do-etfw' ); ?>
-				<input type="number" min="220" max="1200" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_width' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_width' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_width'] ); ?>" />
-			</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_width' ) ); ?>"><?php esc_html_e( 'Maximum Width:', 'do-etfw' ); ?></label>
+			<input type="number" min="220" max="1200" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_width' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_width' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_width'] ); ?>" />
+			<br />
+			<small><?php echo esc_html__( 'px; 220 to 1200', 'do-etfw' ); ?></small>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_height' ) ); ?>">
-				<?php esc_html_e( 'Height (px; at least 200):', 'do-etfw' ); ?>
-				<input type="number" min="200" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_height' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_height' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_height'] ); ?>" />
-			</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_height' ) ); ?>"><?php esc_html_e( 'Height:', 'do-etfw' ); ?></label>
+			<input type="number" min="200" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_height' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_height' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_height'] ); ?>" />
+			<br />
+			<small><?php echo esc_html__( 'px; at least 200', 'do-etfw' ); ?></small>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_tweet_limit' ) ); ?>">
-				<?php esc_html_e( 'Number of Tweets Shown:', 'do-etfw' ); ?>
-				<input type="number" min="1" max="20" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_tweet_limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_tweet_limit' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_tweet_limit'] ); ?>" />
-			</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_tweet_limit' ) ); ?>"><?php esc_html_e( 'Number of Tweets Shown:', 'do-etfw' ); ?></label>
+			<input type="number" min="1" max="20" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_tweet_limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_tweet_limit' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_tweet_limit'] ); ?>" />
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'twitter_widget_theme' ); ?>">
-				<?php esc_html_e( 'Theme:', 'do-etfw' ); ?>
-			</label>
-			<select class="widefat" name="<?php echo $this->get_field_name( 'twitter_widget_theme' ); ?>" id="<?php echo $this->get_field_id( 'twitter_widget_theme' ); ?>">
-              <?php foreach ( $twitter_widget_theme as $key => $val ): ?>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_theme' ) ); ?>"><?php esc_html_e( 'Theme:', 'do-etfw' ); ?></label>
+            <select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_theme' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_theme' ) ); ?>">
+              <?php foreach ( $this->twitter_widget_theme as $key => $val ): ?>
 			    <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $instance['twitter_widget_theme'], $key ); ?>><?php echo esc_html( $val ); ?></option>
 			  <?php endforeach; ?>
             </select>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_link_color' ) ); ?>">
-				<?php esc_html_e( 'Link Color (hex):', 'do-etfw' ); ?>
-				<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_link_color' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_link_color' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_link_color'] ); ?>" />
-			</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_link_color' ) ); ?>"><?php esc_html_e( 'Link Color (hex):', 'do-etfw' ); ?></label>
+			<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_link_color' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_link_color' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_link_color'] ); ?>" />
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_border_color' ) ); ?>">
-				<?php esc_html_e( 'Border Color (hex):', 'do-etfw' ); ?>
-				<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_border_color' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_border_color' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_border_color'] ); ?>" />
-			</label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_border_color' ) ); ?>"><?php esc_html_e( 'Border Color (hex):', 'do-etfw' ); ?></label>
+			<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'twitter_widget_border_color' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'twitter_widget_border_color' ) ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_border_color'] ); ?>" />
 		</p>
 
 		<p>
@@ -337,25 +363,4 @@ class DO_ETFW_Widget extends WP_Widget {
 <?php
 	}
 
-	// Defaults
-	public function defaults() {
-
-		$defaults = array(
-			'title'                       => esc_html__( 'Follow me on Twitter', 'do-etfw' ),
-			'twitter_timeline_type'       => 'username',
-			'twitter_widget_username'     => 'DesignOrbital',
-			'twitter_widget_id'           => '',
-			'twitter_widget_width'        => '',
-			'twitter_widget_height'       => 400,
-			'twitter_widget_tweet_limit'  => null,
-			'twitter_widget_theme'        => 'light',
-			'twitter_widget_link_color'   => '#3b94d9',
-			'twitter_widget_border_color' => '#f5f5f5',
-			'twitter_widget_chrome'       => array(),
-		);
-
-		return $defaults;
-
-	}
-
-}
+} // End Class DO_ETFW_Widget

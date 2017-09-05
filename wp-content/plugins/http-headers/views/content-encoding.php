@@ -55,7 +55,7 @@
 			$content_encoding_value = array();
 		}
 		foreach ($items as $i => $item) {
-			if ($i % 2 === 0) {
+			if ($i > 0 && $i % 2 === 0) {
 				?></tr><tr><?php
 			}
 			?><td><label><input type="checkbox" class="http-header-value" name="hh_content_encoding_value[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $content_encoding_value) ? NULL : ' checked'; ?><?php echo $content_encoding == 1 ? NULL : ' readonly'; ?> /> <?php echo $item; ?></label></td><?php
@@ -74,7 +74,7 @@
 		}
 		$items = array('php', 'html', 'js', 'css', 'json', 'xml', 'svg', 'txt', 'bmp', 'ico', 'ttf', 'otf', 'eot');
 		foreach ($items as $i => $item) {
-			if ($i % 2 === 0) {
+			if ($i > 0 && $i % 2 === 0) {
 				?></tr><tr><?php
 			}
 			?><td><label><input type="checkbox" class="http-header-value" name="hh_content_encoding_ext[<?php echo $item; ?>]" value="1"<?php echo !array_key_exists($item, $content_encoding_ext) ? NULL : ' checked'; ?><?php echo $content_encoding == 1 ? NULL : ' readonly'; ?> /> *.<?php echo $item; ?></label></td><?php

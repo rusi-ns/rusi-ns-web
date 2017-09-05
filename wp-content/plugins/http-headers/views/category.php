@@ -102,6 +102,12 @@ include dirname(__FILE__) . '/includes/breadcrumbs.inc.php';
 						}
 					}
 					break;
+				case 'hh_timing_allow_origin':
+					if ($value == 'origin')
+					{
+						$value = get_option('hh_timing_allow_origin_url');
+					}
+					break;
 				case 'hh_access_control_allow_origin':
 					if ($value == 'origin')
 					{
@@ -187,6 +193,20 @@ include dirname(__FILE__) . '/includes/breadcrumbs.inc.php';
 					}
 					$tmp[] = sprintf('report-uri="%s"', get_option('hh_expect_ct_report_uri'));
 					$value = join(', ', $tmp); 
+					break;
+				case 'hh_custom_headers':
+					$_names = array($item[0]);
+					$_values = array('&nbsp;');
+					foreach ($value['name'] as $key => $name)
+					{
+						if (!empty($name) && !empty($value['value'][$key]))
+						{
+							$_names[] = '<p class="hh-p">&nbsp;&nbsp;&nbsp;&nbsp;'.$name.'</p>';
+							$_values[] = '<p class="hh-p">'.$value['value'][$key].'</p>';
+						}
+					}
+					$item[0] = join('', $_names);
+					$value = join('', $_values);
 					break;
 				default:
 					$value = !is_array($value) ? $value : join(', ', $value);

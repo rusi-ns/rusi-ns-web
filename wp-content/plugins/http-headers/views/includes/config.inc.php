@@ -38,4 +38,9 @@ $headers = array(
 	'connection' => array('Connection', 'hh_connection', 'misc'),
 	'cookie-security' => array('Cookie security', 'hh_cookie_security', 'security'),
 	'expect-ct' => array('Expect-CT', 'hh_expect_ct', 'security'),
+	'timing-allow-origin' => array('Timing-Allow-Origin', 'hh_timing_allow_origin', 'misc'),
+	'custom-headers' => array('Custom headers', 'hh_custom_headers', 'misc'),
+    'x-dns-prefetch-control' => array('X-DNS-Prefetch-Control', 'hh_x_dns_prefetch_control', 'security'),
+    'x-download-options' => array('X-Download-Options', 'hh_x_download_options', 'security'),
+    'x-permitted-cross-domain-policies' => array('X-Permitted-Cross-Domain-Policies', 'hh_x_permitted_cross_domain_policies', 'security'),
 );
