@@ -360,6 +360,26 @@ class DO_ETFW_Widget extends WP_Widget {
 			</label>
 		</p>
 
+		<p>
+			<?php
+				printf( '%1$s <a href="%2$s" target="_blank">%3$s</a>',
+					esc_html__( '30% discount on premium WordPress themes?', 'etfw' ),
+					esc_url( add_query_arg( array( 'page' => 'do-etfw-options' ), admin_url( 'options-general.php' ) ) ),
+					esc_html__( 'Get Discount Code', 'etfw' )
+				);
+			?>
+		</p>
+
+		<p>
+			<?php
+				printf( '%1$s <a href="%2$s" target="_blank">%3$s</a>',
+					esc_html__( 'Do you like the plugin?', 'etfw' ),
+					esc_url( 'https://wordpress.org/support/plugin/easy-twitter-feed-widget/reviews/' ),
+					esc_html__( 'Please rate it at wordpress.org!', 'etfw' )
+				);
+			?>
+		</p>
+
 <?php
 	}
 

@@ -1,11 +1,13 @@
-=== Plugin Name ===
-Contributors: dartiss, Aricura, mark.cheret
-Tags: footnote, footnotes, bibliography, formatting, notes, Post, posts, reference, referencing
+=== footnotes ===
+Contributors: Aricura, mark.cheret, ericakfranz
+Tags: footnote, bibliography, formatting, notes, post, reference
 Requires at least: 3.9
-Tested up to: 4.5.3
-License: GPLv3 or later
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Stable Tag: 1.6.4
+Tested up to: 4.8.1
+Stable Tag: 1.6.5
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+A powerful and fully featured method of adding footnotes to your site content.
 
 == Description ==
 
@@ -77,16 +79,20 @@ Visit this swift write-up from a **footnotes** user by the name of **Southwest**
 
 == Changelog ==
 
+= 1.6.5 =
+* Bugfix: Check if quicktags script is available before loading custom QTag button. This fixes a JS error which may have interfered with other functionality on custom post type edit screens.
+
 = 1.6.4 =
-- Bugfix: The deprecated WP_Widget elements have been replaced
-- Bugfix: Fixed occasional bug where footnote ordering could be out of sequence
+
+* Bugfix: The deprecated WP_Widget elements have been replaced
+* Bugfix: Fixed occasional bug where footnote ordering could be out of sequence
 
 = 1.6.3 =
-- Bugfix: We were provided a fix by a user named toma. footnotes now works in sub-folder installations of WordPress
+* Bug: We were provided a fix by a user named toma. footnotes now works in sub-folder installations of WordPress
 
 = 1.6.2 =
-- Update: Changed the Preview tab
-- Bugfix: Html tags has been removed in the Reference container when the excerpt mode is enabled
+* Update: Changed the Preview tab
+* Bugfix: Html tags has been removed in the Reference container when the excerpt mode is enabled
 
 = 1.6.1 =
 - Update: Translations
@@ -316,5 +322,6 @@ Visit this swift write-up from a **footnotes** user by the name of **Southwest**
 - First development Version of the Plugin
 
 == Upgrade Notice ==
-to upgrade our plugin is simple. Just update the plugin within your WordPress installation.
-To cross-upgrade from other footnotes plugins, there will be a migration assistant in the future
+
+= 4.3.5 =
+* Minor update to change branding

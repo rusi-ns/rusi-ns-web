@@ -7,7 +7,7 @@ Author: DesignOrbital.com
 Author URI: https://designorbital.com
 Text Domain: do-etfw
 Domain Path: /languages/
-Version: 0.7
+Version: 0.8
 License: GPL v3
 
 Easy Twitter Feed Widget Plugin
@@ -31,15 +31,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Constants
  */
 if ( ! defined( 'DO_ETFW_VERSION' ) ) {
-	define( 'DO_ETFW_VERSION', '0.6' );
+	define( 'DO_ETFW_VERSION', '0.8' );
 }
 
-if ( ! defined( 'DO_ETFW_DIR' ) ) {
-	define( 'DO_ETFW_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+if ( ! defined( 'DO_ETFW_BASENAME' ) ) {
+	define( 'DO_ETFW_BASENAME', plugin_basename( __FILE__ ) );
 }
 
 if ( ! defined( 'DO_ETFW_DIR_BASENAME' ) ) {
 	define( 'DO_ETFW_DIR_BASENAME', trailingslashit( dirname( plugin_basename( __FILE__ ) ) ) );
+}
+
+if ( ! defined( 'DO_ETFW_DIR' ) ) {
+	define( 'DO_ETFW_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 }
 
 if ( ! defined( 'DO_ETFW_URI' ) ) {
@@ -53,6 +57,16 @@ function do_etfw_load_textdomain() {
   load_plugin_textdomain( 'do-etfw', false, DO_ETFW_DIR_BASENAME. 'languages/' );
 }
 add_action( 'plugins_loaded', 'do_etfw_load_textdomain' );
+
+// Redirect to welcome screen upon plugin activation.
+function do_etfw_activation_redirect( $plugin ) {
+
+	if ( $plugin === DO_ETFW_BASENAME ) {
+		exit( wp_redirect( add_query_arg( array( 'page' => 'do-etfw-options' ), admin_url( 'options-general.php' ) ) ) );
+	}
+
+}
+add_action( 'activated_plugin', 'do_etfw_activation_redirect' );
 
 /**
  * Custom functions.

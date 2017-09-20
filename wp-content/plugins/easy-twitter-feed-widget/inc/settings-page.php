@@ -1,76 +1,86 @@
-<div class="do-etfw-admin-wrapper">
+<div class="wrap do-etfw-admin-wrapper">
+	<h1><?php printf( '%1$s', esc_html__( 'Easy Twitter Feed Widget Plugin Settings', 'etfw' ) ); ?></h1>
 
-	<div class="do-etfw-header">
-		<div class="do-etfw-header-inside">
-			<?php $plugin = do_etfw_plugin_data(); ?>
-			<h2><?php printf( '%1$s %2$s', $plugin['Name'], esc_html__( 'Settings', 'do-etfw' ) ); ?></h2>
-		</div>
-	</div><!-- .do-etfw-header -->
+	<div class="settings-container">
+		<div class="settings-col settings-col-options">
+			<div class="options-wrapper">
 
-	<div class="do-etfw-info">
-		<div class="do-etfw-info-inside">
-			<ul>
-				<li>
-					<a href="https://designorbital.com/premium-wordpress-themes/?utm_source=wporg-etfw&utm_medium=button&utm_campaign=premium-wp-themes" class="button button-primary" target="_blank"><?php echo esc_html__( 'Premium WordPress Themes', 'do-etfw' ); ?></a>
-				</li>
-				<li>
-					<a href="https://designorbital.com/free-wordpress-themes/?utm_source=wporg-etfw&utm_medium=button&utm_campaign=free-wp-themes" class="button" target="_blank"><?php echo esc_html__( 'Free WordPress Themes', 'do-etfw' ); ?></a>
-				</li>
-				<li>
-					<a href="https://www.facebook.com/designorbital" class="button" target="_blank"><?php echo esc_html__( 'Like Us On Facebook', 'do-etfw' ); ?></a>
-				</li>
-				<li>
-					<a href="https://twitter.com/designorbital" class="button" target="_blank"><?php echo esc_html__( 'Follow On Twitter', 'do-etfw' ); ?></a>
-				</li>
-			</ul>
-		</div>
-	</div><!-- .do-etfw-info -->
+				<form action="options.php" method="post" class="form-options-wrapper">
 
-	<div class="do-etfw-header">
-		<div class="do-etfw-header-inside">
-			<?php $plugin = do_etfw_plugin_data(); ?>
-			<h2><?php echo esc_html__( 'Support Us for the Development and Maintenance of Plugin', 'etfw' ); ?></h2>
-		</div>
-	</div><!-- .do-etfw-header -->
+					<?php settings_fields( 'do_etfw_options_group' ); ?>
 
-	<div class="do-etfw-info">
-		<div class="do-etfw-info-inside">
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-				<input type="hidden" name="cmd" value="_s-xclick">
-				<input type="hidden" name="hosted_button_id" value="Z3LBGSQDYRCWA">
-				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-			</form>
-		</div>
-	</div><!-- .do-etfw-info -->
+					<h2 class="nav-tab-wrapper">
+						<a class="nav-tab nav-tab-active" id="configuration-tab" href="#configuration"><?php esc_html_e( 'Configuration', 'etfw' ); ?></a>
+					</h2>
 
-	<form action="options.php" method="post" class="do-etfw-form-wrapper">
+					<section id="configuration" class="nav-tab-section">
+						<?php do_settings_sections( 'do_etfw_section_config_page' ); ?>
+					</section>
 
-		<?php settings_fields( 'do_etfw_options_group' ); ?>
+					<input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save Changes', 'etfw' ); ?>">
+				</form>
 
-		<div class="do-etfw-form-header">
-			<div class="do-etfw-form-header-inside">
-				<input type="submit" class="button button-primary" value="<?php echo esc_html__( 'Save Changes', 'do-etfw' ); ?>">
-			</div>
-		</div><!-- .do-etfw-form-header -->
+			</div><!-- .options-wrapper -->
+		</div><!-- .settings-col -->
 
-		<div id="do-etfw-tabs" class="do-etfw-tabs-container">
-			<ul class="tabs">
-				<li class="tab" id="tab-1"><a href="#section-config"><?php echo esc_html__( 'Configuration', 'do-etfw' ); ?></a></li>
-			</ul>
-			<div class="panel-container">
-				<div id="section-config" class="panel">
-					<?php do_settings_sections( 'do_etfw_section_config_page' ); ?>
-				</div>
-			</div>
-		</div><!-- .do-etfw-tabs-container -->
+		<div class="settings-col settings-col-info">
+			<div class="info-wrapper">
 
-		<div class="do-etfw-form-footer">
-			<div class="do-etfw-form-footer-inside">
-				<input type="submit" class="button button-primary" value="<?php echo esc_html__( 'Save Changes', 'do-etfw' ); ?>">
-			</div>
-		</div><!-- .do-etfw-form-footer -->
+					<div class="card-wrapper">
+						<div class="card-wrapper-inside">
+							<h2 class="title"><?php esc_html_e( 'Get 30% Discount', 'etfw' ); ?></h2>
+								<?php
+									printf( '<p>%1$s</p> <p><code>%2$s</code></p> <p><a href="%3$s" class="button button-primary" target="_blank">%4$s</a></p> <p><a href="%5$s" class="button" target="_blank">%6$s</a></p>',
+										esc_html__( 'Get 30% discount on DesignOrbital premium WordPress themes by using the following discount code.', 'etfw' ),
+										esc_html__( 'TWITTERWIDGET30', 'etfw' ),
+										esc_url( 'https://designorbital.market/?utm_source=wporg-etfw&utm_medium=button&utm_campaign=designorbital' ),
+										esc_html__( 'Premium WordPress Themes', 'etfw' ),
+										esc_url( 'https://designorbital.com/free-wordpress-themes/?utm_source=wporg-etfw&utm_medium=button&utm_campaign=designorbital' ),
+										esc_html__( 'Free WordPress Themes', 'etfw' )
+									);
+								?>
+						</div>
+					</div>
 
-	</form><!-- .do-etfw-form-wrapper -->
+					<div class="card-wrapper">
+						<div class="card-wrapper-inside">
+							<h2 class="title"><?php esc_html_e( 'Rate the Plugin', 'etfw' ); ?></h2>
+								<?php
+									printf( '<p>%1$s</p> <p><a href="%2$s" target="_blank">%3$s</a></p>',
+										esc_html__( 'Do you like the plugin?', 'etfw' ),
+										esc_url( 'https://wordpress.org/support/plugin/easy-twitter-feed-widget/reviews/' ),
+										esc_html__( 'Please rate it at wordpress.org!', 'etfw' )
+									);
+								?>
+						</div>
+					</div>
+
+					<div class="card-wrapper">
+						<div class="card-wrapper-inside">
+							<h2 class="title"><?php esc_html_e( 'Support Us', 'etfw' ); ?></h2>
+								<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+									<input type="hidden" name="cmd" value="_s-xclick">
+									<input type="hidden" name="hosted_button_id" value="Z3LBGSQDYRCWA">
+									<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+									<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+								</form>
+						</div>
+					</div>
+
+					<div class="card-wrapper">
+						<div class="card-wrapper-inside">
+							<h2 class="title"><?php esc_html_e( 'Follow Us', 'etfw' ); ?></h2>
+								<p>
+									<a href="https://www.facebook.com/designorbital" class="button" target="_blank"><?php echo esc_html__( 'Like Us On Facebook', 'do-etfw' ); ?></a>
+								</p>
+								<p>
+									<a href="https://twitter.com/designorbital" class="button" target="_blank"><?php echo esc_html__( 'Follow On Twitter', 'do-etfw' ); ?></a>
+								</p>
+						</div>
+					</div>
+
+			</div><!-- .info-wrapper -->
+		</div><!-- .settings-col -->
+	</div><!-- .settings-container -->
 
 </div><!-- .do-etfw-admin-wrapper -->
