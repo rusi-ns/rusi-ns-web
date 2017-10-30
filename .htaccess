@@ -1,3 +1,4 @@
+
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -9,8 +10,3 @@ RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress
-
-RewriteCond %{HTTP_HOST} ^rusi\.ca$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.rusi\.ca$
-RewriteRule ^(.*)$ "https\:\/\/rusi\-ns\.ca\/$1" [R=301,L]
-
