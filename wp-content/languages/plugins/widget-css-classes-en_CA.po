@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Widget CSS Classes - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-06-29 18:52:53+0000\n"
+"PO-Revision-Date: 2017-10-24 16:55:12+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,50 +11,63 @@ msgstr ""
 "Language: en_CA\n"
 "Project-Id-Version: Plugins - Widget CSS Classes - Stable (latest release)\n"
 
-#: widget-css-classes.php:96
+#. Translators: %s stands for a link to translate.wordpress.org.
+#: includes/widget-css-classes-settings.class.php:73
+msgid "Translations are taken from %s"
+msgstr "Translations are taken from %s"
+
+#: includes/widget-css-classes-settings.class.php:71
+msgid "Translate classes like `widget-first` and `widget-even`."
+msgstr "Translate classes like `widget-first` and `widget-even`."
+
+#: includes/widget-css-classes-settings.class.php:69
+msgid "Translate classes"
+msgstr "Translate classes"
+
+#: widget-css-classes.php:97
 msgid "Please update"
 msgstr "Please update"
 
 #. Translators: %1$s stands for the WP version and %2$s stands for "Please
 #. update" (a link).
-#: widget-css-classes.php:94
+#: widget-css-classes.php:95
 msgid "Widget CSS Classes requires WordPress %1$s or newer. %2$s"
 msgstr "Widget CSS Classes requires WordPress %1$s or newer. %2$s"
 
-#: includes/widget-css-classes-settings.class.php:81
+#: includes/widget-css-classes-settings.class.php:95
 msgid "None"
 msgstr "None"
 
-#: includes/widget-css-classes-settings.class.php:59
+#: includes/widget-css-classes-settings.class.php:67
 msgid "Plugins that run after this plugin could still add duplicates."
 msgstr "Plugins that run after this plugin could still add duplicates."
 
-#: includes/widget-css-classes-settings.class.php:57
+#: includes/widget-css-classes-settings.class.php:65
 msgid "Remove duplicate classes"
 msgstr "Remove duplicate classes"
 
-#: includes/widget-css-classes-settings.class.php:53
+#: includes/widget-css-classes-settings.class.php:61
 msgid "Fix widget parameters"
 msgstr "Fix widget parameters"
 
-#: includes/widget-css-classes-settings.class.php:55
+#: includes/widget-css-classes-settings.class.php:63
 msgid "Wrap widget in a <div> element if the parameters are invalid."
 msgstr "Wrap widget in a <div> element if the parameters are invalid."
 
-#: includes/widget-css-classes.class.php:199
-#: includes/widget-css-classes.class.php:226
+#: includes/widget-css-classes.class.php:242
+#: includes/widget-css-classes.class.php:269
 msgid "CSS Classes"
 msgstr "CSS Classes"
 
-#: includes/widget-css-classes-settings.class.php:80
+#: includes/widget-css-classes-settings.class.php:94
 msgid "Both"
 msgstr "Both"
 
-#: includes/widget-css-classes-settings.class.php:79
+#: includes/widget-css-classes-settings.class.php:93
 msgid "Predefined"
 msgstr "Predefined"
 
-#: includes/widget-css-classes-settings.class.php:52
+#: includes/widget-css-classes-settings.class.php:60
 msgid "Predefined Classes"
 msgstr "Predefined Classes"
 
@@ -74,89 +87,90 @@ msgstr "Add custom, first, last, even, odd, and numbered classes to your widgets
 msgid "http://cleverness.org/plugins/widget-css-classes"
 msgstr "http://cleverness.org/plugins/widget-css-classes"
 
-#: includes/widget-css-classes.class.php:503
+#: includes/widget-css-classes.class.php:109
 msgid "widget-odd"
 msgstr "widget-odd"
 
-#: includes/widget-css-classes.class.php:502
+#: includes/widget-css-classes.class.php:108
 msgid "widget-even"
 msgstr "widget-even"
 
-#: includes/widget-css-classes.class.php:492
+#: includes/widget-css-classes.class.php:107
 msgid "widget-last"
 msgstr "widget-last"
 
-#: includes/widget-css-classes.class.php:491
+#: includes/widget-css-classes.class.php:106
 msgid "widget-first"
 msgstr "widget-first"
 
-#: includes/widget-css-classes.class.php:483
+#: includes/widget-css-classes.class.php:105
 msgid "widget-"
 msgstr "widget-"
 
-#: includes/widget-css-classes.class.php:171
+#: includes/widget-css-classes.class.php:214
 msgid "CSS ID"
 msgstr "CSS ID"
 
-#: includes/widget-css-classes-settings.class.php:254
+#: includes/widget-css-classes-settings.class.php:276
 msgid "Import Settings"
 msgstr "Import Settings"
 
-#: includes/widget-css-classes-settings.class.php:250
+#: includes/widget-css-classes-settings.class.php:272
 msgid "Export Settings"
 msgstr "Export Settings"
 
-#: includes/widget-css-classes-settings.class.php:248
+#: includes/widget-css-classes-settings.class.php:270
 msgid "Import/Export Settings"
 msgstr "Import/Export Settings"
 
-#. #-#-#-#-#  widget-css-classes-code.pot (Widget CSS Classes 1.5.0)  #-#-#-#-#
+#. #-#-#-#-#  widget-css-classes-code.pot (Widget CSS Classes 1.5.2.1) 
+#. #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: includes/widget-css-classes-settings.class.php:205
+#: includes/widget-css-classes-settings.class.php:227
 msgid "Widget CSS Classes"
 msgstr "Widget CSS Classes"
 
-#: includes/widget-css-classes-settings.class.php:147
+#: includes/widget-css-classes-settings.class.php:169
 msgid "No Settings File Selected"
 msgstr "No Settings File Selected"
 
-#: includes/widget-css-classes-settings.class.php:143
+#: includes/widget-css-classes-settings.class.php:165
 msgid "Invalid Settings File"
 msgstr "Invalid Settings File"
 
-#: includes/widget-css-classes-settings.class.php:139
+#: includes/widget-css-classes-settings.class.php:161
 msgid "Settings Imported"
 msgstr "Settings Imported"
 
-#: includes/widget-css-classes-settings.class.php:131
+#: includes/widget-css-classes-settings.class.php:153
 msgid "Import/Export"
 msgstr "Import/Export"
 
-#: includes/widget-css-classes-settings.class.php:78
+#: includes/widget-css-classes-settings.class.php:92
 msgid "Text"
 msgstr "Text"
 
-#: includes/widget-css-classes-settings.class.php:69
+#: includes/widget-css-classes-settings.class.php:83
 msgid "No"
 msgstr "No"
 
-#: includes/widget-css-classes-settings.class.php:68
+#: includes/widget-css-classes-settings.class.php:82
 msgid "Yes"
 msgstr "Yes"
 
-#: includes/widget-css-classes-settings.class.php:51
+#: includes/widget-css-classes-settings.class.php:59
 msgid "Class Field Type"
 msgstr "Class Field Type"
 
-#: includes/widget-css-classes-settings.class.php:50
+#: includes/widget-css-classes-settings.class.php:56
 msgid "Show Additional Field for ID"
 msgstr "Show Additional Field for ID"
 
-#: includes/widget-css-classes-settings.class.php:49
+#: includes/widget-css-classes-settings.class.php:53
 msgid "Add Even/Odd Classes"
 msgstr "Add Even/Odd Classes"
 
-#: includes/widget-css-classes-settings.class.php:48
+#: includes/widget-css-classes-settings.class.php:50
 msgid "Add First/Last Classes"
 msgstr "Add First/Last Classes"
 

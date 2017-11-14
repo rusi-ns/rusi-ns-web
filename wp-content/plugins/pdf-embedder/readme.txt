@@ -1,9 +1,9 @@
-=== Plugin Name ===
+=== PDF Embedder ===
 Contributors: danlester
-Tags: doc, docx, pdf, office, powerpoint, google, document, embed, intranet
+Tags: doc, pdf, pdf viewer, office, google, document, embed, intranet
 Requires at least: 3.5
-Tested up to: 4.7
-Stable tag: 3.0.1
+Tested up to: 4.9
+Stable tag: 3.1.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -17,20 +17,12 @@ The plugin has a unique method for embedding PDFs, using Javascript only, and _n
 
 The free viewer currently has Next/Prev buttons to page through the document, and zoom buttons.
 
-PDFs are embedded within your existing WordPress pages so we have full control over appearance, and all Javascript and other files are served by your own server
-(not by Google or any other third-party who may not be able to guarantee their own reliability).
+PDFs are embedded within your existing WordPress pages so we have full control over appearance, and all Javascript and other files are served by your own server (not by Google or any other third-party who may not be able to guarantee their own reliability).
+
 Even if other plugins use similar technology, they will insert the PDF itself into an 'iframe' which means they do not get the flexibility over sizing.
 
 There is no button for users to download the PDF in the free version of the plugin, but this is available in the Premium versions along with other extra features.
 Hyperlinks in your PDF will only be clickable in the Premium versions.
-
-**Now translation-ready!** Please contribute your translations.
-
-Persian translation by Mostafa Safarian i of [سئو](http://www.greenseo.ir/)
-
-French translation by Thierry Gaillou of [JDFitForme](http://www.jdfitforme.fr/)
-
-Spanish translation by Armando Landois of [LANDOIS Diseño](https://landois.com/)
 
 
 = Usage =
@@ -45,19 +37,21 @@ You can change the default appearance - e.g. width, and toolbar position/appeara
 
 To override your site-wide defaults on an individual embed, see the [Plugin Instructions](http://wp-pdf.com/free-instructions/?utm_source=PDF%20Readme%20Instructions&utm_medium=freemium&utm_campaign=Freemium) for information about sizing options plus other ways to customize the shortcodes.
 
-> **Extra Premium Features**
->
-> * Download button in the toolbar.
-> * Continuous scroll between pages.
-> * Hyperlinks are fully functional.
-> * Full screen mode.
-> * Edit page number to jump straight to page.
-> * Track number of downloads and views.
-> * Removes wp-pdf.com attribution from the toolbar.
-> * Mobile-friendly.
-> * Secure option - difficult to download original PDF.
->
-> See [wp-pdf.com](http://wp-pdf.com/?utm_source=PDF%20Readme%20Box&utm_medium=freemium&utm_campaign=Freemium) for details!
+= Extra Premium Features =
+
+Features available in the Premium versions:
+
+* **Download button in the toolbar**
+* **Continuous scroll between pages**
+* **Hyperlinks are fully functional**
+* **Full screen mode**
+* **Edit page number to jump straight to page**
+* **Track number of downloads and views**
+* **Removes wp-pdf.com attribution from the toolbar**
+* **Mobile-friendly**
+* **Secure option - difficult to download original PDF**
+
+**See [wp-pdf.com](http://wp-pdf.com/?utm_source=PDF%20Readme%20Box&utm_medium=freemium&utm_campaign=Freemium) for details!**
 
 = Mobile-friendly embedding using PDF Embedder Premium =
 
@@ -91,12 +85,25 @@ It also displays the thumbnail as the ‘icon’ for the PDF in the Media Librar
 
 See our website [wp-pdf.com/thumbnails/](http://wp-pdf.com/thumbnails/?utm_source=PDF%20Readme%20Thumbnails&utm_medium=freemium&utm_campaign=Freemium) for more details and purchase options.
 
+
+= Now translation-ready! =
+
+ lease contribute your translations.
+
+Persian translation by Mostafa Safarian i of [سئو](http://www.greenseo.ir/)
+
+French translation by Thierry Gaillou of [JDFitForme](http://www.jdfitforme.fr/)
+
+Spanish translation by Armando Landois of [LANDOIS Diseño](https://landois.com/)
+
+
 With thanks to the Mozilla team for developing the underlying [pdf.js](https://github.com/mozilla/pdf.js) technology used by this plugin.
 
 == Screenshots ==
 
-1. Uploaded PDF is displayed within your page/post at the correct size to fit. 
+1. Uploaded PDF is displayed within your page/post at the correct size to fit.
 2. User hovers over document to see Next/Prev page butons.
+3. Settings can change appearance of the viewer, including size
 
 == Frequently Asked Questions ==
 
@@ -108,8 +115,7 @@ Please feel free to email [contact@wp-pdf.com](mailto:contact@wp-pdf.com) with a
 
 Always include your full shortcode, plus links to the relevant pages, and screenshots if they would be helpful too. 
 
-We may occasionally be able to respond to support queries posted on the 'Support' forum here on the wordpress.org
-plugin page, but we recommend sending us an email instead if possible.
+We may occasionally be able to respond to support queries posted on the 'Support' forum here on the wordpress.org plugin page, but we recommend sending us an email instead if possible.
 
 = How can I change the Size or customize the Toolbar? =
 
@@ -127,6 +133,23 @@ The height will be calculated so that the document fits naturally, given the wid
 The Next/Prev toolbar can appear at the top or bottom of the document (or both), and it can either appear only when the user hovers over the document or it can be fixed at all times.
 
 See the [Plugin Instructions](http://wp-pdf.com/free-instructions/?utm_source=PDF%20Readme%20FAQ&utm_medium=freemium&utm_campaign=Freemium) for more details about sizing and toolbar options.
+
+= Premium feature list =
+
+Features available in the premium versions of the plugin:
+
+* Download button in the toolbar
+* Continuous scroll between pages
+* Hyperlinks are fully functional
+* Full screen mode
+* Edit page number to jump straight to page
+* Track number of downloads and views
+* Removes wp-pdf.com attribution from the toolbar
+* Mobile-friendly
+* Secure option - difficult to download original PDF
+
+See [wp-pdf.com](http://wp-pdf.com/?utm_source=PDF%20Readme%20Box&utm_medium=freemium&utm_campaign=Freemium) for details!
+
 
 = Can I improve the viewing experience for mobile users? =
 
@@ -147,7 +170,10 @@ See our website [wp-pdf.com](http://wp-pdf.com/secure/?utm_source=PDF%20Readme%2
 
 = Can I add a Download button to the toolbar? =
 
-This is possible only in the Premium version.
+This is possible only in the Premium version. As a workaround in the free version, you could add a direct link to the PDF beneath the embedded version.
+
+To do this, copy the URL from the pdf-embedder shortcode and insert it into a link using HTML such as this:
+&lt;a href="(url of PDF)"&gt;Download Here&lt;/a&gt;
 
 = Are Hyperlinks supported? =
 
@@ -176,6 +202,28 @@ the Plugins section of your Wordpress admin
 1. Follow the instructions from step 4 above
 
 == Changelog ==
+
+= 3.1.8 =
+
+Updated version of underlying pdf.js library, fixes some rendering bugs.
+
+Recalculates fresh viewer size more often in response to resize events. Previous versions attempted to increase performance by only recalculating viewer size when it had changed, but this missed some required resizing after Javascript-based tabs are clicked.
+
+Fixed some issues with zoom appearance.
+
+Mouse scroll wheel is now more consistent across all browsers (in terms of scroll speed).
+
+When scrollbars are always visible, no longer cuts off edge of PDF underneath.
+
+= 3.1.2 =
+
+Ready for compatibility with WordPress 4.8.
+
+New mouse wheel scrolling in Firefox wasn't working with some themes.
+
+Latest version of pdf.js library, and newest code bringing the free version into line with the premium versions.
+
+Mouse wheel scrolling in Firefox no longer also scrolls the window unless at very top or bottom of page.
 
 = 3.0.1 =
 
