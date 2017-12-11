@@ -190,6 +190,32 @@ class PP_AdminUsers {
 					$hide_roles = ( ! defined('bbp_get_version') ) ? array( 'bbp_participant', 'bbp_moderator', 'bbp_keymaster', 'bbp_blocked', 'bbp_spectator' ) : array();
 					$hide_roles = apply_filters( 'pp_hide_roles', $hide_roles );
 				}
+
+				// === clean up after any inappropriate role metagroup auto-deletion ===
+				$user_groups = pp_get_groups_for_user( $id, 'pp_group' );	// these are already being buffered, so no extra DB overhead
+				$has_wp_role_metagroup = false;
+				foreach( $user_groups as $group ) {
+					if ( ( 'wp_role' == $group->metagroup_type ) && ! in_array( $group->metagroup_id, array( 'wp_auth', 'wp_all' ) ) && ! in_array( $group->metagroup_id, $hide_roles ) ) {
+						$has_wp_role_metagroup = true;
+						break;
+					}
+				}
+				
+				// if this user does not have at least on role metagroup stored, see if one should be added
+				if ( ! $has_wp_role_metagroup ) {
+					foreach( $user_object->roles as $role_name ) {
+						if ( $role_group = pp_get_metagroup( 'wp_role', $role_name ) ) {
+							pp_add_group_user( $role_group->ID, $id );
+							
+							// force reload of supplemental roles and exceptions
+							$role_info = ppc_count_assigned_roles( 'user', array( 'query_agent_ids' => array_keys( $wp_list_table->items ), 'force_refresh' => true ) );
+							ppc_list_agent_exceptions( 'user', $id, array( 'query_agent_ids' => array_keys( $wp_list_table->items ), 'force_refresh' => true ) );
+							break;
+						}
+					}
+				}
+				// === end role metagroup cleanup ===
+
 				$user_object->roles = array_diff( $user_object->roles, $hide_roles );
 				
 				$role_titles = array();

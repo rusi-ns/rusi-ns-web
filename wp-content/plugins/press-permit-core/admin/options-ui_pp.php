@@ -46,7 +46,7 @@ class PP_OptionsUI {
 			
 			$title = ( ! empty( $args['title'] ) ) ? " title='" . esc_attr($args['title']) . "'" : '';
 			
-			echo "<div class='agp-vspaced_input'>"
+			echo "<div class='agp-v-spaced_input'>"
 				. "<label for='$option_name'{$title}><input name='$option_name' type='checkbox' $disabled_clause $style id='$option_name' value='1' " . checked('1', $return['val'], false) . " /> "
 				. $this->option_captions[$option_name]
 				. "</label>";

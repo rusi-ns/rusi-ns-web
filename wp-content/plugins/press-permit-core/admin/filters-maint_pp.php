@@ -8,7 +8,7 @@ pp_load_admin_api();
  * 
  * @package PP
  * @author Kevin Behrens <kevin@agapetry.net>
- * @copyright Copyright (c) 2011-2015, Agapetry Creations LLC
+ * @copyright Copyright (c) 2011-2017, Agapetry Creations LLC
  * 
  */
 class PP_AdminFilters
@@ -41,7 +41,7 @@ class PP_AdminFilters
 		}
 
 		// =============== User Maintenance =================
-		add_action( 'profile_update', array( &$this, 'act_sync_wproles' ) );
+		add_action( 'profile_update', array( 'PP_AdminFilters', 'act_sync_wproles' ) );
 		add_action( 'profile_update',  array( &$this, 'act_update_user_groups' ) );
 		add_action( 'set_user_role', array( &$this, 'act_schedule_role_sync' ) );
 
@@ -98,7 +98,7 @@ class PP_AdminFilters
 		wp_cache_delete( $wp_roles->role_key, 'options' );
 		$wp_roles = new WP_Roles();
 		
-		$this->act_sync_wproles();
+		self::act_sync_wproles();
 		return $roles;
 	}
 
@@ -209,7 +209,7 @@ class PP_AdminFilters
 		add_action( 'shutdown', $func );
 	}
 
-	function act_sync_wproles( $user_ids = '', $role_name = '', $blog_id_arg = '' ) {
+	static function act_sync_wproles( $user_ids = '', $role_name = '', $blog_id_arg = '' ) {
 		require_once( dirname(__FILE__).'/update_pp.php');
 		PP_Updated::sync_wproles( $user_ids, $role_name, $blog_id_arg );
 	}

@@ -146,6 +146,7 @@ class PP_Updated {
 				global $wpdb;
 				$wpdb->update( $wpdb->ppc_exceptions, array( 'for_item_status' => '' ), array( 'via_item_source' => 'post' ) );	  // fix importer glitch
 				
+				/*
 				// delete orphaned exceptions
 				if ( $orphan_ids = $wpdb->get_col( 
 					"SELECT eitem_id FROM $wpdb->ppc_exception_items AS i INNER JOIN $wpdb->ppc_exceptions AS e ON e.exception_id = i.exception_id " 
@@ -153,6 +154,7 @@ class PP_Updated {
 				) ) {
 					$wpdb->query( "DELETE FROM $wpdb->ppc_exception_items WHERE eitem_id IN ('" . implode( "','", $orphan_ids ) . "')" );
 				}
+				*/
 				
 				// force regen of buffered ancestors array (prev versions botched it when tt_id != term_id)
 				$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '%_ancestors_pp'" );
@@ -250,11 +252,13 @@ class PP_Updated {
 		$metagroups['rvy_pending_rev_notice'] = (object) array( 'type' => 'rvy_notice', 'name' => '[Pending Revision Monitors]', 'descript' => 'Administrators / Publishers to notify (by default) of pending revisions' );
 		$metagroups['rvy_scheduled_rev_notice'] = (object) array( 'type' => 'rvy_notice', 'name' => '[Scheduled Revision Monitors]', 'descript' => 'Administrators / Publishers to notify when any scheduled revision is published' );
 
+		$do_group_deletions = defined( 'PP_AUTODELETE_ROLE_METAGROUPS' ) && PP_AUTODELETE_ROLE_METAGROUPS;
+		
 		if ( $results = $wpdb->get_results( "SELECT * FROM $wpdb->pp_groups WHERE metagroup_id != ''" ) ) {
 			$delete_metagroup_ids = array();
 
 			foreach ( $results as $row ) {
-				if ( ! isset( $metagroups[$row->metagroup_id] ) )
+				if ( ! isset( $metagroups[$row->metagroup_id] ) && $do_group_deletions )
 					$delete_metagroup_ids[] = $row->ID;
 				else {
 					$stored_metagroups[$row->metagroup_id] = true;
@@ -280,46 +284,48 @@ class PP_Updated {
 			}
 		}
 
-		$user_clause = ( $user_ids ) ? 'AND user_id IN (' . implode(', ', array_map( 'intval', $user_ids ) ) . ')' : ''; 
-		
-		// which user roles are already represented by PP metagroup membership?
-		$results = $wpdb->get_results( "SELECT group_id, user_id FROM $members_table WHERE group_id IN ('" . implode( "','", $all_role_metagroups) . "') $user_clause" );
-
-		foreach ( $results as $key => $row ) {
-			$stored_role_metagroups[$row->user_id][] = $row->group_id;
-		}
-
-		// Now step through every WP usermeta capabilities record, synchronizing PP metagroup membership with WP role and custom caps
-		$usermeta = $wpdb->get_results( "SELECT user_id, meta_value FROM $wpdb->usermeta WHERE meta_key = '{$wpdb->prefix}capabilities' $user_clause" );
-
-		foreach ( array_keys($usermeta) as $key ) {
-			$user_caps = maybe_unserialize($usermeta[$key]->meta_value);
-			if ( empty($user_caps) || ! is_array($user_caps) )
-				continue;
+		if ( $user_ids || ! defined( 'PP_SKIP_USER_SYNC' ) || ! PP_SKIP_USER_SYNC ) {
+			$user_clause = ( $user_ids ) ? 'AND user_id IN (' . implode(', ', array_map( 'intval', $user_ids ) ) . ')' : ''; 
 			
-			// Filter out caps that are not role names
-			$user_role_metagroups = array_intersect_key( $all_role_metagroups, array_diff( $user_caps, array('', 0, false) ) );
+			// which user roles are already represented by PP metagroup membership?
+			$results = $wpdb->get_results( "SELECT group_id, user_id FROM $members_table WHERE group_id IN ('" . implode( "','", $all_role_metagroups) . "') $user_clause" );
 
-			$user_id = $usermeta[$key]->user_id;
-			
-			if ( isset( $stored_role_metagroups[$user_id] ) ) {
-				if ( $delete_role_metagroups = array_diff( $stored_role_metagroups[$user_id], $user_role_metagroups ) )
-					$delete_clauses []= "user_id = '$user_id' AND group_id IN ('" . implode( "','", $delete_role_metagroups ) . "')";
+			foreach ( $results as $key => $row ) {
+				$stored_role_metagroups[$row->user_id][] = $row->group_id;
+			}
+
+			// Now step through every WP usermeta capabilities record, synchronizing PP metagroup membership with WP role and custom caps
+			$usermeta = $wpdb->get_results( "SELECT user_id, meta_value FROM $wpdb->usermeta WHERE meta_key = '{$wpdb->prefix}capabilities' $user_clause" );
+
+			foreach ( array_keys($usermeta) as $key ) {
+				$user_caps = maybe_unserialize($usermeta[$key]->meta_value);
+				if ( empty($user_caps) || ! is_array($user_caps) )
+					continue;
+				
+				// Filter out caps that are not role names
+				$user_role_metagroups = array_intersect_key( $all_role_metagroups, array_diff( $user_caps, array('', 0, false) ) );
+
+				$user_id = $usermeta[$key]->user_id;
+				
+				if ( isset( $stored_role_metagroups[$user_id] ) ) {
+					if ( $delete_role_metagroups = array_diff( $stored_role_metagroups[$user_id], $user_role_metagroups ) )
+						$delete_clauses []= "user_id = '$user_id' AND group_id IN ('" . implode( "','", $delete_role_metagroups ) . "')";
+				}
+				
+				if ( isset($stored_role_metagroups[$user_id]) )
+					$user_role_metagroups = array_diff( $user_role_metagroups, $stored_role_metagroups[$user_id] );
+
+				foreach( $user_role_metagroups as $group_id )
+					$insert_sql_rows []= "('$user_id', '$group_id', 'member', 'active')";
 			}
 			
-			if ( isset($stored_role_metagroups[$user_id]) )
-				$user_role_metagroups = array_diff( $user_role_metagroups, $stored_role_metagroups[$user_id] );
-
-			foreach( $user_role_metagroups as $group_id )
-				$insert_sql_rows []= "('$user_id', '$group_id', 'member', 'active')";
-		}
-		
-		if ( $delete_clauses ) {
-			$wpdb->query( "DELETE FROM $members_table WHERE ( " . implode( ' ) OR ( ', $delete_clauses ) . " )" );
-		}
-		
-		if ( $insert_sql_rows ) {
-			$wpdb->query( "INSERT INTO $members_table (user_id, group_id, member_type, status ) VALUES " . implode( ',', $insert_sql_rows ) );
+			if ( $delete_clauses ) {
+				$wpdb->query( "DELETE FROM $members_table WHERE ( " . implode( ' ) OR ( ', $delete_clauses ) . " )" );
+			}
+			
+			if ( $insert_sql_rows ) {
+				$wpdb->query( "INSERT INTO $members_table (user_id, group_id, member_type, status ) VALUES " . implode( ',', $insert_sql_rows ) );
+			}
 		}
 		
 		update_option( 'pp_wp_role_sync', true );

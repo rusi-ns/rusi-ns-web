@@ -1,6 +1,14 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+class PP_RoleAssignmentHelper {
+	var $insertion_action_enabled = true;
+	
+	function disable_actions( $unused_new = '', $unused_old = '' ) {
+		$this->insertion_action_enabled = false;
+	}
+}
+
 class PP_RoleAssigner {
 	// additional arguments recognized by insert_role_assignments():
 	//	is_auto_insertion = false  (if true, skips logging the item as having a manually modified role assignment)
@@ -182,9 +190,11 @@ public static function assign_exceptions( $agents, $agent_type = 'user', $args =
 			
 			// if an include exception is passed in with value=false, remove corresponding stored exception
 			if ( $no_access = array_intersect( $agents[$assign_for], array(false) ) ) {
-				if ( $no_access = array_intersect_key( $stored_assignments[$mod_type][$assign_for], $no_access ) ) {
-					$delete_agents_from_eitem[$assign_for] = array_merge( $delete_agents_from_eitem[$assign_for], array_keys($no_access) );
-					$any_changes = true;
+				if ( isset( $stored_assignments[$mod_type][$assign_for] ) ) {
+					if ( $no_access = array_intersect_key( $stored_assignments[$mod_type][$assign_for], $no_access ) ) {
+						$delete_agents_from_eitem[$assign_for] = array_merge( $delete_agents_from_eitem[$assign_for], array_keys($no_access) );
+						$any_changes = true;
+					}
 				}
 			}
 		}
@@ -280,6 +290,23 @@ public static function assign_exceptions( $agents, $agent_type = 'user', $args =
 	//_pp_delete_orphan_roles($scope, $src_name);
 }
 
+private static function count_hooks( $tag ) {
+	global $wp_filter;
+	
+	$count = 0;
+	
+	if ( isset( $wp_filter[$tag] ) ) {
+		$hooked = (array) $wp_filter[ $tag ];
+		if ( isset( $hooked['callbacks'] ) ) {
+			foreach( array_keys( $hooked['callbacks'] ) as $priority ) {
+				$count += count( $hooked['callbacks'][$priority] );
+			}
+		}
+	}
+
+	return $count;
+}
+
 public static function insert_exceptions( $mod_type, $operation, $via_item_source, $via_item_type, $for_item_source, $for_item_type, $item_id, $agent_type, $agents, $args ) {	
 	$defaults = array( 'assign_for' => 'item', 'for_item_status' => '', 'inherited_from' => array(), 'is_auto_insertion' => false );  // auto_insertion arg set for propagation from parent objects
 	$args = array_merge($defaults, (array) $args);
@@ -289,6 +316,21 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 		return;
 
 	global $wpdb, $current_user;
+	
+	$helper = new PP_RoleAssignmentHelper();
+	if ( ! $enable_actions = apply_filters( 'pp_exception_item_insertion_hooks', false ) ) {
+		if ( has_action( 'pp_inserted_exception_item' ) ) {	 // for perf, don't fire an action for each insertion unless it's been hooked into
+			$enable_actions = true;
+		
+			if ( defined( 'PPFF_VERSION' ) && ( ! pp_wp_ver('4.7') || self::count_hooks('pp_inserted_exception_item') < 2 ) ) {	// if not explicitly enabled and PP File Filtering is the only API user, stop doing the action after file rules have been expired
+				add_action( 'update_option_pp_file_rules_expired', array( &$helper, 'disable_actions' ) );
+			}
+		}
+	}
+	
+	if ( $enable_actions ) {
+		$helper->insertion_action_enabled = true;
+	}
 	
 	$updated_items = array(); // for use with do_action hook
 	$updated_items[] = $item_id;
@@ -365,11 +407,11 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 	
 	$qry_item_delete_base = "SELECT eitem_id FROM $wpdb->ppc_exception_items WHERE 1=1";
 	
-	if ( $optimized_insertions = ( ( 'post' == $via_item_source ) && defined( 'PP_OPTIMIZE_EXCEPTION_STORAGE' ) ) ) {
+	if ( $optimized_insertions = ( ( 'post' != $via_item_source ) || ( 1 == count( $propagate_post_types ) ) ) && ! defined( 'PP_DISABLE_OPTIMIZED_INSERTIONS' ) ) {
 		$qry_insert_base = "INSERT INTO $wpdb->ppc_exception_items (item_id, assign_for, exception_id, inherited_from) VALUES ";
 		$qry_insert = $qry_insert_base;
 		$insert_row_count = 0;
-		$max_insert_rows = ( defined( 'PP_EXCEPTIONS_MAX_INSERT_ROWS' ) ) ? PP_EXCEPTIONS_MAX_INSERT_ROWS : 1000;
+		$max_insert_rows = ( defined( 'PP_EXCEPTIONS_MAX_INSERT_ROWS' ) ) ? PP_EXCEPTIONS_MAX_INSERT_ROWS : 2;
 	}
 	
 	foreach( array_keys($agents) as $agent_id ) {
@@ -396,7 +438,10 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 		$item_data = compact( 'item_id', 'assign_for', 'exception_id', 'assigner_id' );
 		$item_data['inherited_from'] = $this_inherited_from;
 		$wpdb->insert( $wpdb->ppc_exception_items, $item_data );
-		do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
+		
+		if ( $helper->insertion_action_enabled )
+			do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
+		
 		$assignment_id = $wpdb->insert_id;
 		
 		// insert exception for all descendant items
@@ -482,6 +527,9 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 					if ( $insert_row_count ) $qry_insert .= ', ';
 					$qry_insert .= "('$id','item','$child_exception_id','$this_inherited_from')";
 					$insert_row_count++;
+					
+					if ( $helper->insertion_action_enabled )
+						do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, array( 'item_id' => $id, 'assign_for' => 'item', 'exception_id' => $child_exception_id, 'inherited_from' => $this_inherited_from, 'assigner_id' => $assigner_id ) ) );
 				} else {
 					if ( $eitem_ids = $wpdb->get_col( $qry_item_delete_base . " AND exception_id = '$child_exception_id' AND item_id = '$id'" ) ) {
 						self::remove_exception_items_by_id( $eitem_ids );
@@ -490,7 +538,9 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 					$item_data = array( 'item_id' => $id, 'assign_for' => 'item', 'exception_id' => $child_exception_id, 'inherited_from' => $this_inherited_from, 'assigner_id' => $assigner_id );
 					
 					$wpdb->insert( $wpdb->ppc_exception_items, $item_data );
-					do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
+					
+					if ( $helper->insertion_action_enabled )
+						do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
 					
 					//if ( $role_hooks ) {
 					//	$assignment_id = $wpdb->insert_id;
@@ -503,6 +553,9 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 					$qry_insert .= "('$id','children','$child_exception_id','$this_inherited_from')";
 					$insert_row_count++;
 					
+					if ( $helper->insertion_action_enabled )
+						do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, array( 'item_id' => $id, 'assign_for' => 'children', 'exception_id' => $child_exception_id, 'inherited_from' => $this_inherited_from, 'assigner_id' => $assigner_id ) ) );
+					
 					if ( $insert_row_count == $max_insert_rows ) {
 						$wpdb->query( $qry_insert );
 						$qry_insert = $qry_insert_base;
@@ -511,7 +564,9 @@ public static function insert_exceptions( $mod_type, $operation, $via_item_sourc
 				} else {
 					$item_data['assign_for'] = 'children';
 					$wpdb->insert( $wpdb->ppc_exception_items, $item_data );
-					do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
+					
+					if ( $helper->insertion_action_enabled )
+						do_action( 'pp_inserted_exception_item', array_merge( (array) $exc, $item_data ) );
 					
 					//if ( $role_hooks ) {
 					//	$assignment_id = $wpdb->insert_id;

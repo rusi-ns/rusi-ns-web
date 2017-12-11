@@ -104,7 +104,7 @@ class PP_AdminUI
 			if ( ! pp_wp_ver('3.8') )
 				wp_enqueue_style( 'pp-edit-perm-legacy', PP_URLPATH . '/admin/css/pp-edit-permissions-legacy.css', array(), PPC_VERSION );
 
-		} elseif ( 'pp-settings' == $pp_plugin_page ) {
+		} elseif ( ( 'pp-settings' == $pp_plugin_page ) || ( ( 'plugin-install.php' == $pagenow ) && strpos( $_SERVER['HTTP_REFERER'], 'pp-settings' ) ) ) {
 			wp_enqueue_style( 'pp-settings', PP_URLPATH . '/admin/css/pp-settings.css', array(), PPC_VERSION );
 			
 		} elseif ( 'pp-about' == $pp_plugin_page ) {

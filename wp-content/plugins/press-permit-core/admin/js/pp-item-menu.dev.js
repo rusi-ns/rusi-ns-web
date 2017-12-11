@@ -22,51 +22,10 @@ var wpNavMenu;
 		jQueryExtensions : function() {
 			// jQuery extensions
 			$.fn.extend({
-				getItemData : function( itemType, id ) {
-					itemType = itemType || 'menu-item';
-
-					var itemData = {}, i,
-					fields = [
-						'menu-item-db-id',
-						'menu-item-object-id',
-						'menu-item-object',
-						'menu-item-parent-id',
-						'menu-item-position',
-						'menu-item-type',
-						'menu-item-title',
-						'menu-item-url',
-						'menu-item-description',
-						'menu-item-attr-title',
-						'menu-item-target',
-						'menu-item-classes',
-						'menu-item-xfn'
-					];
-
-					if( !id && itemType == 'menu-item' ) {
-						id = this.find('.menu-item-data-db-id').val();
-					}
-
-					if( !id ) return itemData;
-
-					this.find('input').each(function() {
-						var field;
-						i = fields.length;
-						while ( i-- ) {
-							if( itemType == 'menu-item' )
-								field = fields[i] + '[' + id + ']';
-							else if( itemType == 'add-menu-item' )
-									field = 'menu-item[' + id + '][' + fields[i] + ']';
-								else
-									field = itemType + '[' + id + '][' + fields[i] + ']';
-							if (
-								this.name &&
-								field == this.name
-							) {
-								itemData[fields[i]] = this.value;
-							}
-						}
-					});
-
+				getItemData : function() {
+					var itemData = {};
+					itemData['menu-item-object-id'] = this.find('input.menu-item-checkbox').val();
+					itemData['menu-item-title'] = this.find('label').html();
 					return itemData;
 				}
 			});
@@ -150,7 +109,7 @@ var wpNavMenu;
 				} else if ( target.hasClass('select-all') ) {
 					selectAreaMatch = /#(.*)$/.exec(e.target.href);
 					if ( selectAreaMatch && selectAreaMatch[1] ) {
-						items = $('#' + selectAreaMatch[1] + ' .tabs-panel-active .menu-item-title input');
+						items = $('#' + selectAreaMatch[1] + ' .tabs-panel-active input.menu-item-checkbox');
 						if( items.length === items.filter(':checked').length )
 							items.prop('checked',false);
 						else

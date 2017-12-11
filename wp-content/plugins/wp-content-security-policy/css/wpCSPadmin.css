@@ -1,11 +1,16 @@
 
-#wpcsp-poststuff textarea {
+.wpcsp-form-table textarea {
     background-color: #fff;
-    height: 200px;
+    min-height: 60px;
+    max-height: 300px;
     width: 80%;
     float: left;
 }
 
+ .wpcsp-form-table p{
+    margin: 5px 0 1em 0;
+ }
+ 
 .wpcsp-wpcspadmin label {
 	clear:both;
 	display:block;
@@ -38,7 +43,7 @@
     max-width: 20%;
     min-width: 200px;
 }
-.wpcsp-logoferrors thead td {
+.wpcsp-logoferrors thead td, .wpcsp_option_errors thead td {
     font-weight: bold;
 }
 .wpcsp-logoferrors thead .tdWPCSPNumErrors {
@@ -57,6 +62,12 @@ select {
     vertical-align: top;
     overflow: hidden;
 }
+.wpcsp_option_row th{
+	padding-top: 10px;
+	pading-right:10px;
+	min-width: 200px;
+    text-align: right;
+}
 .wpcsp-wpcspadmin table {
     border-collapse: collapse;
 }
@@ -74,11 +85,11 @@ select {
 }
 .wpcsp_option_errors{
 	clear:both;
+	color:#ff0000;
 }
 .wpcsp_option_errors li{
 	color:#ff0000;
 }
-.wpcsp_test_row td{
-	 border-top:300px solid transparent;
-	 font-size:smaller;
+.wpscp_Cannot_Allow{
+	display:inline-block;
 }

@@ -101,10 +101,15 @@ class PP_TermsAdmin {
 		}
 		
 		if ( ! empty( $cache) ) {
-			if ( isset($cache) ) {	// Note: As of WP 3.5, array is keyed "blog_id:term_id" on Multisite installs 
+			if ( isset($cache) ) {	// Note: array is keyed "blog_id:term_id" on Multisite installs 
 				$listed_term_ids = array();
 				foreach( $cache as $k => $term ) {
-					if ( ! is_numeric($k) || ! is_object($term) ) continue;
+					if ( ! is_object($term) ) continue;
+						
+					if ( ! is_numeric($k) ) {
+						$arr = explode( ':', $k );
+						if ( ! $arr || ( count($arr) != 2 ) || ! is_numeric( array_pop($arr) ) ) continue;
+					}
 					
 					$listed_tt_ids[]= $term->term_taxonomy_id;
 				}

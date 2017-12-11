@@ -32,6 +32,7 @@ class PP_Options_Advanced {
 				'permissions_admin' =>   __('Permissions Admin', 'pp'),
 				'capabilities' =>		 __('PP Capabilities', 'pp'),
 				'role_integration' =>	 __('Role Integration', 'pp'),
+				'constants' =>			 __('Constants', 'pp'),
 				'misc' =>				 __('Miscellaneous', 'pp'),
 			) );
 		}
@@ -205,7 +206,7 @@ class PP_Options_Advanced {
 				</span>
 				
 	
-				<table id="pp_cap_descripts">
+				<table id="pp_cap_descripts" class="pp_cap_descripts">
 				<thead>
 				<tr>
 				<th class="cap-name"><?php _e('Capability Name', 'pp');?></th>
@@ -285,6 +286,111 @@ class PP_Options_Advanced {
 				</td></tr>
 			<?php endif; // any options accessable in this section
 			
+			
+			$section = 'constants';							// --- CONSTANTS SECTION ---
+			
+			// don't display the section unless constants are defined or WP_DEBUG set
+			include_once( PPC_ABSPATH . '/pp-constants.php');
+			
+			$pp_defined_constants_by_type = $pp_constants_by_type;
+			
+			foreach( $pp_defined_constants_by_type as $const_type => $constants ) {
+				$any_defined = false;
+				foreach( $constants as $const_name ) {
+					if ( defined( $const_name ) && empty( $pp_constants[$const_name]->suppress_display ) ) {
+						$defined_constant_types[$const_type] = true;
+						$any_defined = true;
+						break;
+					}
+				}
+				
+				if ( ! $any_defined ) unset( $pp_defined_constants_by_type[ $const_type ] );
+			}
+			
+			if ( $defined_constant_types || ( defined( 'PP_DEBUG' ) && PP_DEBUG ) ) :?>
+			<tr><td scope="row" colspan="2"><span style="font-weight:bold"><?php echo $ui->section_captions[$tab][$section];?></span>
+			
+			<table id="pp_defined_constants" class="pp_cap_descripts">
+				<thead>
+				<tr>
+				<th class="cap-name"><?php _e('Defined Constant', 'pp');?></th>
+				<th><?php echo __('Setting', 'pp');?></th>
+				<th><?php echo __('Description', 'pp');?></th>
+				</tr>
+				</thead>
+				<tbody>
+				
+				<?php
+				foreach( $pp_defined_constants_by_type as $const_type => $constants ) :?>
+					<tr class="const-section">
+					<td>--- <?php echo $pp_constant_types[$const_type];?> ---</td>
+					<td></td>
+					<td></td>
+					</tr>
+				
+					<?php
+					foreach( $constants as $const_name ) :
+						if ( ! isset( $pp_constants[$const_name] ) ) continue;
+					
+						if ( ! defined( $const_name ) ) continue;
+						
+						if ( ! empty( $pp_constants[$const_name]->suppress_display ) ) continue;
+					?>
+						<tr>
+						<td class="cap-name"><?php echo $const_name;?></td>
+						<td><?php echo strval( constant( $const_name ) );?></td>
+						<td><?php echo $pp_constants[$const_name]->descript;?></td>
+						</tr>
+					<?php endforeach;?>
+				<?php endforeach;?>
+				</tbody>
+			</table>
+			
+			<?php if( $pp_defined_constants_by_type || ( defined( 'PP_DEBUG' ) && PP_DEBUG ) ):?>
+			<br />
+			<table id="pp_available_constants" class="pp_cap_descripts">
+				<thead>
+				<tr>
+				<th class="cap-name"><?php _e('Available Constant', 'pp');?></th>
+				<th><?php echo __('Setting', 'pp');?></th>
+				<th><?php echo __('Description', 'pp');?></th>
+				</tr>
+				</thead>
+				<tbody>
+				
+				<?php
+				foreach( $pp_constants_by_type as $const_type => $constants ) :
+					if ( empty( $pp_defined_constants_by_type[$const_type] ) && ( ! defined( 'PP_DEBUG' ) || ! PP_DEBUG ) ) continue;
+				?>
+					<?php if( isset( $pp_constant_types[$const_type] ) ):?>
+					<tr class="const-section">
+					<td>--- <?php echo $pp_constant_types[$const_type];?> ---</td>
+					<td></td>
+					<td></td>
+					</tr>
+					<?php endif;?>
+				
+					<?php
+					foreach( $constants as $const_name ) :
+						if ( ! isset( $pp_constants[$const_name] ) ) continue;
+					
+						if ( ! empty( $pp_constants[$const_name]->suppress_display ) ) continue;
+					
+						$class = ( defined( $const_name ) ) ? ' defined' : '';
+					?>
+						<tr>
+						<td class="cap-name<?php echo $class;?>"><?php echo $const_name;?></td>
+						<td class="<?php echo $class;?>"><?php echo ( defined( $const_name ) ) ? strval( constant( $const_name ) ) : '';?></td>
+						<td class="<?php echo $class;?>"><?php echo $pp_constants[$const_name]->descript;?></td>
+						</tr>
+					<?php endforeach;?>
+				<?php endforeach;?>
+				</tbody>
+			</table>
+			<?php endif;?>
+			
+			</td></tr>
+			<?php endif; // display constants section
 		
 		} // endif advanced options enabled
 		

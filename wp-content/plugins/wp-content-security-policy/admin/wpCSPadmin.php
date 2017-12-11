@@ -1,17 +1,97 @@
 <?php
-if(!empty($_SERVER['SCRIPT_FILENAME']) && basename(__FILE__) == basename($_SERVER['SCRIPT_FILENAME']))
+if(!empty($_SERVER['SCRIPT_FILENAME']) && basename(__FILE__) == basename($_SERVER['SCRIPT_FILENAME'])){
 	die('You can not access this page directly!');
+}
 
-
-class wpCSPAdmin{
-
+class wpCSPAdmin extends WP_REST_Controller{
+	
 	/**
 	 * Nearly all the constants are in the wpCSPclass class, because that class needs a bunch of the settings, but not access to wpCSPAdmin
 	 */
 	const wpCSPDBVersionOptionName = 'wpcsp-dbVersion';
 	const wpCSPDBVersion = '1.1';
 	const wpCSPDBCronJobName = 'wpcsp-DBDailyMaintenance';
-
+	
+	/**
+	 * Check the user can access the function.
+	 *
+	 * @param  WP_REST_Request  $request The current request object.
+	 * @return WP_Error|boolean
+	 */
+	public static function permissions_check_edit_posts(  $request  ) {
+		return current_user_can( 'edit_posts' );
+	}
+	
+	
+	/**
+	 * Sanitize a request argument based on details registered to the route.
+	 *
+	 * @param  mixed            $value   Value of the &#039;filter&#039; argument.
+	 * @param  WP_REST_Request  $request The current request object.
+	 * @param  string           $param   Key of the parameter. In this case it is &#039;filter&#039;.
+	 * @return WP_Error|boolean
+	 */
+	public static function data_arg_sanitize_string_callback( $value, $request, $param ) {
+		// It is as simple as returning the sanitized value.
+		return sanitize_text_field( $value );
+	}
+	
+	/**
+	 * Register the routes for the objects of the controller.
+	 */
+	public function register_routes() {
+		register_rest_route( wpCSPclass::ROUTE_NAMESPACE , '/' . wpCSPclass::ROUTE_BASE. '/RestAdmin',
+				array(
+						'methods'         => WP_REST_Server::CREATABLE,
+						'callback'        => array( __CLASS__, 'RestAdmin' ),
+						'permission_callback' => array( __CLASS__, 'permissions_check_edit_posts' ),
+						'args'            => array(
+								'subaction' => array(
+										'required' => true,
+										'type' => 'string',
+										"enum" => array( 'getdata', 'addSafeDomain', 'addIgnoreDomain', 'clearLogFile', 'TestURLChecker' ),
+										'description' => '',
+								),
+								'violateddirective' => array(
+										'required' => false,
+										'type' => 'string',
+										"sanitize_callback" => array( __CLASS__, 'data_arg_sanitize_string_callback' ),
+										'description' => '',
+								),
+								'blockeduri' => array(
+										'required' => false,
+										'type' => 'string',
+										"sanitize_callback" => array( __CLASS__, 'data_arg_sanitize_string_callback' ),
+										'description' => '',
+								),
+								'scheme' => array(
+										'required' => false,
+										'type' => 'string',
+										"sanitize_callback" => array( __CLASS__, 'data_arg_sanitize_string_callback' ),
+										'description' => '',
+								),
+								'domain' => array(
+										'required' => false,
+										'type' => 'string',
+										"sanitize_callback" => array( __CLASS__, 'data_arg_sanitize_string_callback' ),
+										'description' => '',
+								),
+								'path' => array(
+										'required' => false,
+										'type' => 'string',
+										"sanitize_callback" => array( __CLASS__, 'data_arg_sanitize_string_callback' ),
+										'description' => '',
+								),
+								'file' => array(
+										'required' => false,
+										'type' => 'string',
+										"sanitize_callback" => array( __CLASS__, 'data_arg_sanitize_string_callback' ),
+										'description' => '',
+								),
+						),
+				) );
+	}
+	
 	/**
 	 * register the hooks and other initialization routines.
 	 */
@@ -23,25 +103,23 @@ class wpCSPAdmin{
 		add_action( 'plugins_loaded', array(__CLASS__,'update_database') );
 		add_action( 'wpCSPAdmin_daily_event',  array(__CLASS__,'daily_maintenance')  );
 		
-
-		add_action( 'wp_ajax_nopriv_WPCSPAjax', array(__CLASS__,'WPCSPAjax' ));
-		add_action( 'wp_ajax_WPCSPAjax', array(__CLASS__,'WPCSPAjax' ));
+		wp_enqueue_script('jquery-ui-core', array( 'jquery' ));
+		wp_enqueue_script('jquery-ui-tabs', array( 'jquery-ui-core' ));
+		wp_enqueue_style( 'jquery-ui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css');
 		
-
 		register_uninstall_hook(__FILE__, array(__CLASS__,"plugin_uninstall") );
 	}
 	
-
+	
 	public static function add_styles_and_scripts() {
 		wp_register_script( 'wpcspadmin', plugins_url( '../js/wpCSPadmin.js', __FILE__ ), array( 'jquery' ),false,true );
 		wp_enqueue_style('wpcspadmin', plugins_url( '../css/wpCSPadmin.css', __FILE__ ) );
 		
 		wp_enqueue_script( 'wpcspadmin' );
 		
-
-		$AjaxURL = admin_url( 'admin-ajax.php' );
 		$Data = array(
-				'ajaxurl' => $AjaxURL,
+				'restAdminURL' => "/wp-json/" . wpCSPclass::ROUTE_NAMESPACE . "/" . wpCSPclass::ROUTE_BASE . "/RestAdmin" ,
+				'restAdminNonce' => wp_create_nonce( "wp_rest" ),
 		) ;
 		
 		wp_localize_script( 'wpcspadmin', 'WPCSP', $Data );
@@ -58,7 +136,7 @@ class wpCSPAdmin{
 				'manage_options',               // capability required to see the page
 				'wpcsp_options',                // admin page slug, e.g. options-general.php?page=wporg_options
 				array( __CLASS__, 'options_page')            // callback function to display the options page
-		);
+				);
 		add_submenu_page(
 				'options-general.php',          // admin page slug - under settings entry
 				__( 'WP Content Security Log', 'wpcsp' ), // page title
@@ -66,10 +144,10 @@ class wpCSPAdmin{
 				'manage_options',               // capability required to see the page
 				'wpcsp_log',                // admin page slug, e.g. options-general.php?page=wporg_options
 				array( __CLASS__, 'log_page')            // callback function to display the options page
-		);
+				);
 	}
-
-
+	
+	
 	
 	
 	/**
@@ -78,141 +156,107 @@ class wpCSPAdmin{
 	public static function options_page() {
 		// Make sure the database table exists.
 		self::update_database() ;
+		global $options;
+	    $options = get_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS );
+	    
+	    // Go through the options looking for errors.
+	    $PolicyKeyErrors = array() ;
+	    $ErrorOutput = array() ;
+		foreach( wpCSPclass::$CSP_Policies as $PolicyKey => $CSPPolicy) :
+			$selected = !empty( $options[ $PolicyKey ] ) ? $options[ $PolicyKey ] : '' ;
+			$CSPOptions = wpCSPclass::CleanPolicyOptionText( $selected ) ;
+			$Errors = self::FindCSPErrors( $PolicyKey, $CSPOptions );
+			if ( !empty( $Errors )) {
+				$PolicyKeyErrors[ $PolicyKey ] = "<ul><li>". implode("</li><li>",$Errors) . "</li></ul>";
+				$ErrorOutput[] = "<tr><td><a href='#anchor". $PolicyKey ."'>".$PolicyKey."</a></td><td>".$PolicyKeyErrors[ $PolicyKey ]."</td></tr>" ;
+			}
+		endforeach;
+		
+		$selected = !empty( $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] ) ? $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] : '';
+		$CSPOptions = wpCSPclass::CleanPolicyOptionText( $selected ) ;
+		$Errors = self::FindCSPErrors( 'URLSToIgnore', $CSPOptions );
+		if ( !empty( $Errors )) {
+			$PolicyKeyErrors[ 'URLSToIgnore'] = "<ul><li>". implode("</li><li>",$Errors) . "</li></ul>";
+			$ErrorOutput[] = "<tr><td><a href='#anchor". $PolicyKey ."'>".$PolicyKey."</a></td><td>".$PolicyKeyErrors[ 'URLSToIgnore' ]."</td></tr>" ;
+		}
+		
+		if ( !empty( $options[ wpCSPclass::SETTINGS_OPTIONS_REPORT_URI_REPORTONLY] ) ) {
+			$ReportURI = $options[ wpCSPclass::SETTINGS_OPTIONS_REPORT_URI_REPORTONLY] ;
+			if ( !filter_var($ReportURI, FILTER_VALIDATE_URL)) {
+				$PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_REPORT_URI_REPORTONLY] = "REPORT-URI url invalid: $ReportURI";
+				$ErrorOutput[] = "<tr><td>REPORT-URI - Report Only</td><td>".$PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_REPORT_URI_REPORTONLY ]."</td></tr>" ;
+			}
+		}
+		if ( !empty( $options[ wpCSPclass::SETTINGS_OPTIONS_REPORT_URI_ENFORCE] ) ) {
+			$ReportURI = $options[ wpCSPclass::SETTINGS_OPTIONS_REPORT_URI_ENFORCE] ;
+			if ( !filter_var($ReportURI, FILTER_VALIDATE_URL)) {
+				$PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_REPORT_URI_ENFORCE] = "REPORT-URI url invalid: $ReportURI";
+				$ErrorOutput[] = "<tr><td>REPORT-URI - Enforce</td><td>".$PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_REPORT_URI_ENFORCE]."</td></tr>" ;
+			}
+		}
+		
+		if ( isset( $options[ wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS] ) && 3 == $options[ wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS] ) {
+			$AllowFromURL = $options[ wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM ] ;
+			if ( !filter_var($AllowFromURL, FILTER_VALIDATE_URL)) {
+				$PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM ] = "ALLOW-FROM url invalid: $AllowFromURL";
+				$ErrorOutput[] = "<tr><td>X-Frame-Options</td><td>".$PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM ]."</td></tr>" ;
+			}
+		}
+		$selected = isset( $options[ wpCSPclass::SETTINGS_OPTIONS_CSP_MODE ] ) ? $options[ wpCSPclass::SETTINGS_OPTIONS_CSP_MODE ] : '' ;
+		if ( $selected == '' || $selected == -1 ){
+			
+			$PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_CSP_MODE ] = "CSP is currently turned off";
+			$ErrorOutput[] = "<tr><td>CSP Mode</td><td>".$PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_CSP_MODE]."</td></tr>" ;
+		}
 		?>
-	 
-	     <div class="wrap">
-	     	<div class="wpcsp-wpcspadmin wpcsp-optionsadmin">
-	 
-		          <?php if ( !empty( $_REQUEST['settings-updated'] ) ) : ?>
-		               <div class="updated fade"><p><strong><?php _e( 'Content Security Policy Options saved!', 'wpcsp' ); ?></strong></p></div>
-		          <?php endif; ?>
-		           
-		          <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-		           
-		          <div id="wpcsp-poststuff">
-		               <div id="post-body">
-		                    <div id="post-body-content">
-		                         <form method="post" action="options.php">
-		                              <?php settings_fields( wpCSPclass::SETTINGS_OPTIONS_SECTION ); ?>
-		                              <?php $options = get_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS ); ?>
-		                              <table class="form-table">
-		                                   <tr class='wpcsp_option_row'><th scope="row"><?php _e( "Run in 'report only' mode?", 'wpcsp' ); ?></th>
-		                                        <td class='wpcsp_option_cell'>
-		                                             <select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_REPORTONLY; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_REPORTONLY; ?>">
-		                                                  <?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_REPORTONLY ]; ?>
-		                                                  <option value="0" <?php selected( $selected, 0 ); ?> >No, enforce policies</option>
-		                                                  <option value="1" <?php selected( $selected, 1 ); ?> >Yes, report only</option>
-		                                             </select>
-		                                             <label class="wpcsp_option_description" for="<?php echo wpCSPclass::SETTINGS_OPTIONS_REPORTONLY; ?>"><?php _e( 'Toggles whether or not to run in report only mode or cause the browsers to enforce the security policy.', 'wpcsp' ); ?></label>
-		                                        </td>
-		                                   </tr>
-		                                   <tr class='wpcsp_option_row'><th scope="row"><?php _e( "Log violations?", 'wpcsp' ); ?></th>
-		                                        <td class='wpcsp_option_cell'>
-		                                             <select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_LOGVIOLATIONS; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_LOGVIOLATIONS; ?>">
-		                                                  <?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_LOGVIOLATIONS]; ?>
-		                                                  <option value="<?php echo wpCSPclass::LOGVIOLATIONS_IGNORE; ?>" <?php selected( $selected, wpCSPclass::LOGVIOLATIONS_IGNORE ); ?> >No, ignore</option>
-		                                                  <option value="<?php echo wpCSPclass::LOGVIOLATIONS_LOG_ALL; ?>" <?php selected( $selected, wpCSPclass::LOGVIOLATIONS_LOG_ALL ); ?> >Yes, log all</option>
-		                                                  <option value="<?php echo wpCSPclass::LOGVIOLATIONS_LOG_10PERC; ?>" <?php selected( $selected, wpCSPclass::LOGVIOLATIONS_LOG_10PERC ); ?> >Yes, log for 10% of page loads</option>
-		                                                  <option value="<?php echo wpCSPclass::LOGVIOLATIONS_LOG_1PERC; ?>" <?php selected( $selected, wpCSPclass::LOGVIOLATIONS_LOG_1PERC ); ?> >Yes, log for 1% of page loads</option>
-		                                                  <option value="<?php echo wpCSPclass::LOGVIOLATIONS_LOG_POINT1PERC; ?>" <?php selected( $selected, wpCSPclass::LOGVIOLATIONS_LOG_POINT1PERC ); ?> >Yes, log for 0.1% of page loads</option>
-		                                                  
-		                                             </select>
-		                                             <label class="wpcsp_option_description" for="<?php echo wpCSPclass::SETTINGS_OPTIONS_LOGVIOLATIONS; ?>"><?php _e( 'Whether to store the CSP violations or ignore them. Logging can be a system drain, you can lower the number of log entries by not logging errors on all page loads.', 'wpcsp' ); ?></label>
-		                                        </td>
-		                                   </tr>
-		                                   
-		                                   <tr><th scope="row"><?php _e( "Policy Entries", 'wpcsp' ); ?></th>
-		                                   	<td><p>Content Security Policy allows the following entries - one per line:</p>
-			                                   	<table>
-			                                   	<tr><td>*</td><td>Allow Anything (try to avoid)</td></tr>
-			                                   	<tr><td>'none'</td><td>Allow nothing</td></tr>
-			                                   	<tr><td>'self'</td><td>Allow from the same domain (scheme and host) only</td></tr>
-			                                   	<tr><td>'unsafe-inline'</td><td>Allow use of inline source elements - scripts, fonts, etc.</td></tr>
-			                                   	<tr><td>'unsafe-eval'</td><td>Allow unsafe execution of evaluated javascript code.</td></tr>
-			                                   	<tr><td>data:</td><td>Allow loading resource from data scheme</td></tr>
-			                                   	<tr><td>https:</td><td>Allow loading resource over a secure connection from any domain</td></tr>
-			                                   	<tr><td>domain.example.com</td><td>Allow loading resource from this specific domain, any scheme</td></tr>
-			                                   	<tr><td>*.example.com</td><td>Allow loading resource from any subdomain of the specified domain</td></tr>
-			                                   	<tr><td>http://domain.example.com</td><td>Allow loading resource from this specific domain and this scheme</td></tr>
-			                                   	</table>
-		                        			</td></tr>
-		                                   <?php 
-								foreach( wpCSPclass::$CSP_Policies as $PolicyKey => $CSPPolicy) :
-										$selected = !empty( $options[ $PolicyKey ] ) ? $options[ $PolicyKey ] : '' ;
-	                                    $CSPOptions = wpCSPclass::CleanPolicyOptionText( $selected ) ;
-										$selected = implode( PHP_EOL, array_unique( $CSPOptions ) ) ;
-										$Errors = self::FindCSPErrors( $CSPOptions );
-										?>
-	                                   <tr class='wpcsp_option_row'><th scope="row"><?php _e( $CSPPolicy['label'], 'wpcsp' ); ?></th>
-	                                        <td class='wpcsp_option_cell'>
-	                                             <textarea name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo $PolicyKey;?>]" id="<?php echo $PolicyKey;?>"><?php echo $selected;?></textarea><br />
-	                                             <label class="wpcsp_option_description" for="<?php echo $PolicyKey;?>"><?php esc_html( _e( $CSPPolicy['description'], 'wpcsp' ) ) ; ?></label>
-	                                             <?php if ( !empty( $Errors )) :?><div class='wpcsp_option_errors'><ul><li><?php echo implode("</li><li>",$Errors) ;?></li></ul></div><?php endif; ?>
-	                                        </td>
-	                                   </tr>
-									<?php 
-								endforeach; ?>
-	                                   <tr class='wpcsp_option_row'><th scope="row"><?php _e( 'URLs to Ignore', 'wpcsp' ); ?></th>
-	                                        <td class='wpcsp_option_cell'>
-	                                   <?php 
-	                                    $selected = !empty( $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] ) ? $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] : '';
-	                                    $CSPOptions = wpCSPclass::CleanPolicyOptionText( $selected ) ;
-										$selected = implode( PHP_EOL, array_unique( $CSPOptions ) ) ;
-										$Errors = self::FindCSPErrors( $CSPOptions );
-										?>
-	                                             <textarea name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE;?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE;?>"><?php echo $selected;?></textarea><br />
-	                                             <label class="wpcsp_option_description" for="<?php echo wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE;?>"><?php _e( 'Ignore violations from these URLs', 'wpcsp' ); ?></label>
-	                                             <?php if ( !empty( $Errors )) :?><div class='wpcsp_option_errors'><ul><li><?php echo implode("</li><li>",$Errors) ;?></li></ul></div><?php endif; ?>
-	                                        </td>
-	                                   </tr>
-	                                   
-	                                   <tr class='wpcsp_option_row'><th scope="row"><?php _e( 'Sandbox', 'wpcsp' ); ?></th>
-	                                        <td class='wpcsp_option_cell'>
-	                                    <?php 
-	                                    $SandboxOptions = array( 
-	                                    			 wpCSPclass::SETTINGS_OPTIONS_SANDBOX_NOTSET => 'Not Set' ,
-	                                                 wpCSPclass::SETTINGS_OPTIONS_SANDBOX_BLANKENTRY => 'Most Restrictive Sandbox' , // pseudo element I made up.
-	                                                 "allow-forms" => 'allow-forms' ,
-	                                                 "allow-pointer-lock" => 'allow-pointer-lock' ,
-	                                                 "allow-popups" => 'allow-popups' ,
-	                                                 "allow-same-origin" => 'allow-same-origin' ,
-	                                                 "allow-scripts" => 'allow-scripts' ,
-	                                                 "allow-top-navigation" => 'allow-top-navigation' , ) ;
-	                                    ?>
-	                                             <select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_SANDBOX; ?>][]" 
-	                                             		id="<?php echo wpCSPclass::SETTINGS_OPTIONS_SANDBOX; ?>" class='wpcsp-selectpolicysandbox'  multiple="multiple" size="7">
-	                                             <?php 
-	                                    			$CurrentOptions = !empty( $options[ wpCSPclass::SETTINGS_OPTIONS_SANDBOX ] ) ? $options[ wpCSPclass::SETTINGS_OPTIONS_SANDBOX ] : '';
-	                                             	foreach( $SandboxOptions as $key => $option ) :
-	                                             	if ( is_array( $CurrentOptions )) {
-	                                             		$selected = in_array( $key, $CurrentOptions ) ? ' selected="selected" ' : '' ;
-													}
-													else{
-														$selected = $key == '' ? ' selected="selected" ' : '' ;
-													}?>
-	                                                 <option value="<?php echo $key; ?>" <?php echo $selected; ?> ><?php echo $option; ?></option>
-	                                              <?php endforeach; ?>
-	                                              </select>            
-	                                              <label class="wpcsp_option_description" for="<?php echo wpCSPclass::SETTINGS_OPTIONS_SANDBOX;?>"><?php _e( "HTML5 defines a sandbox attribute for iframe elements, intended to allow web authors to reduce the risk of including potentially untrusted content by imposing restrictions on that content's abilities. When the attribute is set, the content is forced into a unique origin, prevented from submitting forms, running script, creating or navigating other browsing contexts, and prevented from running plugins. These restrictions can be loosened by setting certain flags as the attribute's value.", 'wpcsp' ); ?></label>
-	                                        </td>
-	                                   </tr>
-	                                   
-		                                   <tr class='wpcsp_option_row'><th scope="row"><?php _e( "Save Changes", 'wpcsp' ); ?></th>
-		                                        <td><input type="submit" class="button-primary" value="<?php _e('Save Changes','wpcsp') ?>" /></td>
-		                                       </tr>
-		                                       
-		                                   <tr class='wpcsp_test_row ' data-target='#btnWPCSPTestURLCheckerOutput'><th scope="row">&nbsp;</th>
-		                                        <td class="btnWPCSPTestURLChecker"><?php _e('Test URL Checker','wpcsp') ?>
-		                                        <div id='btnWPCSPTestURLCheckerOutput'></div></td>
-		                                       </tr>
-		                              </table>
-		                         </form>
-		                    </div> <!-- end post-body-content -->
-		               </div> <!-- end post-body -->
-		          </div> <!-- end poststuff -->
+		<div class="wrap">
+			<div class="wpcsp-wpcspadmin wpcsp-optionsadmin">
+	          
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+	      
+			<?php if ( !empty( $_REQUEST['settings-updated'] ) ) : ?>
+				<div class="updated fade"><p><strong><?php _e( 'Content Security Policy Options saved!', 'wpcsp' ); ?></strong></p></div>
+			<?php endif; ?>
+			
+			<?php if ( !empty( $ErrorOutput )): ?>
+				<div class="updated fade">
+					<table class='wpcsp_option_errors'>
+						<thead><tr><td colspan='2'>Errors found in configuration:</td></tr></thead>
+						<tbody><?php echo implode("",$ErrorOutput);?></tbody>
+					</table>
+				</div>
+			<?php endif; ?>
+          
+			<form method="post" action="options.php">
+				<?php settings_fields( wpCSPclass::SETTINGS_OPTIONS_SECTION ); // Outputs nonces and other necessary items?>
+	                                       
+				<div id="wpcsp_tabsAdmin" class='wpcsp_tabsAdmin'>
+					<ul>
+						<li><a href="#wpcsp_tabsAdmin_Control">CSP Control</a></li>
+						<li><a href="#wpcsp_tabsAdmin_CSP">Content Security Policies</a></li>
+						<li><a href="#wpcsp_tabsAdmin_Headers">Headers</a></li>
+						<li><a href="#wpcsp_tabsAdmin_Test">Test</a></li>
+					</ul>
+					<div id='wpcsp_tabsAdmin_Control'>
+						<?php include('part-cspcontrol.php'); ?>
+						<?php include('part-cspsavechanges.php'); ?>
+					</div>
+					<div id='wpcsp_tabsAdmin_CSP'>
+						<?php include('part-cspoptions.php'); ?>
+						<?php include('part-cspsavechanges.php'); ?>
+					</div>
+					<div id='wpcsp_tabsAdmin_Headers'>
+						<?php include('part-cspheaders.php'); ?>
+						<?php include('part-cspsavechanges.php'); ?>
+					</div>
+					<div id='wpcsp_tabsAdmin_Test'>
+						<?php include('part-csptest.php'); ?>
+					</div>
 	          </div>
-	     </div>
-	     <?php 
+			</form>
+			</div>
+     	</div> <?php // end of class=wrap ?>
+     <?php 
 	}
 	
 
@@ -230,7 +274,7 @@ class wpCSPAdmin{
 		// Get some display information for the user.
 		$LogTableName = wpCSPclass::LogTableName();
 		$SinceDate = $wpdb->get_var( "select min( CreatedOn ) from " . $LogTableName );
-		$rows = $wpdb->get_results( "select violated_directive, blocked_uri, count( * ) as numerrors from ".$LogTableName." WHERE 1 group by violated_directive,blocked_uri" );
+		$rows = $wpdb->get_results( "select violated_directive, blocked_uri, count( * ) as numerrors from ".$LogTableName." WHERE 1 group by violated_directive,blocked_uri order by numerrors DESC limit 100" );
 		$Counter = 0 ;
 		?>
 	     <div class="wrap">
@@ -326,19 +370,30 @@ class wpCSPAdmin{
 									</tr></table>
 								</td>
 								<td class='tdWPCSPActionButtons'>
-									<input type="button" class="button-primary btnWPCSPAddSafeDomain" value="<?php _e('Allow ' . strtoupper( $obj->violated_directive ) . ' Access' ,'wpcsp') ?>" />
+									<?php if ( isset( wpCSPclass::$CSP_Policies[ $obj->violated_directive ] )) : ?>
+										<input type="button" class="button-primary btnWPCSPAddSafeDomain" value="<?php _e('Allow ' . strtoupper( $obj->violated_directive ) . ' Access' ,'wpcsp') ?>" />
+									<?php else:?>
+										<div class='wpscp_Cannot_Allow'>No allow Option</div>
+									<?php endif; ?>
 									<input type="button" class="button-primary btnWPCSPIgnoreDomain" value="<?php _e('Ignore Domain Violations','wpcsp') ?>" />
+									<div class='WPCSPInfoBox' style='display:none;'></div>
 								</td>
 							</tr>
 						<tr class='trWPCSPViewErrors WPCSPHiddenEntry' id='<?php echo $TargetRow2;?>'><td colspan='4'></td></tr>
 						<?php 
-						elseif( in_array( $URIParts['path'], array('data','inline','eval') )) : 
+						elseif( in_array( $URIParts['path'], array('data','inline','eval','blob','mediastream','filesystem') )) : 
 							switch( $URIParts['path'] ) {
 								case 'data':
 									$BlockRule = "data:" ;
 									break ;
 								case 'blob':
 									$BlockRule = "blob:" ;
+									break ;
+								case 'mediastream':
+									$BlockRule = "mediastream:" ;
+									break ;
+								case 'filesystem':
+									$BlockRule = "filesystem:" ;
 									break ;
 								case 'inline':
 									$BlockRule = "'unsafe-inline'" ;
@@ -365,6 +420,7 @@ class wpCSPAdmin{
 								<td class='tdWPCSPActionButtons'>
 									<input type="button" class="button-primary btnWPCSPAddSafeDomain" value="<?php _e('Allow ' . strtoupper( $obj->violated_directive ) . ' Access' ,'wpcsp') ?>" />
 									<input type="button" class="button-primary btnWPCSPIgnoreDomain" value="<?php _e('Ignore Domain Violations','wpcsp') ?>" />
+									<div class='WPCSPInfoBox' style='display:none;'></div>
 								</td>
 							</tr>
 						<tr class='trWPCSPViewErrors WPCSPHiddenEntry' id='<?php echo $TargetRow2;?>'><td colspan='4'></td></tr>
@@ -419,7 +475,7 @@ class wpCSPAdmin{
 										information text NOT NULL default '',
 										createdon timestamp DEFAULT CURRENT_TIMESTAMP,
 										PRIMARY KEY  id (id),
-										KEY  violated_directive (violated_directive, blocked_uri),
+										KEY  violated_directive (violated_directive, blocked_uri(191) ),
 										KEY  createdon (createdon)
 								) " . $charset_collate . ";" ;
 			
@@ -464,130 +520,114 @@ class wpCSPAdmin{
 	/**
 	 * Handle the admin ajax calls for data and setting options.
 	 */
-	public static function WPCSPAjax() {
+	public function RestAdmin( WP_REST_Request $request ) {
 
 		global $wpdb;
 
 		@ob_end_clean();
-		
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
 		
 		$ReturnStatus = true ;
 		$Data = array() ;
 		$HTML = "Unknown error" ;
 		$AdditionalReturn = array();
 		
-		if ( !is_user_logged_in() || !is_admin() ) {
-			$ReturnStatus = false ;
-			$HTML = "Restricted";
-		}
-		else {
-			$SubAction = !empty( $_REQUEST['subaction'] ) ? $_REQUEST['subaction'] : "" ;
-			$ViolatedDirective = !empty( $_REQUEST['violateddirective'] ) ? $_REQUEST['violateddirective'] : "" ;
-			$BlockedURI = !empty( $_REQUEST['blockeduri'] ) ? $_REQUEST['blockeduri'] : "" ;
-			$Scheme = !empty( $_REQUEST['scheme'] ) ? $_REQUEST['scheme'] : "" ;
-			$Domain = !empty( $_REQUEST['domain'] ) ? $_REQUEST['domain'] : "" ;
-			$Path = !empty( $_REQUEST['path'] ) ? $_REQUEST['path'] : "" ;
-			$File = !empty( $_REQUEST['file'] ) ? $_REQUEST['file'] : "" ;
+		$SubAction = $request->get_param('subaction') ;
+		$ViolatedDirective = $request->get_param('violateddirective') ;
+		$BlockedURI = $request->get_param('blockeduri') ;
+		$Scheme = $request->get_param('scheme') ;
+		$Domain = $request->get_param('domain') ;
+		$Path = $request->get_param('path') ;
+		$File = $request->get_param('file') ;
 
-			switch( $SubAction ) {
-				case 'getdata':
-					$sql = $wpdb->prepare("SELECT document_uri, useragent, count(*) as numerrors ".
-										" FROM " . wpCSPclass::LogTableName() .
-										" WHERE violated_directive = %s" .
-										" AND blocked_uri = %s " .
-										" GROUP BY document_uri, useragent",
-										$ViolatedDirective,
-										$BlockedURI );
-					$rows = $wpdb->get_results( $sql );
-					foreach ($rows as $obj) :
-						$Data[] = array( 'document_uri' => !empty( $obj->document_uri ) ? $obj->document_uri : '(not set)',
-								'useragent' => !empty( $obj->useragent ) ? $obj->useragent : '(not set)',
-								'numerrors' => $obj->numerrors , ) ;
-					endforeach;
-					$HTML = '';
-					break ;
-					
-				case 'addSafeDomain':
-					if( !empty( $Scheme) && empty( $Domain )) {
-						$BlockedURI = $Scheme . ':' ;
+		switch( $SubAction ) {
+			case 'getdata':
+				$sql = $wpdb->prepare("SELECT document_uri, useragent, count(*) as numerrors ".
+									" FROM " . wpCSPclass::LogTableName() .
+									" WHERE violated_directive = %s" .
+									" AND blocked_uri = %s " .
+									" GROUP BY document_uri, useragent",
+									$ViolatedDirective,
+									$BlockedURI );
+				$rows = $wpdb->get_results( $sql );
+				foreach ($rows as $obj) :
+					$Data[] = array( 'document_uri' => !empty( $obj->document_uri ) ? $obj->document_uri : '(not set)',
+							'useragent' => !empty( $obj->useragent ) ? $obj->useragent : '(not set)',
+							'numerrors' => $obj->numerrors , ) ;
+				endforeach;
+				$HTML = '';
+				break ;
+				
+			case 'addSafeDomain':
+				if( !empty( $Scheme) && empty( $Domain )) {
+					$BlockedURI = $Scheme . ':' ;
+				}
+				else {
+					if ( !empty( $Scheme) && !empty( $Domain )) {
+						$BlockedURI = $Scheme . "://" . $Domain ;
 					}
 					else {
-						if ( !empty( $Scheme) && !empty( $Domain )) {
-							$BlockedURI = $Scheme . "://" . $Domain ;
-						}
-						else {
-							$BlockedURI = $Domain ;
-						}
-						if ( !empty( $Path )) {
-							$BlockedURI .= $Path ;
-							if ( !empty( $File )) {
-								$BlockedURI .= $File ;
-							}
+						$BlockedURI = $Domain ;
+					}
+					if ( !empty( $Path )) {
+						$BlockedURI .= $Path ;
+						if ( !empty( $File )) {
+							$BlockedURI .= $File ;
 						}
 					}
-					$BlockedURI = str_replace("\'","'",$BlockedURI);
-					$options = get_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS );
-					$selected = !empty( $options[ $ViolatedDirective ] ) ? $options[ $ViolatedDirective ] : '' ;
-					$selected .= " " . $BlockedURI ;
-                    $options[ $ViolatedDirective ] = implode(" ", wpCSPclass::CleanPolicyOptionText( $selected ) ) ;
+				}
+				$BlockedURI = str_replace("\'","'",$BlockedURI);
+				$options = get_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS );
+				$selected = !empty( $options[ $ViolatedDirective ] ) ? $options[ $ViolatedDirective ] : '' ;
+				$selected .= " " . $BlockedURI ;
+                $options[ $ViolatedDirective ] = implode(" ", wpCSPclass::CleanPolicyOptionText( $selected ) ) ;
 
-                    $options = update_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS , $options );
-					$HTML = 'Successfully added <strong>'.esc_html( $BlockedURI ) .'</strong> to the <strong>' . strtoupper($ViolatedDirective) . '</strong> domains list';
-					break ;
-				case 'addIgnoreDomain':
-					if( !empty( $Scheme) && empty( $Domain )) {
-						$BlockedURI = $Scheme . ':' ;
+				$options = update_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS , $options );
+				$HTML = 'Successfully added <strong>'.esc_html( $BlockedURI ) .'</strong> to the <strong>' . strtoupper($ViolatedDirective) . '</strong> domains list';
+				break ;
+			case 'addIgnoreDomain':
+				if( !empty( $Scheme) && empty( $Domain )) {
+					$BlockedURI = $Scheme . ':' ;
+				}
+				else {
+					if ( !empty( $Scheme) && !empty( $Domain )) {
+						$BlockedURI = $Scheme . "://" . $Domain ;
 					}
 					else {
-						if ( !empty( $Scheme) && !empty( $Domain )) {
-							$BlockedURI = $Scheme . "://" . $Domain ;
-						}
-						else {
-							$BlockedURI = $Domain ;
-						}
-						if ( !empty( $Path )) {
-							$BlockedURI .= $Path ;
-							if ( !empty( $File )) {
-								$BlockedURI .= $File ;
-							}
+						$BlockedURI = $Domain ;
+					}
+					if ( !empty( $Path )) {
+						$BlockedURI .= $Path ;
+						if ( !empty( $File )) {
+							$BlockedURI .= $File ;
 						}
 					}
-					$options = get_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS );
-					$selected = !empty( $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] ) ? $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] : '' ;
-					$selected .= " " . $BlockedURI ;
-                    $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] = implode(" ", wpCSPclass::CleanPolicyOptionText( $selected ) ) ;
+				}
+				$options = get_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS );
+				$selected = !empty( $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] ) ? $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] : '' ;
+				$selected .= " " . $BlockedURI ;
+                $options[ wpCSPclass::SETTINGS_OPTIONS_VIOLATIONSTOIGNORE ] = implode(" ", wpCSPclass::CleanPolicyOptionText( $selected ) ) ;
 
-					$options = update_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS , $options );
-					$HTML = 'Successfully added <strong>'.$BlockedURI.'</strong> to the <strong>IGNORED</strong> domains list';
-					break ;
-				case 'clearLogFile':
-					self::ClearLogFile() ;
-					$HTML = 'Successfully cleared the log file. Refresh screen to see';
-					$ReturnStatus = true ;
-					break ;
-				case 'TestURLChecker':
-					$HTML = self::TestURLChecker();
-					$ReturnStatus = true ;
-					break ;
-				default:
-					$HTML = 'Unknown action';
-					$ReturnStatus = false;
-					break ;
-			}
-			
+				$options = update_option( wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS , $options );
+				$HTML = 'Successfully added <strong>'.$BlockedURI.'</strong> to the <strong>IGNORED</strong> domains list';
+				break ;
+			case 'clearLogFile':
+				self::ClearLogFile() ;
+				$HTML = 'Successfully cleared the log file. Refresh screen to see';
+				$ReturnStatus = true ;
+				break ;
+			case 'TestURLChecker':
+				$HTML = self::TestURLChecker();
+				$ReturnStatus = true ;
+				break ;
+			default:
+				$HTML = 'Unknown action';
+				$ReturnStatus = false;
+				break ;
 		}
 		// response output
 		$return = array('success'=>$ReturnStatus, 'html' => $HTML, 'data' => $Data ) ;
 	
-		header("HTTP/1.1 200 OK");
-		header( "Content-Type: application/json" );
-		echo json_encode( $return );
-	
-		exit;
-		
+		return new WP_REST_Response( $return, 200 );
 	}
 	/*
 	 * What we do when the plugin is activated - create/update table.
@@ -624,27 +664,30 @@ class wpCSPAdmin{
 	 * @param array $Policies	- pre-parsed array of URL policies
 	 * @return array 			- Array of errors
 	 */
-	static private function FindCSPErrors( $Policies ) {
+	static private function FindCSPErrors( $PolicyKey, $Policies ) {
 		$return = array() ;
-		$SchemeTags = array( 'data', 'blob','filesystem','http','https',);
+		$SchemeTags = array( 'data', 'blob','mediastream','filesystem','http','https',);
 		if( is_array( $Policies)){
 			foreach( $Policies as $Policy ) {
 				$StrippedPolicy = preg_replace("/[^a-zA-Z0-9\s]/", "", $Policy);
 				if ( $StrippedPolicy == 'self' && $Policy != "'self'") {
-					$return[] = "Entry for <strong>self</strong> should read <strong>'self'</strong> (with single quotes) - entry: " .$Policy ; 
+					$return[] = "Entry for <strong>self</strong> should read <strong>'self'</strong> (with single quotes) - Policy: " .$Policy ; 
 				}
 				if ( $StrippedPolicy == 'unsafeinline' && $Policy != "'unsafe-inline'") {
-					$return[] = "Entry for <strong>unsafe-inline</strong> should read <strong>'unsafe-inline'</strong> (with single quotes) - entry: " .$Policy ; 
+					$return[] = "Entry for <strong>unsafe-inline</strong> should read <strong>'unsafe-inline'</strong> (with single quotes) - Policy: " .$Policy ; 
 				}
 				if ( $StrippedPolicy == 'unsafeeval' && $Policy != "'unsafe-eval'") {
-					$return[] = "Entry for <strong>unsafe-eval</strong> should read <strong>'unsafe-eval'</strong> (with single quotes) - entry: " .$Policy ; 
+					$return[] = "Entry for <strong>unsafe-eval</strong> should read <strong>'unsafe-eval'</strong> (with single quotes) - Policy: " .$Policy ; 
 				}
 				if ( $StrippedPolicy == 'none' && $Policy != "'none'") {
-					$return[] = "Entry for <strong>none</strong> should read <strong>'none'</strong> (with single quotes) - entry: " .$Policy ; 
+					$return[] = "Entry for <strong>none</strong> should read <strong>'none'</strong> (with single quotes) - Policy: " .$Policy ; 
+				}
+				if ( $StrippedPolicy == 'strict-dynamic' && $Policy != "'strict-dynamic'") {
+					$return[] = "Entry for <strong>strict-dynamic</strong> should read <strong>'strict-dynamic'</strong> (with single quotes) - Policy: " .$Policy ;
 				}
 				foreach( $SchemeTags as $SchemeTag ) {
 					if ( $StrippedPolicy == $SchemeTag && $Policy != $SchemeTag . ":") {
-						$return[] = "Entry for <strong>".$SchemeTag.":</strong> should read <strong>".$SchemeTag.":</strong> - entry: " .$Policy ; 
+						$return[] = "Entry for <strong>".$SchemeTag.":</strong> should read <strong>".$SchemeTag.":</strong> (with ending colon) - Policy: " .$Policy ; 
 					}
 				}
 				if ( substr( $Policy,0,1) == '/'){
@@ -653,6 +696,10 @@ class wpCSPAdmin{
 				if ( strlen( $Policy ) > 2 && substr( $Policy,0,1) == '*' &&  substr( $Policy,1,1) != '.'){
 					$return[] = "Allow all subdomain entry should start '*.domain.com' - entry: " .$Policy ;
 				}
+				if ( $StrippedPolicy == 'data' && $PolicyKey == 'script-src' ) {
+					$return[] = "Avoid using 'data:' for script-src: " .$Policy ;
+				}
+					
 			}
 		}
 		return $return ;
@@ -812,7 +859,7 @@ class wpCSPAdmin{
 		// Test end to end including logging.
 		$CSPViolation = array( 'csp-report' => array( 'effective-directive' => 'img-src' ,
 				'blocked-uri' => 'http://b.wallyworld.zzzz' ) ) ;
-		if ( wpCSPclass::LogPolicyViolation( $CSPViolation ) === false ) {
+		if ( wpCSPclass::ProcessPolicyViolation( $CSPViolation ) === false ) {
 			$return[] =  "Should be logging b.wallyworld.zzzz as it is not blocked by ignored urls<br>\n ;" ;
 		}
 		
@@ -822,5 +869,11 @@ class wpCSPAdmin{
 	}
 }
 
-
-wpCSPAdmin::init();
+add_action('init',array("wpCSPAdmin","init"));
+// If action "rest_api_init" hasn't run yet then use that, otherwise we have the route server in place, just register route
+if ( did_action('rest_api_init') == 0 ){
+	add_action('rest_api_init',array("wpCSPAdmin","register_routes"));
+}
+else {
+	wpCSPAdmin::register_routes();
+}

@@ -7,9 +7,6 @@ class PP_ItemSave {
 								$via_item_source, $for_item_source, $item_id 
 							);
 		
-		if ( ! defined( 'PP_EXTRA_ITEM_UPDATE_ARGS' ) )
-			$args['for_item_status'] = '';
-
 		extract( $args, EXTR_SKIP );
 		
 		if ( $can_assign_roles = current_user_can( 'pp_assign_roles' ) ) {

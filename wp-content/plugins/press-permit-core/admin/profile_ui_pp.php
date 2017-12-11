@@ -115,6 +115,8 @@ class PP_ProfileUI {
 			if ( ! $all_groups = pp_get_groups( $agent_type ) )
 				continue;
 			
+			if ( ! in_array( $agent_type, array( 'pp_group', 'pp_net_group' ) ) ) continue;
+			
 			$reqd_caps = (array) apply_filters( 'pp_edit_groups_reqd_caps', array('pp_edit_groups') );
 			
 			$editable_ids = ( current_user_can( 'pp_manage_members' ) ) ? array_keys($all_groups) : _pp_retrieve_admin_groups();
@@ -159,6 +161,8 @@ class PP_ProfileUI {
 			if ( 'pp_group' == $agent_type ) {
 				if ( defined( 'GROUPS_CAPTION_RS' ) )
 					echo ( GROUPS_CAPTION_RS );
+				elseif ( defined( 'PP_GROUPS_CAPTION' ) )
+					echo ( PP_GROUPS_CAPTION );
 				else
 					_e( 'Permission Groups', 'pp' );
 			} else {

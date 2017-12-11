@@ -135,10 +135,12 @@ function pp_get_mod_object( $mod_type ) {
 	
 	if ( ! isset($mod_types) ) {
 		$mod_types = array(
-			'include' => (object) array( 'label' => __('Only these:') ),
-			'exclude' => (object) array( 'label' => __('Not these:') ),
-			'additional' => (object) array( 'label' => __('Also these:') ),
+			'include' => (object) array( 'label' => __('Only these:', 'pp') ),
+			'exclude' => (object) array( 'label' => __('Not these:', 'pp') ),
 		);
+		
+		if ( ! defined( 'PP_NO_ADDITIONAL_ACCESS' ) )
+			$mod_types['additional'] = (object) array( 'label' => __('Also these:', 'pp') );
 	}
 	return ( isset($mod_types[$mod_type]) ) ? $mod_types[$mod_type] : (object) array();
 }

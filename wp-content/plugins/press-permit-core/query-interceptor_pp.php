@@ -8,7 +8,7 @@ require_once( dirname(__FILE__).'/exceptions_pp.php' );
  * 
  * @package PP
  * @author Kevin Behrens <kevin@agapetry.net>
- * @copyright Copyright (c) 2011-2016, Agapetry Creations LLC
+ * @copyright Copyright (c) 2011-2017, Agapetry Creations LLC
  * 
  */
 class PP_QueryInterceptor
@@ -270,9 +270,12 @@ class PP_QueryInterceptor
 		$matches = array();
 		if ( $num_matches = preg_match_all( "/{$src_table}.post_status\s*=\s*'([^']+)'/", $where, $matches ) ) {
 			if ( pp_is_front() || ( defined('REST_REQUEST') && REST_REQUEST ) ) {
-				if ( pp_is_front() || 'read' == $required_operation )
-					$valid_stati = array_merge( pp_get_post_stati( array( 'public' => true, 'post_type' => $post_types ) ), pp_get_post_stati( array( 'private' => true, 'post_type' => $post_types ) ), array( 'future' => 'future' ) );
-				else
+				if ( pp_is_front() || 'read' == $required_operation ) {
+					$valid_stati = array_merge( pp_get_post_stati( array( 'public' => true, 'post_type' => $post_types ) ), pp_get_post_stati( array( 'private' => true, 'post_type' => $post_types ) ) );
+					
+					if ( is_single() || ! empty( $args['has_cap_check'] ) || defined( 'PP_FUTURE_POSTS_BLOGROLL' ) )
+						$valid_stati['future'] = 'future';
+				} else
 					$valid_stati = pp_get_post_stati( array( 'internal' => false, 'post_type' => $post_types ), 'names' );
 				
 				if ( in_array( 'attachment', $post_types ) )
@@ -305,7 +308,7 @@ class PP_QueryInterceptor
 		
 		if ( is_array($alternate_required_ops) ) {
 			if ( ! $required_operation )
-				$required_operation = ( pp_is_front() && ! is_preview() ) ? 'read' : 'edit';
+				$required_operation = ( ( pp_is_front() || ( defined('REST_REQUEST') && REST_REQUEST ) ) && ! is_preview() ) ? 'read' : 'edit';
 
 			$alternate_required_ops = array_unique( array_merge( $alternate_required_ops, (array) $required_operation ) );
 
@@ -373,7 +376,7 @@ class PP_QueryInterceptor
 		$tease_otypes = array_intersect( $post_types, $this->_get_teaser_post_types($post_types, $args) );
 		
 		if ( ! $required_operation ) {
-			$required_operation = ( pp_is_front() && ! is_preview() ) ? 'read' : 'edit';
+			$required_operation = ( ( pp_is_front() || ( defined('REST_REQUEST') && REST_REQUEST ) ) && ! is_preview() ) ? 'read' : 'edit';
 			$args['required_operation'] = $required_operation;
 		}
 		
@@ -383,7 +386,11 @@ class PP_QueryInterceptor
 		$meta_cap = "{$required_operation}_post";
 
 		if ( 'read' == $required_operation ) {
-			$use_statuses = array_merge( pp_get_post_stati( array( 'public' => true, 'post_type' => $post_types ), 'object' ), pp_get_post_stati( array( 'private' => true, 'post_type' => $post_types ), 'object' ), array( 'future' => 'future' ) );
+			$use_statuses = array_merge( pp_get_post_stati( array( 'public' => true, 'post_type' => $post_types ), 'object' ), pp_get_post_stati( array( 'private' => true, 'post_type' => $post_types ), 'object' ) );
+			
+			if ( is_single() || ! empty( $args['has_cap_check'] ) || defined( 'PP_FUTURE_POSTS_BLOGROLL' ) )
+				$use_statuses['future'] = 'future';
+			
 			foreach( $use_statuses as $key => $obj ) {
 				if ( ! empty($obj->exclude_from_search) )	// example usage is bbPress hidden status
 					unset($use_statuses[$key]);

@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @package PP
  * @author Kevin Behrens <kevin@agapetry.net>
- * @copyright Copyright (c) 2011-2015, Agapetry Creations LLC
+ * @copyright Copyright (c) 2011-2017, Agapetry Creations LLC
  * 
  */
 if ( ! class_exists('PP_User') ) {
@@ -68,6 +68,8 @@ class PP_User extends WP_User {
 	}
 	
 	function get_usergroups_clause( $table_alias, $args = array() ) {
+		$args = array_merge( array( 'context' => '', $args ) );
+		
 		$table_alias = ( $table_alias ) ? "$table_alias." : '';
 		
 		$arr = array();
@@ -85,6 +87,14 @@ class PP_User extends WP_User {
 					if ( empty( $apply_groups[$k]->metagroup_type ) )
 						unset( $apply_groups[$k] );
 				}
+			}
+			
+			if ( ( 'pp_group' == $agent_type ) && ( 'roles' == $args['context'] ) && ! defined( 'PP_ALL_ANON_ROLES' ) ) {				
+				if ( $anon_group = pp_get_metagroup( 'wp_role', 'wp_anon' ) )
+					unset( $apply_groups[$anon_group->ID] );
+					
+				if ( $all_group = pp_get_metagroup( 'wp_role', 'wp_all' ) )
+					unset( $apply_groups[$all_group->ID] );
 			}
 			
 			if ( ! empty( $apply_groups ) ) {
@@ -159,7 +169,7 @@ class PP_User extends WP_User {
 
 		global $wpdb, $pp_role_defs;
 		
-		$u_g_clause = $this->get_usergroups_clause( 'uro' );
+		$u_g_clause = $this->get_usergroups_clause( 'uro', array( 'context' => 'roles' ) );
 		
 		$cols = apply_filters( 'pp_get_site_roles_fields', 'role_name' );
 		$qry = "SELECT $cols FROM $wpdb->ppc_roles AS uro WHERE 1=1 $u_g_clause";

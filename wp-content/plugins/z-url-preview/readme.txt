@@ -2,7 +2,7 @@
 Tags: link preview, post, excerpt, Facebook type preview, linkedin type preview
 Requires at least: 4.2
 Tested up to: 4.8
-Stable tag: 1.6.2
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -10,6 +10,8 @@ A plugin to embed a preview of a link, similar to facebook
 
 == Description ==
 This plugin fetches an excerpt of an external website link. The excerpt contains the title, description and image.
+
+V2.0.0 Added URL validation and XSS checks. If this breaks and valid URL's please let me know via the Wordpress support tab.
 
 V1.5.2 Update: Added option to place the button in the "Media Button" row above the editor and changed the default for new install's to use PHP's HTML Dom instead of regex's.
 
@@ -51,6 +53,9 @@ Note: Tested with "TinyMCE Advanced" and "Black Studio TinyMCE Widget" modules.
 7. Button with "Media Button" setting.
 
 == Changelog ==
+
+= 2.0.0 =
+* Added URL filtering and XSS checks
 
 = 1.6.2 =
 * Updated SVN code structure

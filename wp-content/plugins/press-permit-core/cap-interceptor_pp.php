@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * 
  * @package PP
  * @author Kevin Behrens <kevin@agapetry.net>
- * @copyright Copyright (c) 2011-2015, Agapetry Creations LLC
+ * @copyright Copyright (c) 2011-2017, Agapetry Creations LLC
  * 
  */
 class PP_CapInterceptor
@@ -36,11 +36,31 @@ class PP_CapInterceptor
 		add_filter( 'user_has_cap', array(&$this, 'flt_user_has_cap'), 99, 3 );  // apply PP filter last
 
 		if ( defined( 'PP_DISABLE_CAP_CACHE' ) ) {
-			$func = creation_function( '$a,$b,$c,$d,&$cap_interceptor', '$cap_interceptor->flags["memcache_disabled"]=true;' );
-			add_action( 'pp_has_cap_pre', $func, 10, 5 );
+			$func = create_function( '$a,$b,$c,$d,$cap_interceptor', '$cap_interceptor->flags["memcache_disabled"]=true;' );
+			add_action( 'pp_has_post_cap_pre', $func, 10, 5 );
 		}
 		
+		/*
+		// As of 4.8, need to impose current_user_can('read_post') on REST view request for a single public post, because WP_REST_Posts_Controller does not
+		if ( ! pp_is_content_administrator() && ! defined( 'PPCE_VERSION' ) ) {
+			if ( pp_wp_ver( '4.7' ) )
+				add_filter( 'rest_request_after_callbacks', array( &$this, 'flt_confirm_rest_readable' ), 20, 3 );
+			else 
+				add_filter( 'rest_pre_dispatch', array( &$this, 'flt_confirm_rest_readable_legacy' ), 10, 3 );
+		}
+		*/
+		
 		do_action_ref_array( 'pp_cap_interceptor', array(&$this) );
+	}
+	
+	function flt_confirm_rest_readable( $rest_response, $handler, $request ) { // filter 'rest_request_after_callbacks'
+		require_once( dirname(__FILE__).'/rest-non_administrator_pp.php' );
+		return PP_Core_REST::flt_confirm_rest_readable( $rest_response, $handler, $request );
+	}
+	
+	function flt_confirm_rest_readable_legacy( $rest_response, $rest_server, $request ) {  // filter 'rest_pre_dispatch'
+		require_once( dirname(__FILE__).'/rest-non_administrator-legacy_pp.php' );
+		return PP_Core_REST_Legacy::flt_pre_dispatch( $rest_response, $rest_server, $request );
 	}
 	
 	// Capability filter applied by WP_User->has_cap (usually via WP current_user_can function)

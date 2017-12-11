@@ -303,7 +303,8 @@ function _pp_support_upload( $args = array() ) {
 		if ( ! empty($$var) ) {
 			if ( PP_MULTISITE && ( 'error_log' != $var ) ) {
 				global $blog_id;
-				$$var['site'] = $blog_id;
+				$_var = $$var;
+				$_var['site'] = $blog_id;
 			}
 			
 			$$var = base64_encode( gzcompress( serialize( $$var ) ) );

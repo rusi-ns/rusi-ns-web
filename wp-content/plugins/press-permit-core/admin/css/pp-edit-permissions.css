@@ -348,3 +348,27 @@ margin-bottom:4px;
 margin-top:10px;
 margin-bottom:10px;
 }
+
+#pp_add_exception td.pp-select-items, #nav-menus-frame, #nav-menus-frame #menu-settings-column.pp-menu-settings-column {
+width: 100% !important;
+}
+
+ul.categorychecklist label {
+vertical-align: top;	
+}
+
+ul.categorychecklist span {
+font-weight:bold;
+font-size: 120%;
+cursor: cell;	
+}
+
+.tabs-panel-view-all ul.categorychecklist span {
+display: inline-block;
+width: 12px;
+}
+
+#nav-menus-frame .add-to-menu {
+float: none;
+margin-left: 15px;
+}

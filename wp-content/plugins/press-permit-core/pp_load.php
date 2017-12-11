@@ -4,7 +4,7 @@
  * 
  * @package PP
  * @author Kevin Behrens <kevin@agapetry.net>
- * @copyright Copyright (c) 2011-2015, Agapetry Creations LLC
+ * @copyright Copyright (c) 2011-2017, Agapetry Creations LLC
  * 
  */
 
@@ -43,7 +43,9 @@ $pp_default_options = pp_default_options();
 if ( PP_MULTISITE )
 	$pp_netwide_options = apply_filters( 'pp_netwide_options', array( 'support_key', 'beta_updates' ) );
 
-pp_register_group_type( 'pp_group', is_admin() ? array( 'labels' => (object) array ( 'name' => __('Groups', 'pp'), 'singular_name' => __('Group', 'pp') ) ) : array() );
+// Don't call translate function too early - call from pp_get_group_object() instead
+//pp_register_group_type( 'pp_group', is_admin() ? array( 'labels' => (object) array ( 'name' => __('Groups', 'pp'), 'singular_name' => __('Group', 'pp') ) ) : array() );
+pp_register_group_type( 'pp_group', is_admin() ? array( 'labels' => (object) array ( 'name' => 'Groups', 'singular_name' => 'group' ) ) : array() );
 
 if ( defined( 'SSEO_VERSION' ) )
 	require_once( dirname(__FILE__).'/eyes-only-helper_pp.php' );
@@ -209,10 +211,10 @@ function pp_init_with_user() {
 	if ( empty( $pp_current_user) || ! defined( 'INIT_ACTION_DONE_PP' ) )
 		return;
 
-	// Prevent conflicts with JSON REST API (no filtering support for now)
+	// Don't filter legacy / development versions of REST api unless constant defined
 	if ( defined( 'JSON_API_VERSION' ) && ! defined( 'PP_FILTER_JSON_REST' ) && ( false !== strpos( $_SERVER['REQUEST_URI'], apply_filters( 'json_url_prefix', 'wp-json' ) ) ) )
 		return;
-		
+	
 	require_once( dirname(__FILE__).'/pp_main.php');
 	
 	if ( empty($pp) )
@@ -312,6 +314,10 @@ function pp_refresh_options() {
 		$pp_site_options['pp_supplemental_role_defs'] = serialize( array_merge( $pp_only_roles, array( 'bbp_participant', 'bbp_moderator', 'bbp_keymaster', 'bbp_blocked', 'bbp_spectator' ) ) );
 	}
 	
+	foreach( array_keys($pp_site_options) as $key ) {
+		if ( is_serialized( $pp_site_options[$key] ) ) $pp_site_options[$key] = unserialize( $pp_site_options[$key] );
+	}
+	
 	$pp_site_options = apply_filters( 'pp_options', $pp_site_options );
 }
 
@@ -392,6 +398,10 @@ function pp_get_enabled_types( $src_name, $args = array(), $output = 'names' ) {
 }
 
 function pp_get_enabled_post_types( $args = array(), $output = 'names' ) {
+	$args = array_merge( array( 'layer' => '' ), $args );
+	$layer = $args['layer'];
+	unset( $args['layer'] );
+	
 	$args['public'] = true;
 	
 	$omit_types = apply_filters( 'pp_unfiltered_post_types', array() );
@@ -400,7 +410,14 @@ function pp_get_enabled_post_types( $args = array(), $output = 'names' ) {
 	
 	if ( $enabled = (array) pp_get_option( "enabled_post_types" ) )
 		$object_types = array_intersect( $object_types, array_keys( array_intersect( $enabled, array(true,1) ) ) );
-
+	
+	if ( 'exceptions' == $layer ) {
+		foreach( $object_types as $key => $_type ) {
+			$type_sub = strtoupper( $_type );
+			if ( defined( "PP_NO_{$type_sub}_EXCEPTIONS" ) && constant( "PP_NO_{$type_sub}_EXCEPTIONS" ) ) unset( $object_types[$key] );
+		}
+	}
+	
 	$object_types = apply_filters( 'pp_enabled_post_types', $object_types );
 	
 	if ( 'names' == $output )

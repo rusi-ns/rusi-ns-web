@@ -220,8 +220,6 @@ class PP_Options_Install {
 			//dump($update_info);
 
 			$info_link = '';
-			$update_link = '';
-			$alert = '';
 			
 			if ( ! $suppress_updates ) {
 				$wp_plugin_updates = get_site_transient( 'update_plugins' );
@@ -234,7 +232,7 @@ class PP_Options_Install {
 				}
 			}
 			
-			printf( __( 'Press Permit Core Version: %1$s %2$s', 'pp'), PPC_VERSION, $info_link . $update_link . $alert );?>
+			printf( __( 'Press Permit Core Version: %1$s %2$s', 'pp'), PPC_VERSION, $info_link );?>
 			<br />
 			<?php printf( __( "Database Schema Version: %s", 'pp'), PPC_DB_VERSION);?>
 			<br />
@@ -472,13 +470,14 @@ class PP_Options_Install {
 				
 				$ok['ver'] = true;
 				$ok['pp_options'] = true;
+				$ok['error_log'] = true;
 				
 				?>
 				<div class="support_data">
 				<?php
 				foreach( $avail as $key => $caption ) :
 					$id = 'support_data_' . $key;
-					$disabled = ( in_array( $key, array( 'ver', 'pp_options' ) ) ) ? 'disabled="disabled"' : '';
+					$disabled = ( in_array( $key, array( 'ver', 'pp_options', 'error_log' ) ) ) ? 'disabled="disabled"' : '';
 				?>
 					<div>
 					<label for="<?php echo $id;?>"><input type="checkbox" id="<?php echo $id;?>" name="support_data[<?php echo $key;?>]" value="1" <?php echo $disabled; checked('1', ! empty($ok[$key]), true);?> /> <?php echo $caption;?></label>

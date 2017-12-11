@@ -1141,11 +1141,6 @@ function wp_statistics_geoip_supported() {
 	// Check to see if we can support the GeoIP code, requirements are:
 	$enabled = true;
 
-	// PHP 5.3
-	if ( ! version_compare(phpversion(), WP_Statistics::$reg['geoip-php-version'], '>') ) {
-		$enabled = false;
-	}
-
 	// PHP's cURL extension installed
 	if ( ! function_exists('curl_init') ) {
 		$enabled = false;
@@ -1260,7 +1255,7 @@ function wp_statistics_date_range_selector(
 		     $page .
 		     '&hitdays=' .
 		     $range[ $i ] .
-		     esc_url($extrafields) .
+		     esc_html($extrafields) .
 		     '">' .
 		     $desc[ $i ] .
 		     '</a></li>';

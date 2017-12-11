@@ -15,15 +15,15 @@ class PP_PostsAdmin {
 		do_action('pp_post_listing_ui');
 
 		add_filter( 'posts_fields', array( &$this, 'posts_fields' ) );	 // perf
-		
-		add_filter( 'pre_get_posts', array( &$this, 'pre_get_posts' ) );
+		add_action( 'admin_enqueue_scripts', array( &$this, 'log_listed_posts' ) );  // 'the_posts' filter is not applied on edit.php for hierarchical types
 	}
 	
-	function pre_get_posts( $query_obj ) {
-		if ( did_action( 'load-edit.php' ) && ( 'id=>parent' == $query_obj->query_vars['fields'] ) ) {
-			$query_obj->query_vars['fields'] = '';
+	function log_listed_posts() {
+		global $wp_query, $pp, $typenow;
+		
+		if ( ! empty( $wp_query->posts ) && empty( $pp->listed_ids[$typenow] ) ) {
+			$pp->flt_posts_listing( $wp_query->posts );
 		}
-		return $query_obj;
 	}
 	
 	// perf enhancement: query only fields which pertain to listing or quick edit

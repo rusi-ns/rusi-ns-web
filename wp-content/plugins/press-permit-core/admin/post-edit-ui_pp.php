@@ -49,11 +49,11 @@ class PP_PostEditUI {
 		if ( ! empty( $hidden_types[$post_type] ) )
 			return;
 
-		if ( ! in_array( $post_type, pp_get_enabled_post_types() ) ) {
+		if ( ! in_array( $post_type, pp_get_enabled_post_types( array( 'layer' => 'exceptions' ) ) ) ) {
 			if ( ! in_array( $post_type, array( 'revision' ) ) && pp_get_option('display_hints') ) {
 				$type_obj = get_post_type_object( $post_type );
 				if ( $type_obj->public ) {
-					if ( ! in_array( $post_type, apply_filters( 'pp_unfiltered_post_types', array() ) ) )
+					if ( ! in_array( $post_type, apply_filters( 'pp_unfiltered_post_types', array() ) ) && ! defined( "PP_NO_" . strtoupper($post_type) . "_EXCEPTIONS" ) )
 						add_meta_box( "pp_enable_type", __( 'Press Permit Settings', 'pp' ), array(&$this, 'draw_settings_ui'), $post_type, 'advanced', 'default', array() );
 				}
 			}
@@ -113,7 +113,9 @@ class PP_PostEditUI {
 		$item_id = ( ! empty($object) && ( 'auto-draft' == $object->post_status ) ) ? 0 : $object->ID;
 
 		$this->init_item_exceptions_ui();
-		$args = array( 'via_item_source' => 'post', 'for_item_source' => 'post', 'for_item_type' => $object->post_type, 'via_item_type' => $object->post_type, 'item_id' => $item_id );
+		$post_type = pp_find_post_type();  // $object->post_type gets reset to 'post' on some installations
+		$args = array( 'via_item_source' => 'post', 'for_item_source' => 'post', 'for_item_type' => $post_type, 'via_item_type' => $post_type, 'item_id' => $item_id );
+		//$args = array( 'via_item_source' => 'post', 'for_item_source' => 'post', 'for_item_type' => $object->post_type, 'via_item_type' => $object->post_type, 'item_id' => $item_id );
 		$this->item_exceptions_ui->draw_exceptions_ui( $box, $args );
 	}
 	

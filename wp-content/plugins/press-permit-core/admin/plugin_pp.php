@@ -40,7 +40,7 @@ class PP_Plugin_Status {
 		//die('test');
 		
 		$query = http_build_query( $request_vars, '', '&' );
-		pp_errlog($query);
+		//pp_errlog($query);
 		
 		$args = array(
 			'headers' => array(

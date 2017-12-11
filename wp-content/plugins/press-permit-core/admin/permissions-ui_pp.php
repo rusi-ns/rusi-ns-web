@@ -405,7 +405,7 @@ class PP_GroupsUI {
 		<th><?php _e('Qualification', 'pp');?></th>
 		<th></th>
 		<th><?php _e('Status', 'pp');?></th>
-		<th></th>
+		<th><a class="pp_clear_all" href="javascript:void(0)"><?php _e('clear', 'pp');?></a></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -477,7 +477,8 @@ class PP_GroupsUI {
 			} elseif ( 'exceptions' == $perm_type ) {
 				if ( ! isset( $args['external'] ) )
 					$args['external'] = array();
-
+				
+				$post_types = array_intersect_key( $post_types, array_fill_keys( pp_get_enabled_post_types( array( 'layer' => 'exceptions' ) ), true ) );
 				self::_select_exceptions_ui( array_diff_key( $post_types, array_fill_keys( array( 'topic', 'reply' ), true ) ), $taxonomies, $args );
 			}
 			?>

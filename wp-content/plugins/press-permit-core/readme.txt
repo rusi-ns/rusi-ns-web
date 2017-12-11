@@ -4,8 +4,8 @@ Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JWZVF
 Tags: restrict, access, permissions, cms, user, private, category, pages, privacy, capabilities, role, scoper
 License: GPLv3
 Requires at least: 3.4
-Tested up to: 4.8.1
-Stable tag: 2.3.21
+Tested up to: 4.9
+Stable tag: 2.4
 
 Advanced yet accessible content permissions. Give users or groups type-specific roles. Enable or block access for specific posts or terms.
 
@@ -49,6 +49,37 @@ Pro [extensions](http://presspermit.com/extensions) are [available](http://press
 Initial production release
 
 == Changelog ==
+
+= 2.4 - 14 Nov 2017 =
+* Feature : Collapsible page selection tree on Edit Permissions screen, defaults visible depth toward a target of 50 visible pages (or as defined by PP_ITEM_MENU_DEFAULT_MAX_VISIBLE constant) 
+* Feature : Edit Permissions screen: "Clear All" link on selection review list after selecting post / term exceptions
+* Change : Scheduled posts are not included in blogroll, even if logged user can edit them. For previous behavior, define constant PP_FUTURE_POSTS_BLOGROLL.
+* Perf : Eliminated excessive page queries on Edit Pages screen
+* Perf : Reduced html output and database queries on Edit Group Permissions / Edit User Permissions screen
+* Perf : Improved database query construction and api behavior when inserting propagating exceptions on a page tree (for previous method, define constant PP_DISABLE_OPTIMIZED_INSERTIONS)
+* Fixed : Do not auto-delete role metagroups even if stored roles are no longer active. Otherwise, omission of role registration by 3rd party code triggers unwanted metagroup regeneration, causing stored permissions to be disassociated from users.
+* Fixed : Users whose role metagroup was inappropriately deleted are automatically restored on login or when included in wp-admin Users listing
+* Fixed : Fatal error for undefined function if pp_get_group() is called without first calling pp_load_admin_api()
+* Fixed : Incorrect REST response under some conditions if PP Collaborative Editing (Pro) not activated
+* Fixed : Edit Post screen: stored post exceptions were not displayed in Exceptions metaboxes on some installations
+* Fixed : If a post has exceptions assigned directly to a user, all of its group-assigned "Only these" exceptions are cleared on post update
+* Fixed : If PP Exceptions metaboxes are re-ordered on the Edit Post screen, they become permanently hidden on the Edit Categories screen
+* Fixed : Multisite - Exceptions were not displayed in custom column on Terms screen 
+* Fixed : Comment count in admin bar was not properly filtered for logged non-Administrators on the front end
+* Fixed : Comments total on admin bar was not filtered 
+* Fixed : Pro - Eliminate unintended (and ineffective) BuddyPress group membership checkboxes on Edit User screen
+* Fixed : If constant PP_GROUP_RESTRICTIONS was defined and later removed, stored restrictions ("Not these" / "Blocked" exceptions) were still applied
+* Fixed : If constant PP_ALL_ANON_ROLES was defined and later removed, stored supplemental roles for {All} or {Anonymous} group were still applied
+* Fixed : Constant definitions PP_NO_POST_EXCEPTIONS, PP_NO_PAGE_EXCEPTIONS, etc. were not consistently applied
+* Fixed : Responsive styling on Permissions > Settings
+* Fixed : PHP Notice for non-static function act_sync_wproles
+* Fixed : Pro - PHP 7 compat: PP configuration upload
+* Change : Pro - Always include PHP error log in PP configuration uploads
+* Change : Support constant PP_ITEM_MENU_PER_PAGE to adjust paging behavior of post selection metabox on Edit Permissions screen
+* Change : Support constant PP_ITEM_MENU_HIERARCHICAL_PER_PAGE to adjust paging behavior of post selection metabox on Edit Permissions screen
+* Change : If any PP constants are defined, display them (and available related constants) on Permissions > Settings > Advanced
+* Doc : Updated dates in several files
+* Lang : Updated .pot file
 
 = 2.3.21 - 11 Aug 2017 =
 * Fixed : PHP Notice on some installations (trying to get property of non-object in groups-retrieval_pp.php)

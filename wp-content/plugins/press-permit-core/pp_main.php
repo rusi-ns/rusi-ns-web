@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * 
  * @package PP
  * @author Kevin Behrens <kevin@agapetry.net>
- * @copyright Copyright (c) 2011-2015, Agapetry Creations LLC
+ * @copyright Copyright (c) 2011-2017, Agapetry Creations LLC
  * 
  */
 class PP
@@ -179,7 +179,7 @@ class PP
 
 		// buffer all IDs in the results set					
 		foreach ( $results as $row ) {
-			$post_type = ( 'revision' == $row->post_type ) ? $default_type : $row->post_type;
+			$post_type = ( ! isset( $row->post_type ) || ( 'revision' == $row->post_type ) ) ? $default_type : $row->post_type;
 			if ( ! isset($this->listed_ids[$post_type]) ) $this->listed_ids[$post_type] = array();
 			$this->listed_ids[$post_type][$row->ID] = true;
 		}

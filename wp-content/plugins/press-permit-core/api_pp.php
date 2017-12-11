@@ -158,6 +158,9 @@ function pp_register_group_type( $agent_type, $args = array() ) {
 
 function pp_get_group_type_object( $agent_type ) {
 	global $pp_group_types;
+	
+	_pp_group_init_labels();
+	
 	return ( isset( $pp_group_types[$agent_type] ) ) ? $pp_group_types[$agent_type] : false;
 }
 
@@ -167,11 +170,22 @@ function pp_get_group_types( $args = array(), $return = 'name' ) {  // todo: han
 	if ( ! isset( $pp_group_types ) )
 		return array();
 	
+	if ( 'object' == $return ) _pp_group_init_labels();
+	
 	if ( ! empty( $args['editable'] ) ) {
 		$editable_group_types = apply_filters( 'pp_editable_group_types', array( 'pp_group' ) );
 		return ( 'object' == $return ) ? array_intersect_key( $pp_group_types, array_fill_keys( $editable_group_types, true ) ) : $editable_group_types;
 	} else
 		return ( 'object' == $return ) ? $pp_group_types : array_keys( $pp_group_types );
+}
+
+function _pp_group_init_labels( $args = array() ) {
+	global $pp_group_types;
+	
+	if ( isset( $pp_group_types['pp_group'] ) && ( 'group' == $pp_group_types['pp_group']->labels->singular_name ) ) {
+		$pp_group_types['pp_group']->labels->singular_name = __( 'Group', 'pp' );
+		$pp_group_types['pp_group']->labels->name = __( 'Groups', 'pp' );
+	}
 }
 
 function pp_group_type_exists( $agent_type ) {
@@ -293,6 +307,7 @@ function pp_get_groups( $agent_type = 'pp_group', $args = array() ) {
  *  - metagroup_id
  */
 function pp_get_group( $group_id, $agent_type = 'pp_group' ) {
+	pp_load_admin_api();
 	return pp_get_agent( $group_id, $agent_type );
 }
 

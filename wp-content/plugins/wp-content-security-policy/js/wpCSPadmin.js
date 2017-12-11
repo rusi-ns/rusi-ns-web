@@ -1,5 +1,6 @@
 jQuery(document).ready(function(){
 	WPCSPHandleLogAdmin();
+	jQuery('#wpcsp_tabsAdmin').tabs();
 });
 jQuery(document).on('change','.WPCSPBlockedURLPath, .WPCSPBlockedURLFile', WPCSPHandleLogAdmin 	);
 
@@ -48,10 +49,12 @@ jQuery(document).on('click','.btnWPCSPViewErrors, .btnWPCSPAddSafeDomain, .btnWP
 	var Target = jQuery(RowInfo).data('target');
 	var violateddirective = jQuery(RowInfo).data('violateddirective');
 	var HideCurrentRowOnSuccess = false ;
+	var InfoBox = jQuery( RowInfo ).find('.WPCSPInfoBox');
+	var data = {} ;
+	var ThisButton = jQuery(this);
 	
 	if ( jQuery(this).hasClass('btnWPCSPViewErrors')) {
 		data = {
-				action : 'WPCSPAjax',
 				subaction : 'getdata',
 				violateddirective : violateddirective,
 				blockeduri: jQuery(RowInfo).data('blockeduri')
@@ -61,7 +64,6 @@ jQuery(document).on('click','.btnWPCSPViewErrors, .btnWPCSPAddSafeDomain, .btnWP
 	}
 	if ( jQuery(this).hasClass('btnWPCSPAddSafeDomain')) {
 		data = {
-				action : 'WPCSPAjax',
 				subaction : 'addSafeDomain',
 				violateddirective : violateddirective,
 				scheme: jQuery(RowInfo).find('.WPCSPBlockedURLScheme').val() ,
@@ -73,7 +75,6 @@ jQuery(document).on('click','.btnWPCSPViewErrors, .btnWPCSPAddSafeDomain, .btnWP
 	}
 	if ( jQuery(this).hasClass('btnWPCSPIgnoreDomain')) {
 		data = {
-				action : 'WPCSPAjax',
 				subaction : 'addIgnoreDomain',
 				violateddirective : violateddirective,
 				scheme: jQuery(RowInfo).find('.WPCSPBlockedURLScheme').val() ,
@@ -83,15 +84,21 @@ jQuery(document).on('click','.btnWPCSPViewErrors, .btnWPCSPAddSafeDomain, .btnWP
 			};
 		HideCurrentRowOnSuccess = true ;
 	}
+	jQuery('.WPCSPInfoBox:visible').css('display','none');
 	
+	data['_wpnonce'] = WPCSP.restAdminNonce ;
+	jQuery(ThisButton).fadeTo('slow',0.3);
 	jQuery.ajax({
-	    url: WPCSP.ajaxurl,
+	    url: WPCSP.restAdminURL ,
 	    data: data,
 	    dataType: 'json',
 	    type: "POST",
-	    error: function() {  
+	    error: function( response, textStatus, errorThrown ) {  
+	    	jQuery(ThisButton).fadeTo('fast',1);
+	    	jQuery(InfoBox).html( textStatus + ": " + response.responseText + '<br>Please Retry.' ).css('display','block');
 	    			} ,
 	    success: function( response ) {
+	    	jQuery(ThisButton).fadeTo('fast',1);
 	    	var DisplayHTML = '' ;
 	    	if ( response['html'] !== '' ){
 	    		DisplayHTML = "<p>" + response['html'] + "</p>";
@@ -110,12 +117,15 @@ jQuery(document).on('click','.btnWPCSPViewErrors, .btnWPCSPAddSafeDomain, .btnWP
 		    					NewTable + "</tbody></table>";
 		    		DisplayHTML += NewTable ;
 	    		}
+	    		jQuery( 'td', Target ).html( DisplayHTML ) ;
+	    		jQuery(Target).removeClass('WPCSPHiddenEntry');
+	    		if ( HideCurrentRowOnSuccess === true ) {
+	        		jQuery(RowInfo).addClass('WPCSPHiddenEntry');
+	    		}
 	    	}
-    		jQuery( 'td', Target ).html( DisplayHTML ) ;
-    		jQuery(Target).removeClass('WPCSPHiddenEntry');
-    		if ( HideCurrentRowOnSuccess === true ) {
-        		jQuery(RowInfo).addClass('WPCSPHiddenEntry');
-    		}
+	    	else {
+	    		jQuery(InfoBox).html( DisplayHTML ).css('display','block');
+	    	}
 	    }
 	});	
 });
@@ -125,10 +135,10 @@ jQuery(document).on('click','.btnWPCSPClearLogFile, .btnWPCSPTestURLChecker', fu
 	
 	// This defines where the target is defined.
 	var RowInfo = false ;
+	var ThisButton = jQuery(this);
 	
 	if ( jQuery(this).hasClass('btnWPCSPClearLogFile')) {
 		data = {
-				action : 'WPCSPAjax',
 				subaction : 'clearLogFile'
 			};
 		RowInfo = jQuery(this).closest('p'); 
@@ -136,21 +146,28 @@ jQuery(document).on('click','.btnWPCSPClearLogFile, .btnWPCSPTestURLChecker', fu
 	}
 	if ( jQuery(this).hasClass('btnWPCSPTestURLChecker')) {
 		data = {
-				action : 'WPCSPAjax',
 				subaction : 'TestURLChecker'
 			};
 		RowInfo = jQuery(this).closest('tr'); 
 	}
 	var Target = jQuery(RowInfo).data('target'); 
+	jQuery(Target).addClass('WPCSPHiddenEntry') ;
+	
 	if ( data !== undefined ) {
+		jQuery(ThisButton).fadeTo('slow',0.3);
+		data['_wpnonce'] = WPCSP.restAdminNonce ;
+		
 		jQuery.ajax({
-		    url: WPCSP.ajaxurl,
+		    url: WPCSP.restAdminURL ,
 		    data: data,
 		    dataType: 'json',
 		    type: "POST",
-		    error: function() {  
-		    			} ,
+		    error: function( response, textStatus, errorThrown ) {
+		    	jQuery(ThisButton).fadeTo('fast',1);
+		    	jQuery(Target).html( textStatus + ": " + response.responseText + '<br>Please Retry.' ).removeClass('WPCSPHiddenEntry');
+		    	} ,
 		    success: function( response ) {
+		    	jQuery(ThisButton).fadeTo('fast',1);
 		    	var DisplayHTML = '' ;
 		    	if ( response['html'] !== '' ){
 		    		DisplayHTML = "<p>" + response['html'] + "</p>";

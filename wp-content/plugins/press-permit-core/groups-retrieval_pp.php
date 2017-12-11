@@ -46,7 +46,7 @@ class PP_GroupRetrieval {
 	
 		$query = "SELECT $cols FROM $groups_table $join WHERE 1=1 $where ORDER BY $order_by";
 		$results = $wpdb->get_results($query, OBJECT_K);
-
+		
 		foreach( array_keys($results) as $key ) {
 			$results[$key]->name = stripslashes($results[$key]->name);
 			
@@ -210,6 +210,7 @@ class PP_GroupRetrieval {
 					if ( ! $matched ) {
 						if ( $role_group = pp_get_metagroup( 'wp_role', $role_name ) ) {
 							$user_groups[$role_group->ID] = $role_group;
+							pp_add_group_user( $role_group->ID, $user_id );
 						}
 					}
 				}
@@ -329,6 +330,14 @@ class PP_GroupRetrieval {
 			$query_key = false;
 		}
 		
+		if ( ( 'pp_group' == $agent_type ) && ( ! defined( 'PP_ALL_ANON_ROLES' ) ) ) {
+			if ( $anon_group = pp_get_metagroup( 'wp_role', 'wp_anon' ) )
+				$query_agent_ids = array_diff( $query_agent_ids, (array) $anon_group->ID );
+				
+			if ( $all_group = pp_get_metagroup( 'wp_role', 'wp_all' ) )
+				$query_agent_ids = array_diff( $query_agent_ids, (array) $all_group->ID );
+		}
+		
 		if ( ! isset( $agent_roles[$agent_id] ) || ( $last_query_key !== $query_key ) ) {
 			foreach( $query_agent_ids as $_id )
 				$agent_roles[$_id] = array();
@@ -378,7 +387,7 @@ class PP_GroupRetrieval {
 			$operations = pp_get_operations();
 
 		if ( ! is_array($post_types) )
-			$post_types = pp_get_enabled_post_types();
+			$post_types = pp_get_enabled_post_types( array( 'layer' => 'exceptions' ) );
 		
 		if ( ! is_array($taxonomies) )
 			$taxonomies = pp_get_enabled_taxonomies();
@@ -386,6 +395,11 @@ class PP_GroupRetrieval {
 		$default_arr = array( 'include', 'exclude' );
 		if ( ! defined( 'PP_NO_ADDITIONAL_ACCESS' ) )
 			$default_arr []= 'additional';
+		
+		foreach( $post_types as $_type ) {
+			$type_sub = strtoupper( $_type );
+			if ( defined( "PP_NO_{$type_sub}_EXCEPTIONS" ) && constant( "PP_NO_{$type_sub}_EXCEPTIONS" ) ) $post_types = array_diff( $post_types, (array) $_type );
+		}
 		
 		$valid_src_types = array( 'post' => array( 	// post exceptions can come from posts or terms
 									'post' => array( '' => array_fill_keys( $default_arr, array_fill_keys( $post_types, array() ) ) ),
@@ -458,14 +472,25 @@ class PP_GroupRetrieval {
 			$ug_clause = $wpdb->prepare( " AND e.agent_type = %s AND e.agent_id IN ('" . implode( "','", array_map( 'intval', (array) $agent_id ) ) . "')", $agent_type );
 
 		$operation_clause = "AND e.operation IN ('" . implode( "','", $operations ) . "')";
+		
 		$mod_clause = ( defined( 'PP_NO_ADDITIONAL_ACCESS' ) ) ? "AND e.mod_type != 'additional'" : '';
+		if ( ! defined( 'PP_GROUP_RESTRICTIONS' ) ) {
+			$wp_group_ids = array();
+			$groups_table = apply_filters( 'pp_use_groups_table', $wpdb->pp_groups, 'pp_group' );
+			$mod_clause .= "AND ( e.mod_type != 'exclude' OR e.agent_type = 'user' OR ( e.agent_type = 'pp_group' AND e.agent_id IN (SELECT ID FROM $groups_table WHERE metagroup_type = 'wp_role') ) )";
+		}
+		
 		$assign_for_clause = ( $assign_for ) ? $wpdb->prepare( "AND i.assign_for = %s", $assign_for ) : '';
 		$inherited_from_clause = ( $inherited_from !== '' ) ? $wpdb->prepare( "AND i.inherited_from = %d", $inherited_from ) : '';
 		$status_clause = ( false !== $for_item_status ) ? $wpdb->prepare( "AND e.for_item_status = %s", $for_item_status ) : '';
 		
-		if ( ! $status_clause && ! defined( 'PPS_VERSION' ) )
-			$status_clause = "AND e.for_item_status IN ('','post_status:private','post_status:draft')";  // exceptions for other statuses will not be applied correctly without custom statuses extension
-
+		if ( ! $status_clause && ! defined( 'PPS_VERSION' ) ) {
+			$stati = array( '','post_status:private','post_status:draft' );
+			if ( defined( 'PPCE_VERSION' ) ) $stati[]= 'post_status:{unpublished}';
+			
+			$status_clause = "AND e.for_item_status IN ('" . implode( "','", $stati ) . "')";  // exceptions for other statuses will not be applied correctly without custom statuses extension
+		}
+		
 		if ( ! $cols )
 			$cols = "e.operation, e.for_item_source, e.for_item_type, e.mod_type, e.via_item_source, e.via_item_type, e.for_item_status, i.item_id, i.assign_for";
 		

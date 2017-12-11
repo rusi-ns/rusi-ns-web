@@ -59,7 +59,7 @@ class PP_Ancestry {
 		return $ancestors;
 	}
 	
-	public static function get_page_ancestors( $object_id = 0 ) {
+	public static function get_page_ancestors( $object_id = 0, $post_type = '' ) {
 		static $ancestors;
 		
 		if ( ! isset($ancestors) || ! empty($_POST) )
@@ -73,7 +73,7 @@ class PP_Ancestry {
 			
 			global $wpdb;
 
-			$post_types = get_post_types( array( 'hierarchical' => true, 'public' => true ) );
+			$post_types = ( $post_type ) ? (array) $post_type : get_post_types( array( 'hierarchical' => true, 'public' => true ) );
 			$where = "WHERE post_type IN ('" . implode( "','", $post_types ) . "') AND post_status != 'auto-draft'";
 
 			if ( $pages = $wpdb->get_results("SELECT ID, post_parent FROM $wpdb->posts $where") ) {
@@ -95,6 +95,87 @@ class PP_Ancestry {
 		}
 		
 		return $ancestors;
+	}
+	
+	public static function _walk_descendants($parent_id, $descendants, $children, $max_depth) {
+		if ( isset($children[$parent_id]) ) {
+			if ( is_numeric( $max_depth ) ) {
+				if ( ! $max_depth ) 
+					return $descendants;
+				else
+					$max_depth--;
+			}
+			
+			if ( in_array( $parent_id, $descendants ) )  // prevent infinite recursion if a page has parent set as one of its descendants
+			  return $descendants;
+	
+			//$descendants = array_merge( $descendants, $children[$parent_id] );
+			
+			foreach( $children[$parent_id] as $child_id ) {
+				$descendants []= $child_id;
+				$grandchildren = self::_walk_descendants($child_id, array(), $children, $max_depth);
+				$descendants = array_merge( $descendants, $grandchildren );
+			}
+		}
+		return $descendants;
+	}
+	
+	public static function get_page_descendants( $root_page, $args = array() ) {
+		global $wpdb;
+		
+		extract( array_merge( array( 'post_type' => '', 'max_depth' => false, 'pages' => array() ), $args ) );
+		
+		$num_pages = 0;
+		$descendants = array();
+
+		if ( ! $pages ) {
+			$post_types = ( $post_type ) ? (array) $post_type : get_post_types( array( 'hierarchical' => true, 'public' => true ) );
+			$where = "WHERE post_type IN ('" . implode( "','", $post_types ) . "') AND post_status != 'auto-draft'";
+			$pages = $wpdb->get_results("SELECT ID, post_parent FROM $wpdb->posts $where");
+		}
+		
+		if ( $pages ) {
+			$children = array();
+			foreach ( $pages as $page ) {
+				if ( ! $page->ID ) continue;
+				
+				if ( ! isset( $children[$page->post_parent] ) ) $children[$page->post_parent] = array();
+				$children[$page->post_parent][] = $page->ID;
+			}
+			
+			$descendants = self::_walk_descendants($root_page, array(), $children, $max_depth);
+		}
+
+		return $descendants;
+	}
+	
+	public static function get_term_descendants( $root_term, $args = array() ) {
+		global $wpdb;
+		
+		extract( array_merge( array( 'taxonomy' => '', 'max_depth' => false, 'terms' => array() ), $args ) );
+		
+		$num_pages = 0;
+		$descendants = array();
+
+		if ( ! $terms ) {
+			$taxonomies = ( $taxonomy ) ? (array) $taxonomy : get_taxonomies( array( 'hierarchical' => true, 'public' => true ) );
+			$where = "WHERE taxonomy IN ('" . implode( "','", $taxonomies ) . "')";
+			$terms = $wpdb->get_results("SELECT term_id, parent FROM $wpdb->term_taxonomy $where");
+		}
+		
+		if ( $terms ) {
+			$children = array();
+			foreach ( $terms as $term ) {
+				if ( ! $term->term_id ) continue;
+				
+				if ( ! isset( $children[$term->parent] ) ) $children[$term->parent] = array();
+				$children[$term->parent][] = $term->term_id;
+			}
+			
+			$descendants = self::_walk_descendants($root_term, array(), $children, $max_depth);
+		}
+
+		return $descendants;
 	}
 	
 	public static function get_term_ancestors($taxonomy, $term_id = 0) {

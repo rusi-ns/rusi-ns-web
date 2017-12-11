@@ -91,7 +91,7 @@ class PP_TermEditUI {
 		foreach( $boxes as $op => $boxes ) {
 			foreach( $boxes as $box_id => $_box ) {
 				// $screen = null, $context = 'advanced', $priority = 'default', $callback_args = null
-				add_meta_box( $box_id, $_box['title'], array(&$this, 'draw_exceptions_ui'), $register_type, 'normal', 'default', array( 'for_item_type' => $_box['for_item_type'], 'op' => $op ) );
+				add_meta_box( $box_id, $_box['title'], array(&$this, 'draw_exceptions_ui'), $register_type, 'advanced', 'default', array( 'for_item_type' => $_box['for_item_type'], 'op' => $op ) );
 			}
 		}
 	}
@@ -155,7 +155,7 @@ class PP_TermEditUI {
 		$this->act_prep_metaboxes();
 		
 		$type = ( $post_type ) ? $post_type : 'post';
-		do_meta_boxes( $type, 'normal', $tag );
+		do_meta_boxes( $type, 'advanced', $tag );
 		
 		?>
 		</div> <!-- post-body-content -->
@@ -202,8 +202,8 @@ class PP_TermEditUI {
 		
 		require_once( ABSPATH . 'wp-admin/includes/meta-boxes.php' );
 
-		add_meta_box( "pp_enable_taxonomy", __( 'Press Permit Settings', 'pp' ), array(&$this, 'draw_settings_ui'), $taxonomy, 'normal', 'default', array() );
-		do_meta_boxes( $taxonomy, 'normal', $tag );
+		add_meta_box( "pp_enable_taxonomy", __( 'Press Permit Settings', 'pp' ), array(&$this, 'draw_settings_ui'), $taxonomy, 'advanced', 'default', array() );
+		do_meta_boxes( $taxonomy, 'advanced', $tag );
 		
 		?>
 		</div> <!-- post-body-content -->

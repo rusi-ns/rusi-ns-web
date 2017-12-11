@@ -196,25 +196,27 @@ class ZLinkPreview {
     }
 
 }
+if ((strpos($_GET['url'], "<") === false) && (strpos($_GET['url'], ">") === false)) {
+    if (filter_var($_GET['url'], FILTER_VALIDATE_URL)) {
 
-$zlinkPreview = new ZLinkPreview($_GET['url']);
-define('SHORTINIT', true);
-require_once('../../../wp-load.php');
-$linkmode = get_option('zurlpreview_linkmode');
-switch ($linkmode) {
-    case "target-blank":
-        $linkmodehtml = ' target="_blank"';
-        break;
-    case "target-newwindow":
-        $linkmodehtml = ' target="newwindow"';
-        break;
-    case "rel-external":
-        $linkmodehtml = ' rel="external"';
-        break;
-    default:
-        $linkmodehtml = '';
-}
-$zlinkPreview->setParseMode(get_option('zurlpreview_parsemode'));
+        $zlinkPreview = new ZLinkPreview($_GET['url']);
+        define('SHORTINIT', true);
+        require_once('../../../wp-load.php');
+        $linkmode = get_option('zurlpreview_linkmode');
+        switch ($linkmode) {
+            case "target-blank":
+                $linkmodehtml = ' target="_blank"';
+                break;
+            case "target-newwindow":
+                $linkmodehtml = ' target="newwindow"';
+                break;
+            case "rel-external":
+                $linkmodehtml = ' rel="external"';
+                break;
+            default:
+                $linkmodehtml = '';
+        }
+        $zlinkPreview->setParseMode(get_option('zurlpreview_parsemode'));
 ?>
 <div id="at_zurlpreview">
             <?php
@@ -270,3 +272,18 @@ $zlinkPreview->setParseMode(get_option('zurlpreview_parsemode'));
 
             <?php } ?>
 </div>
+<?php
+    } else {
+?>
+<div id="at_zurlpreview">
+    <p>URL validation failed.</p>
+</div>
+<?php
+    }
+} else {
+?>
+<div id="at_zurlpreview">
+    <p>URL validation failed (Possible XSS).</p>
+</div>
+<?php
+}

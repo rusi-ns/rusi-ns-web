@@ -69,7 +69,7 @@ case 'get_mod_options':
 	} else
 		$is_wp_role = false;
 	
-	if ( ! $is_wp_role || ! in_array( $group->metagroup_id, array( 'wp_anon', 'wp_all' ) ) || defined( 'PP_ALL_ANON_FULL_EXCEPTIONS' ) )
+	if ( ( ! $is_wp_role || ! in_array( $group->metagroup_id, array( 'wp_anon', 'wp_all' ) ) || defined( 'PP_ALL_ANON_FULL_EXCEPTIONS' ) ) && ! defined( 'PP_NO_ADDITIONAL_ACCESS' ) )
 		$modes['additional'] = __('Also these:', 'pp');
 	
 	if ( ( 'user' == $agent_type ) || $is_wp_role || ( 'assign' == $operation ) || defined( 'PP_GROUP_RESTRICTIONS' ) ) {
@@ -197,7 +197,7 @@ case 'get_item_path' :
 	
 	if ( 'term' == $via_src_name ) {
 		$html = $item_id . chr(13) . PP_Ancestry::get_term_path( $item_id, $via_type );
-	} else {
+	} elseif ( 'post' == $via_src_name ) {
 		$html = $item_id . chr(13) . PP_Ancestry::get_post_path( $item_id );
 	}
 
