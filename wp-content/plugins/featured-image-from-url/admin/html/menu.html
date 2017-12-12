@@ -414,6 +414,70 @@
     </div>
 
     <div class="box">
+        <h2>WooCommerce</h2>
+        <div class="greybox" id="grad1">
+            You can disable the product lightbox and zoom here once these features are only compatible with the premium version.
+        </div>
+        <br>
+        <table style="text-align:left">
+            <tr>
+                <th>
+                    <form 
+                        id="fifu_form_wc_lbox" 
+                        action="javascript:void(0)" 
+                        method="post">
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_wc_lbox" 
+                            onclick="invert('wc_lbox')" 
+                            name="fifu_toggle_wc_lbox" 
+                            class="<?php echo $enable_wc_lbox; ?>" 
+                            value=" "
+                            style="display:block">
+
+                        <input 
+                            type="hidden" 
+                            id="fifu_input_wc_lbox" 
+                            name="fifu_input_wc_lbox" 
+                            value="" >
+                    </form>
+                </th>
+                <th>   
+                    lightbox
+                </th>
+            </tr> 
+            <tr>
+                <th>
+                    <form 
+                        id="fifu_form_wc_zoom" 
+                        action="javascript:void(0)" 
+                        method="post">
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_wc_zoom" 
+                            onclick="invert('wc_zoom')" 
+                            name="fifu_toggle_wc_zoom" 
+                            class="<?php echo $enable_wc_zoom; ?>" 
+                            value=" "
+                            style="display:block">
+
+                        <input 
+                            type="hidden" 
+                            id="fifu_input_wc_zoom" 
+                            name="fifu_input_wc_zoom" 
+                            value="" >
+                    </form>
+                </th>
+                <th>   
+                    zoom
+                </th>
+            </tr>              
+        </table>
+    </div>
+
+    <div class="box">
         <h2>WP All Import</h2>
         <div class="greybox" id="grad1">
             You can use Featured Image from URL with WP All Import plugin. For that, use the custom field <b>fifu_image_url</b>.<br/><br/> The other custom fields supported by FIFU are listed below, in the section WP REST API > Plugin Fields.
@@ -1072,20 +1136,6 @@
             value=" "
             style="display:block">
         </form>
-    </div>
-
-    <div class="box">
-        <h2>WooCommerce Lightbox</h2>
-        <div class="greybox" id="grad2">
-            <b>Premium feature</b><br><br>
-            You can enable/disable the WooCommerce lightbox here.<br>
-        </div>
-        <br>
-        <input 
-            type="image" 
-            href="javascript:void(0)" 
-            class="toggleoff" 
-            value=" " style="display:block">
     </div>
 
     <div class="box">

@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: marceljm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8BLDLZ3HDBGQG
-Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, vimeo, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail, link, uri, affiliate, wp, rest, api, wp rest api, lazy, load, google, drive, instagram, validation, jetpack, visual composer, play, pause, crop, resize
+Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, vimeo, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail, link, uri, affiliate, wp, rest, api, wp rest api, lazy, load, google, drive, instagram, validation, jetpack, visual composer, play, pause, crop, resize, zoom, enable, disable
 Requires at least: 4.0
 Tested up to: 4.9.1
 Stable tag: 4.9.1
@@ -32,6 +32,8 @@ Features:
 
 * some nonstandard image URLs, such as Instagram and Google Drive's, will work as well;
 
+* you can disable the product lightbox and zoom;
+
 * supports WP REST API (**premium feature**);
 
 * all features created for external images are available for external videos from YouTube and Vimeo. For YouTube videos, it's possible to set player parameters. And you can define the video size for each screen type (**premium feature**);
@@ -47,8 +49,6 @@ Features:
 * it's able to crop all the external featured images on home/shop to the same size (**premium feature**);
 
 * you can apply your own CSS style or 18 hover effects to the images (**premium feature**);
-
-* you can enable/disable the WooCommerce lightbox (**premium feature**);
 
 * auto play/pause videos on mouse over/out (**premium feature**);
 
@@ -322,6 +322,9 @@ was removed. To finish, a Premium version is now been presented.
 = 1.7.1 =
 * Crop all external featured images to the same size.
 
+= 1.7.2 =
+* Disable product lightbox and zoom.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -492,3 +495,6 @@ was removed. To finish, a Premium version is now been presented.
 
 = 1.7.1 =
 * Crop all external featured images to the same size.
+
+= 1.7.2 =
+* Disable product lightbox and zoom.
