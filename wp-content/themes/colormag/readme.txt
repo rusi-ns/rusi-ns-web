@@ -50,6 +50,13 @@ and we will include it within the theme from next version update.
 /**********************************************************/
 
 == Changelog ==
+= Version 1.2.3 - 2017-12-12 =
+* Added - Scrollbar for fixed better responsive menu if overflow.
+* Tweaks - Touch screen accessible submenu
+* Feature - Added Elementor plugin support
+* Feature - Added Block widgets for use within Elementor plugin
+* Feature - Added Grid widgets for use within Elementor plugin
+
 = Version 1.2.2 - 2017-10-16 =
 * Feature - Added header variation options
 * Feature - Added footer variation options

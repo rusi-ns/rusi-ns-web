@@ -753,6 +753,16 @@ li.default-menu {
 }
 /* =DROP DOWN
 ----------------------------------------------- */
+.main-navigation {
+	ul {
+		li {
+			&.focus	> ul {
+				display: block;
+			}
+		}
+	}
+}
+
 .main-navigation .sub-menu,
 .main-navigation .children {
    background-color: #232323;
@@ -1402,7 +1412,6 @@ li.default-menu {
    color: #b1b6b6;
    float: left;
    font-size: 14px;
-   max-width: 50%;
 }
 .footer-socket-wrapper .copyright a {
    color: #b1b6b6;
@@ -2431,6 +2440,13 @@ a#scroll-up:hover {
 
 }
 
+
+/* = Page Template CSS
+----------------------------------------------- */
+.page-template-page-builder #primary {
+	float: none;
+	width: 100%;
+}
 
 /*--------------------------------------------------------------
 Responsive Structure

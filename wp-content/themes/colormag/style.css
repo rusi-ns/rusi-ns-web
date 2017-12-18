@@ -4,7 +4,7 @@ Theme URI: https://themegrill.com/themes/colormag/
 Author: ThemeGrill
 Author URI: https://themegrill.com
 Description: ColorMag is a perfect responsive magazine style WordPress theme. Suitable for news, newspaper, magazine, publishing, business and any kind of sites. Get free support at https://themegrill.com/support-forum/ and check the demo at https://demo.themegrill.com/colormag/
-Version: 1.2.2
+Version: 1.2.3
 License: GNU General Public License, version 3 (GPLv3)
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 Tags: one-column, two-columns, right-sidebar, left-sidebar, flexible-header, custom-header, custom-background, custom-menu, custom-colors, sticky-post, threaded-comments, translation-ready, featured-images, theme-options, post-formats, footer-widgets, blog, e-commerce, news, rtl-language-support
@@ -952,6 +952,10 @@ li.default-menu {
 
 /* =DROP DOWN
 ----------------------------------------------- */
+.main-navigation ul li.focus > ul {
+	display: block;
+}
+
 .main-navigation .sub-menu,
 .main-navigation .children {
 	background-color: #232323;
@@ -1729,7 +1733,6 @@ li.default-menu {
 	color: #b1b6b6;
 	float: left;
 	font-size: 14px;
-	max-width: 50%;
 }
 
 .footer-socket-wrapper .copyright a {
@@ -2894,6 +2897,13 @@ a#scroll-up:hover {
 }
 
 /* Gallery Post Format */
+/* = Page Template CSS
+----------------------------------------------- */
+.page-template-page-builder #primary {
+	float: none;
+	width: 100%;
+}
+
 /*--------------------------------------------------------------
 Responsive Structure
 --------------------------------------------------------------*/
@@ -3131,6 +3141,10 @@ div#wp-custom-header:hover .wp-custom-header-video-button {
 	/*--------------------------------------------------------------
 	classic Layout
 	--------------------------------------------------------------*/
+}
+
+#masthead .main-small-navigation ul.menu-scrollbar {
+	overflow-y: scroll;
 }
 
 #masthead .main-small-navigation li:hover > a, #masthead .main-small-navigation li.current-page-ancestor > a, #masthead .main-small-navigation li.current-menu-ancestor > a, #masthead .main-small-navigation li.current-page-item > a, #masthead .main-small-navigation li.current-menu-item > a {

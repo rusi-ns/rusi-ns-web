@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - UpdraftPlus WordPress Backup Plugin - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-12-04 17:58:10+0000\n"
+"PO-Revision-Date: 2017-12-07 18:30:31+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,18 @@ msgstr ""
 "X-Generator: GlotPress/2.4.0-alpha\n"
 "Language: en_CA\n"
 "Project-Id-Version: Plugins - UpdraftPlus WordPress Backup Plugin - Stable (latest release)\n"
+
+#: templates/wp-admin/settings/tab-addons.php:14
+msgid "If you have purchased from UpdraftPlus.Com, then follow this link to the installation instructions (particularly step 1)."
+msgstr "If you have purchased from UpdraftPlus.Com, then follow this link to the installation instructions (particularly step 1)."
+
+#: templates/wp-admin/settings/tab-addons.php:14
+msgid "You are currently using the free version of UpdraftPlus."
+msgstr "You are currently using the free version of UpdraftPlus."
+
+#: templates/wp-admin/settings/tab-addons.php:12
+msgid "get it here"
+msgstr "get it here"
 
 #: templates/wp-admin/settings/existing-backups-table.php:70
 msgid "remote site"
@@ -1737,6 +1749,10 @@ msgstr "Subscriptions can be cancelled at any time."
 #: methods/updraftvault.php:325
 msgid "Payments can be made in US dollars, euros or GB pounds sterling, via card or PayPal."
 msgstr "Payments can be made in US dollars, Euros or GB pounds sterling, via card or PayPal."
+
+#: templates/wp-admin/settings/tab-addons.php:19
+msgid "Buy it now"
+msgstr "Buy it now"
 
 #: methods/updraftvault.php:308 methods/updraftvault.php:314
 #: methods/updraftvault.php:320
