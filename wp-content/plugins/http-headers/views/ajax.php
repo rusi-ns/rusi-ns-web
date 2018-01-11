@@ -7,17 +7,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
 			case 'inspect':
 				
+			    include '../../../../wp-load.php';
+			    load_plugin_textdomain('http-headers', false, basename(dirname(dirname(__FILE__))) . '/languages');
+			    
 				if (!(isset($_POST['url']) && preg_match('|^https?://|', $_POST['url'])))
 				{
 					?>
 					<section class="hh-panel">
-						<h3><span class="hh-highlight">URL malformed</span></h3>
+						<h3><span class="hh-highlight"><?php _e('URL malformed', 'http-headers'); ?></span></h3>
 					</section>
 					<?php
 					exit;
 				}
 				
-				include '../../../../wp-load.php';
 				include 'includes/http.class.php';
 				include 'includes/config.inc.php';
 				$http = new Http();
@@ -41,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				{
 					?>
 					<section class="hh-panel">
-						<h3><span class="hh-highlight">HTTP Status: <?php echo $status; ?></span></h3>
+						<h3><span class="hh-highlight"><?php _e('HTTP Status', 'http-headers'); ?>: <?php echo $status; ?></span></h3>
 						<p><?php 
 						switch ($status)
 						{
@@ -69,12 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				}
 				?>
 				<section class="hh-panel">
-					<h3><span class="hh-highlight">Response headers</span></h3>
+					<h3><span class="hh-highlight"><?php _e('Response headers', 'http-headers'); ?></span></h3>
 					<table class="hh-results">
 						<thead>
 							<tr>
-								<th style="width: 30%">Header</th>
-								<th>Value</th>
+								<th style="width: 30%"><?php _e('Header', 'http-headers'); ?></th>
+								<th><?php _e('Value', 'http-headers'); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -97,10 +99,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				</section>
 				<?php
 				$special = array('content-security-policy', 'public-key-pins');
+				$exclude = array('custom-headers', 'cookie-security', 'x-powered-by');
 				$missing = array();
 				foreach ($headers as $k => $v)
 				{
-					if (!array_key_exists($k, $responseHeaders) && !(in_array($k, $special) && array_key_exists($k . '-report-only', $responseHeaders) ))
+					if (!array_key_exists($k, $responseHeaders)
+					    && !in_array($k, $exclude)
+					    && !(in_array($k, $special) && array_key_exists($k . '-report-only', $responseHeaders) ))
 					{
 						$missing[$k] = @$categories[$v[2]];
 					}
@@ -111,12 +116,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					asort($missing);
 					?>
 					<section class="hh-panel">
-						<h3><span class="hh-highlight">Missing headers</span></h3>
+						<h3><span class="hh-highlight"><?php _e('Missing headers', 'http-headers'); ?></span></h3>
 						<table class="hh-results">
 							<thead>
 								<tr>
-									<th style="width: 30%">Header</th>
-									<th>Category</th>
+									<th style="width: 30%"><?php _e('Header', 'http-headers'); ?></th>
+									<th><?php _e('Category', 'http-headers'); ?></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -137,6 +142,66 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					<?php
 				}
 				break;
+            case 'import':
+                include '../../../../wp-load.php';
+                
+                if (!(isset($_FILES['file']['tmp_name'])
+                    && is_uploaded_file($_FILES['file']['tmp_name'])
+                    && $_FILES['file']['error'] == UPLOAD_ERR_OK
+                )) {
+                    wp_redirect(sprintf("%soptions-general.php?page=http-headers&tab=advanced&status=ERR", get_admin_url()));
+                    exit;
+                }                
+
+                $string = @file_get_contents($_FILES['file']['tmp_name']);
+                if ($string === false) {
+                    wp_redirect(sprintf("%soptions-general.php?page=http-headers&tab=advanced&status=ERR", get_admin_url()));
+                    exit;
+                }
+
+                $arr = preg_split('/;(\s+)?\n/', $string);
+                foreach ($arr as $statement) {
+                    $wpdb->query($statement);
+                }
+                
+                wp_redirect(sprintf("%soptions-general.php?page=http-headers&tab=advanced&status=OK", get_admin_url()));
+                exit;
+                
+                break;
+            case 'export':
+                include '../../../../wp-load.php';
+                include 'includes/config.inc.php';
+                $statement = sprintf("SELECT * FROM wp_options WHERE option_name IN ('%s');", join("','", $options));
+                $results = $wpdb->get_results($statement, ARRAY_A);
+                $sql = array();
+                foreach ($results as $item)
+                {
+                    $value = str_replace("'", "''", $item['option_value']);
+                    $query = array();
+                    $query[] = "INSERT INTO wp_options (option_id, option_name, option_value, autoload)";
+                    $query[] = sprintf("VALUES (NULL, '%s', '%s', '%s')", $item['option_name'], $value, $item['autoload']);
+                    $query[] = sprintf("ON DUPLICATE KEY UPDATE option_value = '%s', autoload = '%s';", $value, $item['autoload']);
+                    $sql[] = join("\n", $query);
+                }
+                
+                $sql = join("\n\n", $sql);
+                $length = function_exists('mb_strlen') ? mb_strlen($sql) : strlen($sql);
+                $name = sprintf('WP-HTTP-Headers-%u.sql', time());
+                
+                # Send headers
+                header('Pragma: public');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                header('Cache-Control: private', false);
+                header('Content-Transfer-Encoding: binary');
+                header('Content-Disposition: attachment; filename="'.$name.'";');
+                header('Content-Type: application/sql');
+                header('Content-Length: ' . $length);
+                
+                echo $sql;
+                exit;
+                
+                break;
 		}
 	}
 }

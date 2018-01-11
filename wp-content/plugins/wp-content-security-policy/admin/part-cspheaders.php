@@ -18,20 +18,20 @@ global $options;
 	<tr class='wpcsp_option_row'>
 		<th scope="row"><?php _e( "Mode", 'wpcsp' ); ?></th>
 		<td class='wpcsp_option_cell'>
-			<select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_EXPECTCT_OPTIONS; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_EXPECTCT_OPTIONS; ?>">
-				<?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_EXPECTCT_OPTIONS ]; ?>
+			<select name="<?php echo WP_CSP::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo WP_CSP::SETTINGS_OPTIONS_EXPECTCT_OPTIONS; ?>]" id="<?php echo WP_CSP::SETTINGS_OPTIONS_EXPECTCT_OPTIONS; ?>">
+				<?php $selected = $options[ WP_CSP::SETTINGS_OPTIONS_EXPECTCT_OPTIONS ]; ?>
 				<option value="0" <?php selected( $selected, 0 ); ?> >Not in use</option>
 				<option value="1" <?php selected( $selected, 1 ); ?> >Report only - do not enforce Expect CT</option>
 				<option value="2" <?php selected( $selected, 2 ); ?> >Enforce Expect CT</option>
 			</select>
-			<label class="wpcsp_option_description" for="<?php echo wpCSPclass::SETTINGS_OPTIONS_EXPECTCT_OPTIONS; ?>"><?php _e( 'Enforce the Expect CT policy or treat it as report only.', 'wpcsp' ); ?></label>
+			<label class="wpcsp_option_description" for="<?php echo WP_CSP::SETTINGS_OPTIONS_EXPECTCT_OPTIONS; ?>"><?php _e( 'Enforce the Expect CT policy or treat it as report only.', 'wpcsp' ); ?></label>
 		</td>
 	</tr>
 	<tr class='wpcsp_option_row'>
 		<th scope="row"><?php _e( "Maximum Age", 'wpcsp' ); ?></th>
 		<td class='wpcsp_option_cell'>
-			<select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_EXPECTCT_MAXAGE; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_EXPECTCT_MAXAGE; ?>">
-			<?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_EXPECTCT_MAXAGE]; ?>
+			<select name="<?php echo WP_CSP::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo WP_CSP::SETTINGS_OPTIONS_EXPECTCT_MAXAGE; ?>]" id="<?php echo WP_CSP::SETTINGS_OPTIONS_EXPECTCT_MAXAGE; ?>">
+			<?php $selected = $options[ WP_CSP::SETTINGS_OPTIONS_EXPECTCT_MAXAGE]; ?>
 			<option value="0" <?php selected( $selected, 0 ); ?> >0</option>
 			<option value="<?php echo HOUR_IN_SECONDS;?>" <?php selected( $selected, HOUR_IN_SECONDS); ?> >One Hour (<?php echo HOUR_IN_SECONDS. " seconds";?>)</option>
 			<option value="<?php echo DAY_IN_SECONDS;?>" <?php selected( $selected, DAY_IN_SECONDS); ?> >One Day (<?php echo DAY_IN_SECONDS . " seconds";?>)</option>
@@ -39,7 +39,7 @@ global $options;
 			<option value="<?php echo MONTH_IN_SECONDS;?>" <?php selected( $selected, MONTH_IN_SECONDS); ?> >One Month (<?php echo MONTH_IN_SECONDS. " seconds";?>)</option>
 			<option value="<?php echo YEAR_IN_SECONDS;?>" <?php selected( $selected, YEAR_IN_SECONDS); ?> >One Year (<?php echo YEAR_IN_SECONDS. " seconds";?>)</option>
 			</select>
-			<label class="wpcsp_option_description" for="<?php echo wpCSPclass::SETTINGS_OPTIONS_CSP_MODE; ?>"><?php _e( 'Specifies the number of seconds that the browser should cache and apply the Expect CT policy for.', 'wpcsp' ); ?></label>
+			<label class="wpcsp_option_description" for="<?php echo WP_CSP::SETTINGS_OPTIONS_CSP_MODE; ?>"><?php _e( 'Specifies the number of seconds that the browser should cache and apply the Expect CT policy for.', 'wpcsp' ); ?></label>
 		</td>
 	</tr>
 	
@@ -56,8 +56,8 @@ global $options;
 	<tr class='wpcsp_option_row'>
 		<th scope="row"><?php _e( "Mode", 'wpcsp' ); ?></th>
 		<td class='wpcsp_option_cell'>
-			<select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_STS_OPTIONS; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_STS_OPTIONS; ?>">
-				<?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_STS_OPTIONS]; ?>
+			<select name="<?php echo WP_CSP::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo WP_CSP::SETTINGS_OPTIONS_STS_OPTIONS; ?>]" id="<?php echo WP_CSP::SETTINGS_OPTIONS_STS_OPTIONS; ?>">
+				<?php $selected = $options[ WP_CSP::SETTINGS_OPTIONS_STS_OPTIONS]; ?>
 				<option value="0" <?php selected( $selected, 0 ); ?> >Not in use</option>
 				<option value="1" <?php selected( $selected, 1 ); ?> >Use with no options</option>
 				<option value="2" <?php selected( $selected, 2 ); ?> >Include Sub Domains</option>
@@ -68,8 +68,8 @@ global $options;
 	<tr class='wpcsp_option_row'>
 		<th scope="row"><?php _e( "Maximum Age", 'wpcsp' ); ?></th>
 		<td class='wpcsp_option_cell'>
-			<select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_STS_MAXAGE; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_STS_MAXAGE; ?>">
-				<?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_STS_MAXAGE]; ?>
+			<select name="<?php echo WP_CSP::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo WP_CSP::SETTINGS_OPTIONS_STS_MAXAGE; ?>]" id="<?php echo WP_CSP::SETTINGS_OPTIONS_STS_MAXAGE; ?>">
+				<?php $selected = $options[ WP_CSP::SETTINGS_OPTIONS_STS_MAXAGE]; ?>
 				<option value="0" <?php selected( $selected, 0 ); ?> >0 (Remove existing policy)</option>
 				<option value="<?php echo HOUR_IN_SECONDS;?>" <?php selected( $selected, HOUR_IN_SECONDS); ?> >One Hour (<?php echo HOUR_IN_SECONDS. " seconds";?>)</option>
 				<option value="<?php echo DAY_IN_SECONDS;?>" <?php selected( $selected, DAY_IN_SECONDS); ?> >One Day (<?php echo DAY_IN_SECONDS . " seconds";?>)</option>
@@ -77,7 +77,7 @@ global $options;
 				<option value="<?php echo MONTH_IN_SECONDS;?>" <?php selected( $selected, MONTH_IN_SECONDS); ?> >One Month (<?php echo MONTH_IN_SECONDS. " seconds";?>) - Recommended</option>
 				<option value="<?php echo YEAR_IN_SECONDS;?>" <?php selected( $selected, YEAR_IN_SECONDS); ?> >One Year (<?php echo YEAR_IN_SECONDS. " seconds";?>)</option>
 			</select>
-			<label class="wpcsp_option_description" for="<?php echo wpCSPclass::SETTINGS_OPTIONS_CSP_MODE; ?>"><?php _e( 'Specifies the number of seconds that the browser should cache and apply the Expect CT policy for.', 'wpcsp' ); ?></label>
+			<label class="wpcsp_option_description" for="<?php echo WP_CSP::SETTINGS_OPTIONS_CSP_MODE; ?>"><?php _e( 'Specifies the number of seconds that the browser should cache and apply the Strict Transport Security policy for.', 'wpcsp' ); ?></label>
 		</td>
 	</tr>
 	
@@ -95,8 +95,8 @@ global $options;
 	<tr class='wpcsp_option_row'>
 		<th scope="row"><?php _e( "Mode", 'wpcsp' ); ?></th>
 		<td class='wpcsp_option_cell'>
-			<select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS; ?>">
-				<?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS]; ?>
+			<select name="<?php echo WP_CSP::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS; ?>]" id="<?php echo WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS; ?>">
+				<?php $selected = $options[ WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS]; ?>
 				<option value="0" <?php selected( $selected, 0 ); ?> >Not in use</option>
 				<option value="1" <?php selected( $selected, 1 ); ?> >DENY</option>
 				<option value="2" <?php selected( $selected, 2 ); ?> >SAMEORIGIN</option>
@@ -107,11 +107,11 @@ global $options;
 	<tr class='wpcsp_option_row'>
 		<th scope="row"><?php _e( "Allow From URL", 'wpcsp' ); ?></th>
 		<td class='wpcsp_option_cell'>
-			<?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM]; ?>
-			<input name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM; ?>"
+			<?php $selected = $options[ WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM]; ?>
+			<input name="<?php echo WP_CSP::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM; ?>]" id="<?php echo WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM; ?>"
 				type='text' value='<?php echo esc_attr($selected);?>' size='40' maxlength='255' /><br />
-			<label class="wpcsp_option_description" for="<?php echo wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM; ?>"><?php _e( 'Only valid if "ALLOW-FROM" selected above.', 'wpcsp' ); ?></label>
-			<?php if ( !empty( $PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM ] )):?><div class='wpcsp_option_errors'><?php echo $PolicyKeyErrors[ wpCSPclass::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM ];?></div><?php endif; ?>
+			<label class="wpcsp_option_description" for="<?php echo WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM; ?>"><?php _e( 'Only valid if "ALLOW-FROM" selected above.', 'wpcsp' ); ?></label>
+			<?php if ( !empty( $PolicyKeyErrors[ WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM ] )):?><div class='wpcsp_option_errors'><?php echo $PolicyKeyErrors[ WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS_ALLOW_FROM ];?></div><?php endif; ?>
 		</td>
 	</tr>
 	
@@ -129,8 +129,8 @@ global $options;
 	<tr class='wpcsp_option_row'>
 		<th scope="row"><?php _e( "Mode", 'wpcsp' ); ?></th>
 		<td class='wpcsp_option_cell'>
-			<select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_XSS_PROTECTION; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_XSS_PROTECTION; ?>">
-				<?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_XSS_PROTECTION]; ?>
+			<select name="<?php echo WP_CSP::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo WP_CSP::SETTINGS_OPTIONS_XSS_PROTECTION; ?>]" id="<?php echo WP_CSP::SETTINGS_OPTIONS_XSS_PROTECTION; ?>">
+				<?php $selected = $options[ WP_CSP::SETTINGS_OPTIONS_XSS_PROTECTION]; ?>
 				<option value="0" <?php selected( $selected, 0 ); ?> >Not in use</option>
 				<option value="1" <?php selected( $selected, 1 ); ?> >0 - Disable Filtering</option>
 				<option value="2" <?php selected( $selected, 2 ); ?> >1 - Enable Filtering</option>
@@ -153,8 +153,8 @@ global $options;
 	<tr class='wpcsp_option_row'>
 		<th scope="row"><?php _e( "Mode", 'wpcsp' ); ?></th>
 		<td class='wpcsp_option_cell'>
-			<select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_CONTENT_TYPE_OPTIONS; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_CONTENT_TYPE_OPTIONS; ?>">
-				<?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_CONTENT_TYPE_OPTIONS]; ?>
+			<select name="<?php echo WP_CSP::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo WP_CSP::SETTINGS_OPTIONS_CONTENT_TYPE_OPTIONS; ?>]" id="<?php echo WP_CSP::SETTINGS_OPTIONS_CONTENT_TYPE_OPTIONS; ?>">
+				<?php $selected = $options[ WP_CSP::SETTINGS_OPTIONS_CONTENT_TYPE_OPTIONS]; ?>
 				<option value="0" <?php selected( $selected, 0 ); ?> >Not in use</option>
 				<option value="1" <?php selected( $selected, 1 ); ?> >nosniff</option>
 			</select>
@@ -182,8 +182,8 @@ This policy will leak origins and paths from TLS-protected resources to insecure
 	<tr class='wpcsp_option_row'>
 		<th scope="row"><?php _e( "Mode", 'wpcsp' ); ?></th>
 		<td class='wpcsp_option_cell'>
-			<select name="<?php echo wpCSPclass::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo wpCSPclass::SETTINGS_OPTIONS_REFERRER_POLICY_OPTIONS; ?>]" id="<?php echo wpCSPclass::SETTINGS_OPTIONS_REFERRER_POLICY_OPTIONS; ?>">
-				<?php $selected = $options[ wpCSPclass::SETTINGS_OPTIONS_REFERRER_POLICY_OPTIONS]; ?>
+			<select name="<?php echo WP_CSP::SETTINGS_OPTIONS_ALLOPTIONS;?>[<?php echo WP_CSP::SETTINGS_OPTIONS_REFERRER_POLICY_OPTIONS; ?>]" id="<?php echo WP_CSP::SETTINGS_OPTIONS_REFERRER_POLICY_OPTIONS; ?>">
+				<?php $selected = $options[ WP_CSP::SETTINGS_OPTIONS_REFERRER_POLICY_OPTIONS]; ?>
 				<option value="0" <?php selected( $selected, 0 ); ?> >Not in use</option>
 				<option value="1" <?php selected( $selected, 1 ); ?> >no-referrer</option>
 				<option value="2" <?php selected( $selected, 2 ); ?> >no-referrer-when-downgrade</option>

@@ -55,11 +55,9 @@ if ( ! class_exists( 'Tribe__Validate' ) ) {
 		/**
 		 * Class constructor
 		 *
-		 * @param string $field_id the field ID to validate
-		 * @param array  $field_id the field object to validate
-		 * @param mixed  $value    the value to validate
-		 *
-		 * @return array $result the result of the validation
+		 * @param string $field_id The field ID to validate
+		 * @param array  $field    The field object to validate
+		 * @param mixed  $value    The value to validate
 		 */
 		public function __construct( $field_id, $field, $value, $additional_args = array() ) {
 
@@ -75,8 +73,6 @@ if ( ! class_exists( 'Tribe__Validate' ) ) {
 				$this->result->valid = false;
 				$this->result->error = esc_html__( 'Invalid or incomplete field passed', 'tribe-common' );
 				$this->result->error .= ( isset( $this->field['id'] ) ) ? ' (' . esc_html__( 'Field ID:', 'tribe-common' ) . ' ' . $this->field['id'] . ' )' : '';
-
-				return $this->result;
 			}
 
 			// call validation callback if a validation callback function is set
@@ -84,10 +80,12 @@ if ( ! class_exists( 'Tribe__Validate' ) ) {
 				if ( function_exists( $this->field['validation_callback'] ) ) {
 					if ( ( ! isset( $_POST[ $field_id ] ) || ! $_POST[ $field_id ] || $_POST[ $field_id ] == '' ) && isset( $this->field['can_be_empty'] ) && $this->field['can_be_empty'] ) {
 						$this->result->valid = true;
-
-						return $this->result;
 					} else {
-						return call_user_func( $validation_callback );
+						$this->result->valid = call_user_func( $this->field['validation_callback'], $value );
+						if ( ! $this->result->valid ) {
+							$this->result->error = esc_html__( 'Invalid or incomplete field passed', 'tribe-common' );
+							$this->result->error .= ( isset( $this->field['id'] ) ) ? ' (' . esc_html__( 'Field ID:', 'tribe-common' ) . ' ' . $this->field['id'] . ' )' : '';
+						}
 					}
 				}
 			}
@@ -100,8 +98,6 @@ if ( ! class_exists( 'Tribe__Validate' ) ) {
 					$this->label = isset( $this->field['label'] ) ? $this->field['label'] : $this->field['id'];
 					if ( ( ! isset( $_POST[ $field_id ] ) || ! $_POST[ $field_id ] || $_POST[ $field_id ] == '' ) && isset( $this->field['can_be_empty'] ) && $this->field['can_be_empty'] ) {
 						$this->result->valid = true;
-
-						return $this->result;
 					} else {
 						call_user_func( array( $this, $this->type ) ); // run the validation
 					}
@@ -117,9 +113,6 @@ if ( ! class_exists( 'Tribe__Validate' ) ) {
 				$this->result->error = esc_html__( 'Invalid or incomplete field passed', 'tribe-common' );
 				$this->result->error .= ( isset( $this->field['id'] ) ) ? ' (' . esc_html__( 'Field ID:', 'tribe-common' ) . ' ' . $this->field['id'] . ' )' : '';
 			}
-
-			// return the result
-			return $this->result;
 		}
 
 		/**
@@ -518,6 +511,23 @@ if ( ! class_exists( 'Tribe__Validate' ) ) {
 		 */
 		public function none() {
 			$this->result->valid = true;
+		}
+
+		/**
+		 * Validates and sanitizes an email address.
+		 *
+		 * @since 4.7.4
+		 */
+		public function email(  ) {
+			$candidate = trim( $this->value );
+
+			$this->result->valid = filter_var( $candidate, FILTER_VALIDATE_EMAIL );
+
+			if ( ! $this->result->valid ) {
+				$this->result->error = sprintf( esc_html__( '%s must be an email address.', 'tribe-common' ), $this->label );
+			} else {
+				$this->value = filter_var( trim( $candidate, FILTER_SANITIZE_EMAIL ) );
+			}
 		}
 
 	} // end class
