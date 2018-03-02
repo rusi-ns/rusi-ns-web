@@ -8,6 +8,10 @@
  * @since      ColorMag 1.0
  */
 function colormag_customize_register( $wp_customize ) {
+
+	// Transport postMessage variable set
+	$customizer_selective_refresh = isset( $wp_customize->selective_refresh ) ? 'postMessage' : 'refresh';
+
 	$wp_customize->get_setting( 'blogname' )->transport        = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
 
@@ -57,7 +61,7 @@ function colormag_customize_register( $wp_customize ) {
 				),
 			);
 			foreach ( $important_links as $important_link ) {
-				echo '<p><a target="_blank" href="' . $important_link[ 'link' ] . '" >' . esc_attr( $important_link[ 'text' ] ) . ' </a></p>';
+				echo '<p><a target="_blank" href="' . $important_link['link'] . '" >' . esc_attr( $important_link['text'] ) . ' </a></p>';
 			}
 		}
 
@@ -121,6 +125,7 @@ function colormag_customize_register( $wp_customize ) {
 		'default'           => 0,
 		'capability'        => 'edit_theme_options',
 		'sanitize_callback' => 'colormag_checkbox_sanitize',
+		'transport'         => $customizer_selective_refresh,
 	) );
 
 	$wp_customize->add_control( 'colormag_date_display', array(
@@ -130,11 +135,20 @@ function colormag_customize_register( $wp_customize ) {
 		'settings' => 'colormag_date_display',
 	) );
 
+	// Selective refresh for date display
+	if ( isset( $wp_customize->selective_refresh ) ) {
+		$wp_customize->selective_refresh->add_partial( 'colormag_date_display', array(
+			'selector'        => '.date-in-header',
+			'render_callback' => 'colormag_date_display',
+		) );
+	}
+
 	// date in header display type
 	$wp_customize->add_setting( 'colormag_date_display_type', array(
 		'default'           => 'theme_default',
 		'capability'        => 'edit_theme_options',
 		'sanitize_callback' => 'colormag_radio_select_sanitize',
+		'transport'         => $customizer_selective_refresh,
 	) );
 
 	$wp_customize->add_control( 'colormag_date_display_type', array(
@@ -148,6 +162,14 @@ function colormag_customize_register( $wp_customize ) {
 		'settings' => 'colormag_date_display_type',
 	) );
 
+	// Selective refresh for date display type
+	if ( isset( $wp_customize->selective_refresh ) ) {
+		$wp_customize->selective_refresh->add_partial( 'colormag_date_display_type', array(
+			'selector'        => '.date-in-header',
+			'render_callback' => 'colormag_date_display_type',
+		) );
+	}
+
 	// home icon enable/disable in primary menu
 	$wp_customize->add_section( 'colormag_home_icon_display_section', array(
 		'title' => __( 'Show Home Icon', 'colormag' ),
@@ -159,6 +181,7 @@ function colormag_customize_register( $wp_customize ) {
 		'default'           => 0,
 		'capability'        => 'edit_theme_options',
 		'sanitize_callback' => 'colormag_checkbox_sanitize',
+		'transport'         => $customizer_selective_refresh,
 	) );
 
 	$wp_customize->add_control( 'colormag_home_icon_display', array(
@@ -167,6 +190,14 @@ function colormag_customize_register( $wp_customize ) {
 		'section'  => 'colormag_home_icon_display_section',
 		'settings' => 'colormag_home_icon_display',
 	) );
+
+	// Selective refresh for displaying home icon
+	if ( isset( $wp_customize->selective_refresh ) ) {
+		$wp_customize->selective_refresh->add_partial( 'colormag_home_icon_display', array(
+			'selector'        => '.home-icon',
+			'render_callback' => '',
+		) );
+	}
 
 	// primary sticky menu enable/disable
 	$wp_customize->add_section( 'colormag_primary_sticky_menu_section', array(
@@ -219,6 +250,7 @@ function colormag_customize_register( $wp_customize ) {
 		'default'           => 0,
 		'capability'        => 'edit_theme_options',
 		'sanitize_callback' => 'colormag_checkbox_sanitize',
+		'transport'         => $customizer_selective_refresh,
 	) );
 
 	$wp_customize->add_control( 'colormag_random_post_in_menu', array(
@@ -227,6 +259,14 @@ function colormag_customize_register( $wp_customize ) {
 		'section'  => 'colormag_random_post_in_menu_section',
 		'settings' => 'colormag_random_post_in_menu',
 	) );
+
+	// Selective refresh for displaying random post icon
+	if ( isset( $wp_customize->selective_refresh ) ) {
+		$wp_customize->selective_refresh->add_partial( 'colormag_random_post_in_menu', array(
+			'selector'        => '.random-post',
+			'render_callback' => 'colormag_random_post',
+		) );
+	}
 
 	// Responsive new menu enable/disable
 	$wp_customize->add_section( 'colormag_responsive_menu_section', array(
@@ -331,10 +371,10 @@ function colormag_customize_register( $wp_customize ) {
 							$this->link();
 							checked( $this->value(), $value );
 							?> />
-							<img src='<?php echo esc_html( $label ); ?>' class='<?php echo $class; ?>'/>
+							<img src='<?php echo esc_html( $label ); ?>' class='<?php echo $class; ?>' />
 						</label>
 					</li>
-					<?php
+				<?php
 				endforeach;
 				?>
 			</ul>
@@ -452,6 +492,7 @@ function colormag_customize_register( $wp_customize ) {
 		'default'           => 'wide_layout',
 		'capability'        => 'edit_theme_options',
 		'sanitize_callback' => 'colormag_site_layout_sanitize',
+		'transport'         => 'postMessage',
 	) );
 
 	$wp_customize->add_control( 'colormag_site_layout', array(
@@ -554,6 +595,7 @@ function colormag_customize_register( $wp_customize ) {
 		'capability'           => 'edit_theme_options',
 		'sanitize_callback'    => 'colormag_color_option_hex_sanitize',
 		'sanitize_js_callback' => 'colormag_color_escaping_option_sanitize',
+		'transport'            => 'postMessage',
 	) );
 
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'colormag_primary_color', array(
@@ -561,6 +603,29 @@ function colormag_customize_register( $wp_customize ) {
 		'section'  => 'colormag_primary_color_setting',
 		'settings' => 'colormag_primary_color',
 	) ) );
+
+	// Color Skin
+	$wp_customize->add_section( 'colormag_color_skin_setting_section', array(
+		'priority' => 6,
+		'title'    => esc_html__( 'Skin Color', 'colormag' ),
+		'panel'    => 'colormag_design_options',
+	) );
+
+	$wp_customize->add_setting( 'colormag_color_skin_setting', array(
+		'default'           => 'white',
+		'capability'        => 'edit_theme_options',
+		'sanitize_callback' => 'colormag_radio_select_sanitize',
+	) );
+
+	$wp_customize->add_control( 'colormag_color_skin_setting', array(
+		'type'    => 'radio',
+		'label'   => esc_html__( 'Choose the color skin for your site.', 'colormag' ),
+		'choices' => array(
+			'white' => esc_html__( 'White Skin', 'colormag' ),
+			'dark'  => esc_html__( 'Dark Skin', 'colormag' ),
+		),
+		'section' => 'colormag_color_skin_setting_section',
+	) );
 
 	if ( ! function_exists( 'wp_update_custom_css_post' ) ) {
 
@@ -618,6 +683,7 @@ function colormag_customize_register( $wp_customize ) {
 		'default'           => 0,
 		'capability'        => 'edit_theme_options',
 		'sanitize_callback' => 'colormag_checkbox_sanitize',
+		'transport'         => $customizer_selective_refresh,
 	) );
 
 	$wp_customize->add_control( 'colormag_social_link_activate', array(
@@ -626,6 +692,14 @@ function colormag_customize_register( $wp_customize ) {
 		'section'  => 'colormag_social_link_activate_settings',
 		'settings' => 'colormag_social_link_activate',
 	) );
+
+	// Selective refresh for displaying social icons/links
+	if ( isset( $wp_customize->selective_refresh ) ) {
+		$wp_customize->selective_refresh->add_partial( 'colormag_social_link_activate', array(
+			'selector'        => '.social-links',
+			'render_callback' => '',
+		) );
+	}
 
 	$colormag_social_links = array(
 		'colormag_social_facebook'   => array(
@@ -664,30 +738,30 @@ function colormag_customize_register( $wp_customize ) {
 
 	foreach ( $colormag_social_links as $colormag_social_link ) {
 
-		$wp_customize->add_setting( $colormag_social_link[ 'id' ], array(
-			'default'           => $colormag_social_link[ 'default' ],
+		$wp_customize->add_setting( $colormag_social_link['id'], array(
+			'default'           => $colormag_social_link['default'],
 			'capability'        => 'edit_theme_options',
 			'sanitize_callback' => 'esc_url_raw',
 		) );
 
-		$wp_customize->add_control( $colormag_social_link[ 'id' ], array(
-			'label'    => $colormag_social_link[ 'title' ],
+		$wp_customize->add_control( $colormag_social_link['id'], array(
+			'label'    => $colormag_social_link['title'],
 			'section'  => 'colormag_social_link_activate_settings',
-			'settings' => $colormag_social_link[ 'id' ],
+			'settings' => $colormag_social_link['id'],
 			'priority' => $i,
 		) );
 
-		$wp_customize->add_setting( $colormag_social_link[ 'id' ] . '_checkbox', array(
+		$wp_customize->add_setting( $colormag_social_link['id'] . '_checkbox', array(
 			'default'           => 0,
 			'capability'        => 'edit_theme_options',
 			'sanitize_callback' => 'colormag_checkbox_sanitize',
 		) );
 
-		$wp_customize->add_control( $colormag_social_link[ 'id' ] . '_checkbox', array(
+		$wp_customize->add_control( $colormag_social_link['id'] . '_checkbox', array(
 			'type'     => 'checkbox',
 			'label'    => __( 'Check to open in new tab', 'colormag' ),
 			'section'  => 'colormag_social_link_activate_settings',
-			'settings' => $colormag_social_link[ 'id' ] . '_checkbox',
+			'settings' => $colormag_social_link['id'] . '_checkbox',
 			'priority' => $i,
 		) );
 
@@ -713,6 +787,7 @@ function colormag_customize_register( $wp_customize ) {
 		'default'           => 'type_one',
 		'capability'        => 'edit_theme_options',
 		'sanitize_callback' => 'colormag_radio_select_sanitize',
+		'transport'         => 'postMessage',
 	) );
 
 	$wp_customize->add_control( 'colormag_main_footer_layout_display_type', array(
@@ -778,6 +853,7 @@ function colormag_customize_register( $wp_customize ) {
 		'default'           => 0,
 		'capability'        => 'edit_theme_options',
 		'sanitize_callback' => 'colormag_checkbox_sanitize',
+		'transport'         => $customizer_selective_refresh,
 	) );
 
 	$wp_customize->add_control( 'colormag_related_posts_activate', array(
@@ -786,6 +862,14 @@ function colormag_customize_register( $wp_customize ) {
 		'section'  => 'colormag_related_posts_section',
 		'settings' => 'colormag_related_posts_activate',
 	) );
+
+	// Selective refresh for related posts feature
+	if ( isset( $wp_customize->selective_refresh ) ) {
+		$wp_customize->selective_refresh->add_partial( 'colormag_related_posts_activate', array(
+			'selector'        => '.related-posts',
+			'render_callback' => '',
+		) );
+	}
 
 	$wp_customize->add_setting( 'colormag_related_posts', array(
 		'default'           => 'categories',
@@ -975,6 +1059,18 @@ function colormag_customize_register( $wp_customize ) {
 
 add_action( 'customize_register', 'colormag_customize_register' );
 
+/**
+ * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
+ *
+ * @since ColorMag 1.2.4
+ */
+
+function colormag_customize_preview_js() {
+	wp_enqueue_script( 'colormag-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), false, true );
+}
+
+add_action( 'customize_preview_init', 'colormag_customize_preview_js' );
+
 /* * ************************************************************************************** */
 
 /**
@@ -993,6 +1089,24 @@ function colormag_customize_partial_blogname() {
  */
 function colormag_customize_partial_blogdescription() {
 	bloginfo( 'description' );
+}
+
+/**
+ * Render the breaking news display type for selective refresh partial
+ *
+ * @return void
+ */
+function colormag_date_display_type() {
+	// Return if date display option is not enabled
+	if ( get_theme_mod( 'colormag_date_display', 0 ) == 0 ) {
+		return;
+	}
+
+	if ( get_theme_mod( 'colormag_date_display_type', 'theme_default' ) == 'theme_default' ) {
+		echo date_i18n( 'l, F j, Y' );
+	} else if ( get_theme_mod( 'colormag_date_display_type', 'theme_default' ) == 'wordpress_date_setting' ) {
+		echo date_i18n( get_option( 'date_format' ) );
+	}
 }
 
 /* * ************************************************************************************** */

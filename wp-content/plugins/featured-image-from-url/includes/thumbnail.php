@@ -6,6 +6,8 @@ add_filter('wp_head', 'fifu_add_sirv_js');
 add_filter('wp_head', 'fifu_apply_css');
 
 function fifu_add_js() {
+    wp_register_script('lazyload', plugins_url('/html/js/jquery.lazyloadxt.extra.js', __FILE__), array('jquery'));
+    wp_enqueue_script('lazyload');
     include 'html/script.html';
 }
 

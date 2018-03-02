@@ -35,7 +35,7 @@
                             onclick="invert('get_first')" 
                             name="fifu_toggle_get_first" 
                             class="<?php echo $enable_get_first; ?>" 
-                            value=" " style="display:block">
+                            value="" style="display:block">
 
                         <input 
                             type="hidden" 
@@ -61,7 +61,7 @@
                             onclick="invert('pop_first')" 
                             name="fifu_toggle_pop_first" 
                             class="<?php echo $enable_pop_first; ?>" 
-                            value=" " style="display:block">
+                            value="" style="display:block">
 
                         <input 
                             type="hidden"
@@ -87,7 +87,7 @@
                             onclick="invert('ovw_first')" 
                             name="fifu_toggle_ovw_first" 
                             class="<?php echo $enable_ovw_first; ?>" 
-                            value=" " style="display:block">
+                            value="" style="display:block">
 
                         <input 
                             type="hidden"
@@ -116,7 +116,7 @@
         <table style="text-align:left">
             <tr>
                 <th>
-                    <input type="text" value=" " style="width:35px">
+                    <input type="text" value="" style="width:35px">
                     <input type="submit" value="OK" >
                 </th>
                 <th>   
@@ -129,7 +129,7 @@
                         type="image" 
                         href="javascript:void(0)" 
                         class="toggleoff" 
-                        value=" "
+                        value=""
                         style="display:block">
                 </th>
                 <th>   
@@ -142,7 +142,7 @@
                         type="image" 
                         href="javascript:void(0)" 
                         class="toggleoff" 
-                        value=" "
+                        value=""
                         style="display:block">
                 </th>
                 <th>   
@@ -169,7 +169,7 @@
                         type="image" 
                         href="javascript:void(0)" 
                         class="toggleoff" 
-                        value=" "
+                        value=""
                         style="display:block">
                 </th>
                 <th>   
@@ -216,7 +216,7 @@
                 onclick="invert('fake')" 
                 name="fifu_toggle_fake" 
                 class="<?php echo $enable_fake; ?>" 
-                value=" " 
+                value="" 
                 style="display:block" >
             <input 
                 type="hidden" 
@@ -258,7 +258,7 @@
                 onclick="invert('content')" 
                 name="fifu_toggle_content" 
                 class="<?php echo $enable_content; ?>" 
-                value=" "
+                value=""
                 style="display:block">
             <input 
                 type="hidden" 
@@ -288,7 +288,7 @@
                             onclick="invert('hide_page')" 
                             name="fifu_toggle_hide_page" 
                             class="<?php echo $enable_hide_page; ?>" 
-                            value=" " style="display:block">
+                            value="" style="display:block">
 
                         <input 
                             type="hidden" 
@@ -314,7 +314,7 @@
                             onclick="invert('hide_post')" 
                             name="fifu_toggle_hide_post" 
                             class="<?php echo $enable_hide_post; ?>" 
-                            value=" " style="display:block">
+                            value="" style="display:block">
 
                         <input 
                             type="hidden"
@@ -347,7 +347,7 @@
                 onclick="invert('lazy')" 
                 name="fifu_toggle_lazy" 
                 class="<?php echo $enable_lazy; ?>" 
-                value=" "
+                value=""
                 style="display:block">
             <input 
                 type="hidden" 
@@ -374,7 +374,7 @@
                 onclick="invert('social')" 
                 name="fifu_toggle_social" 
                 class="<?php echo $enable_social; ?>" 
-                value=" "
+                value=""
                 style="display:block">
             <input 
                 type="hidden" 
@@ -382,35 +382,6 @@
                 name="fifu_input_social" 
                 value="" >
         </form>
-    </div>
-
-    <div style="<?php echo show_woocommerce_box() ?>">
-        <div class="box">
-            <h2>WooCommerce Full Integration</h2>
-            <div class="greybox" id="grad1">
-                The External Featured Image box is already available on Product Editor. However the full integration is required if you want to include the External Product Gallery and use other WooCommerce resources, such as Lightbox. This free version supports WooCommerce 2.4/2.5 and the Premium version supports WooCommerce 3.
-            </div>
-            <br>
-            <form 
-                id="fifu_form_woocommerce" 
-                action="javascript:void(0)" 
-                method="post">
-                <input 
-                    type="image" 
-                    href="javascript:void(0)" 
-                    id="fifu_toggle_woocommerce" 
-                    onclick="invert('woocommerce')" 
-                    name="fifu_toggle_woocommerce" 
-                    class="<?php echo $enable_woocommerce; ?>" 
-                    value=" "
-                    style="display:block">
-                <input 
-                    type="hidden" 
-                    id="fifu_input_woocommerce" 
-                    name="fifu_input_woocommerce" 
-                    value="" >
-            </form>
-        </div>
     </div>
 
     <div class="box">
@@ -433,7 +404,7 @@
                             onclick="invert('wc_lbox')" 
                             name="fifu_toggle_wc_lbox" 
                             class="<?php echo $enable_wc_lbox; ?>" 
-                            value=" "
+                            value=""
                             style="display:block">
 
                         <input 
@@ -460,7 +431,7 @@
                             onclick="invert('wc_zoom')" 
                             name="fifu_toggle_wc_zoom" 
                             class="<?php echo $enable_wc_zoom; ?>" 
-                            value=" "
+                            value=""
                             style="display:block">
 
                         <input 
@@ -960,26 +931,11 @@
             Allows you to use use external images/videos on Product Categories Grid.
         </div>
         <br>
-        <form 
-            id="fifu_form_woocommerce" 
-            action="javascript:void(0)" 
-            method="post">
-            <input 
-                type="image" 
-                href="javascript:void(0)" 
-                id="fifu_toggle_woocommerce" 
-                onclick="invert('woocommerce')" 
-                name="fifu_toggle_woocommerce" 
-                class="<?php echo $enable_woocommerce; ?>" 
-                value=" "
-                style="display:block">
-
-            <input 
-                type="hidden" 
-                id="fifu_input_woocommerce" 
-                name="fifu_input_woocommerce" 
-                value="" >
-        </form>
+        <input 
+            type="image" 
+            href="javascript:void(0)" 
+            class="toggleoff" 
+            value="" style="display:block">
     </div>
 
     <div class="box">
@@ -996,7 +952,7 @@
                             id="fifu_toggle_slider_fade" 
                             name="fifu_toggle_slider_fade" 
                             class="toggleoff" 
-                            value=" " style="display:block">
+                            value="" style="display:block">
                     </th>
                     <th>   
                         fade effect
@@ -1010,7 +966,7 @@
                             id="fifu_toggle_slider_stop" 
                             name="fifu_toggle_slider_stop" 
                             class="toggleoff" 
-                            value=" " style="display:block">
+                            value="" style="display:block">
                     </th>
                     <th>   
                         pause autoplay on hover
@@ -1024,7 +980,7 @@
                             id="fifu_toggle_slider_ctrl" 
                             name="fifu_toggle_slider_ctrl" 
                             class="toggleoff" 
-                            value=" " style="display:block">
+                            value="" style="display:block">
                     </th>
                     <th>   
                         show prev/next buttons
@@ -1038,7 +994,7 @@
                             id="fifu_toggle_slider_auto" 
                             name="fifu_toggle_slider_auto" 
                             class="toggleoff" 
-                            value=" " style="display:block">
+                            value="" style="display:block">
                     </th>
                     <th>   
                         start to play automatically
@@ -1083,7 +1039,7 @@
             type="image" 
             href="javascript:void(0)" 
             class="toggleoff" 
-            value=" " style="display:block">
+            value="" style="display:block">
     </div>
 
     <div class="box">
@@ -1100,7 +1056,7 @@
                         type="image" 
                         href="javascript:void(0)" 
                         class="toggleoff" 
-                        value=" "
+                        value=""
                         style="display:block">
                 </th>
                 <th>   
@@ -1113,7 +1069,7 @@
                         type="image" 
                         href="javascript:void(0)" 
                         class="toggleoff" 
-                        value=" "
+                        value=""
                         style="display:block">
                 </th>
                 <th>   
@@ -1133,7 +1089,7 @@
             type="image" 
             href="javascript:void(0)" 
             class="toggleoff" 
-            value=" "
+            value=""
             style="display:block">
         </form>
     </div>

@@ -36,6 +36,11 @@ class WP_CSP extends WP_REST_Controller{
 	const OPTIONS_DELIMITER = "||";
 	
 	
+	const CSP_NOTINUSE = -1 ;
+	const CSP_ENABLED_ENFORCE = 0 ;
+	const CSP_ENABLED_REPORTONLY = 1 ;
+	const CSP_MODE_DEFAULT = WP_CSP::CSP_ENABLED_REPORTONLY;
+	
 	const LOGVIOLATIONS_IGNORE = 0 ;
 	const LOGVIOLATIONS_LOG_ALL = 1 ;
 	const LOGVIOLATIONS_LOG_10PERC = 10 ;
@@ -44,6 +49,12 @@ class WP_CSP extends WP_REST_Controller{
 	
 	const BLOCK_ALL_MIXED_CONTENT = 21 ;
 	const UPGRADE_INSECURE_REQUESTS = 22 ;
+	
+	const HSTS_NOT_IN_USE = 0 ;
+	const HSTS_USE_NO_OPTIONS = 1 ;
+	const HSTS_SUBDOMAINS= 2 ;
+	const HSTS_PRELOAD= 3 ;
+	const HSTS_SUBDOMAINS_AND_PRELOAD = 4 ;
 	
 	
 	const ROUTE_BASE = 'route';
@@ -57,47 +68,61 @@ class WP_CSP extends WP_REST_Controller{
 			'default-src' => array( 'label' => 'Default SRC' ,
 					'description' => "The default-src is the default policy for loading content such as JavaScript, Images, CSS, Font's, AJAX requests, Frames, HTML5 Media." ,
 			),
-			'script-src' => array( 'label' => 'Script SRC' ,
-					'description' => 'Defines valid sources of JavaScript.' ,
-			),
-			'style-src' => array( 'label' => 'Style SRC' ,
-					'description' => 'Defines valid sources of stylesheets.' ,
-			),
-			'img-src' => array( 'label' => 'Image SRC' ,
-					'description' => 'Defines valid sources of images.' ,
-			),
-			'font-src' => array( 'label' => 'Font SRC' ,
-					'description' => 'Defines valid sources of fonts.' ,
-			),
-			'frame-src' => array( 'label' => 'Frame SRC' ,
-					'description' => 'Defines valid sources for loading frames.' ,
-			),
-			'object-src' => array( 'label' => 'Object SRC' ,
-					'description' => 'Defines valid sources of plugins, eg &lt;object&gt;, &lt;embed&gt; or &lt;applet&gt;.' ,
+			'base-uri' => array( 'label' => 'Base URI' ,
+					'description' => "base-uri directive restricts the URLs which can be used in a document's <base> element. " ,
+					'fallback'	=> 'No. Not setting this allows anything.',
 			),
 			'connect-src' => array( 'label' => 'Connect SRC' ,
 					'description' => 'Applies to XMLHttpRequest (AJAX), WebSocket or EventSource. If not allowed the browser emulates a 400 HTTP status code.' ,
+					'fallback'	=> 'Yes. If this directive is absent, the user agent will look for the default-src directive.',
 			),
-			'media-src' => array( 'label' => 'Media SRC' ,
-					'description' => 'Defines valid sources of audio and video, eg HTML5 &lt;audio&gt;, &lt;video&gt; elements.' ,
-			),
-			'base-uri' => array( 'label' => 'Base URI' ,
-					'description' => "base-uri directive restricts the URLs which can be used in a document's <base> element. If this value is absent, then any URI is allowed. If this directive is absent, the user agent will use the value in the <base> element." ,
-			),
-			'manifest-src' => array( 'label' => 'Manifest SRC' ,
-					'description' => 'manifest-src directive specifies which manifest can be applied to the resource.' ,
-			),
-			'worker-src' => array( 'label' => 'Worker SRC' ,
-					'description' => 'worker-src directive specifies valid sources for Worker, SharedWorker, or ServiceWorker scripts.' ,
+			'font-src' => array( 'label' => 'Font SRC' ,
+					'description' => 'Defines valid sources of fonts.' ,
+					'fallback'	=> 'Yes. If this directive is absent, the user agent will look for the default-src directive.',
 			),
 			'form-action' => array( 'label' => 'Form Action' ,
 					'description' => 'The form-action restricts which URLs can be used as the action of HTML form elements.' ,
+					'fallback'	=> 'No. Not setting this allows anything.',
 			),
 			'frame-ancestors' => array( 'label' => 'Frame Ancestors' ,
 					'description' => 'The frame-ancestors directive indicates whether the user agent should allow embedding the resource using a frame, iframe, object, embed or applet element, or equivalent functionality in non-HTML resources.' ,
+					'fallback'	=> 'No. Not setting this allows anything.',
+			),
+			'frame-src' => array( 'label' => 'Frame SRC' ,
+					'description' => 'Defines valid sources for loading frames.' ,
+					'fallback' => 'If this directive is absent, the user agent will look for the child-src directive (which falls back to the default-src directive).',
+			),
+			'img-src' => array( 'label' => 'Image SRC' ,
+					'description' => 'Defines valid sources of images.' ,
+					'fallback'	=> 'Yes. If this directive is absent, the user agent will look for the default-src directive.',
+			),
+			'manifest-src' => array( 'label' => 'Manifest SRC' ,
+					'description' => 'manifest-src directive specifies which manifest can be applied to the resource.' ,
+					'fallback'	=> 'Yes. If this directive is absent, the user agent will look for the default-src directive.',
+			),
+			'media-src' => array( 'label' => 'Media SRC' ,
+					'description' => 'Defines valid sources of audio and video, eg HTML5 &lt;audio&gt;, &lt;video&gt; elements.' ,
+					'fallback'	=> 'Yes. If this directive is absent, the user agent will look for the default-src directive.',
+			),
+			'object-src' => array( 'label' => 'Object SRC' ,
+					'description' => 'Defines valid sources of plugins, eg &lt;object&gt;, &lt;embed&gt; or &lt;applet&gt;.' ,
+					'fallback'	=> 'Yes. If this directive is absent, the user agent will look for the default-src directive.',
 			),
 			'plugin-types' => array( 'label' => 'Plugin Types' ,
 					'description' => 'The plugin-types directive restricts the set of plugins that can be invoked by the protected resource by limiting the types of resources that can be embedded.' ,
+					'fallback'	=> 'No. Not setting this allows anything.',
+			),
+			'script-src' => array( 'label' => 'Script SRC' ,
+					'description' => 'Defines valid sources of JavaScript.' ,
+					'fallback'	=> 'Yes. If this directive is absent, the user agent will look for the default-src directive.',
+			),
+			'style-src' => array( 'label' => 'Style SRC' ,
+					'description' => 'Defines valid sources of stylesheets.' ,
+					'fallback'	=> 'Yes. If this directive is absent, the user agent will look for the default-src directive.',
+			),
+			'worker-src' => array( 'label' => 'Worker SRC' ,
+					'description' => 'worker-src directive specifies valid sources for Worker, SharedWorker, or ServiceWorker scripts.' ,
+					'fallback' => 'If this directive is absent, the user agent will first look for the child-src directive, then the script-src directive, then finally for the default-src directive, when governing worker execution.',
 			),
 	) ;
 	
@@ -111,11 +136,13 @@ class WP_CSP extends WP_REST_Controller{
 		
 		// Find the user set options from the database
 		$options = get_option( self::SETTINGS_OPTIONS_ALLOPTIONS );
-		$AddNonces = self::DoIAddNoncesToAllOptions($options);
 		
+		// Are we going to add nonces? If so we need to trap as much of the output as possible withut going overboard.
+		$AddNonces = self::DoIAddNoncesToAllOptions($options);
 		if ( $AddNonces ){
 			$HighestPriority = -1000; //PHP_INT_MIN +1 ;
 			$LowestPriority = PHP_INT_MAX -1 ;
+			
 			// Need to output buffer the contents as we can't filter the localize scripts code.
 			add_action('wp_head', array( __CLASS__,"ob_start"),$HighestPriority);
 			add_action('wp_head', array( __CLASS__,"ob_end_flush"),$LowestPriority);
@@ -126,10 +153,84 @@ class WP_CSP extends WP_REST_Controller{
 			add_action('shutdown', array( __CLASS__,"ob_start"), $HighestPriority );
 			add_action('shutdown', array( __CLASS__,"ob_end_flush"),$LowestPriority -1);
 			
-			// This routine stops our ob_end_flush() routine working properly.
+			// This routine stops our ob_end_flush() routine working properly - let's move it to after our ob_flush.
 			remove_action( 'shutdown',  'wp_ob_end_flush_all',  1    );
 			add_action( 'shutdown',    'wp_ob_end_flush_all',  $LowestPriority);
 		}
+		
+		// If we want to be on the HSTS Preload list we need to check the redirects are in the right order.
+		$IsHSTSPreload = self::IsHSTSPreloadConfigured($options);
+ 		if ( $IsHSTSPreload ){
+			add_filter( 'redirect_canonical', array( __CLASS__, 'redirect_canonical' ), 10,3);
+ 		}
+	}
+	
+	/**
+	 * Work out HSTS Preload redirect scheme. Has to go from non-SSL to SSL, then from mysite.com to www.mysite.com
+	 * @param string $redirect_url
+	 * @param string $requested_url
+	 * @return string
+	 */
+	public static function redirect_canonical( $redirect_url, $requested_url ) {
+		//redirect_canonical redirect_url: https://www.mysite.com/ requested_url: http://mysite.com/
+		
+		// For HSTS we can only redirect one step at a time.
+		if ( !empty( $_SERVER['SCRIPT_URI'] ) ) {
+			
+			// Figure out the current URL and the new URL - can't use the value passed to us by WordPress as they've already modified it a little
+			$RedirectURLParts = parse_url( $redirect_url);
+			$RequestURLParts = parse_url( $_SERVER['SCRIPT_URI'] );
+			
+			// If the scheme is changing then just do that one change.
+			if ( $RequestURLParts['scheme'] != $RedirectURLParts['scheme']) {
+				$RequestURLParts['scheme'] = $RedirectURLParts['scheme'] ;
+				$redirect_url = self::unparse_url($RequestURLParts);
+				// Have to add our own HSTS headers before we redirect.
+				self::add_header() ;
+			}
+			// If the host is changing then just do that one change.
+			elseif ( $RequestURLParts['host'] != $RedirectURLParts['host']) {
+				$RequestURLParts['host'] = $RedirectURLParts['host'] ;
+				$redirect_url = self::unparse_url($RequestURLParts);
+				// Have to add our own HSTS headers before we redirect.
+				self::add_header() ;
+			}
+			// Otherwise - if path or anything else changes that's OK.
+		}
+		return $redirect_url;
+	}
+	/**
+	 * rebuild the URL from the parse_url parts.
+	 * @param array $parsed_url
+	 * @return string
+	 */
+	private static function unparse_url($parsed_url) {
+		$scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+		$host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+		$port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+		$user     = isset($parsed_url['user']) ? $parsed_url['user'] : '';
+		$pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
+		$pass     = ($user || $pass) ? "$pass@" : '';
+		$path     = isset($parsed_url['path']) ? $parsed_url['path'] : '';
+		$query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+		$fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+		return "$scheme$user$pass$host$port$path$query$fragment";
+	} 
+	
+	/**
+	 * Are we trying to HSTS Preload?
+	 * @param array  $options
+	 * @return boolean
+	 */
+	public static function IsHSTSPreloadConfigured( $options ) {
+		$return = false ;
+		if ( isset( $options[ WP_CSP::SETTINGS_OPTIONS_STS_OPTIONS ] ) && WP_CSP::HSTS_SUBDOMAINS_AND_PRELOAD == $options[ WP_CSP::SETTINGS_OPTIONS_STS_OPTIONS ] ) {
+			$HSTS_ExpirySeconds = !empty( $options[ WP_CSP::SETTINGS_OPTIONS_STS_MAXAGE] ) ? $options[ WP_CSP::SETTINGS_OPTIONS_STS_MAXAGE] : '' ;
+			if ( $HSTS_ExpirySeconds >= YEAR_IN_SECONDS ) {
+				$return = true ;
+			}
+		}
+		return $return;
 	}
 	
 	/**
@@ -149,14 +250,13 @@ class WP_CSP extends WP_REST_Controller{
 		return $content;
 	}
 	/**
-	 * Gets the contents from the buffer and tags it. Buffer is closed.
+	 * Gets the contents from the buffer and tags it. Buffer is closed. Remember to echo the string.
 	 * @return string
 	 */
 	public static function ob_end_flush() {
 		$content = ob_get_contents();
 		ob_end_clean();
 		$content = self::tag_string( $content );
-		//echo "Content: ". esc_html( $content ). "<br>\n";
 		echo $content;
 	}
 	
@@ -166,12 +266,14 @@ class WP_CSP extends WP_REST_Controller{
 	 * @return string
 	 */
 	public static function tag_string( $html){
-		$html = str_replace("<script","<script nonce=".self::getNonce() , $html );
-		$html = str_replace("<link","<link nonce=".self::getNonce() , $html );
-		$html = str_replace("<style","<style nonce=".self::getNonce() , $html );
-// 		$html = str_replace(" style="," nonce='".self::getNonce()."' style=", $html );
-		// Remove any double nonces added by accident.
-		$html = str_replace(" nonce=".self::getNonce()." nonce=".self::getNonce(), " nonce=".self::getNonce() ,$html);
+		$Replacements = array( // Add nonces to the places it needs to be added
+								"<script" => "<script nonce=".self::getNonce() , 
+								"<link" => "<link nonce=".self::getNonce() ,
+								"<style" => "<style nonce=".self::getNonce() ,
+								// Remove any double nonces added by accident.
+								" nonce=".self::getNonce()." nonce=".self::getNonce() => " nonce=".self::getNonce() ) ;
+
+		$html = str_replace( array_keys( $Replacements ), array_values( $Replacements ) ,$html);
 		return $html;
 	}
 	
@@ -225,14 +327,22 @@ class WP_CSP extends WP_REST_Controller{
 	 * Add the header to each page.
 	 */
 	public static function add_header() {
+		static $AlreadyAddedHeaders = false ;
+		
+		// Stop this routine being called multiple times.
+		if ( $AlreadyAddedHeaders ) {
+			return ;
+		}
+		$AlreadyAddedHeaders = true ;
+		
+		
 		// Find the user set options from the database
 		$options = get_option( self::SETTINGS_OPTIONS_ALLOPTIONS );
 		
 		$WP_Rest_Nonce =  wp_create_nonce( "wp_rest" );
-		//$ReportURI_ReportOnlyBase = site_url( "/wp-json/" . WP_CSP::ROUTE_NAMESPACE . "/" . WP_CSP::ROUTE_BASE . "/LogPolicyViolation" ) ;
 		$ReportURI_ReportOnlyBase = get_rest_url( null, WP_CSP::ROUTE_NAMESPACE . "/" . WP_CSP::ROUTE_BASE . "/LogPolicyViolation" );
 		$ReportURI_ThisServer = add_query_arg( array("_wpnonce" => $WP_Rest_Nonce), $ReportURI_ReportOnlyBase) ;
-
+		
 		// Work out the report URI - used a few times in the settings.
 		if ( empty( $options[ self::SETTINGS_OPTIONS_REPORT_URI_REPORTONLY ])){
 			$ReportURI_ReportOnly = $ReportURI_ThisServer ;
@@ -256,7 +366,7 @@ class WP_CSP extends WP_REST_Controller{
 			if ( in_array( "'self'", $CSPOptions)) {
 				$CSPOptions[] = site_url();
 			}
-			// If we have a strict dynamic setting then add a nonce 
+			// If we have a strict dynamic setting then add a nonce
 			if ( self::DoIAddNoncesToCSPPolicy($CSPOptions)) {
 				$CSPOptions[] = "'nonce-".self::getNonce()."'";
 			}
@@ -287,7 +397,7 @@ class WP_CSP extends WP_REST_Controller{
 				$CSPOutput[] =  "sandbox " . $SandboxOptions ;
 			}
 		}
-
+		
 		// Mixed Content - if its blank its not set, if its not blank then something needs outputting..
 		if ( !empty( $options[ self::SETTINGS_OPTIONS_MIXED_CONTENT]) ) {
 			switch( $options[ self::SETTINGS_OPTIONS_MIXED_CONTENT] ) {
@@ -335,19 +445,19 @@ class WP_CSP extends WP_REST_Controller{
 		}
 		
 		// Output the CSP header
-		$ReportOnly = isset( $options[ self::SETTINGS_OPTIONS_CSP_MODE] ) ? $options[ self::SETTINGS_OPTIONS_CSP_MODE ] : 0;
-		switch( $ReportOnly ) {
+		$CSPMode = isset( $options[ self::SETTINGS_OPTIONS_CSP_MODE] ) ? $options[ self::SETTINGS_OPTIONS_CSP_MODE ] : WP_CSP::CSP_MODE_DEFAULT;
+		switch( $CSPMode ) {
 			case "":
-			case -1: // Not In use - -1 because this was added after 0/1 were allocated.
+			case WP_CSP::CSP_NOTINUSE: // Not In use - -1 because this was added after 0/1 were allocated.
 				break ;
-			case 0:
+			case WP_CSP::CSP_ENABLED_ENFORCE:
 				// We want to log violations - set the correct URL to log the errors.
 				if ( $LogViolations === true ) {
 					$CSPOutput[] = "report-uri " . $ReportURI_Enforce  ;
 				}
 				header("Content-Security-Policy: " . implode( "; ", $CSPOutput ));
 				break ;
-			case 1:
+			case WP_CSP::CSP_ENABLED_REPORTONLY:
 				if ( $LogViolations === true ) {
 					$CSPOutput[] = "report-uri " . $ReportURI_ReportOnly  ;
 				}
@@ -356,9 +466,9 @@ class WP_CSP extends WP_REST_Controller{
 		}
 		
 		// Ensure all the header options are set before continuing.
-		$HeaderOptions = array( WP_CSP::SETTINGS_OPTIONS_EXPECTCT_OPTIONS, WP_CSP::SETTINGS_OPTIONS_STS_OPTIONS, WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS, 
+		$HeaderOptions = array( WP_CSP::SETTINGS_OPTIONS_EXPECTCT_OPTIONS, WP_CSP::SETTINGS_OPTIONS_STS_OPTIONS, WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS,
 				WP_CSP::SETTINGS_OPTIONS_XSS_PROTECTION, WP_CSP::SETTINGS_OPTIONS_CONTENT_TYPE_OPTIONS, WP_CSP::SETTINGS_OPTIONS_REFERRER_POLICY_OPTIONS ,
-				WP_CSP::SETTINGS_OPTIONS_EXPECTCT_MAXAGE, WP_CSP::SETTINGS_OPTIONS_STS_MAXAGE, 
+				WP_CSP::SETTINGS_OPTIONS_EXPECTCT_MAXAGE, WP_CSP::SETTINGS_OPTIONS_STS_MAXAGE,
 		) ;
 		foreach( $HeaderOptions as $HeaderOption ) {
 			if ( !isset( $options[ $HeaderOption ] ) || !is_numeric( $options[ $HeaderOption ] )){
@@ -380,18 +490,22 @@ class WP_CSP extends WP_REST_Controller{
 				header( "Expect-CT: enforce,max-age=$ExpectCTMaxAge,report-uri=$ReportURI_ReportOnly" );
 				break ;
 		}
+		// see https://hstspreload.org/
 		switch($options[ WP_CSP::SETTINGS_OPTIONS_STS_OPTIONS] ) {
 			case "":
-			case 0:
+			case WP_CSP::HSTS_NOT_IN_USE:
 				break ;
-			case 1: // Use with no options
+			case WP_CSP::HSTS_USE_NO_OPTIONS: // Use with no options
 				header( "Strict-Transport-Security: max-age=$STSMaxAge" );
 				break ;
-			case 2: // Include Sub Domains
+			case WP_CSP::HSTS_SUBDOMAINS: // Include Sub Domains
 				header( "Strict-Transport-Security: max-age=$STSMaxAge; includeSubDomains" );
 				break ;
-			case 3: // Preload
+			case WP_CSP::HSTS_PRELOAD: // Preload
 				header( "Strict-Transport-Security: max-age=$STSMaxAge; preload" );
+				break ;
+			case WP_CSP::HSTS_SUBDOMAINS_AND_PRELOAD: // Preload
+				header( "Strict-Transport-Security: max-age=$STSMaxAge; includeSubDomains; preload" );
 				break ;
 		}
 		switch( $options[ WP_CSP::SETTINGS_OPTIONS_FRAME_OPTIONS] ) {
@@ -412,7 +526,7 @@ class WP_CSP extends WP_REST_Controller{
 		switch($options[ WP_CSP::SETTINGS_OPTIONS_XSS_PROTECTION]  ) {
 			case "":
 			case 0:
-				break ;				
+				break ;
 			case 1: // 0 - Disable Filtering
 				header( "X-XSS-Protection: 0" );
 				break ;
@@ -542,24 +656,24 @@ class WP_CSP extends WP_REST_Controller{
 	 * Put an entry into the log table so the admin can figure out what to do wwith the violation.
 	 * @param array $CSPViolation
 	 */
-	private static function ProcessPolicyViolation( $CSPViolation ) {
+	public static function ProcessPolicyViolation( $CSPViolation ) {
 		
 		/*
 		 * csp-report: {document-uri: "https://staging.performanceplustire.com/packages/",…}}
-			csp-report
-				{document-uri			: "https://staging.performanceplustire.com/packages/",…}
-				blocked-uri				:	"eval"
-				column-number			:	266
-				disposition				:	"enforce"
-				document-uri			:	"https://staging.performanceplustire.com/packages/"
-				effective-directive		:	"script-src"
-				line-number				:	51
-				original-policy			:	"default-src 'self' https://staging.performanceplustire.com; script-src 'strict-dynamic' 'nonce-E4mbZyubjEoqQb6oiGOXomeVNLbMD5dGuux6BvGIe9BwDb09TDTiQfj1098m11itE5lfgGhprqZyElVWPdgKu57V2VSpXybtGqqAvNy9DtwWo1adQy5dlB2z01H2GgYN'; style-src 'unsafe-inline' https://ajax.googleapis.com https://staging.performanceplustire.com; img-src data: https://cdnstaging.performanceplustire.com https://insight.adsrvr.org https://secure.gravatar.com https://staging.performanceplustire.com https://stats.g.doubleclick.net https://www.google-analytics.com; font-src data: https://staging.performanceplustire.com; frame-src https://e1.fanplayr.com; child-src https://e1.fanplayr.com; connect-src https://api.rollbar.com https://staging.performanceplustire.com https://tracker.affirm.com https://www.google-analytics.com; block-all-mixed-content; report-uri https://staging.performanceplustire.com/wp-json/wpcsp/v1/route/LogPolicyViolation?_wpnonce=bfe10f966d"
-				referrer				:	"https://staging.performanceplustire.com/policies/"
-				script-sample			:	""
-				source-file				:	"https://s.btstatic.com"
-				status-code				:	0
-				violated-directive		:	"script-src"
+		 csp-report
+		 {document-uri			: "https://staging.performanceplustire.com/packages/",…}
+		 blocked-uri				:	"eval"
+		 column-number			:	266
+		 disposition				:	"enforce"
+		 document-uri			:	"https://staging.performanceplustire.com/packages/"
+		 effective-directive		:	"script-src"
+		 line-number				:	51
+		 original-policy			:	"default-src 'self' https://staging.performanceplustire.com; script-src 'strict-dynamic' 'nonce-E4mbZyubjEoqQb6oiGOXomeVNLbMD5dGuux6BvGIe9BwDb09TDTiQfj1098m11itE5lfgGhprqZyElVWPdgKu57V2VSpXybtGqqAvNy9DtwWo1adQy5dlB2z01H2GgYN'; style-src 'unsafe-inline' https://ajax.googleapis.com https://staging.performanceplustire.com; img-src data: https://cdnstaging.performanceplustire.com https://insight.adsrvr.org https://secure.gravatar.com https://staging.performanceplustire.com https://stats.g.doubleclick.net https://www.google-analytics.com; font-src data: https://staging.performanceplustire.com; frame-src https://e1.fanplayr.com; child-src https://e1.fanplayr.com; connect-src https://api.rollbar.com https://staging.performanceplustire.com https://tracker.affirm.com https://www.google-analytics.com; block-all-mixed-content; report-uri https://staging.performanceplustire.com/wp-json/wpcsp/v1/route/LogPolicyViolation?_wpnonce=bfe10f966d"
+		 referrer				:	"https://staging.performanceplustire.com/policies/"
+		 script-sample			:	""
+		 source-file				:	"https://s.btstatic.com"
+		 status-code				:	0
+		 violated-directive		:	"script-src"
 		 */
 		// Two bits of information we need to be able to log the violation.
 		$ViolatedDirective = '' ;
@@ -635,14 +749,15 @@ class WP_CSP extends WP_REST_Controller{
 			// Do we still want to log the violation?
 			if ( $LogViolation === true ) {
 				
+				$PrettyData = array() ;
 				// This is the extra information to help track down weird violations.
-				$PrettyData = "Violated Directive: " . $ViolatedDirective . " <br>\n" .
+				$PrettyData[] = "Violated Directive: " . $ViolatedDirective ;
 						"Blocked Host: " . $BlockedURI . " <br>\n"  ;
 				// Not sure we can handle blocking individual ports....
 				if ( isset( $URLParts['port'])) {
-					$PrettyData .= "Port Blocked: " . $URLParts['port'] . " <br>\n" ;
+					$PrettyData[] = "Port Blocked: " . $URLParts['port'] ;
 				}
-				$PrettyData .= print_r( $CSPViolation , true ) ;
+				$PrettyData[] = print_r( $CSPViolation , true ) ;
 				
 				// Insert the violation into the custom table.
 				global $wpdb;
@@ -657,7 +772,7 @@ class WP_CSP extends WP_REST_Controller{
 								'blocked_uri' => $BlockedURI ,
 								'useragent' => $UserAgent ,
 								'remoteaddress' => $RemoteAddress ,
-								'information' => $PrettyData ,
+								'information' => implode("<br>\n",$PrettyData ) ,
 						),
 						array(
 								'%s',
@@ -717,7 +832,7 @@ class WP_CSP extends WP_REST_Controller{
 		}
 		
 		// For matching against anything with a wildcard - remove the subdomain.
-		$URIHostnameWildcard = substr( $URIParts['host'] , strpos($URIParts['host'],"." )) ;
+		$URIHostnameWildcard = !empty( $URIParts['host'] ) ? substr( $URIParts['host'] , strpos($URIParts['host'],"." )) : '' ;
 		
 		// Split the path into path and file.
 		if ( empty( $URIParts['path'] )){
@@ -795,6 +910,9 @@ class WP_CSP extends WP_REST_Controller{
 				}
 				// Special options - not sure what to check
 				elseif ( $OptionURL == "'unsafe-eval'"){
+				}
+				// Special options - not sure what to check
+				elseif ( $OptionURL == "'unsafe-hashed-attributes'"){
 				}
 				// system set to not allow any connections therefore everything fails matching.
 				elseif ( $OptionURL == "'none'"){
@@ -876,7 +994,7 @@ class WP_CSP extends WP_REST_Controller{
 	 * @param array string $CSPOptions
 	 * @return boolean
 	 */
-	private static function DoIAddNoncesToCSPPolicy( $CSPOptions ) {
+	public static function DoIAddNoncesToCSPPolicy( $CSPOptions ) {
 		
 		$AddNonces = false ;
 		// If we have a strict dynamic setting then add a nonce
@@ -921,11 +1039,12 @@ class WP_CSP extends WP_REST_Controller{
 	}
 }
 
-add_action('init',array("WP_CSP","init"));
+$WP_CSP = new WP_CSP() ;
+add_action('init',array( $WP_CSP ,"init"));
 // If action "rest_api_init" hasn't run yet then use that, otherwise we have the route server in place, just register route
 if ( did_action('rest_api_init') == 0 ){
-	add_action('rest_api_init',array("WP_CSP","register_routes"));
+	add_action('rest_api_init',array($WP_CSP,"register_routes"));
 }
 else {
-	WP_CSP::register_routes();
+	$WP_CSP->register_routes();
 }

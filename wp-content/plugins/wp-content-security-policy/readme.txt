@@ -3,9 +3,9 @@ Contributors: dyland
 Donate link: None
 Tags: content security policy, csp
 Requires WP: 4.8
-Tested up to: 4.9
+Tested up to: 4.9.4
 Requires PHP: 5.3
-Stable tag: 2.1
+Stable tag: 2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 GitHub Plugin URI: https://github.com/dylandownhill/WP-Content-Security-Policy-Plugin
@@ -27,6 +27,8 @@ Adding CSP to your site will protect your visitors from:
 This plugin will help you set your CSP settings and will add them to the page the visitor requested. Policy violations will be logged in a database table which can be viewed via an admin page that supplies all the violations, along with counts. Buttons easily allow you to add the sites to your headers or to ignore them.
 
 This plugin also allows you to ignore sites that repeatedly violate your policies. For example, some tracking images will show as violating your policies, but you still don't want them to run, therefore you can block the site from showing up in your logs - note, however, that the browser will still call your server and your server will still spend resources processing the call.
+
+In addition, this plugin can help you to get on the **HSTS Preload** list - See https://hstspreload.org/ for details.
 
 = CSP Directives =
 
@@ -184,62 +186,13 @@ e.g.
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Visit the settings under 'Settings->Content Security Policy Options'. I recommend you run this plugin in 'report only' mode for a little while to help you set your CSP settings correctly.
 
+= To Upgrade =
+
+See the new CSP V3 tab on the admin page.
+
 == Upgrade Notice ==
 
-= Before You Start =
-
-I recommend you **move all styles and scripts into include files** - this will allow WP_CSP to approve the included file and will mean you can stop the browser running scripts that have been added to the page from an unknown source.
-
-With the advent of Content Security Policy version 3 the workings for CSP changed (note: this is the W3C CSP version 3, not the WP_CSP version). 
-* In CSP version 1 and 2 you have to declare each host name you trust individually, this works great for most sites; however, it can become an issue on sites that have a lot of advertizing or other content and you can end up with dozens of sites with permissions.
-* In CSP version 3 you declare the scripts and styles that you trust using a 'nonce' (random string of characters, different to Wordpress Nonces), they then pass on the trust to whatever they do. Nonces change on **every single page** refresh.
-
-Ideally you would use CSP version 3; however, a lot of scripts do not work well with CSP version 3, so you might have to revert to using version 2 syntax for now.
-Scripts that don't work with CSP version 3 includes "Revolution Slider" - let me know of any more with issues and I'll note them here.
-
-= CSP Version 3 =
-
-Version 3 uses 'nonce's to indicate which scripts and styles you trust to run on your site. When you set 'strict-dynamic' as your policy the plugin will:
-* Automatically generate a valid nonce for use by the plugin and by your code.
-* Automatically add the correct nonce to your CSP policy header.
-* Automatically tag all styles and scripts in your header and footer with the correct nonce value (wp_head() and wp_footer()).
-* Allow manual tagging of scripts/styles through additional functionality.
-
-= CSP v3 Additional Nonce Tagging =
-
-There are four additional ways to add the nonce to your code:
-1. Add your included script or stylesheet to the header or footer and the code will be tagged automatically (use wp_enqueue_scripts/wp_enqueue_style). If you use get_template_part() you can tag these through add_action too i.e.
-`<?php 
-add_action('wp_footer',function() {
-	get_template_part( 'track/part', 'trackfooter' );
-	get_template_part( 'track/part', 'anothertracker' );
-	get_template_part( 'track/part', 'paidads' );
-});?>
-<?php wp_footer(); ?>`
-
-1. have WP_CSP add the tagging automatically through output buffer capturing. i.e.
-`WP_CSP::ob_start();
-My scripts and styles
-WP_CSP::ob_end_flush()`
-
-1. Send the string through the WP_CSP auto tagging function
-`$content = do_shortcode('[rev_slider alias="homepage"]');
-echo WP_CSP::tag_string($content);`
-
-1. Add the nonce by hand:
-`<script async defer data-pin-hover="true" data-pin-round="true" data-pin-save="false" src="//assets.pinterest.com/js/pinit.js" **<?php if ( class_exists ('WP_CSP') ) { echo "nonce='".WP_CSP::getNonce() . "' "; } ?>**></script>`
-
-= CSP v3 Inline Scripts/Styles and Untaggable Code =
-
-Inline scripts and styles can be dangerous, you do not know which scripts wrote them and probably don't want them run if you can avoid it. 
-When you use 'script-dynamic', the "unsafe-eval" anh "unsafe-inline stop working and the browser will say in the console (your browser's developer tools console) "Note that 'unsafe-inline' is ignored if either a hash or nonce value is present in the source list."
-
-To fix this either:
-* Put all the scripts and/or style code into files and include the files. The include statements can be tagged.
-* If the browser returns "Either the 'unsafe-inline' keyword, a hash (**'sha256-h3SEZNZpOYg4jp6TCkoWN7Z477Qt3q1owH0SPbz+a4M='**), or a nonce ('nonce-...') is required to enable inline execution." - you can take the SHA number (including single quotes) and put that in the policy line.
-
-As of writing browsers do not report the SHA code in their error report to the server so you will have to add this by hand.
-
+See the new CSP V3 tab on the admin page.
 
 == Frequently Asked Questions ==
 
@@ -294,6 +247,19 @@ This is different for all sites. The plugin will automatically delete records ol
 Every error output by your browser is likely to result in a call to the server to log the error - if a page has 20 errors that's 20 calls to your server - this can be a lot of processing power. To avoid this change the "Log Violations" option from "Yes, All" to "Yes - 10%", "Yes - 1%', or "Yes - 0.1%" - in each case the plugin will randomly allow only a set fraction of your visitors to report errors back to the server, they're still enfored at the browser but no report will come back to your site.
 
 == Changelog ==
+
+= 2.3 =
+* Bug: CSP Enforced mode was getting lost due to 'empty()' check
+
+= 2.2 =
+* Moved CSP v3 information into tab on admin screen to make it easier to find
+* Grouped options on admin panels - added red border to make grouping obvious
+* Added HSTS preload option and warning text. Handle auto-redirect by WordPress.
+* Added support for 'unsafe-hashed-attributes' which is a W3C work in progress setting 
+* Bug: Undefined variables in admin screens
+* Bug: Display of errors for policies was breaking
+* Bug: internal link tester failed due to private function
+* Tested against WordPress 4.9.4
 
 = 2.1 =
 * Added full support for CSP version 3 - nonces, auto-tagging scripts and style tags, etc. See section **CSP v3 Additional Nonce Tagging**

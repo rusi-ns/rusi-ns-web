@@ -13,7 +13,6 @@ function fifu_insert_menu() {
 function fifu_get_menu_html() {
     $image_button = plugins_url() . '/featured-image-from-url/admin/images/onoff.jpg';
 
-    $enable_woocommerce = get_option('fifu_woocommerce');
     $enable_social = get_option('fifu_social');
     $enable_lazy = get_option('fifu_lazy');
     $enable_content = get_option('fifu_content');
@@ -35,8 +34,6 @@ function fifu_get_menu_html() {
 
     fifu_update_menu_options();
 
-    fifu_script_woocommerce();
-
     if (get_option('fifu_fake') == 'toggleon')
         fifu_enable_fake();
     else
@@ -44,7 +41,6 @@ function fifu_get_menu_html() {
 }
 
 function fifu_get_menu_settings() {
-    fifu_get_setting('fifu_woocommerce');
     fifu_get_setting('fifu_social');
     fifu_get_setting('fifu_lazy');
     fifu_get_setting('fifu_content');
@@ -78,7 +74,6 @@ function fifu_get_setting($type) {
 }
 
 function fifu_update_menu_options() {
-    fifu_update_option('fifu_input_woocommerce', 'fifu_woocommerce');
     fifu_update_option('fifu_input_social', 'fifu_social');
     fifu_update_option('fifu_input_lazy', 'fifu_lazy');
     fifu_update_option('fifu_input_content', 'fifu_content');
@@ -105,22 +100,6 @@ function fifu_update_option($input, $type) {
         else
             update_option($type, wp_strip_all_tags($_POST[$input]));
     }
-}
-
-function fifu_script_woocommerce() {
-    if (get_option('fifu_woocommerce') == 'toggleon') {
-        $command1 = "echo " . get_template_directory() . " > ../wp-content/plugins/featured-image-from-url/scripts/tmp.txt";
-        $command2 = "sh ../wp-content/plugins/featured-image-from-url/scripts/enableWoocommerce.sh";
-    } else {
-        $command1 = "sh ../wp-content/plugins/featured-image-from-url/scripts/disableWoocommerce.sh";
-        $command2 = "rm ../wp-content/plugins/featured-image-from-url/scripts/tmp.txt";
-    }
-    shell_exec($command1);
-    shell_exec($command2);
-}
-
-function show_woocommerce_box() {
-    return function_exists('WC') && WC()->version < 2.6 ? 'display:inline' : 'display:none';
 }
 
 function fifu_enable_fake() {

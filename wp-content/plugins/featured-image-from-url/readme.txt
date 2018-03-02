@@ -3,8 +3,8 @@ Contributors: marceljm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8BLDLZ3HDBGQG
 Tags: featured image, external featured image, featured image from url, url featured image, featured, image, external, url, flickr, s3, picasa, woocommerce, product image, product gallery, product, gallery, column, list, page, post, all, content, custom, type, custom post type, category, video, external video, youtube, vimeo, featured video, hover, effects, hover effects, sirv, wp all import, css, style, slider, thumbnail, social, network,  auto, publish, hide, first image, content, lightbox, size, grid, auto post thumbnail, link, uri, affiliate, wp, rest, api, wp rest api, lazy, load, google, drive, instagram, validation, jetpack, visual composer, play, pause, crop, resize, zoom, enable, disable
 Requires at least: 4.0
-Tested up to: 4.9.1
-Stable tag: 4.9.1
+Tested up to: 4.9.4
+Stable tag: 4.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -325,6 +325,12 @@ was removed. To finish, a Premium version is now been presented.
 = 1.7.2 =
 * Disable product lightbox and zoom.
 
+= 1.7.3 =
+* Bug fix.
+
+= 1.7.4 =
+* Bug fix: Instagram URLs. Scripts removed: no more support to WooCommerce 2.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -498,3 +504,9 @@ was removed. To finish, a Premium version is now been presented.
 
 = 1.7.2 =
 * Disable product lightbox and zoom.
+
+= 1.7.3 =
+* Bug fix.
+
+= 1.7.4 =
+* Bug fix: Instagram URLs. Scripts removed: no more support to WooCommerce 2.
