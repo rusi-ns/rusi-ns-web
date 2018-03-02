@@ -133,9 +133,9 @@ class PP_Options_Install {
 					$class = 'activating';
 					if ( $expire_days < 30 ) $is_err = true;
 					if ( $expire_days < 1 )
-						$msg = sprintf( __( 'Your support key (for plugin updates) will expire today. For information on renewal at a discounted rate, <a href="%2$s">click here</a>.', 'pp' ), $expire_days, 'admin.php?page=pp-settings&amp;pp_renewal=1' );
+						$msg = sprintf( __( 'Your support key (for plugin updates) will expire today. For information on renewal at a discounted rate, <a href="%s">click here</a>.', 'pp' ), $expire_days, 'admin.php?page=pp-settings&amp;pp_renewal=1' );
 					elseif ( $expire_days < 30 )
-						$msg = sprintf( __( 'Your support key (for plugin updates) will expire in %1$s days. For information on renewal at a discounted rate, <a href="%2$s">click here</a>.', 'pp' ), $expire_days, 'admin.php?page=pp-settings&amp;pp_renewal=1' );
+						$msg = sprintf( _n( 'Your support key (for plugin updates) will expire in %d day. For information on renewal at a discounted rate, <a href="%s">click here</a>.', 'Your support key (for plugin updates) will expire in %d days. For information on renewal at a discounted rate, <a href="%s">click here</a>.', $expire_days, 'pp' ), $expire_days, 'admin.php?page=pp-settings&amp;pp_renewal=1' );
 					else
 						$class = "activating hidden";
 				} elseif ( ! $activated ) {

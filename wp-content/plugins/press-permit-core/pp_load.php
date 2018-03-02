@@ -315,7 +315,10 @@ function pp_refresh_options() {
 	}
 	
 	foreach( array_keys($pp_site_options) as $key ) {
-		if ( is_serialized( $pp_site_options[$key] ) ) $pp_site_options[$key] = unserialize( $pp_site_options[$key] );
+		if ( is_serialized( $pp_site_options[$key] ) ) {
+			$pp_site_options[$key] = @unserialize( $pp_site_options[$key] );
+			if ( ! is_array($pp_site_options[$key]) ) unset( $pp_site_options[$key] );
+		}
 	}
 	
 	$pp_site_options = apply_filters( 'pp_options', $pp_site_options );

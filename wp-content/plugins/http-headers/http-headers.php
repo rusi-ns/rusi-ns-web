@@ -3,7 +3,7 @@
 Plugin Name: HTTP Headers
 Plugin URI: https://zinoui.com/blog/http-headers-for-wordpress
 Description: A plugin for HTTP headers management including security, access-control (CORS), caching, compression, and authentication.
-Version: 1.9.3
+Version: 1.9.4
 Author: Dimitar Ivanov
 Author URI: https://zinoui.com
 License: GPLv2 or later
@@ -609,6 +609,7 @@ function http_headers_admin() {
 function http_headers_option($option) {
     if (isset($_POST['hh_method']))
     {
+        check_admin_referer('http-headers-mtd-options');
 	# When method is changed
 		update_headers_directives();
 		update_auth_credentials();
@@ -622,23 +623,32 @@ function http_headers_option($option) {
 	# When particular header is changed
         switch (true) {
             case array_key_exists('hh_www_authenticate', $_POST):
+                check_admin_referer('http-headers-wwa-options');
 				update_auth_credentials();
 				update_auth_directives();
 				break;
             case array_key_exists('hh_content_encoding', $_POST):
+                check_admin_referer('http-headers-ce-options');
+                update_content_encoding_directives();
+                break;
             case array_key_exists('hh_vary', $_POST):
+                check_admin_referer('http-headers-vary-options');
 				update_content_encoding_directives();
 				break;
             case array_key_exists('hh_expires', $_POST):
+                check_admin_referer('http-headers-exp-options');
 				update_expires_directives();
 				break;
             case array_key_exists('hh_cookie_security', $_POST):
+                check_admin_referer('http-headers-cose-options');
 				update_cookie_security_directives();
 				break;
             case array_key_exists('hh_timing_allow_origin', $_POST):
+                check_admin_referer('http-headers-tao-options');
 				update_timing_directives();
 				break;
             case array_key_exists('option_page', $_POST) && strpos($_POST['option_page'], 'http-headers-') === 0:
+                check_admin_referer($_POST['option_page'].'-options');
 				update_headers_directives();
                 break;
 		}
@@ -1131,7 +1141,9 @@ function http_headers_enqueue($hook) {
 
 function http_headers_ajax_inspect() {
     check_ajax_referer('inspect');
-    include 'views/ajax-inspect.php';
+    if (current_user_can('manage_options')) {
+    	include 'views/ajax-inspect.php';
+    }
     wp_die();
 }
 

@@ -4,7 +4,7 @@ jQuery(document).ready( function($) {
 	var all_exceptiondata = [];
 	var xid = -1;
 	
-	$('ul.categorychecklist ul.children li[style="display:none"').parent().prevAll('input.menu-item-checkbox').next('span').html(' + ');
+	$('ul.categorychecklist ul.children li[style="display:none"]').parent().prevAll('input.menu-item-checkbox').next('span').html(' + ');
 	
 	$('input.menu-item-checkbox').nextAll('span').click( function(e) {
 		$(this).parent().children('ul.children').children('li').toggle();

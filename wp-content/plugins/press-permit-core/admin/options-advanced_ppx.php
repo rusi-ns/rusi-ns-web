@@ -292,19 +292,15 @@ class PP_Options_Advanced {
 			// don't display the section unless constants are defined or WP_DEBUG set
 			include_once( PPC_ABSPATH . '/pp-constants.php');
 			
-			$pp_defined_constants_by_type = $pp_constants_by_type;
+			$defined_constant_types = array();
 			
-			foreach( $pp_defined_constants_by_type as $const_type => $constants ) {
-				$any_defined = false;
+			foreach( $pp_constants_by_type as $const_type => $constants ) {
 				foreach( $constants as $const_name ) {
-					if ( defined( $const_name ) && empty( $pp_constants[$const_name]->suppress_display ) ) {
+					if ( defined( $const_name ) ) {
 						$defined_constant_types[$const_type] = true;
-						$any_defined = true;
 						break;
 					}
 				}
-				
-				if ( ! $any_defined ) unset( $pp_defined_constants_by_type[ $const_type ] );
 			}
 			
 			if ( $defined_constant_types || ( defined( 'PP_DEBUG' ) && PP_DEBUG ) ) :?>
@@ -321,7 +317,7 @@ class PP_Options_Advanced {
 				<tbody>
 				
 				<?php
-				foreach( $pp_defined_constants_by_type as $const_type => $constants ) :?>
+				foreach( array_keys( $defined_constant_types ) as $const_type ) :?>
 					<tr class="const-section">
 					<td>--- <?php echo $pp_constant_types[$const_type];?> ---</td>
 					<td></td>
@@ -329,12 +325,8 @@ class PP_Options_Advanced {
 					</tr>
 				
 					<?php
-					foreach( $constants as $const_name ) :
-						if ( ! isset( $pp_constants[$const_name] ) ) continue;
-					
-						if ( ! defined( $const_name ) ) continue;
-						
-						if ( ! empty( $pp_constants[$const_name]->suppress_display ) ) continue;
+					foreach( $pp_constants_by_type[$const_type] as $const_name ) :
+						if ( ! defined( $const_name ) || ! isset( $pp_constants[$const_name] ) || ! empty( $pp_constants[$const_name]->suppress_display ) ) continue;
 					?>
 						<tr>
 						<td class="cap-name"><?php echo $const_name;?></td>
@@ -346,7 +338,6 @@ class PP_Options_Advanced {
 				</tbody>
 			</table>
 			
-			<?php if( $pp_defined_constants_by_type || ( defined( 'PP_DEBUG' ) && PP_DEBUG ) ):?>
 			<br />
 			<table id="pp_available_constants" class="pp_cap_descripts">
 				<thead>
@@ -360,7 +351,6 @@ class PP_Options_Advanced {
 				
 				<?php
 				foreach( $pp_constants_by_type as $const_type => $constants ) :
-					if ( empty( $pp_defined_constants_by_type[$const_type] ) && ( ! defined( 'PP_DEBUG' ) || ! PP_DEBUG ) ) continue;
 				?>
 					<?php if( isset( $pp_constant_types[$const_type] ) ):?>
 					<tr class="const-section">
@@ -372,10 +362,8 @@ class PP_Options_Advanced {
 				
 					<?php
 					foreach( $constants as $const_name ) :
-						if ( ! isset( $pp_constants[$const_name] ) ) continue;
-					
-						if ( ! empty( $pp_constants[$const_name]->suppress_display ) ) continue;
-					
+						if ( ! isset( $pp_constants[$const_name] ) || ! empty( $pp_constants[$const_name]->suppress_display ) ) continue;
+						
 						$class = ( defined( $const_name ) ) ? ' defined' : '';
 					?>
 						<tr>
@@ -387,7 +375,6 @@ class PP_Options_Advanced {
 				<?php endforeach;?>
 				</tbody>
 			</table>
-			<?php endif;?>
 			
 			</td></tr>
 			<?php endif; // display constants section

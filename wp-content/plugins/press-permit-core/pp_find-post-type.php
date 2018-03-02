@@ -4,7 +4,7 @@ class PP_Find {
 		if ( defined('DOING_AJAX') && DOING_AJAX ) { // todo: separate function to eliminate redundancy with PP_QueryInterceptor::flt_posts_clauses()
 			$ajax_post_types = apply_filters( 'pp_ajax_post_types', array( 'ai1ec_doing_ajax' => 'ai1ec_event' ) );
 			foreach( array_keys($ajax_post_types) as $arg ) {
-				if ( ! empty( $_REQUEST[$arg] ) || ( $arg == $_REQUEST['action'] ) )
+				if ( ! empty( $_REQUEST[$arg] ) || ( ! empty( $_REQUEST['action'] ) && ( $arg == $_REQUEST['action'] ) ) )
 					return $ajax_post_types[$arg];
 			}
 		}

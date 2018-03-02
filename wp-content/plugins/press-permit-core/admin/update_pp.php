@@ -146,15 +146,8 @@ class PP_Updated {
 				global $wpdb;
 				$wpdb->update( $wpdb->ppc_exceptions, array( 'for_item_status' => '' ), array( 'via_item_source' => 'post' ) );	  // fix importer glitch
 				
-				/*
 				// delete orphaned exceptions
-				if ( $orphan_ids = $wpdb->get_col( 
-					"SELECT eitem_id FROM $wpdb->ppc_exception_items AS i INNER JOIN $wpdb->ppc_exceptions AS e ON e.exception_id = i.exception_id " 
-					. "WHERE ( e.via_item_source = 'post' AND i.item_id NOT IN ( SELECT ID FROM $wpdb->posts ) ) OR ( e.via_item_source = 'term' AND i.item_id NOT IN ( SELECT term_taxonomy_id FROM $wpdb->term_taxonomy ) )"
-				) ) {
-					$wpdb->query( "DELETE FROM $wpdb->ppc_exception_items WHERE eitem_id IN ('" . implode( "','", $orphan_ids ) . "')" );
-				}
-				*/
+				//self::delete_orphaned_exceptions();
 				
 				// force regen of buffered ancestors array (prev versions botched it when tt_id != term_id)
 				$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '%_ancestors_pp'" );
@@ -181,6 +174,17 @@ class PP_Updated {
 		*/
 	}
 
+	public static function delete_orphaned_exceptions() {
+		global $wpdb;
+		
+		if ( $orphan_ids = $wpdb->get_col( 
+			"SELECT eitem_id FROM $wpdb->ppc_exception_items AS i INNER JOIN $wpdb->ppc_exceptions AS e ON e.exception_id = i.exception_id " 
+			. "WHERE ( e.via_item_source = 'post' AND i.item_id NOT IN ( SELECT ID FROM $wpdb->posts ) ) OR ( e.via_item_source = 'term' AND i.item_id NOT IN ( SELECT term_taxonomy_id FROM $wpdb->term_taxonomy ) )"
+		) ) {
+			$wpdb->query( "DELETE FROM $wpdb->ppc_exception_items WHERE eitem_id IN ('" . implode( "','", $orphan_ids ) . "')" );
+		}
+	}
+	
 	public static function drop_group_indexes_sql() {
 		global $wpdb;
 	

@@ -4,7 +4,7 @@ Donate link: https://zinoui.com/donation
 Tags: custom headers, http headers, headers, security, http header, header, cross domain, cors, xss, clickjacking, mitm, cross origin, cross site, privacy, p3p, hsts, referrer, csp, caching, compression, access control, authentication
 Requires at least: 3.2
 Tested up to: 4.9.1
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv2 or later
 
 HTTP Headers adds CORS & security HTTP headers to your website.
@@ -78,6 +78,11 @@ These HTTP headers are being used in production services by popular websites as 
 Updates are on they way, so stay tuned at [@DimitarIvanov](https://twitter.com/DimitarIvanov)
 
 == Changelog ==
+
+= 1.9.4 =
+*Release Date - 13th January, 2018*
+
+* In-plugin security improvement
 
 = 1.9.3 =
 *Release Date - 10th January, 2018*

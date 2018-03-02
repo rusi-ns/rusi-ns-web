@@ -4,8 +4,8 @@ Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JWZVF
 Tags: restrict, access, permissions, cms, user, private, category, pages, privacy, capabilities, role, scoper
 License: GPLv3
 Requires at least: 3.4
-Tested up to: 4.9
-Stable tag: 2.4
+Tested up to: 4.9.1
+Stable tag: 2.4.1
 
 Advanced yet accessible content permissions. Give users or groups type-specific roles. Enable or block access for specific posts or terms.
 
@@ -49,6 +49,12 @@ Pro [extensions](http://presspermit.com/extensions) are [available](http://press
 Initial production release
 
 == Changelog ==
+
+= 2.4.1 - 13 Dec 2017 =
+* Fixed : Edit Permissions screen : javascript error on Safari browser
+* Fixed : PHP Notice if a serialized PP settings array stored in wp_options table is corrupted
+* Fixed : Compat - PHP Notice for undefined index in pp_find-post-type.php, with some third party plugins
+* Fixed : PHP Notice in Permissions > Settings
 
 = 2.4 - 14 Nov 2017 =
 * Feature : Collapsible page selection tree on Edit Permissions screen, defaults visible depth toward a target of 50 visible pages (or as defined by PP_ITEM_MENU_DEFAULT_MAX_VISIBLE constant) 

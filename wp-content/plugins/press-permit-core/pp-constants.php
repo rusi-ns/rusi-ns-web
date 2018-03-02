@@ -97,15 +97,17 @@ $pp_constants_by_type = array();
 global $pp_constant_types;
 $pp_constant_types = array();
 foreach( $pp_constants as $name => $const ) {
-	if ( ! isset( $pp_constant_types[ $const->type ] ) && empty( $const->suppress_display ) ) {
-		$pp_constant_types[ $const->type ] = ucwords( str_replace( '-', ' ', $const->type ) );
+	if ( empty( $const->suppress_display ) ) {
+		if ( ! isset( $pp_constant_types[ $const->type ] ) ) {
+			$pp_constant_types[ $const->type ] = ucwords( str_replace( '-', ' ', $const->type ) );
+			
+			foreach( array( '-' => ' ', 'Pp' => 'PP', 'Wp' => 'WP', 'Ui' => 'UI' ) as $find => $repl )
+				$pp_constant_types[ $const->type ] = ucwords( str_replace( $find, $repl, $pp_constant_types[ $const->type ] ) );
+		}
 		
-		foreach( array( '-' => ' ', 'Pp' => 'PP', 'Wp' => 'WP', 'Ui' => 'UI' ) as $find => $repl )
-			$pp_constant_types[ $const->type ] = ucwords( str_replace( $find, $repl, $pp_constant_types[ $const->type ] ) );
+		if ( ! isset( $pp_constants_by_type[ $const->type ] ) ) $pp_constants_by_type[ $const->type ] = array();
+		
+		$pp_constants_by_type[ $const->type ][]= $name;
 	}
-	
-	if ( ! isset( $pp_constants_by_type[ $const->type ] ) ) $pp_constants_by_type[ $const->type ] = array();
-	
-	$pp_constants_by_type[ $const->type ][]= $name; 
 }
 $pp_constant_types = apply_filters( 'pp_constant_types', $pp_constant_types );
