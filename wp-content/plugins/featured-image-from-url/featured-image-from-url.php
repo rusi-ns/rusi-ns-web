@@ -2,10 +2,11 @@
 
 /*
  * Plugin Name: Featured Image From URL
+ * Plugin URI: http://featuredimagefromurl.com/
  * Description: Use an external image as Featured Image of your post/page/custom post type (WooCommerce). Includes Auto Set (External Post), Product Gallery, Social Tags and more.
- * Version: 1.7.4
+ * Version: 1.8.1
  * Author: Marcel Jacques Machado 
- * Author URI: http://featuredimagefromurl.com/
+ * Author URI: https://www.linkedin.com/in/marceljm/
  */
 
 define('FIFU_PLUGIN_DIR', plugin_dir_path(__FILE__));
