@@ -5,6 +5,7 @@ WP-Cache Config Sample File
 See wp-cache.php for author details.
 */
 
+$wp_cache_mobile_groups = '';
 $wp_cache_home_path = '/';
 $wp_cache_slash_check = 1;
 $cache_page_secret = '794600ca886974100e1fe3a0dd2b38a5';
@@ -43,7 +44,7 @@ if ( '/' != substr($cache_path, -1)) {
 
 $wp_cache_mobile = 0;
 $wp_cache_mobile_whitelist = 'Stand Alone/QNws';
-$wp_cache_mobile_browsers = 'Android, 2.0 MMP, 240x320, AvantGo, BlackBerry, Blazer, Cellphone, Danger, DoCoMo, Elaine/3.0, EudoraWeb, hiptop, IEMobile, iPhone, iPod, KYOCERA/WX310K, LG/U990, MIDP-2.0, MMEF20, MOT-V, NetFront, Newt, Nintendo Wii, Nitro, Nokia, Opera Mini, Palm, Playstation Portable, portalmmm, Proxinet, ProxiNet, SHARP-TQ-GX10, Small, SonyEricsson, Symbian OS, SymbianOS, TS21i-10, UP.Browser, UP.Link, Windows CE, WinWAP';
+$wp_cache_mobile_browsers = '2.0 MMP, 240x320, 400X240, AvantGo, BlackBerry, Blazer, Cellphone, Danger, DoCoMo, Elaine/3.0, EudoraWeb, Googlebot-Mobile, hiptop, IEMobile, KYOCERA/WX310K, LG/U990, MIDP-2., MMEF20, MOT-V, NetFront, Newt, Nintendo Wii, Nitro, Nokia, Opera Mini, Palm, PlayStation Portable, portalmmm, Proxinet, ProxiNet, SHARP-TQ-GX10, SHG-i900, Small, SonyEricsson, Symbian OS, SymbianOS, TS21i-10, UP.Browser, UP.Link, webOS, Windows CE, WinWAP, YahooSeeker/M1A1-R2D2, iPhone, iPod, Android, BlackBerry9530, LG-TU915 Obigo, LGE VX, webOS, Nokia5800';
 
 // change to relocate the supercache plugins directory
 $wp_cache_plugins_dir = WPCACHEHOME . 'plugins';
@@ -81,7 +82,7 @@ $wp_cache_hide_donation = 0;
 $wp_cache_not_logged_in = 0;
 $wp_cache_clear_on_post_edit = 1;
 $wp_cache_hello_world = 0;
-$wp_cache_mobile_enabled = 0;
+$wp_cache_mobile_enabled = 1;
 $wp_cache_cron_check = 1;
 $wp_cache_mfunc_enabled = 0;
 $wp_cache_make_known_anon = 0;
@@ -99,11 +100,11 @@ $wp_cache_preload_on = 1;
 $wp_cache_preload_taxonomies = 0;
 $wp_cache_preload_email_me = 0;
 $wp_cache_preload_email_volume = 'none';
-$wp_cache_mobile_prefixes = '';
+$wp_cache_mobile_prefixes = 'w3c , w3c-, acs-, alav, alca, amoi, audi, avan, benq, bird, blac, blaz, brew, cell, cldc, cmd-, dang, doco, eric, hipt, htc_, inno, ipaq, ipod, jigs, kddi, keji, leno, lg-c, lg-d, lg-g, lge-, lg/u, maui, maxo, midp, mits, mmef, mobi, mot-, moto, mwbp, nec-, newt, noki, palm, pana, pant, phil, play, port, prox, qwap, sage, sams, sany, sch-, sec-, send, seri, sgh-, shar, sie-, siem, smal, smar, sony, sph-, symb, t-mo, teli, tim-, tosh, tsm-, upg1, upsi, vk-v, voda, wap-, wapa, wapi, wapp, wapr, webc, winw, winw, xda , xda-';
 $cached_direct_pages = array(  );
 $wpsc_served_header = false;
 $cache_gc_email_me = 1;
-$wpsc_save_headers = 1;
+$wpsc_save_headers = 0;
 $cache_schedule_interval = 'daily';
 $wp_super_cache_comments = 1;
 ?>
