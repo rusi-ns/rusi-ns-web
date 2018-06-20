@@ -26,6 +26,7 @@ function fifu_get_menu_html() {
     $enable_pop_first = get_option('fifu_pop_first');
     $enable_ovw_first = get_option('fifu_ovw_first');
     $column_height = get_option('fifu_column_height');
+    $enable_priority = get_option('fifu_priority');
 
     $array_cpt = array();
     for ($x = 0; $x <= 4; $x++)
@@ -55,6 +56,7 @@ function fifu_get_menu_settings() {
     fifu_get_setting('fifu_pop_first');
     fifu_get_setting('fifu_ovw_first');
     fifu_get_setting('fifu_column_height');
+    fifu_get_setting('fifu_priority');
 
     for ($x = 0; $x <= 4; $x++)
         fifu_get_setting('fifu_cpt' . $x);
@@ -89,6 +91,7 @@ function fifu_update_menu_options() {
     fifu_update_option('fifu_input_pop_first', 'fifu_pop_first');
     fifu_update_option('fifu_input_ovw_first', 'fifu_ovw_first');
     fifu_update_option('fifu_input_column_height', 'fifu_column_height');
+    fifu_update_option('fifu_input_priority', 'fifu_priority');
 
     for ($x = 0; $x <= 4; $x++)
         fifu_update_option('fifu_input_cpt' . $x, 'fifu_cpt' . $x);

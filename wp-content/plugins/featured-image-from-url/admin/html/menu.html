@@ -136,24 +136,12 @@
         </form>
     </div>
 
-    <a name="default"></a>
-
     <div class="box">
-
         <h2>Default External Featured Image</h2>
-
         <div class="greybox">
-
             Here you can define the URL of a default external featured image that will be shown when you create/update a post/page/product without an internal/external featured image. 
-
-            <br><br>
-
-            <i>If this new FREE feature is useful to you, please cherish my work. Give FIFU a <a href="https://wordpress.org/support/view/plugin-reviews/featured-image-from-url?filter=5" target="_blank">5-star</a> rating!</i>
-
         </div>
-
         <br>
-
         <form 
             id="fifu_form_default_url" 
             action="javascript:void(0)" 
@@ -168,7 +156,6 @@
             <input type="submit" 
                    value="Submit" >
         </form>
-
     </div>
 
     <div class="box">
@@ -329,6 +316,47 @@
         </form>
     </div>
 
+    <a name="priority"></a>
+
+    <div class="box">
+        <h2>Priority</h2>
+        <div class="greybox" id="grad1">
+            Enable the toggle below to prioritize the internal image rather than the external one, if both exist.
+            <br><br>
+            <i>If this new FREE feature is useful to you, please cherish my work. Give FIFU a <a href="https://wordpress.org/support/view/plugin-reviews/featured-image-from-url?filter=5" target="_blank">5-star</a> rating!</i>            
+        </div>
+        <br>
+        <table style="text-align:left">
+            <tr>
+                <th>
+                    <form 
+                        id="fifu_form_priority" 
+                        action="javascript:void(0)" 
+                        method="post">
+                        <input 
+                            type="image" 
+                            href="javascript:void(0)" 
+                            id="fifu_toggle_priority" 
+                            onclick="invert('priority')" 
+                            name="fifu_toggle_priority" 
+                            class="<?php echo $enable_priority; ?>" 
+                            value=""
+                            style="display:block">
+
+                        <input 
+                            type="hidden"
+                            id="fifu_input_priority" 
+                            name="fifu_input_priority" 
+                            value="" >
+                    </form>
+                </th>
+                <th>   
+                    prioritize the internal image
+                </th>
+            </tr>             
+        </table>
+    </div>
+
     <div class="box">
         <h2>Social Tags</h2>
         <div class="greybox" id="grad1">
@@ -425,7 +453,9 @@
         <div class="greybox" id="grad1">
             You can use Featured Image from URL with WP All Import plugin. For that, use the custom field <b>fifu_image_url</b>.<br/><br/> The other custom fields supported by FIFU are listed below, in the section WP REST API > Plugin Fields.
             <br/><br/>
-            But if you have a list of URLs delimited by "|", it's possible to use that with the custom field <b>fifu_list_url</b>. In this case, the first image will be considered the featured image and the others will be in the product image gallery. For sliders, use <b>fifu_slider_list_url</b>.
+            <div class="greybox" id="grad2">
+                <b>Premium feature</b><br><br>But if you have a list of URLs delimited by "|", it's possible to use that with the custom field <b>fifu_list_url</b>. In this case, the first image will be considered the featured image and the others will be in the product image gallery. For sliders, use <b>fifu_slider_list_url</b>.
+            </div>
         </div>
     </div>
 

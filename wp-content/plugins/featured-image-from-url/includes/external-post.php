@@ -74,9 +74,7 @@ function fifu_first_url_in_content($post_id) {
     //double quotes
     $aux1 = explode('src="', $matches[0][0]);
     if ($aux1) {
-        error_log($aux1[1]);
         $aux2 = explode('"', $aux1[1]);
-        error_log($aux2[0]);
     }
 
     //single quotes
