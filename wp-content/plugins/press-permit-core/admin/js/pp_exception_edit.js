@@ -50,12 +50,12 @@ $('.pp-select-x-operation').hide();}
 var reload_via_type=function(){if($('select[name="pp_select_x_operation"]').val())
 x_ajax_ui('get_via_type_options',draw_via_types);else
 $('.pp-select-x-via-type').hide();}
-var reload_mod_type=function(){if($('select[name="pp_select_x_operation"]').val()){x_ajax_ui('get_mod_options',draw_mod_types);}else
+var reload_mod_type=function(){if($('select[name="pp_select_x_operation"]').val()){setTimeout(function(){x_ajax_ui('get_mod_options',draw_mod_types)},100);}else
 $('.pp-select-x-mod-type').hide();}
 var reload_assign_for=function(){if($('select[name="pp_select_x_for_type"]').val())
-x_ajax_ui('get_assign_for_ui',draw_assign_for);else
+setTimeout(function(){x_ajax_ui('get_assign_for_ui',draw_assign_for)},100);else
 $('.pp-select-x-assign-for').hide();}
-var reload_status=function(){var op=$('select[name="pp_select_x_operation"]').val();var mod_type=$('select[name="pp_select_x_mod_type"]').val();if(mod_type&&op){x_ajax_ui('get_status_ui',draw_status);if('include'==mod_type){$('input.add-to-top').show();$('input.add-to-top').parent().show();}else{$('input.add-to-top').hide();$('input.add-to-top').parent().hide();}}else
+var reload_status=function(){var op=$('select[name="pp_select_x_operation"]').val();var mod_type=$('select[name="pp_select_x_mod_type"]').val();if(mod_type&&op){setTimeout(function(){x_ajax_ui('get_status_ui',draw_status)},50);if('include'==mod_type){$('input.add-to-top').show();$('input.add-to-top').parent().show();}else{$('input.add-to-top').hide();$('input.add-to-top').parent().hide();}}else
 $('.pp-select-x-status').hide();if('include'==mod_type||(('exclude'==mod_type)&&('associate'==op))){$('td.pp-select-items input.menu-item-checkbox[value="0"]').closest('li').show();}else{$('td.pp-select-items input.menu-item-checkbox[value="0"]').closest('li').hide();}}
 $('select[name="pp_select_x_for_type"]').bind('change',reload_operation);$('select[name="pp_select_x_for_type"]').change(function(){$('.pp-select-items').hide();$('.pp-select-x-mod-type').hide();$('.pp-select-x-via-type').hide();$('.pp-select-x-status').hide();$('#pp_add_exception').css('width','auto');});$('select[name="pp_select_x_operation"]').bind('change',reload_via_type);$('select[name="pp_select_x_operation"]').bind('change',reload_mod_type);$('select[name="pp_select_x_operation"]').bind('change',reload_status);$('select[name="pp_select_x_mod_type"]').bind('change',reload_status);$('select[name="pp_select_x_via_type"]').bind('change',reload_status);$('select[name="pp_select_x_via_type"]').bind('change',reload_assign_for);$('select[name="pp_select_x_via_type"]').change(function(){$('#pp_add_exception .postbox').hide();if($(this).val()){var pp_via_type=$(this).val();$('#select-exception-'+pp_via_type).show();$('.pp-select-items').show();}else
 $('.pp-select-items').hide();$('#pp_add_exception').css('width','100%');$('input.menu-item-checkbox').prop('checked',false);});var draw_operations=function(data,txtStatus){sel=$('select[name="pp_select_x_operation"]');sel.html(data);sel.triggerHandler('change');$('.pp-select-x-operation').show();x_ajax_ui_done();}

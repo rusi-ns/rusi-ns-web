@@ -308,14 +308,16 @@ jQuery(document).ready( function($) {
 	
 	var reload_mod_type = function() {
 		if ( $('select[name="pp_select_x_operation"]').val() ) {
-			x_ajax_ui('get_mod_options',draw_mod_types);
+			//x_ajax_ui('get_mod_options',draw_mod_types);
+			setTimeout( function(){x_ajax_ui('get_mod_options',draw_mod_types)},100);
 		} else
 			$('.pp-select-x-mod-type').hide();
 	}
 	
 	var reload_assign_for = function() {
 		if ( $('select[name="pp_select_x_for_type"]').val() )
-			x_ajax_ui('get_assign_for_ui',draw_assign_for);
+			//x_ajax_ui('get_assign_for_ui',draw_assign_for);
+			setTimeout( function(){x_ajax_ui('get_assign_for_ui',draw_assign_for)},100);
 		else
 			$('.pp-select-x-assign-for').hide();
 	}
@@ -324,7 +326,8 @@ jQuery(document).ready( function($) {
 		var op = $('select[name="pp_select_x_operation"]').val();
 		var mod_type = $('select[name="pp_select_x_mod_type"]').val();
 		if ( mod_type && op ) {
-			x_ajax_ui('get_status_ui',draw_status);
+			//x_ajax_ui('get_status_ui',draw_status);
+			setTimeout( function(){x_ajax_ui('get_status_ui',draw_status)},50);
 			
 			if ( 'include' == mod_type ) {
 				$('input.add-to-top').show();

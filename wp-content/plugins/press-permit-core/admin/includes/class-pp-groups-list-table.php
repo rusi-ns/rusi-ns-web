@@ -86,17 +86,32 @@ class PP_Groups_List_Table extends PP_Groups_List_Table_Base {
 		return array();
 	}
 
+	private function deleted_roles_listed() {
+		global $wp_roles;
+		
+		foreach( $this->items as $group ) {
+			if ( ( 'wp_role' == $group->metagroup_type ) ) {
+				$role_name = $group->metagroup_id; // str_replace( 'wp_', '', $group->metagroup_id );
+				if ( ! in_array( $group->metagroup_id, array( 'wp_anon', 'wp_auth', 'wp_all' ) ) && ! in_array( $role_name, array_keys( $wp_roles->role_names ) ) ) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	function get_bulk_actions() {
 		$actions = array();
-
-		if ( current_user_can( 'pp_delete_groups' ) && ( empty($_REQUEST['group_variant']) || 'wp_role' != $_REQUEST['group_variant'] ) )
+		
+		if ( current_user_can( 'pp_delete_groups' ) && ( empty($_REQUEST['group_variant']) || 'wp_role' != $_REQUEST['group_variant'] || $this->deleted_roles_listed() ) )
 			$actions['delete'] = __( 'Delete', 'pp' );
 
 		return $actions;
 	}
 
 	function get_columns() {
-		$bulk_check_all = ( empty($_REQUEST['group_variant']) || 'wp_role' != $_REQUEST['group_variant'] ) ? '<input type="checkbox" />' : '';
+		$bulk_check_all = ( empty($_REQUEST['group_variant']) || 'wp_role' != $_REQUEST['group_variant'] || $this->deleted_roles_listed() ) ? '<input type="checkbox" />' : '';
 		
 		$c = array(
 			'cb'       => $bulk_check_all,
@@ -191,7 +206,8 @@ class PP_Groups_List_Table extends PP_Groups_List_Table_Base {
 		
 		$can_delete_group = $is_administrator || current_user_can( 'pp_delete_groups', $group_id );
 		
-		if ( $can_delete_group && ! $group_object->metagroup_id ) {
+		// allow metagroups for deleted / inactive wp roles to be deleted
+		if ( $can_delete_group && ( ! $group_object->metagroup_id || ( 'wp_role' == $group_object->metagroup_type && PP_GroupRetrieval::is_deleted_role( $group_object->metagroup_id ) ) ) ) {
 			$actions['delete'] = "<a class='submitdelete' href='" . wp_nonce_url( $base_url . "?page=pp-groups&amp;pp_action=delete{$agent_type_clause}&amp;group=$group_id", 'bulk-groups' ) . "'>" . __( 'Delete' ) . "</a>";
 		}
 
@@ -199,7 +215,7 @@ class PP_Groups_List_Table extends PP_Groups_List_Table_Base {
 		$edit .= $this->row_actions( $actions );
 
 		// Set up the checkbox ( because the group or group members are editable, otherwise it's empty )
-		if ( $actions && ! $group_object->metagroup_id )
+		if ( $actions && ( ! $group_object->metagroup_id || ( ( 'wp_role' == $group_object->metagroup_type ) && PP_GroupRetrieval::is_deleted_role( $group_object->metagroup_id ) ) ) )
 			$checkbox = "<input type='checkbox' name='groups[]' id='group_{$group_id}' value='{$group_id}' />";
 		else
 			$checkbox = '';

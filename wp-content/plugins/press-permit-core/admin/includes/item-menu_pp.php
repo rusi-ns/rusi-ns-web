@@ -186,9 +186,13 @@ function pp_nav_menu_item_post_type_meta_box( $object, $post_type ) {
 		?>" id="tabs-panel-posttype-<?php echo $post_type_name; ?>-search">
 			<?php
 			if ( isset( $_REQUEST['quick-search-posttype-' . $post_type_name] ) ) {
+				if ( function_exists( '_filter_query_attachment_filenames' ) ) add_filter( 'posts_clauses', '_filter_query_attachment_filenames' );
+				
 				$searched = esc_attr( $_REQUEST['quick-search-posttype-' . $post_type_name] );
 				$post_status = ( 'attachment' == $post_type_name ) ? 'inherit' : '';
-				$search_results = get_posts( array( 's' => $searched, 'post_type' => $post_type_name, 'fields' => 'all', 'order' => 'DESC', 'post_status' => $post_status ) );
+				$search_results = query_posts( array( 's' => $searched, 'post_type' => $post_type_name, 'fields' => 'all', 'order' => 'DESC', 'post_status' => $post_status ) );
+				
+				remove_filter( 'posts_clauses', '_filter_query_attachment_filenames' );
 			} else {
 				$searched = '';
 				$search_results = array();
@@ -723,8 +727,10 @@ function _pp_ajax_menu_quick_search() {
 			$status = ( 'attachment' == $matches[2] ) ? 'inherit' : '';
 			add_filter( 'posts_search', '_pp_item_menu_search_clause' );
 			
+			if ( function_exists( '_filter_query_attachment_filenames' ) ) add_filter( 'posts_clauses', '_filter_query_attachment_filenames' );
+			
 			query_posts(array(
-				'posts_per_page' => 99,
+				'posts_per_page' => 999,
 				'post_type' => $matches[2],
 				's' => $query,
 				'orderby' => 'title',

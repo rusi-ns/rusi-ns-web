@@ -64,8 +64,10 @@ case 'bulkdelete':
 	foreach ( $groupids as $id ) {
 		$id = (int) $id;
 		if ( $group = pp_get_group( $id, $agent_type ) ) {
-			echo "<li><input type=\"hidden\" name=\"users[]\" value=\"" . esc_attr($id) . "\" />" . sprintf(__('ID #%1s: %2s'), $id, $group->name) . "</li>\n";
-			$go_delete++;
+			if ( empty( $group->metagroup_type ) || ( 'wp_role' == $group->metagroup_type && PP_GroupRetrieval::is_deleted_role( $group->metagroup_id ) ) ) {
+				echo "<li><input type=\"hidden\" name=\"users[]\" value=\"" . esc_attr($id) . "\" />" . sprintf(__('ID #%1s: %2s'), $id, $group->name) . "</li>\n";
+				$go_delete++;
+			}
 		}
 	}
 	?>

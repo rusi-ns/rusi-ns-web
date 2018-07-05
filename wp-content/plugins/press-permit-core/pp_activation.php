@@ -22,6 +22,8 @@ class PP_Activation {
 	}
 
 	public static function deactivate() {
+		do_action( 'pp_deactivate' );
+		
 		set_site_transient('ppc_update_info', false);
 		
 		/*
@@ -39,8 +41,6 @@ class PP_Activation {
 		}
 
 		set_site_transient('update_plugins',$plugin_updates);
-
-		do_action( 'pp_deactivate' );
 	}
 } // end class
 } // endif

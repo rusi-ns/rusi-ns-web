@@ -125,8 +125,10 @@ class PP
 			if ( ! $this->direct_file_access && ( ! $is_front || $front_filtering ) && ( ! defined('XMLRPC_REQUEST') || ! $is_administrator ) ) {  // don't add for direct file access or administrator XML-RPC
 				//add_filter( 'query', array( &$this, 'get_pages_query_watch' ), 50, 1 );
 				
-				$priority = ( defined( 'PP_GET_PAGES_PRIORITY' ) ) ? PP_GET_PAGES_PRIORITY : 1;
-				add_filter( 'get_pages', array( &$this, 'flt_get_pages' ), $priority, 2 );
+				if ( ! is_admin() || ! pp_is_content_administrator() ) {
+					$priority = ( defined( 'PP_GET_PAGES_PRIORITY' ) ) ? PP_GET_PAGES_PRIORITY : 1;
+					add_filter( 'get_pages', array( &$this, 'flt_get_pages' ), $priority, 2 );
+				}
 			}
 		}
 	}

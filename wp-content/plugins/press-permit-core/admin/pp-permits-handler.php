@@ -49,7 +49,7 @@ class PP_Permits_Handler {
 				$id = (int) $id;
 
 				if ( $group_obj = pp_get_group($id, $agent_type) ) {
-					if ( ! empty($group->obj->metagroup_id) )
+					if ( ! empty($group->obj->metagroup_id) || ( ( 'wp_role' == $group->obj->metagroup_type ) && PP_GroupRetrieval::is_deleted_role( $group->obj->metagroup_id ) ) )
 						continue;
 				}
 				

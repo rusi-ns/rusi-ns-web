@@ -363,7 +363,20 @@ function pp_get_metagroup( $metagroup_type, $metagroup_id, $args = array() ) {
 	
 	$key = $metagroup_id . ':' . $wpdb->pp_groups;  // PP setting may change to/from netwide groups after buffering
 	if ( ! isset( $buffered_groups[$key] ) ) {
-		if ( $group = $wpdb->get_row( "SELECT * FROM $wpdb->pp_groups WHERE metagroup_type = '$metagroup_type' AND metagroup_id = '$metagroup_id' LIMIT 1" ) ) {
+		$query = "SELECT * FROM $wpdb->pp_groups WHERE metagroup_type = '$metagroup_type' AND metagroup_id = '$metagroup_id' LIMIT 1";
+
+		if ( ! $group = $wpdb->get_row( $query ) ) {
+			// Groups table not created early enough on some multisite installations when third party code triggers early set_current_user action. 
+			// TODO: Identify indicators to call db_setup() pre-emptively.
+			if ( ! empty( $wpdb->last_error ) && is_string( $wpdb->last_error ) && strpos( $wpdb->last_error, ' exist' ) ) {
+				require_once( dirname(__FILE__).'/db-setup_pp.php');
+				PP_DB_Setup::db_setup();
+				
+				$group = $wpdb->get_row( $query );
+			}
+		}
+		
+		if ( $group ) {
 			$group->group_id = $group->ID;
 			$group->status = 'active';
 			$buffered_groups[$key] = $group;

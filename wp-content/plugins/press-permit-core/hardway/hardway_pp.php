@@ -101,6 +101,11 @@ class PP_Hardway
 		$args['offset'] = absint( $r['offset'] );
 		$args['child_of'] = (int) $r['child_of'];
 
+		// Avoid conflict with ACF, other plugins
+		if ( is_admin() && ( empty( $args['name'] ) || ( 'parent_id' !== $args['name'] ) ) && false !== strpos( $args['sort_column'], 'menu_order' ) && ! defined( 'PP_GET_PAGES_LEGACY_FILTER' ) ) {
+			return $results;
+		}
+		
 		extract( apply_filters( 'pp_get_pages_args', $r ), EXTR_SKIP );  // PPE filter modifies append_page, exclude_tree
 
 		// workaround for CMS Tree Page View

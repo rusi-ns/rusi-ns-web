@@ -510,4 +510,10 @@ class PP_GroupRetrieval {
 		
 		return $except;
 	}
+	
+	public static function is_deleted_role( $role_name ) {
+		global $wp_roles;
+		
+		return ! in_array( $role_name, array_keys( $wp_roles->role_names ) ) && ! in_array( $role_name, array( 'wp_anon', 'wp_all', 'wp_auth' ) );
+	}
 }

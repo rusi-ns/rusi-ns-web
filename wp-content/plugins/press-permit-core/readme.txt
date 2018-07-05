@@ -4,8 +4,8 @@ Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JWZVF
 Tags: restrict, access, permissions, cms, user, private, category, pages, privacy, capabilities, role, scoper
 License: GPLv3
 Requires at least: 3.4
-Tested up to: 4.9.1
-Stable tag: 2.4.1
+Tested up to: 4.9.6
+Stable tag: 2.4.4
 
 Advanced yet accessible content permissions. Give users or groups type-specific roles. Enable or block access for specific posts or terms.
 
@@ -49,6 +49,21 @@ Pro [extensions](http://presspermit.com/extensions) are [available](http://press
 Initial production release
 
 == Changelog ==
+
+= 2.4.4 - 14 Jun 2018 =
+* Fixed : Page Association exceptions were not applied to parent selection dropdown on Edit Page screen (since 2.4.2)
+* Fixed : Pro - PHP warnings for PP extensions on Plugins, WordPress Updates screens
+* Fixed : PHP warnings in wp-admin
+
+= 2.4.3 - 3 May 2018 =
+* Fixed : Pro - Invalid update links and PHP warnings for PP extensions on Plugins, WordPress Updates screens
+
+= 2.4.2 - 2 May 2018 =
+* Fixed : After a WP role is deleted, the corresponding permission group remained. These can now be manually deleted.
+* Change : Increase limit for number of quick search results in post selection boxes on Edit Group Permissions screen
+* Fixed : "Add Exceptions" dropdowns on Edit Group Permissions screen failed to load on some installations with a server-imposed limit on simultaneous queries
+* Fixed : Groups table not created early enough on some multisite installations when third party code triggers early set_current_user action
+* Compat : get_pages() calls by plugins / themes in wp-admin() may be filtered incorrectly when sort_column is menu_order (for previous behavior, define constant PP_GET_PAGES_LEGACY_ADMIN_FILTER)
 
 = 2.4.1 - 13 Dec 2017 =
 * Fixed : Edit Permissions screen : javascript error on Safari browser

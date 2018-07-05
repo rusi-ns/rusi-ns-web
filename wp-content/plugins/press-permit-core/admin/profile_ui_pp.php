@@ -19,7 +19,7 @@ class PP_ProfileUI {
 		if ( ! $exceptions_ui = ppc_list_agent_exceptions( $agent_type, $agent_id, $args ) ) {
 			if ( ( 'user' == $agent_type ) && ( $join_groups != 'groups_only' ) && $new_permissions_link ) : ?>
 				<div style="clear:both;"></div>
-				<div id='pp_current_exceptions_ui' class='pp-group-box <?php echo $class;?>'>
+				<div id='pp_current_user_exceptions_ui' class='pp-group-box <?php echo $class;?>'>
 				<h3>
 				<?php 
 				_e( 'Custom User Permissions', 'pp' );

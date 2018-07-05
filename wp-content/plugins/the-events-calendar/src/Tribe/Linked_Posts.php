@@ -707,16 +707,25 @@ class Tribe__Events__Linked_Posts {
 			return;
 		}
 
-		if ( ! isset( $submission[ $linked_post_type_id_field ] ) ) {
-			$submission[ $linked_post_type_id_field ] = array();
-		}
-
 		$temp_submission = $submission;
 		$submission = array();
 
 		// make sure all elements are arrays
 		foreach ( $temp_submission as $key => $value ) {
 			$submission[ $key ] = is_array( $value ) ? $value : array( $value );
+		}
+
+		// setup key(s) if all new post(s)
+		if ( ! isset( $submission[ $linked_post_type_id_field ] ) ) {
+			$first_item                               = current( $submission );
+			$multiple_posts                           = is_array( $first_item ) ? count( $first_item ) - 1 : 0;
+			$submission[ $linked_post_type_id_field ] = array();
+			$post_count                               = 0;
+
+			do {
+				$submission[ $linked_post_type_id_field ][] = '';
+				$post_count ++;
+			} while ( $multiple_posts > $post_count );
 		}
 
 		$fields = array_keys( $submission );
@@ -876,37 +885,35 @@ class Tribe__Events__Linked_Posts {
 		 */
 		$options->available['text'] = apply_filters( 'tribe_events_saved_linked_post_dropdown_optgroup', $options->available['text'], $post_type );
 
-		if ( 0 != $current_user->ID ) {
-			$my_linked_posts = $this->get_linked_post_info(
-				$post_type,
-				array(
-					'post_status' => array(
-						'publish',
-						'draft',
-						'private',
-						'pending',
-					),
-					'author' => $current_user->ID,
-				)
-			);
+		$my_linked_posts = $this->get_linked_post_info(
+			$post_type,
+			array(
+				'post_status' => array(
+					'publish',
+					'draft',
+					'private',
+					'pending',
+				),
+				'author' => $current_user->ID,
+			)
+		);
 
-			if ( ! empty( $my_linked_posts ) ) {
-				foreach ( $my_linked_posts as $my_linked_post ) {
-					$my_linked_post_ids[] = $my_linked_post->ID;
+		if ( ! empty( $my_linked_posts ) ) {
+			foreach ( $my_linked_posts as $my_linked_post ) {
+				$my_linked_post_ids[] = $my_linked_post->ID;
 
-					$new_child = array(
-						'id' => $my_linked_post->ID,
-						'text' => wp_kses( get_the_title( $my_linked_post->ID ), array() ),
-					);
+				$new_child = array(
+					'id' => $my_linked_post->ID,
+					'text' => wp_kses( get_the_title( $my_linked_post->ID ), array() ),
+				);
 
-					$edit_link = get_edit_post_link( $my_linked_post );
+				$edit_link = get_edit_post_link( $my_linked_post );
 
-					if ( ! empty( $edit_link ) ) {
-						$new_child['edit'] = $edit_link;
-					}
-
-					$options->available['children'][] = $new_child;
+				if ( ! empty( $edit_link ) ) {
+					$new_child['edit'] = $edit_link;
 				}
+
+				$options->owned['children'][] = $new_child;
 			}
 		}
 
